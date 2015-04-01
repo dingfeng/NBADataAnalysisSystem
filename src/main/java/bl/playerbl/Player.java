@@ -3,8 +3,6 @@ package bl.playerbl;
 import java.awt.Image;
 import java.util.ArrayList;
 
-import bl.Playerbl.PlayerCalculatedData;
-import bl.Teambl.Team;
 import po.MatchesPO;
 import po.PlayerPO;
 import vo.Area;
@@ -92,8 +90,10 @@ public class Player {
 		this.age = playerPo.getAge();
 		this.exp = playerPo.getExp();
 		this.school = playerPo.getSchool();
-		/* -----------------------------
-		PlayerCalculatedData data = match.getPlayerData(name);
+		//得到playerlist
+		PlayerList playerlist = PlayerList.getPlayserListInstance();
+		//得到相应名字的player对象以初始化此player
+		Player data = playerlist.getPlayerData(name);
 		if (data != null) {
 			this.team = data.getTeam();
 			Team team1 = new Team();
@@ -138,7 +138,6 @@ public class Player {
 			this.freeThrow = data.getFreeThrow();// 罚球
 			this.twoPair = data.getTwoPair();// 两双
 		}
-		*/
 	}
 
 	/**
