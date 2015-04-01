@@ -3,7 +3,9 @@ package bl.playerbl;
 import java.awt.Image;
 import java.util.ArrayList;
 
+import po.MatchPlayerPO;
 import po.MatchesPO;
+import po.PlayerPO;
 import vo.Area;
 
 public class Player {
@@ -73,106 +75,108 @@ public class Player {
 	private ArrayList<MatchesPO> matches = new ArrayList<MatchesPO>(82);// 球员参加的比赛的信息
 
 	/**
+	 * 使用playerpo初始化player的构造器
+	 * 
+	 * @param playerPo
+	 */
+	public Player(PlayerPO playerPo) {
+		this.name = playerPo.getName();
+		this.action = playerPo.getAction();
+		this.portrait = playerPo.getPortrait();
+		this.number = playerPo.getNumber();
+		this.position = playerPo.getPosition();
+		this.heightfeet = playerPo.getHeightfeet();
+		this.heightinch = playerPo.getHeightinch();
+		this.birth = playerPo.getBirth();
+		this.age = playerPo.getAge();
+		this.exp = playerPo.getExp();
+		this.school = playerPo.getSchool();
+		// 得到playerlist
+		PlayerList playerlist = PlayerList.getPlayserListInstance();
+		// 得到相应名字的player对象以初始化此player
+		Player data = playerlist.getPlayerData(name);
+		if (data != null) {
+			this.team = data.getTeam();
+			Team team1 = new Team();
+			playerArea = team1.getMatchArea(team);
+			this.GmScEfficiency = data.getGmScEfficiency();
+			this.matchNo = data.getMatchNo();
+			this.firstServiceNo = data.getFirstServiceNo();
+			this.rebs = data.getRebs();
+			this.assistNo = data.getAssistNo();
+			this.time = data.getTime();
+			this.hitRate = data.getHitRate();
+			this.threeHitRate = data.getThreeHitRate();
+			this.penaltyHitRate = data.getPenaltyHitRate();
+			this.offendNo = data.getOffendNo();
+			this.defenceNo = data.getDefenceNo();
+			this.stealsNo = data.getStealsNo();
+			this.blockNo = data.getBlockNo();
+			this.mistakesNo = data.getMatchNo();
+			this.foulsNo = data.getFoulsNo();
+			this.points = data.getPoints();
+			this.efficiency = data.getEfficiency();
+			this.trueHitRate = data.getTrueHitRate();
+			this.hitEfficiency = data.getHitEfficiency();
+			this.rebEfficiency = data.getRebEfficiency();
+			this.offenseRebsEfficiency = data.getOffenseRebsEfficiency();
+			this.defenceRebsEfficiency = data.getDefenceRebsEfficiency();
+			this.assistEfficiency = data.getAssistEfficiency();
+			this.stealsEfficiency = data.getEfficiency();
+			this.blockEfficiency = data.getBlockEfficiency();
+			this.mistakeEfficiency = data.getMistakeEfficiency();
+			this.useEfficiency = data.getUseEfficiency();
+			this.rebound = data.getRebound();// 篮板
+			this.assist = data.getAssist();// 助攻
+			this.scoring_rebound_assist = data.getScoring_rebound_assist();// 得分/篮板/助攻（加权比1：1：1）
+			this.block = data.getBlock();// 盖帽
+			this.steal = data.getSteal();// 抢断
+			this.foul = data.getFoul();// 犯规
+			this.mistake = data.getMistake();// 失误
+			this.minute = data.getMinute();// 分钟
+			this.shot = data.getShot();// 投篮
+			this.three_points = data.getThree_points();// 三分
+			this.freeThrow = data.getFreeThrow();// 罚球
+			this.twoPair = data.getTwoPair();// 两双
+		}
+	}
+
+	/**
 	 * 向player对象中添加一个match的数据
 	 * 
 	 * @param match
 	 * @return boolean
 	 */
-	public boolean addMatchInformation(MatchesPO match) {
+	public boolean addMatchInformation(MatchesPO match,
+			MatchPlayerPO matchPlayer) {
 		// 向相应的player对象中添加一个match数据
 		matches.add(match);
 
-		String name;
-		String location;// 位置
-		double time;// 在场时间
-		int hitNo; // 投篮命中数
-		int handNo; // 投篮出手次数
-		int threeHitNo; // 三分命中数
-		int threeHandNo; // 三分出手数
-		int penaltyHitNo; // 罚球命中数
-		int penaltyHandNo; // 罚球出手数
-		int offenseRebs; // 进攻篮板数
-		int defenceRebs; // 防守篮板数
-		int rebs; // 篮板数
-		int help; // 助攻数
-		int stealsNo;// 抢断数
-		int blockNo;// 盖帽数
-		int mistakesNo;// 失误数
-		int foulsNo;// 犯规数
-		int points;// 得分
-
-		int myRebs = 0;
-		int teamTotalTime = 0;
-		int yourRebs = 0;
-		int totalHit = 0;
-		int yourTwoPoints = 0;
-		int yourAttackNO = 0;
-		int teamHand = 0;
-		int teamPenalty = 0;
-		int teamMistakes = 0;
-
-		/*
-		 * name = matchPlayerpo.getName();// 球员名称 location =
-		 * matchPlayerpo.getLocation();// 位置 time = matchPlayerpo.getTime();//
-		 * 在场时间 hitNo = matchPlayerpo.getHitNo(); // 投篮命中数 handNo =
-		 * matchPlayerpo.getHandNo(); // 投篮出手次数 threeHitNo =
-		 * matchPlayerpo.getThreeHitNo(); // 三分命中数 threeHandNo =
-		 * matchPlayerpo.getThreeHandNo(); // 三分出手数 penaltyHitNo =
-		 * matchPlayerpo.getPenaltyHitNo(); // 罚球命中数 penaltyHandNo =
-		 * matchPlayerpo.getPenaltyHandNo(); // 罚球出手数 offenseRebs =
-		 * matchPlayerpo.getOffenseRebs(); // 进攻篮板数 defenceRebs =
-		 * matchPlayerpo.getDefenceRebs(); // 防守篮板数 rebs =
-		 * matchPlayerpo.getRebs(); // 篮板数 help = matchPlayerpo.getHelp();//
-		 * 总篮板数 stealsNo = matchPlayerpo.getStealsNo();// 抢断数 blockNo =
-		 * matchPlayerpo.getBlockNo();// 盖帽数 mistakesNo =
-		 * matchPlayerpo.getMistakesNo();// 失误数 foulsNo =
-		 * matchPlayerpo.getFoulsNo();// 犯规数 points =
-		 * matchPlayerpo.getPoints();// 得分
-		 * 
-		 * totalHit += hitNo; teamTotalTime += time; teamHand += handNo;
-		 * teamPenalty += penaltyHandNo; teamMistakes += mistakesNo; myRebs +=
-		 * rebs;
-		 * 
-		 * if (!location.equalsIgnoreCase("?"))
-		 * matchPlayer.setLocation(location); if (i < 6)
-		 * matchPlayer.addFirstServiceNo(1); i++; matchPlayer.addMatchNO(1); if
-		 * (time == -1) { matchPlayer.addDirtyData(1); } else {
-		 * matchPlayer.addTime(time); } matchPlayer.addDate(teamName,
-		 * matchpo.getDate()); matchPlayer.addHitNo(hitNo);
-		 * matchPlayer.addHandNo(handNo);
-		 * matchPlayer.addThreeHandNo(threeHandNo);
-		 * matchPlayer.addThreeHitNo(threeHitNo);
-		 * matchPlayer.addPenaltyHandNo(penaltyHandNo);
-		 * matchPlayer.addPenaltyHitNo(penaltyHitNo);
-		 * matchPlayer.addOffenseRebs(offenseRebs);
-		 * matchPlayer.addDefenceRebs(defenceRebs); matchPlayer.addRebs(rebs);
-		 * matchPlayer.addHelp(help); matchPlayer.addStealsNo(stealsNo);
-		 * matchPlayer.addBlockNo(blockNo);
-		 * matchPlayer.addMistakesNo(mistakesNo);
-		 * matchPlayer.addFoulsNo(foulsNo); matchPlayer.addPoints(points); if
-		 * (matchPlayerpo.isDirty()) matchPlayer.addDirtyData(); int j = 0; if
-		 * (points > 9) j++; if (rebs > 9) j++; if (help > 9) j++; if (stealsNo
-		 * > 9) j++; if (blockNo > 9) j++; if (j >= 2)
-		 * matchPlayer.addTwoPair(1);
-		 * 
-		 * Iterator<MatchPlayerPO> playerItr2 = teamPlayer2.iterator(); while
-		 * (playerItr2.hasNext()) { MatchPlayerPO matchPlayerpo =
-		 * playerItr2.next(); yourRebs += matchPlayerpo.getRebs(); yourTwoPoints
-		 * += matchPlayerpo.getHitNo() - matchPlayerpo.getThreeHitNo() -
-		 * matchPlayerpo.getPenaltyHitNo(); yourAttackNO +=
-		 * matchPlayerpo.getOffenseRebs(); } playerItr = teamPlayer.iterator();
-		 * while (playerItr.hasNext()) { MatchPlayerPO player =
-		 * playerItr.next(); String playerName = player.getName(); MatchPlayer
-		 * matchPlayer1 = playerDatas.get(playerName);
-		 * matchPlayer1.addTotalHit(totalHit);
-		 * matchPlayer1.addTeamTotalTime(teamTotalTime);
-		 * matchPlayer1.addTeamPenalty(teamPenalty);
-		 * matchPlayer1.addTeamMistakes(teamMistakes);
-		 * matchPlayer1.addMyRebs(myRebs); matchPlayer1.addTeamHand(teamHand);
-		 * matchPlayer1.addYourAttackNO(yourAttackNO);
-		 * matchPlayer1.addYourRebs(yourRebs);
-		 * matchPlayer1.addYourTwoPoints(yourTwoPoints); }
-		 */
+		int hitNo = 0; // 投篮命中数
+		int handNo = 0; // 投篮出手次数
+		int threeHitNo = 0; // 三分命中数
+		int threeHandNo = 0; // 三分出手数
+		int penaltyHitNo = 0; // 罚球命中数
+		int penaltyHandNo = 0; // 罚球出手数
+		int offenseRebs = 0; // 进攻篮板数
+		int defenceRebs = 0; // 防守篮板数
+		int rebs = 0; // 篮板数
+		int help = 0;// 总篮板数
+		int stealsNo = 0;// 抢断数
+		int blockNo = 0;// 盖帽数
+		int mistakesNo = 0;// 失误数
+		int foulsNo = 0;// 犯规数
+		
+		hitNo += matchPlayer.getHitNo(); handNo += matchPlayer.getHandNo();
+		threeHitNo += matchPlayer.getThreeHitNo(); threeHandNo +=
+		matchPlayer.getThreeHandNo(); penaltyHitNo +=
+	    matchPlayer.getPenaltyHitNo(); penaltyHandNo +=
+		matchPlayer.getPenaltyHandNo(); offenseRebs +=
+		matchPlayer.getOffenseRebs(); defenceRebs +=
+		matchPlayer.getDefenceRebs(); rebs += matchPlayer.getRebs(); help +=
+		matchPlayer.getHelp(); stealsNo += matchPlayer.getStealsNo(); blockNo
+		+= matchPlayer.getBlockNo(); mistakesNo +=
+		matchPlayer.getMistakesNo(); foulsNo += matchPlayer.getFoulsNo();
 		return true;
 	}
 
