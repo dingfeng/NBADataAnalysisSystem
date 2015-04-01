@@ -13,7 +13,9 @@ public class TeamController implements Teamblservice{
 		return null;
 	}
 
-	public void setAverage(boolean average) {
+	public void setAverage(boolean average)
+	
+	{
 	}
 
 	public TeamVO findTeam(String name) {
