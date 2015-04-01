@@ -1,18 +1,7 @@
 package data.teamdata;
 
-import java.awt.Image;
-import java.awt.Toolkit;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import javax.swing.ImageIcon;
 
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
@@ -22,86 +11,117 @@ import dataservice.teamdataservice.TeamDataService;
 import po.TeamPO;
 import vo.Area;
 
-public class TeamData  {
-	private String filename = "data/teams/teams";
-	private static HashMap<String, TeamPO> map = new HashMap<String, TeamPO>();
-	public static  String projectDir = System.getProperty("user.dir");
-	
-	
-	/**
-	 * 得到所有队伍的基本信息
-	 */
-	public Iterator<TeamPO> getAllTeamData() 
+public class TeamData implements TeamDataService
+{
+   String filename;
+   String svg_uri;
+   final static int TEAM_NUM = 30;
+   
+  public TeamData (String filename)
+  {
+	  this.filename = filename;
+	  svg_uri = "file:\\"+filename+"/";
+  }
+  
+  public TeamPO[] getAllTeamData()
+  {
+	TeamPO[] teampos  = new TeamPO[TEAM_NUM];
+	String parser = XMLResourceDescriptor.getXMLParserClassName();
+    SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
+    Document doc = null;
+	try
 	{
-		//如果数据未读过
-		if(map.size() == 0)
-		{
-			this.read();
-		}
-		return map.values().iterator();
+	BufferedReader reader = new BufferedReader(new FileReader(filename+"/teams")  );
+	String tempStr = reader.readLine();
+	String[] items = null;
+	for (int i  = 0; i < 30; i++)
+	{
+	tempStr = reader.readLine();
+	items = dealWithLine(tempStr);
+	doc = f.createDocument( svg_uri+ items[1]+ ".svg");
+	teampos[i] = new TeamPO(doc,items[0],items[1],items[2],
+	items[3],convToPlayerArea(items[4]),items[5],Integer.parseInt(items[6]));
 	}
+	
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+	return teampos;
+  }
+  
+  
+  private  String[] dealWithLine(String tempStr)
+  {
+	  
+	  int str_len = tempStr.length();
+	  char ch = 0;
+	  int j = 1;
+	  char ch_in = 0;
+	  int i = 0;
+	  String [] items = new String[7];
+	  int item_index = 0;
+	  while (i < str_len)
+	  {
+		  ch = tempStr.charAt(i);		  
+		  if (item_index <= 5)
+		  {
+			  if (('A' <= ch && ch <= 'Z') || ('a' <= ch &&  ch <= 'z'))
+			  {
+				  j = 1;
+				  ch_in = tempStr.charAt(i+j);
+				  while (('A' <= ch_in && ch_in < 'Z') || ('a' <= ch_in &&  ch_in <= 'z')
+						  || ch_in == ' ')
+				  {
+					  ch_in = tempStr.charAt(i + (++j));
+				  }
+				  
+				  items[item_index] = tempStr.substring(i, i+j);
+				  
+				  i += j;
+				  ++item_index;
+			  }
+		  }
+		  
+		  else if (item_index == 6)
+		  {
+			  if (ch < '9' && ch > '0')
+			  {
+				  items[item_index] = tempStr.substring(i, i + 4);
+				  break;
+			  }
+		  }
+		  i++;
+	  }
+	  return items;
+  }
+  
+  private Area convToPlayerArea(String area)
+  {
 
-	/**
-	 * 得到一个队伍的基本信息,若没有此队伍则返回null
-	 */
-	public TeamPO getOneTeamData(String teamName) {
-		//如果数据未读过，则读数据
-		if(map.size() == 0){
-			this.read();
-		}
-		//找到相应的数据
-		return map.get(teamName);
-	}
-
-	/**
-	 * 读方法
-	 * @return	文件读出解析后的TeamPO对象
-	 */
-	private void  read(){
-		try {
-			@SuppressWarnings("resource")
-			BufferedReader reader = new BufferedReader(new FileReader(filename)  );
-			String tempStr = reader.readLine();
-			while(!(tempStr = reader.readLine()).equals("╚═══════════════╧═══╧═══════════════════╧═╧═════════════╧═══════════════════════════════╧════╝")){
-				//去掉数据中的空格
-				Pattern p = Pattern.compile("\\s*|\t|\r|\n");
-	            Matcher m = p.matcher(tempStr);
-	            tempStr = m.replaceAll("");
-				String[] str = tempStr.split("\\│");
-				String Name = str[0].substring(1);//将数据行前的"||"去掉
-				//得到相应的图片
-				Image icon;// = new ImageIcon("data\\teams\\" + str[1] + ".svg\\", "TeamIcon");
-				icon = Toolkit.getDefaultToolkit().getImage("data\\teams\\" + str[1] + ".svg\\");
-				String parser = XMLResourceDescriptor.getXMLParserClassName();
-    		    SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
-    		     projectDir.replace("\\", "/");
-    		    String uri = "file:\\"+projectDir+"\\data\\teams\\"+str[1]+".svg";
-    		    Document doc = f.createDocument(uri);
-				//得到分区
-				Area area;
-				if(str[4].equals("Atlantic")){
-					area = Area.ATLANTIC;
-				}else if(str[4].equals("Central")){
-					area = Area.CENTRAL;
-				}else if(str[4].equals("Southeast")){
-					area = Area.SOUTHEAST;
-				}else if(str[4].equals("Southwest")){
-					area = Area.SOUTHWEST;
-				}else if(str[4].equals("Northwest")){
-					area = Area.NORTHWEST;
-				}else{
-					area = Area.PACIFIC;
-				}
-				//得到建立时间
-				int foundYear = Integer.parseInt(str[6].substring(0, 4));
-				TeamPO newTeam = new TeamPO(doc, Name, str[1], str[2], str[3], area, str[5], foundYear);
-				map.put(str[1], newTeam);
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-	}
+	  Area playerArea = null;
+	  switch (area)
+	  {
+	  case "Atlantic" :
+		  playerArea = Area.ATLANTIC;
+		  break;
+	  case "Central":
+		  playerArea = Area.CENTRAL;
+		  break;
+	  case "Southeast":
+		  playerArea = Area.SOUTHEAST;
+		  break;
+	  case "Southwest":
+		  playerArea = Area.SOUTHWEST;
+		  break;
+	  case "Northwest":
+		  playerArea = Area.NORTHWEST;
+		  break;
+	  case "Pacific" : 
+		  playerArea = Area.PACIFIC;
+		  break;
+	  }
+	  return playerArea;
+  }
 }

@@ -11,12 +11,13 @@ public class test
 	   System.out.println("old_time : "+old_time);
 	   
    }
+   
    public  static String filename = "G:/NBAData/teams";
    
    //test oldMatchTest return the time
    public static long oldTeamTest()
    {
-	   TeamData teamData = new TeamData();
+	   TeamData_old teamData = new TeamData_old();
 	   long start_time = System.currentTimeMillis();
 	   teamData.getAllTeamData();
 	   long end_time = System.currentTimeMillis();
@@ -26,11 +27,13 @@ public class test
    
    public static long newTeamTest()
    {
-	   newTeamData newTeam = new newTeamData(filename);
+	   TeamData newTeam = new TeamData(filename);
 	   long start_time = System.currentTimeMillis();
 	   newTeam.getAllTeamData();
 	   long end_time = System.currentTimeMillis();
 	   long margin_time = end_time - start_time;
 	   return margin_time;
    }
+   
+   
 }

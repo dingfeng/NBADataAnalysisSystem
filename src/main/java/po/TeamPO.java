@@ -20,7 +20,7 @@ public class TeamPO {
 
 	public String toString()
 	{
-	   return name+" "+nameAbridge+" "+address+" "+matchArea+" "+manage+" ";
+	   return name+" "+nameAbridge+" "+address+" "+matchArea+" "+manage+" "+foundYear;
 	}
 	public TeamPO(Document image, String name, String nameAbridge, String address,
 			String matchArea, Area playerArea, String manage, int foundYear) {
