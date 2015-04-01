@@ -13,5 +13,6 @@ public interface Teamblservice
 	 public void setAverage(boolean average);
      public TeamVO findTeam(String name);
      public Area getTeamArea(String name);
+     
      public Iterator<TeamVO>  getAllTeams();
 }
