@@ -3,7 +3,10 @@ package bl.playerbl;
 import java.awt.Image;
 import java.util.ArrayList;
 
+import bl.Playerbl.PlayerCalculatedData;
+import bl.Teambl.Team;
 import po.MatchesPO;
+import po.PlayerPO;
 import vo.Area;
 
 public class Player {
@@ -71,6 +74,72 @@ public class Player {
 
 	private SortBy sortBy;
 	private ArrayList<MatchesPO> matches = new ArrayList<MatchesPO>(82);// 球员参加的比赛的信息
+
+	/**
+	 * 使用playerpo初始化player的构造器
+	 * 
+	 * @param playerPo
+	 */
+	public Player(PlayerPO playerPo) {
+		this.name = playerPo.getName();
+		this.action = playerPo.getAction();
+		this.portrait = playerPo.getPortrait();
+		this.number = playerPo.getNumber();
+		this.position = playerPo.getPosition();
+		this.heightfeet = playerPo.getHeightfeet();
+		this.heightinch = playerPo.getHeightinch();
+		this.birth = playerPo.getBirth();
+		this.age = playerPo.getAge();
+		this.exp = playerPo.getExp();
+		this.school = playerPo.getSchool();
+		/* -----------------------------
+		PlayerCalculatedData data = match.getPlayerData(name);
+		if (data != null) {
+			this.team = data.getTeam();
+			Team team1 = new Team();
+			playerArea = team1.getMatchArea(team);
+			this.GmScEfficiency = data.getGmScEfficiency();
+			this.matchNo = data.getMatchNo();
+			this.firstServiceNo = data.getFirstServiceNo();
+			this.rebs = data.getRebs();
+			this.assistNo = data.getAssistNo();
+			this.time = data.getTime();
+			this.hitRate = data.getHitRate();
+			this.threeHitRate = data.getThreeHitRate();
+			this.penaltyHitRate = data.getPenaltyHitRate();
+			this.offendNo = data.getOffendNo();
+			this.defenceNo = data.getDefenceNo();
+			this.stealsNo = data.getStealsNo();
+			this.blockNo = data.getBlockNo();
+			this.mistakesNo = data.getMatchNo();
+			this.foulsNo = data.getFoulsNo();
+			this.points = data.getPoints();
+			this.efficiency = data.getEfficiency();
+			this.trueHitRate = data.getTrueHitRate();
+			this.hitEfficiency = data.getHitEfficiency();
+			this.rebEfficiency = data.getRebEfficiency();
+			this.offenseRebsEfficiency = data.getOffenseRebsEfficiency();
+			this.defenceRebsEfficiency = data.getDefenceRebsEfficiency();
+			this.assistEfficiency = data.getAssistEfficiency();
+			this.stealsEfficiency = data.getEfficiency();
+			this.blockEfficiency = data.getBlockEfficiency();
+			this.mistakeEfficiency = data.getMistakeEfficiency();
+			this.useEfficiency = data.getUseEfficiency();
+			this.rebound = data.getRebound();// 篮板
+			this.assist = data.getAssist();// 助攻
+			this.scoring_rebound_assist = data.getScoring_rebound_assist();// 得分/篮板/助攻（加权比1：1：1）
+			this.block = data.getBlock();// 盖帽
+			this.steal = data.getSteal();// 抢断
+			this.foul = data.getFoul();// 犯规
+			this.mistake = data.getMistake();// 失误
+			this.minute = data.getMinute();// 分钟
+			this.shot = data.getShot();// 投篮
+			this.three_points = data.getThree_points();// 三分
+			this.freeThrow = data.getFreeThrow();// 罚球
+			this.twoPair = data.getTwoPair();// 两双
+		}
+		*/
+	}
 
 	/**
 	 * 向player对象中添加一个match的数据
