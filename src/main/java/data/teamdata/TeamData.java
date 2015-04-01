@@ -2,6 +2,7 @@ package data.teamdata;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
@@ -29,9 +30,10 @@ public class TeamData implements TeamDataService
 	String parser = XMLResourceDescriptor.getXMLParserClassName();
     SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
     Document doc = null;
+    BufferedReader reader= null;
 	try
 	{
-	BufferedReader reader = new BufferedReader(new FileReader(filename+"/teams")  );
+    reader = new BufferedReader(new FileReader(filename+"/teams")  );
 	String tempStr = reader.readLine();
 	String[] items = null;
 	for (int i  = 0; i < 30; i++)
@@ -42,12 +44,13 @@ public class TeamData implements TeamDataService
 	teampos[i] = new TeamPO(doc,items[0],items[1],items[2],
 	items[3],convToPlayerArea(items[4]),items[5],Integer.parseInt(items[6]));
 	}
-	
+	reader.close();
 	}
 	catch(Exception e)
 	{
 		e.printStackTrace();
 	}
+	
 	return teampos;
   }
   

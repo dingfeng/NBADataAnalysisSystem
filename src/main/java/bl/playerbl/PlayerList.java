@@ -8,7 +8,7 @@ import po.MatchPlayerPO;
 import po.MatchTeamPO;
 import po.MatchesPO;
 import po.PlayerPO;
-import data.playerdata.PlayerData;
+import data.playerdata.PlayerData_old;
 import dataservice.playerdataservice.PlayerDataService;
 
 /**
@@ -18,7 +18,7 @@ import dataservice.playerdataservice.PlayerDataService;
  */
 public class PlayerList {
 	private static HashMap<String, PlayerPO> players;//player列表
-	private PlayerDataService dataservice = new PlayerData();
+	private PlayerDataService dataservice = new PlayerData_old();
 	
 	//构造方法为私有
 	private PlayerList(){
