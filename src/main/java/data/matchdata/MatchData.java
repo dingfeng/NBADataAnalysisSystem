@@ -15,10 +15,14 @@ import po.MatchPlayerPO;
 import po.MatchTeamPO;
 import po.MatchesPO;
 
-public class MatchData implements MatchDataService 
+public class MatchData 
 {
 	private static String filename = "data\\matches\\";
 	
+	public MatchData (String dataSource)
+	{
+		filename = dataSource;
+	}
 	//获得所有的比赛数据
 	public ArrayList<MatchesPO> getAllMatchData() 
 	{

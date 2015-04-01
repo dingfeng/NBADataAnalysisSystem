@@ -5,6 +5,6 @@ import po.MatchesPO;
 
 public interface MatchDataService {
 	// 得到所有比赛中球员的数据
-	public ArrayList<MatchesPO> getAllMatchData();
-	
+	public MatchesPO[] getAllMatchData();
+	public MatchesPO[] getRecentMatchData();
 }

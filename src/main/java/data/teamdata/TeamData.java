@@ -22,15 +22,11 @@ import dataservice.teamdataservice.TeamDataService;
 import po.TeamPO;
 import vo.Area;
 
-public class TeamData implements TeamDataService{
+public class TeamData  {
 	private String filename = "data/teams/teams";
 	private static HashMap<String, TeamPO> map = new HashMap<String, TeamPO>();
 	public static  String projectDir = System.getProperty("user.dir");
 	
-	public TeamData()
-	{
-		
-	}
 	
 	/**
 	 * 得到所有队伍的基本信息

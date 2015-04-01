@@ -12,16 +12,15 @@ import dataservice.playerdataservice.PlayerDataService;
 import po.PlayerPO;
 
 
-public class PlayerData  implements PlayerDataService {
+public class PlayerData    {
 	Toolkit toolkit = Toolkit.getDefaultToolkit();
-	public static void main(String [] args){
-		PlayerData p = new PlayerData();
-		p.getOnePlayerData("Aaron Brooks");
-		System.out.println();
-	}
-    
+    String fileName ;    
 	HashMap<String,PlayerPO> allData ;
-
+     //init the dataSource 
+	public PlayerData(String fileName)
+	{
+		this.fileName = fileName;
+	}
 	//获得所有的球员数据
 	public HashMap<String,PlayerPO> getAllPlayerData() {
 		if(allData==null)
