@@ -66,7 +66,7 @@ public class PlayerList {
 				String name = thisMatchPlayer.getName();
 				Player playerToAddInfo = players.get(name);
 				// 添加到相应的player的数据中
-				boolean thisresult = playerToAddInfo.addMatchInformation(m);
+				boolean thisresult = playerToAddInfo.addMatchInformation(m, thisMatchPlayer);
 				// 如果信息添加失败，则返回false，并停止此次信息的添加，待修改
 				if (thisresult != true) {
 					return false;
