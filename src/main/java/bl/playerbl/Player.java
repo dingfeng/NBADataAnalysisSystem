@@ -147,26 +147,36 @@ public class Player {
 	 * @param match
 	 * @return boolean
 	 */
-	public boolean addMatchInformation(MatchesPO match, MatchPlayerPO matchPlayer) {
+	public boolean addMatchInformation(MatchesPO match,
+			MatchPlayerPO matchPlayer) {
 		// 向相应的player对象中添加一个match数据
 		matches.add(match);
 
-		/*
-		hitNo += matchPlayer.getHitNo();
-		handNo += matchPlayer.getHandNo();
-		threeHitNo += matchPlayer.getThreeHitNo();
-		threeHandNo += matchPlayer.getThreeHandNo();
-		penaltyHitNo += matchPlayer.getPenaltyHitNo();
-		penaltyHandNo += matchPlayer.getPenaltyHandNo();
-		offenseRebs += matchPlayer.getOffenseRebs();
-		defenceRebs += matchPlayer.getDefenceRebs();
-		rebs += matchPlayer.getRebs();
-		help += matchPlayer.getHelp();
-		stealsNo += matchPlayer.getStealsNo();
-		blockNo += matchPlayer.getBlockNo();
-		mistakesNo += matchPlayer.getMistakesNo();
-		foulsNo += matchPlayer.getFoulsNo();
-		*/
+		int hitNo = 0; // 投篮命中数
+		int handNo = 0; // 投篮出手次数
+		int threeHitNo = 0; // 三分命中数
+		int threeHandNo = 0; // 三分出手数
+		int penaltyHitNo = 0; // 罚球命中数
+		int penaltyHandNo = 0; // 罚球出手数
+		int offenseRebs = 0; // 进攻篮板数
+		int defenceRebs = 0; // 防守篮板数
+		int rebs = 0; // 篮板数
+		int help = 0;// 总篮板数
+		int stealsNo = 0;// 抢断数
+		int blockNo = 0;// 盖帽数
+		int mistakesNo = 0;// 失误数
+		int foulsNo = 0;// 犯规数
+		
+		hitNo += matchPlayer.getHitNo(); handNo += matchPlayer.getHandNo();
+		threeHitNo += matchPlayer.getThreeHitNo(); threeHandNo +=
+		matchPlayer.getThreeHandNo(); penaltyHitNo +=
+	    matchPlayer.getPenaltyHitNo(); penaltyHandNo +=
+		matchPlayer.getPenaltyHandNo(); offenseRebs +=
+		matchPlayer.getOffenseRebs(); defenceRebs +=
+		matchPlayer.getDefenceRebs(); rebs += matchPlayer.getRebs(); help +=
+		matchPlayer.getHelp(); stealsNo += matchPlayer.getStealsNo(); blockNo
+		+= matchPlayer.getBlockNo(); mistakesNo +=
+		matchPlayer.getMistakesNo(); foulsNo += matchPlayer.getFoulsNo();
 		return true;
 	}
 
