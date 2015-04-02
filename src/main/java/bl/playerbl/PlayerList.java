@@ -61,12 +61,27 @@ public class PlayerList {
 			Iterator<MatchPlayerPO> iteratorTeam1 = playerteam1.iterator();
 			Iterator<MatchPlayerPO> iteratorTeam2 = playerteam2.iterator();
 
+			Player playerToAddInfo;
+			
+			//添加第一个队伍的数据
 			while (iteratorTeam1.hasNext()) {
 				MatchPlayerPO thisMatchPlayer = iteratorTeam1.next();
 				String name = thisMatchPlayer.getName();
-				Player playerToAddInfo = players.get(name);
+				playerToAddInfo = players.get(name);
 				// 添加到相应的player的数据中
-				boolean thisresult = playerToAddInfo.addMatchInformation(m, thisMatchPlayer);
+				boolean thisresult = playerToAddInfo.addMatchInformation(m, thisMatchPlayer, team2, team1.getName());
+				// 如果信息添加失败，则返回false，并停止此次信息的添加，待修改
+				if (thisresult != true) {
+					return false;
+				}
+			}
+			//添加第二个队伍的数据
+			while(iteratorTeam2.hasNext()){
+				MatchPlayerPO thisMatchPlayer = iteratorTeam2.next();
+				String name = thisMatchPlayer.getName();
+				playerToAddInfo = players.get(name);
+				// 添加到相应的player的数据中
+				boolean thisresult = playerToAddInfo.addMatchInformation(m, thisMatchPlayer, team1, team2.getName());
 				// 如果信息添加失败，则返回false，并停止此次信息的添加，待修改
 				if (thisresult != true) {
 					return false;
