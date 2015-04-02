@@ -8,13 +8,11 @@ public class test
 	public static void main(String[] args)
 	{
 		long total_old = 0;
-//		for (int i = 0; i < 100; i++)
-//		{
-//			total_old += getAllPlayers_old();
-			System.out.println(getAllPlayers_old());
-//		}
-//		System.out.println("old "+ total_old/100);
-//		System.out.println("new player data efficiency : " + getAllPlayers_new());
+		long total_new = 0;
+		total_old = getAllPlayers_old();
+		total_new = getAllPlayers_new();
+		System.out.println("total_old : "+total_old);
+		System.out.println("total_new : "+ total_new);
 		
 	}
 	

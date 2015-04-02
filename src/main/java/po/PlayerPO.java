@@ -9,7 +9,7 @@ public class PlayerPO {
 	private Image portrait;// 全身图片
 	private String name;// 姓名
 	private int number;// 球衣号码
-	private char position;// 位置
+	private String position;// 位置
 	private int heightfeet;// 身高的英尺
 	private int heightinch;// 身高的英寸
 	private int weight;// 体重（磅）
@@ -19,7 +19,7 @@ public class PlayerPO {
 	private String school;// 毕业学校
 
 	public PlayerPO(Image action, Image portrait, String name, int number,
-			char position, int heightfeet, int heightinch, int weight,
+			String position, int heightfeet, int heightinch, int weight,
 			String birth, int age, int exp, String school) {
 		super();
 		this.action = action;
@@ -52,7 +52,7 @@ public class PlayerPO {
 		return number;
 	}
 
-	public char getPosition() {
+	public String getPosition() {
 		return position;
 	}
 

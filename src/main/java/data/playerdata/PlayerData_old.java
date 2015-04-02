@@ -114,7 +114,7 @@ public class PlayerData_old    {
 		    {
 		    	e.printStackTrace();
 		    }
-			playerPO = new PlayerPO(action,portrait,name,number,position,heightfeet,heightinch,weight,birth,age,exp,school);
+			playerPO = new PlayerPO(action,portrait,name,number,String.valueOf(position),heightfeet,heightinch,weight,birth,age,exp,school);
 			br.close();
 		return playerPO;
 			}catch (Exception e){e.printStackTrace();}

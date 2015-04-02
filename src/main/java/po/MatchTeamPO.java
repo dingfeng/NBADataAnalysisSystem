@@ -4,21 +4,25 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MatchTeamPO {
-       private ArrayList<MatchPlayerPO> players = new ArrayList<MatchPlayerPO>();
+       private MatchPlayerPO[] players;
        private int[] scores;
        private int totalScores;
        private String name;
-       public MatchTeamPO(ArrayList<MatchPlayerPO> player,int [] scores,int totalScores,String name)
+       public MatchTeamPO(MatchPlayerPO[] player,int [] scores,int totalScores,String name)
        {
     	   this.players = player;
     	   this.scores = scores;
     	   this.totalScores = totalScores;
     	   this.name = name;
        }
-	public ArrayList<MatchPlayerPO> getPlayers() {
+    
+	public MatchPlayerPO[] getPlayers()
+	{
 		return players;
 	}
-	public int[] getScores() {
+	
+	public int[] getScores()
+	{
 		return scores;
 	}
 	public int getTotalScores() {
@@ -40,13 +44,11 @@ public class MatchTeamPO {
     	sb.append(totalScores);
     	sb.append("  ");
     	sb.append("\n");
-        Iterator<MatchPlayerPO> playersItr = players.iterator();
-        while (playersItr.hasNext())
-        {
-        	MatchPlayerPO match = playersItr.next();
-        	sb.append(match.toString());
-        	sb.append("  ");
-        }
+    	for (MatchPlayerPO player : players)
+    	{
+    		sb.append(player.toString());
+    		sb.append("  ");
+    	}
         return sb.toString();
     }
     

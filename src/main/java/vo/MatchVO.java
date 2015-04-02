@@ -1,20 +1,22 @@
-package po;
+package vo;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MatchesPO {
-	   
-       private MatchTeamPO team1;
-       private  MatchTeamPO team2;
-       private String date;
-       public MatchesPO(MatchTeamPO team1,MatchTeamPO team2,
-    		   String date)
-    		   {
-    	            this.team1 = team1;
-    	            this.team2 = team2;
-    	            this.date = date;
-    		   }
+import po.MatchTeamPO;
+
+public class MatchVO 
+{
+	 private MatchTeamPO team1;
+     private  MatchTeamPO team2;
+     private Date date;
+     public MatchVO(MatchTeamPO team1,MatchTeamPO team2,
+  		   Date date)
+  		   {
+  	            this.team1 = team1;
+  	            this.team2 = team2;
+  	            this.date = date;
+  		   }
 	public MatchTeamPO getTeam1() {
 		return team1;
 	}
@@ -22,7 +24,7 @@ public class MatchesPO {
 	{
 		return team2;
 	}
-	public String getDate() 
+	public Date getDate() 
 	{
 		return date;
 	}
@@ -41,5 +43,5 @@ public class MatchesPO {
 		sb.append(dateStr);
 		return sb.toString();
 	}
-       
+     
 }
