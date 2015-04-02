@@ -15,7 +15,6 @@ public class TeamController implements Teamblservice{
 
 	public void setAverage(boolean average)
 	{
-		
 	}
 
 	public TeamVO findTeam(String name) {
@@ -24,6 +23,14 @@ public class TeamController implements Teamblservice{
 	
 	public Iterator<TeamVO> getAllTeams()
 	{
+		return null;
+	}
+
+	public TeamVO getRecentData(String teamName, int matchNo) {
+		return null;
+	}
+    
+	public Iterator<TeamVO> getHotTeams(TeamSortBy sortBy) {
 		return null;
 	}
 

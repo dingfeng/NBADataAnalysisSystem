@@ -13,5 +13,6 @@ public interface Teamblservice
 	 public void setAverage(boolean average);
      public TeamVO findTeam(String name);
      public Iterator<TeamVO>  getAllTeams();
-     
+     public TeamVO getRecentData(String teamName,int matchNo);
+     public Iterator<TeamVO> getHotTeams(TeamSortBy sortBy);
 }
