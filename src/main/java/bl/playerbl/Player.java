@@ -3,7 +3,9 @@ package bl.playerbl;
 import java.awt.Image;
 import java.util.ArrayList;
 
+import bl.matchbl.MatchPlayer;
 import po.MatchPlayerPO;
+import po.MatchTeamPO;
 import po.MatchesPO;
 import po.PlayerPO;
 import vo.Area;
@@ -37,7 +39,7 @@ public class Player {
 	private double threeHitRate;// 三分命中率
 	private double penaltyHitRate;// 罚球命中率
 	private double offendNo;// 进攻数
-	private double defenceNo;// 防守数5
+	private double defenceNo;// 防守数
 	private double stealsNo;// 抢断数
 	private double blockNo;// 盖帽数
 	private double mistakesNo;// 失误数
@@ -71,6 +73,9 @@ public class Player {
 	public static boolean isAverage = false;
 	private Area playerArea = Area.ATLANTIC; // 分区
 
+	//player对象中保有一个累计了相应player数据的MatchPlayer对象
+	private MatchPlayer matchplayer;
+	
 	private SortBy sortBy;
 	private ArrayList<MatchesPO> matches = new ArrayList<MatchesPO>(82);// 球员参加的比赛的信息
 
@@ -138,6 +143,7 @@ public class Player {
 			this.three_points = data.getThree_points();// 三分
 			this.freeThrow = data.getFreeThrow();// 罚球
 			this.twoPair = data.getTwoPair();// 两双
+			this.matchplayer = data.getMatchPlayer();//球员比赛数据
 		}
 	}
 
@@ -148,10 +154,13 @@ public class Player {
 	 * @return boolean
 	 */
 	public boolean addMatchInformation(MatchesPO match,
-			MatchPlayerPO matchPlayer) {
+			MatchPlayerPO matchPlayer, MatchTeamPO rival,
+			String TeamName) {
 		// 向相应的player对象中添加一个match数据
 		matches.add(match);
 
+		String location;// 位置
+		double time;// 在场时间
 		int hitNo = 0; // 投篮命中数
 		int handNo = 0; // 投篮出手次数
 		int threeHitNo = 0; // 三分命中数
@@ -166,17 +175,97 @@ public class Player {
 		int blockNo = 0;// 盖帽数
 		int mistakesNo = 0;// 失误数
 		int foulsNo = 0;// 犯规数
+		int points;// 得分
+
+		int myRebs = 0;
+		int teamTotalTime = 0;
+		int yourRebs = 0;
+		int totalHit = 0;
+		int yourTwoPoints = 0;
+		double yourAttackNO = 0;
+		int teamHand = 0;
+		int teamPenalty = 0;
+		int teamMistakes = 0;
+		int i = 0;
+		int teamDefenceNo = 0;
+
+		location = matchPlayer.getLocation();// 位置
+		time = matchPlayer.getTime();// 在场时间
+		hitNo += matchPlayer.getHitNo();
+		handNo += matchPlayer.getHandNo();
+		threeHitNo += matchPlayer.getThreeHitNo();
+		threeHandNo += matchPlayer.getThreeHandNo();
+		penaltyHitNo += matchPlayer.getPenaltyHitNo();
+		penaltyHandNo += matchPlayer.getPenaltyHandNo();
+		offenseRebs += matchPlayer.getOffenseRebs();
+		defenceRebs += matchPlayer.getDefenceRebs();
+		rebs += matchPlayer.getRebs();
+		help += matchPlayer.getHelp();
+		stealsNo += matchPlayer.getStealsNo();
+		blockNo += matchPlayer.getBlockNo();
+		mistakesNo += matchPlayer.getMistakesNo();
+		foulsNo += matchPlayer.getFoulsNo();
+		points = matchPlayer.getPoints();// 得分
+		totalHit += hitNo;
+		teamTotalTime += time;
+		teamHand += handNo;
+		teamPenalty += penaltyHandNo;
+		teamMistakes += mistakesNo;
+		myRebs += rebs;
+		teamDefenceNo += defenceRebs;
 		
-		hitNo += matchPlayer.getHitNo(); handNo += matchPlayer.getHandNo();
-		threeHitNo += matchPlayer.getThreeHitNo(); threeHandNo +=
-		matchPlayer.getThreeHandNo(); penaltyHitNo +=
-	    matchPlayer.getPenaltyHitNo(); penaltyHandNo +=
-		matchPlayer.getPenaltyHandNo(); offenseRebs +=
-		matchPlayer.getOffenseRebs(); defenceRebs +=
-		matchPlayer.getDefenceRebs(); rebs += matchPlayer.getRebs(); help +=
-		matchPlayer.getHelp(); stealsNo += matchPlayer.getStealsNo(); blockNo
-		+= matchPlayer.getBlockNo(); mistakesNo +=
-		matchPlayer.getMistakesNo(); foulsNo += matchPlayer.getFoulsNo();
+		if (!location.equalsIgnoreCase("?")){
+			matchplayer.setLocation(location);
+		}
+		if(i < 6){
+			matchplayer.addFirstServiceNo(1);
+		}
+		i ++;
+		matchplayer.addMatchNO(1);
+		if(time == -1){
+			matchplayer.addDirtyData(1);
+		} else{
+			matchplayer.addTime(time);
+		}
+		matchplayer.addDate(TeamName, match.getDate());
+		matchplayer.addHitNo(hitNo);
+		matchplayer.addHandNo(handNo);
+		matchplayer.addThreeHitNo(threeHitNo);;
+		matchplayer.addThreeHandNo(threeHandNo);
+		matchplayer.addPenaltyHandNo(penaltyHandNo);
+		matchplayer.addPenaltyHitNo(penaltyHitNo);;
+		matchplayer.addOffenseRebs(offenseRebs);
+		matchplayer.addDefenceRebs(defenceRebs);
+		matchplayer.addRebs(rebs);
+		matchplayer.addHelp(help);
+		matchplayer.addStealsNo(stealsNo);
+		matchplayer.addBlockNo(blockNo);
+		matchplayer.addMistakesNo(mistakesNo);
+		matchplayer.addFoulsNo(foulsNo);
+		matchplayer.addPoints(points);
+		if(matchPlayer.isDirty()){
+			matchplayer.addDirtyData();
+		}
+		//计算两双
+		int j = 0;
+		if(points > 9){
+			j ++;
+		}
+		if(rebs > 9){
+			j ++;
+		}
+		if(help > 9){
+			j ++;
+		}
+		if(stealsNo > 9){
+			j ++;
+		}
+		if(blockNo > 9){
+			j ++;
+		}
+		if(j >=2){
+			matchplayer.addTwoPair(1);
+		}
 		return true;
 	}
 
@@ -402,5 +491,9 @@ public class Player {
 
 	public int compareTo(Player arg0) {
 		return sortBy.compareTo(arg0.getSortBy());
+	}
+
+	public MatchPlayer getMatchPlayer() {
+		return matchplayer;
 	}
 }

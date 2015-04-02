@@ -25,6 +25,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
+import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyTable;

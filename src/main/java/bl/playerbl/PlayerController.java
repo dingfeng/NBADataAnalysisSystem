@@ -16,13 +16,13 @@ public class PlayerController implements PlayerBlService{
 		player = player.getPlayserListInstance();
 	}
 
-	public Iterator<PlayerVO> sortPlayer(PlayerSortBy playerSortBy,
+	public Iterator<PlayerVO> sortPlayers(PlayerSortBy playerSortBy,
 			SortType sortType) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Iterator<PlayerVO> sreenPlayer(char playerPosition, Area playerArea,
+	public Iterator<PlayerVO> sreenPlayers(char playerPosition, Area playerArea,
 			PlayerSortBy sortBy) {
 		// TODO Auto-generated method stub
 		return null;

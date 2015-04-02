@@ -9,8 +9,8 @@ import vo.PlayerVO;
 import vo.SortType;
 
 public interface PlayerBlService {
-	public Iterator<PlayerVO> sortPlayer(PlayerSortBy playerSortBy, SortType sortType);
-	public Iterator<PlayerVO> sreenPlayer(char playerPosition, Area playerArea, PlayerSortBy sortBy);
+	public Iterator<PlayerVO> sortPlayers(PlayerSortBy playerSortBy, SortType sortType);
+	public Iterator<PlayerVO> sreenPlayers(char playerPosition, Area playerArea, PlayerSortBy sortBy);
 	public Iterator<PlayerVO> getDayHotPlayer();
 	public Iterator<PlayerVO> getSeasonHotPlayer();
 	public Iterator<PlayerVO> getPromotePlayer();
