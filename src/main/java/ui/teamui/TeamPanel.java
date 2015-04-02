@@ -33,6 +33,7 @@ import ui.mainui.MyTable;
 import vo.SortType;
 import vo.TeamSortBy;
 import vo.TeamVO;
+import bl.teambl.TeamController;
 
 public class TeamPanel extends JPanel {
 

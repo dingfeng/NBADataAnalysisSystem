@@ -42,18 +42,6 @@ public class StartFrame extends JFrame{
 			}
 		});
 		my.setLayout(null);
-		JTabbedPane jtp = new JTabbedPane();
-		jtp.setBounds(0, FrameSize.height/16+50, FrameSize.width, FrameSize.height*15/16);
-		JPanel playerPanel = new PlayerPanel();
-		JPanel teamPanel = new TeamPanel();
-		jtp.setVisible(false);
-		jtp.add("player",playerPanel);
-		jtp.add("team",teamPanel);
-		jtp.setSelectedIndex(1);
-		jtp.setSelectedIndex(0);
-		jtp.setVisible(true);
-//		my.frame.add(jtp);
-		jtp.repaint();
 		my.frame.repaint();
 		my.repaint();
 	}

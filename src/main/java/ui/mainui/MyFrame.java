@@ -122,6 +122,8 @@ public class MyFrame extends JFrame {
 	
 	void setPlayer(){
 		mainpanel.remove(teampanel);
+		mainpanel.remove(matchpanel);
+		mainpanel.remove(hotpanel);
 		mainpanel.add(playerpanel);
 		mainpanel.repaint();
 	}
