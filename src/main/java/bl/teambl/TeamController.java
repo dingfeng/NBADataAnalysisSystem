@@ -21,14 +21,9 @@ public class TeamController implements Teamblservice{
 	public TeamVO findTeam(String name) {
 		return null;
 	}
-
-	public Area getTeamArea(String name) 
+	
+	public Iterator<TeamVO> getAllTeams()
 	{
-		return null;
-		
-	}
-
-	public Iterator<TeamVO> getAllTeams() {
 		return null;
 	}
 

@@ -12,7 +12,6 @@ public interface Teamblservice
 	 public Iterator<TeamVO> sortTeams(TeamSortBy TeamSortBy, SortType sortType);
 	 public void setAverage(boolean average);
      public TeamVO findTeam(String name);
-     public Area getTeamArea(String name);
-     
      public Iterator<TeamVO>  getAllTeams();
+     
 }

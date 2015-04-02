@@ -31,8 +31,9 @@ public class PlayerData implements PlayerDataService{
 		
 		return null;
 	}
-	private PlayerPO readInfo(File file)
+	private String[] readInfo(File file)
 	{
+		String[] player_infos = new String[9];
 		try {
 			BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
 			String tempStr = null;
@@ -55,12 +56,15 @@ public class PlayerData implements PlayerDataService{
 					}
 					else 
 					{
+					    n = 1;
 						while ((ch <= 'z' && ch >= 'a') || (ch<='Z' && ch >= 'A')
 						|| (ch <= '9' && ch >= '0')
 						|| (ch == ' ') || (ch == ',') || (ch == '/'))
 						{
-							
+							ch = tempStr.charAt(j + n);
+							++n;
 						}
+						
 					}
 				}
 				
