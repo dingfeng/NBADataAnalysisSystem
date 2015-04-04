@@ -68,7 +68,7 @@ public class MatchPlayerPO
 		this.blockNo = blockNo;
 		this.mistakesNo = mistakesNo;
 		this.foulsNo = foulsNo;
-		this.points = hitNo * 2+threeHitNo * 3 +penaltyHitNo;
+		this.points = (hitNo-threeHitNo) * 2+threeHitNo * 3 +penaltyHitNo;
 	}
 
 	public String getName() {
@@ -125,12 +125,16 @@ public class MatchPlayerPO
 	public int getPoints() {
 		return points;
 	}
-	public boolean isDirty()
+	public boolean isTimeDirty()
 	{
 		return dirty;
 	}
-	public void setDirty()
+	public void settIimeDirty()
 	{
 		dirty = true;
+	}
+	public void setTime(int time)
+	{
+		this.time = time;
 	}
 }

@@ -65,34 +65,36 @@ public class PlayerData implements PlayerDataService{
 			int m = 0;
 			int n = 0;
 			int j = 0;
+			char [] content_list = null;
 			for (int i = 0 ; i < 9; i++)
 			{
 				br.readLine();
 				tempStr = br.readLine();
 				m=0;
 				j=0;
-				while(j < tempStr.length())
+				content_list = tempStr.toCharArray();
+				while(j < content_list.length)
 				{
-					ch = tempStr.charAt(j);
+					ch = content_list[j];
 					if ((ch <= 'z' && ch >= 'a') || (ch<='Z' && ch >= 'A')
 							|| (ch <= '9' && ch >= '0')
 							|| (ch == ' ') || (ch == ',') || (ch == '/') || (ch == '-'))
 					if (m == 0)
 					{
 					 while ((ch <= 'z' && ch >= 'a') || (ch<='Z' && ch >= 'A'))
-						ch = tempStr.charAt(++j);
+						ch = content_list[++j];
 					 ++m;
 					}
 					else 
 					{
 					    n = 1;
-					    ch = tempStr.charAt(j + n);
+					    ch = content_list[j + n];
 						while ((ch <= 'z' && ch >= 'a') || (ch<='Z' && ch >= 'A')
 						|| (ch <= '9' && ch >= '0')
 						|| (ch == ' ') || (ch == ',') || (ch == '/') || (ch == '-'))
 						{
 							++n;
-							ch = tempStr.charAt(j + n);
+							ch = content_list[j + n];
 						}
 						info[i] = tempStr.substring(j, j + n);
 						break;

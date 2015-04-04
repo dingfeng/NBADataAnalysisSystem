@@ -57,8 +57,8 @@ public class TeamData implements TeamDataService
   
   private  String[] dealWithLine(String tempStr)
   {
-	  
-	  int str_len = tempStr.length();
+	  char [] content_list = tempStr.toCharArray();
+	  int str_len = content_list.length;
 	  char ch = 0;
 	  int j = 1;
 	  char ch_in = 0;
@@ -67,17 +67,17 @@ public class TeamData implements TeamDataService
 	  int item_index = 0;
 	  while (i < str_len)
 	  {
-		  ch = tempStr.charAt(i);		  
+		  ch = content_list[i];		  
 		  if (item_index <= 5)
 		  {
 			  if (('A' <= ch && ch <= 'Z') || ('a' <= ch &&  ch <= 'z'))
 			  {
 				  j = 1;
-				  ch_in = tempStr.charAt(i+j);
+				  ch_in = content_list[i+j];
 				  while (('A' <= ch_in && ch_in < 'Z') || ('a' <= ch_in &&  ch_in <= 'z')
 						  || ch_in == ' ')
 				  {
-					  ch_in = tempStr.charAt(i + (++j));
+					  ch_in = content_list[i + (++j)];
 				  }
 				  
 				  items[item_index] = tempStr.substring(i, i+j);

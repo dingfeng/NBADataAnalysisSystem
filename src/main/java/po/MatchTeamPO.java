@@ -8,13 +8,18 @@ public class MatchTeamPO {
        private int[] scores;
        private int totalScores;
        private String name;
-       public MatchTeamPO(MatchPlayerPO[] player,int [] scores,int totalScores,String name)
+       private int time;
+       public MatchTeamPO(MatchPlayerPO[] player,int [] scores,int totalScores,String name, int time)
        {
     	   this.players = player;
     	   this.scores = scores;
     	   this.totalScores = totalScores;
     	   this.name = name;
        }
+    public int getTime()
+    {
+    	return time;
+    }
     
 	public MatchPlayerPO[] getPlayers()
 	{
