@@ -7,12 +7,18 @@ public class Queue
   protected MatchesPO[] matches;
   private int max;
   private int lenth;
-  public Queue(int max)
+  //如果是球队则使用缩写
+  private String name;
+  public Queue(int max,String name)
   {
 	  this.max = max;
 	  matches = new MatchesPO[max];
   }
   
+  public String getName()
+  {
+	 return name;
+  }
   public MatchesPO[] getAllMatches()
   {
  	 if (lenth == -1)
@@ -29,6 +35,8 @@ public class Queue
   
   public void enQueue(MatchesPO match)
   {
+	 if (lenth == max -1)
+		 enlarge();
  	 matches[++lenth] = match; 
   }
   
@@ -44,5 +52,22 @@ public class Queue
 	  matches = temp;
   }
   
+  public MatchesPO[] getRecentMatches(int num)
+  {
+	  MatchesPO[] matches0 = null;
+	  if (num > lenth + 1)
+	  {
+		  matches0 = this.matches;
+	  }
+	  else 
+	  {
+		  matches0 = new MatchesPO[num];
+		  for (int i = 0; i < num; i++)
+		  { 
+			  matches0[i] = matches[lenth-num+i+1];
+		  }
+	  }
+	return matches0;
+  }
   
 }

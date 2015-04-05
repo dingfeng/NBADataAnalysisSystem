@@ -1,15 +1,17 @@
 package data.teamdata;
 
+import po.TeamPO;
+
 
 public class test 
 {
    public static void main(String[] args)
    {
-	   long old_time = oldTeamTest();
-	   long new_time = newTeamTest();
-	   System.out.println("newTeamTest : "+new_time);
+//	   long old_time = oldTeamTest();
+//	   long new_time = newTeamTest();
+//	   System.out.println("newTeamTest : "+new_time);
 //	   System.out.println("old_time : "+old_time);
-	   
+	   printTeamName();
    }
    
    public  static String filename = "G:/NBAData/teams";
@@ -35,6 +37,14 @@ public class test
 	   
 	   return margin_time;
    }
-   
+   public static void printTeamName()
+   {
+	   TeamData t = new TeamData(filename);
+	   TeamPO[] teams = t.getAllTeamData();
+	   for (TeamPO t1 : teams)
+	   {
+		   System.out.println("\""+t1.getNameAbridge()+"\",");
+	   }
+   }
    
 }
