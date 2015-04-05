@@ -1,7 +1,10 @@
 package DataFactory;
 
+import data.matchdata.MatchData;
 import data.matchdata.MatchData_old;
+import data.playerdata.PlayerData;
 import data.playerdata.PlayerData_old;
+import data.teamdata.TeamData;
 import data.teamdata.TeamData_old;
 import dataservice.matchdataservice.MatchDataService;
 import dataservice.playerdataservice.PlayerDataService;
@@ -10,14 +13,15 @@ import DataFactoryService.NBADataFactory;
 
 public class DataFactoryImp implements NBADataFactory
 {
-	private static NBADataFactory factory = null;
 	private static  String dataSource = null;
-	
+	private static MatchDataService match_data;
+	private static PlayerDataService player_data;
+	private static TeamDataService team_data;
+	private static  NBADataFactory factory;
 	public static void  setDataSource(String dataSource0)
 	{
 		dataSource = dataSource0;
 	}
-	
 	public static NBADataFactory instance()
 	{
 		if (dataSource == null)
@@ -26,24 +30,30 @@ public class DataFactoryImp implements NBADataFactory
 		}
 		if (factory == null)
 		{
-			return new DataFactoryImp();
+			factory = new DataFactoryImp();
 		}
-		else return factory ;
+		return factory;
 	}
-	
-	public  MatchDataService getMatchData() {
-		//return new MatchData(dataSource + "\\matches\\");
-		return null;
+	public  MatchDataService getMatchData(){
+		if (match_data == null)
+		{
+			match_data = new MatchData(dataSource + "\\matches");
+		}
+		return match_data;
 	}
 
 	public PlayerDataService getPlayerData() {
-		//return new PlayerData(dataSource + "\\players\\");
-		return null;
+		   if (player_data == null)
+			 player_data = new PlayerData(dataSource + "\\players");
+		return player_data;
 	}
 
 	public TeamDataService getTeamData() {
-		//return new TeamData(dataSource + "/teams/");
-		return null;
+		if (team_data == null)
+		{
+			team_data = new TeamData(dataSource + "/teams");
+		}
+		return team_data;
 	}
 
 }

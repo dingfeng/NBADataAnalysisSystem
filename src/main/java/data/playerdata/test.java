@@ -7,12 +7,11 @@ public class test
 	
 	public static void main(String[] args)
 	{
-		long total_old = 0;
-		long total_new = 0;
-		total_old = getAllPlayers_old();
-		total_new = getAllPlayers_new();
-		System.out.println("total_old : "+total_old);
-		System.out.println("total_new : "+ total_new);
+//		total_new = getAllPlayers_new();
+		
+//		for (int i = 0; i < 100; i++)
+		System.out.println("total_old : "+getAllPlayers_old());
+//		System.out.println("total_new : "+ total_new);
 		
 	}
 	

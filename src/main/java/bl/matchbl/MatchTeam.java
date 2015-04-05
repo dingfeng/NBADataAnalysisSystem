@@ -1,5 +1,6 @@
 package bl.matchbl;
 
-public class MatchPlayer {
+public class MatchTeam
+{
 
 }

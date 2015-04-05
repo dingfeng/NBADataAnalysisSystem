@@ -12,13 +12,14 @@ public class main {
 public static void main(String[] args) throws IOException
 { 
 	
-	long result = 0;
-	for ( int i = 0; i < 30; i++)
-		result += testMatchTime_new();
-	System.out.println("old : "+result /30);
+//	long result = 0;
+//	for ( int i = 0; i < 30; i++)
+//		result += testMatchTime_new();
+//	System.out.println("old : "+result /30);
 //      System.out.println("old : "+ testMatchTime_old());
 //      System.out.println("old : "+ testMatchTime_old());
 //       System.out.println("new : "+testMatchTime_new());
+	vExecute();
 }
 
 public static void print(File[] files)
@@ -67,6 +68,58 @@ public static long testMatchTime_old()
 	data.getAllMatchData();
 	long end = System.currentTimeMillis();
 	return end - start;
+}
+
+public static void vExecute()
+{
+	new Thread()
+	{
+		PrintWriter print;
+		public void run()
+		{
+			
+			try {
+			 print = new PrintWriter(new FileWriter("G:/match_log.txt"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			MatchData data = new MatchData("G:/NBAData");
+			
+		   for (int i = 0; i < 10000; i++)
+		   {
+			   try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			   if (i != 0 )
+			   {
+				   if (!data.changed()) continue;
+			   }
+			   MatchesPO[] ms = null;
+			   if ( i ==0 )
+			   {
+			   ms = data.getAllMatches();
+			   if (ms == null)
+				   continue;
+			   print.println("all matches : ");
+			   for (MatchesPO p : ms)
+			   {
+				   print.println(p.toString());
+			   }
+			   }
+			   ms = data.getTodayMatches();
+			   if (ms == null) continue;
+			   print.println("today : ");
+			   for (MatchesPO p : ms)
+			   {
+				   print.println(p.toString());
+			   }
+			   print.flush();
+		   }
+		   print.close();
+		}
+	}.start();
 }
 
 }

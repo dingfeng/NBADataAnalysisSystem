@@ -39,14 +39,13 @@ public class MatchTeamPO {
     public String toString()
     {
     	StringBuilder sb = new StringBuilder();
-    	sb.append(name + " ");
+    	sb.append(name + "---");
     	sb.append(totalScores);
     	for (int score : scores)
     	{
     		sb.append(score);
-    		sb.append(" ");
+    		sb.append("  ");
     	}
-    	sb.append(totalScores);
     	sb.append("  ");
     	sb.append("\n");
     	for (MatchPlayerPO player : players)
