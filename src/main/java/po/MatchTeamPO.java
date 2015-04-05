@@ -52,7 +52,6 @@ public class MatchTeamPO {
     	for (MatchPlayerPO player : players)
     	{
     		sb.append(player.toString());
-    		sb.append("  ");
     	}
         return sb.toString();
     }

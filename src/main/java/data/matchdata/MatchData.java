@@ -12,7 +12,7 @@ import po.MatchesPO;
 public class MatchData 
 {
   private  String matchesPath;
-  private  MatchQueue matches;
+  private   MatchQueue matches;
   private final static int MAX_SIZE = 6000;
   private final static int MAX_TODAY_MATCH = 50;
   private final static int MAX_SECTION_COUNT = 10;
@@ -20,18 +20,21 @@ public class MatchData
   private final static int FIRST_LINE_SIZE = 3;
   private final static int MAX_MATCH_PLAYERS = 20;
   private final static int MAX_TEAM_ABB = 8;
-  private  MatchesPO[] todayMatches = new MatchesPO[MAX_TODAY_MATCH];
+  private MatchesPO[] todayMatches = new MatchesPO[MAX_TODAY_MATCH];
   private  int todayMatchesLength = -1;
   private  int  length = -1;
   private String today;
   private int latest_index = -1;
   private boolean inited = false;
   private String first_file_name;
-  File file = new File(matchesPath);
+  File file ;
   String lastfilename;
+  
+  public MatchData(){}
   public  MatchData(String path)
   {
 	  matchesPath = path + "/matches";
+	  file = new File(matchesPath);
 	  matches = new MatchQueue();
 	  initData();
   }
@@ -79,19 +82,19 @@ public class MatchData
 	  else 
 	  {
 		  //存在跨年数据
-		  int i = 1;
+		  int i = 0;
 		  char ch = first_file_name.charAt(6);
-		  while (ch == '0' && i < file_children.length)
+		  while (ch == '0')
 		  {
-			  ch =  file_children[i].getName().charAt(6);
 			  ++i;
+			  ch =  file_children[i].getName().charAt(6);
 		  }
 		  //搜索到最新添加的一场比赛
 		  String latest_file_name = file_children[i-1].getName();
-		  char day = latest_file_name.charAt(7);
-		  int n =  i  - 2;
+		  char day = latest_file_name.charAt(10);
+		  int n =  i  - 1;
 		  //确定最近一天的比赛数据与其他数据的分界
-		  while (n >= 0 && file_children[n].getName().charAt(n) == day) --n;
+		  while (n >= 0 && file_children[n].getName().charAt(10) == day)  --n;
 		  n += 1;
 		  today = latest_file_name.substring(6, 11);
 		  latest_index = i - 1;
@@ -104,7 +107,7 @@ public class MatchData
 			  matches.enQueue(getMatchPO(file_children[j]));
 		  }
 		  MatchesPO matchpo = null;
-		  for (int j = n; j < i; j++)
+		  for (int j = n; j < latest_index + 1; j++)
 		  {
 			  matchpo = getMatchPO(file_children[j]);
 			  matches.enQueue(matchpo);
@@ -121,18 +124,19 @@ public class MatchData
 	if (!inited)
 	{
 		initData();
+		return;
 	}
 	File[] file_children = file.listFiles();
 	if (file_children.length == 0) return;
 	String lastfile_in = file_children[file_children.length -1].getName(); 
 	String first_f_name = file_children[0].getName();
 	int n = latest_index;
-	String latest_index_filename = file_children[latest_index].getName();
+	String latest_index_filename = lastfilename;
 	if (isRightOrder(first_file_name, first_f_name))               //未产生跨年数据添加
 	{
 		//搜索新添加的数据，考虑到已经产生过跨年数据添加和未产生过跨年数据添加两种情况
 		while (n+1 < file_children.length&&isRightOrder(latest_index_filename,file_children[++n].getName()));  
-		if (latest_index == n-1) return;              //数据未发生改变
+		if ((latest_index == n-1) ||( latest_index == file_children.length-1)) return;              //数据未发生改变
 		int old_latest_index = latest_index;
 		latest_index = n -1;
 		latest_index_filename = file_children[latest_index].getName();
@@ -205,7 +209,7 @@ public class MatchData
 		 }
 	  }
   }
-  private MatchesPO getMatchPO(File file)
+  public MatchesPO getMatchPO(File file)
   {
 	  MatchesPO matchpo = null;
 	  BufferedReader reader =null;
@@ -234,7 +238,7 @@ public class MatchData
 		  last = first + 1;
 		  check = content_list[last];
 		  while (check != ';') check = content_list[++last];
-		  first_line[++first_line_index] = line.substring(first, last-1);
+		  first_line[++first_line_index] = line.substring(first, last);
 		  first = last + 1;
 	  }
 	  first = 0;
@@ -246,7 +250,7 @@ public class MatchData
 		  last = first + 1;
 		  check = content_list[last];
 		  while (check != ';') check = content_list[++last];
-		  sections[++sections_index] = line.substring(first, last-1);
+		  sections[++sections_index] = line.substring(first, last);
 		  first = last + 1;
 	  }
 	  team1 = reader.readLine();
@@ -257,7 +261,7 @@ public class MatchData
 		  line = reader.readLine();
 	  }
 	  
-	  team2 = reader.readLine();
+	  team2 = line;
 	  while ((line = reader.readLine())!= null)
 	  {
 		team2_players[++player2_index] = dealWithLine(line);
@@ -302,7 +306,7 @@ public class MatchData
   }
   
   
-  private MatchPlayerPO dealWithLine(String line)
+  public MatchPlayerPO dealWithLine(String line)
   {
 	String[] player_info  = new String[PLAYER_INFO_NUM];
 	int index = -1;
@@ -331,10 +335,12 @@ public class MatchData
 	if (time_str != null)
 	{
 		i = time_str.indexOf(':');
+		if ( i != -1)
+		{	
 		total_time = 60 * Integer.parseInt(time_str.substring(0,i))+
 				Integer.parseInt(time_str.substring(i+1, time_str.length()));
+		}
 	}
-	
 	return new MatchPlayerPO(player_info[0],player_info[1],total_time,
 			Integer.parseInt(player_info[3]),Integer.parseInt(player_info[4]),Integer.parseInt(player_info[5]),Integer.parseInt(player_info[6]),
 			Integer.parseInt(player_info[7]),Integer.parseInt(player_info[8]),Integer.parseInt(player_info[9]),Integer.parseInt(player_info[10]),
@@ -344,7 +350,7 @@ public class MatchData
   public MatchesPO[] getTodayMatches()
   {
 	  updateData();
-	  MatchesPO[] today_matchpos = new MatchesPO[todayMatchesLength];
+	  MatchesPO[] today_matchpos = new MatchesPO[todayMatchesLength+1];
 	  for (int i = 0;i <= todayMatchesLength; i++)
 	  {
 		 today_matchpos[i] = todayMatches[i];

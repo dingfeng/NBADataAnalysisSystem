@@ -47,5 +47,6 @@
 	<classpathentry kind="lib" path="lib/xerces_2_5_0.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis-ext.jar"/>
 	<classpathentry kind="lib" path="lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="lib/trove-3.1a1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

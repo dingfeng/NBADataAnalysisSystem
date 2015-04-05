@@ -8,7 +8,7 @@ public class test
 	   long old_time = oldTeamTest();
 	   long new_time = newTeamTest();
 	   System.out.println("newTeamTest : "+new_time);
-	   System.out.println("old_time : "+old_time);
+//	   System.out.println("old_time : "+old_time);
 	   
    }
    

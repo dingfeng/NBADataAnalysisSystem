@@ -41,7 +41,7 @@ public class MatchPlayerPO
 		sb.append(blockNo+" ");// 盖帽数
 		sb.append(mistakesNo+" ");// 失误数
 		sb.append(foulsNo+" ");// 犯规数
-		sb.append(points+" ");// 得分
+		sb.append(points+"\n");// 得分
 		return sb.toString();
 	}
 	public MatchPlayerPO(String name, String location, double time, int hitNo,

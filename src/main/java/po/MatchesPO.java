@@ -30,15 +30,13 @@ public class MatchesPO {
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
+		sb.append(date+"\n");
 		sb.append("team1 : ");
 		sb.append(team1.toString());
 		sb.append("\n");
 		sb.append("team2 : ");
 		sb.append(team2.toString());
 		sb.append("\n");
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd");
-		String dateStr = dateFormat.format(date);
-		sb.append(dateStr);
 		return sb.toString();
 	}
        

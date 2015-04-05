@@ -23,6 +23,7 @@ public class MatchData_old
 	{
 		filename = dataSource;
 	}
+	public MatchData_old(){}
 	//获得所有的比赛数据
 	public ArrayList<MatchesPO> getAllMatchData() 
 	{
@@ -157,8 +158,10 @@ public class MatchData_old
 //		System.out.println(path);
 //		System.out.println(names[0]+"  "+matchPlayer1.size());
 //		System.out.println(names[1]+"  "+matchPlayer2.size());
-		MatchTeamPO team1 = new MatchTeamPO(matchPlayer1,smallScoresInt[0],totalScoresInt[0],names[0]);
-		MatchTeamPO team2 = new MatchTeamPO(matchPlayer2,smallScoresInt[1],totalScoresInt[1],names[1]);
+		MatchPlayerPO[] m1 = new MatchPlayerPO[matchPlayer1.size()];
+		MatchPlayerPO[] m2 = new MatchPlayerPO[matchPlayer2.size()];
+		MatchTeamPO team1 = new MatchTeamPO(matchPlayer1.toArray(m1),smallScoresInt[0],totalScoresInt[0],names[0],1);
+		MatchTeamPO team2 = new MatchTeamPO( matchPlayer2.toArray(m2),smallScoresInt[1],totalScoresInt[1],names[1],1);
 		MatchesPO matchpo = new MatchesPO(team1,team2,date);
 		return matchpo; 
 	}
