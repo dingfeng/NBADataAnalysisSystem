@@ -2,7 +2,7 @@ package bl.matchbl;
 
 import po.MatchesPO;
 
-public class Queue 
+abstract public class Queue 
 {
   protected MatchesPO[] matches;
   private int max;
@@ -69,5 +69,6 @@ public class Queue
 	  }
 	return matches0;
   }
+ abstract public void update();
   
 }
