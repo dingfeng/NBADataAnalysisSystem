@@ -126,6 +126,7 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("罚球");
 		columnsName.add("两双");
 
+		
 		columnsName.add("投篮命中率(%)");
 		columnsName.add("三分命中率(%)");
 		columnsName.add("罚球命中率(%)");
