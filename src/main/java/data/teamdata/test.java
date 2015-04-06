@@ -43,7 +43,7 @@ public class test
 	   TeamPO[] teams = t.getAllTeamData();
 	   for (TeamPO t1 : teams)
 	   {
-		   System.out.println("\""+t1.getNameAbridge()+"\",");
+		   System.out.println("\""+t1.getName()+"\",");
 	   }
    }
    

@@ -8,7 +8,7 @@ abstract public class Queue
   private int max;
   private int lenth;
   //如果是球队则使用缩写
-  private String name;
+  protected String name;
   public Queue(int max,String name)
   {
 	  this.max = max;

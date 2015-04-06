@@ -8,7 +8,7 @@ import org.w3c.dom.Document;
 
 import vo.Area;
 
-public class TeamPO {
+public class TeamPO implements Comparable<TeamPO>{
 	private Document image; // 队伍图标
 	private String name; // 队伍名称
 	private String nameAbridge; // 名称缩写
@@ -65,5 +65,9 @@ public class TeamPO {
 
 	public int getFoundYear() {
 		return foundYear;
+	}
+	@Override
+	public int compareTo(TeamPO o) {
+		return name.compareTo(o.getName());
 	}
 }

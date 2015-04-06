@@ -13,8 +13,8 @@ import po.MatchesPO;
 public class Match 
 {
    private	MatchDataService match_data;
-   private	TIntObjectMap<Queue> team_map;
-   private	TIntObjectMap<Queue> player_map;
+   private	TIntObjectMap<TeamQueue> team_map;
+   private	TIntObjectMap<PlayerQueue> player_map;
    private	boolean inited = false;
    private final static int match_num = 82;
    private static  Match match;
@@ -22,8 +22,8 @@ public class Match
    {
 		NBADataFactory factory = DataFactoryImp.instance();
 		match_data = factory.getMatchData();
-		team_map = new TIntObjectHashMap<Queue>();
-		player_map = new TIntObjectHashMap<Queue>();
+		team_map = new TIntObjectHashMap<TeamQueue>();
+		player_map = new TIntObjectHashMap<PlayerQueue>();
 		init();
 	}
     
@@ -63,10 +63,12 @@ public class Match
 		Queue team2_q = team_map.get(team2.getName().hashCode());
 		team1_q.enQueue(match);
 		team2_q.enQueue(match);
+		team1_q.update();
+		team2_q.update();
 		MatchPlayerPO[] player_team1 = team1.getPlayers();
 		MatchPlayerPO[] player_team2 = team2.getPlayers();
 		int key = -1;
-        Queue q = null;
+        PlayerQueue q = null;
         for (MatchPlayerPO p : player_team1)
         {
             key = p.getName().hashCode();
@@ -80,6 +82,7 @@ public class Match
         	   q = player_map.get(p.getName().hashCode());
             }
         	q.enQueue(match);
+        	q.update();
         }
         
         for (MatchPlayerPO p : player_team2)
@@ -95,6 +98,7 @@ public class Match
         	   q = player_map.get(p.getName().hashCode());
             }
         	q.enQueue(match);
+        	q.update();
         }
 	}
 	
@@ -134,11 +138,11 @@ public class Match
 		return match_data.getRecentTeamMatches(teamName, num);
 	}
     
-    public TIntObjectMap<Queue> getTeam_map() {
+    public TIntObjectMap<TeamQueue> getTeam_map() {
     	return team_map;
     }
 
-    public TIntObjectMap<Queue> getPlayer_map() {
+    public TIntObjectMap<PlayerQueue> getPlayer_map() {
     	return player_map;
     }
 }

@@ -26,7 +26,8 @@ blockNo, // 盖帽数
  offenseRound, // 进攻回合
  offenseEfficiency,// 进攻效率
  defenceEfficiency,// 防守效率
- rebsEfficiency,// 篮板效率
+ orebsEfficiency,// 进攻篮板效率
+ drebsEfficiency,//防守篮板效率
 stealsEfficiency,// 抢断效率
  assistEfficiency// 助攻率
 

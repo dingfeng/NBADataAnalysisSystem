@@ -9,21 +9,21 @@ import org.w3c.dom.Document;
 public class TeamVO {
 	private String name; // 球队名称
 	private int matchNo; // 比赛场数
-	private int hitNo; // 投篮命中数
-	private int handNo; // 投篮出手次数
-	private int threeHitNo; // 三分命中数
-	private int threeHandNo; // 三分出手数
-	private int penaltyHitNo; // 罚球命中数
-	private int penaltyHandNo; // 罚球出手数
-	private int offenseRebs; // 进攻篮板数
-	private int defenceRebs; // 防守篮板数
-	private int rebs; // 篮板数
-	private int assistNo; // 助攻数
-	private int stealsNo; // 抢断数
-	private int blockNo; // 盖帽数
-	private int mistakesNo; // 失误数
-	private int foulsNo; // 犯规数
-	private int points; // 比赛得分
+	private double hitNo; // 投篮命中数
+	private double handNo; // 投篮出手次数
+	private double threeHitNo; // 三分命中数
+	private double threeHandNo; // 三分出手数
+	private double penaltyHitNo; // 罚球命中数
+	private double penaltyHandNo; // 罚球出手数
+	private double offenseRebs; // 进攻篮板数
+	private double defenceRebs; // 防守篮板数
+	private double rebs; // 篮板数
+	private double assistNo; // 助攻数
+	private double stealsNo; // 抢断数
+	private double blockNo; // 盖帽数
+	private double mistakesNo; // 失误数
+	private double foulsNo; // 犯规数
+	private double podoubles; // 比赛得分
 	private double hitRate; // 投篮命中率
 	private double threeHitRate;// 三分命中率
 	private double penaltyHitRate;// 罚球命中率
@@ -34,13 +34,15 @@ public class TeamVO {
 	private double rebsEfficiency;// 篮板效率
 	private double stealsEfficiency;// 抢断效率
 	private double assistEfficiency;// 助攻率
+	
+	
 	private Document image; // 队伍图标
 	private String nameAbridge; // 名称缩写
 	private String address; // 所在地
 	private String matchArea; // 赛区
 	private Area playerArea;// 分区
 	private String manage; // 主场
-	private int foundYear; // 建立时间
+	private double foundYear; // 建立时间
 	
 	public String toString()
 	{
@@ -61,7 +63,7 @@ public class TeamVO {
 		  sb.append("blockNo : "+blockNo); // 盖帽数
 		  sb.append("mistakesNo : "+mistakesNo); // 失误数
 		  sb.append("foulsNo : "+foulsNo); // 犯规数
-		  sb.append("points : "+points); // 比赛得分
+		  sb.append("podoubles : "+podoubles); // 比赛得分
 		  sb.append("hitRate : "+hitRate); // 投篮命中率
 		  sb.append("threeHitRate : "+threeHitRate);// 三分命中率
 		  sb.append("penaltyHitRate : "+penaltyHitRate);// 罚球命中率
@@ -80,11 +82,11 @@ public class TeamVO {
 		
 		return sb.toString();
 	}
-	public TeamVO(String name, int matchNo, int hitNo, int handNo,
-			int threeHitNo, int threeHandNo, int penaltyHitNo,
-			int penaltyHandNo, int offenseRebs, int defenceRebs, int rebs,
-			int assistNo, int stealsNo, int blockNo, int mistakesNo,
-			int foulsNo, int points, double hitRate, double threeHitRate,
+	public TeamVO(String name, int matchNo, double hitNo, double handNo,
+			double threeHitNo, double threeHandNo, double penaltyHitNo,
+			double penaltyHandNo, double offenseRebs, double defenceRebs, double rebs,
+			double assistNo, double stealsNo, double blockNo, double mistakesNo,
+			double foulsNo, double podoubles, double hitRate, double threeHitRate,
 			double penaltyHitRate, double winRate, double offenseRound,
 			double offenseEfficiency, double defenceEfficiency,
 			double rebsEfficiency, double stealsEfficiency,
@@ -95,7 +97,7 @@ public class TeamVO {
 	 String matchArea, // 赛区
 	 Area playerArea,// 分区
 	 String manage, // 主场
-	 int foundYear)// 建立时间) 
+	 double foundYear)// 建立时间) 
 	 {
 		this.image = image;
 		this.nameAbridge = nameAbridge;
@@ -121,7 +123,7 @@ public class TeamVO {
 		this.blockNo = blockNo;
 		this.mistakesNo = mistakesNo;
 		this.foulsNo = foulsNo;
-		this.points = points;
+		this.podoubles = podoubles;
 		this.hitRate = hitRate;
 		this.threeHitRate = threeHitRate;
 		this.penaltyHitRate = penaltyHitRate;
@@ -150,124 +152,124 @@ public class TeamVO {
 		this.matchNo = matchNo;
 	}
 
-	public int getHitNo() {
+	public double getHitNo() {
 		return hitNo;
 	}
 
-	public void setHitNo(int hitNo) {
+	public void setHitNo(double hitNo) {
 		this.hitNo = hitNo;
 	}
 
-	public int getHandNo() {
+	public double getHandNo() {
 		return handNo;
 	}
 
-	public void setHandNo(int handNo) {
+	public void setHandNo(double handNo) {
 		this.handNo = handNo;
 	}
 
-	public int getThreeHitNo() {
+	public double getThreeHitNo() {
 		return threeHitNo;
 	}
 
-	public void setThreeHitNo(int threeHitNo) {
+	public void setThreeHitNo(double threeHitNo) {
 		this.threeHitNo = threeHitNo;
 	}
 
-	public int getThreeHandNo() {
+	public double getThreeHandNo() {
 		return threeHandNo;
 	}
 
-	public void setThreeHandNo(int threeHandNo) {
+	public void setThreeHandNo(double threeHandNo) {
 		this.threeHandNo = threeHandNo;
 	}
 
-	public int getPenaltyHitNo() {
+	public double getPenaltyHitNo() {
 		return penaltyHitNo;
 	}
 
-	public void setPenaltyHitNo(int penaltyHitNo) {
+	public void setPenaltyHitNo(double penaltyHitNo) {
 		this.penaltyHitNo = penaltyHitNo;
 	}
 
-	public int getPenaltyHandNo() {
+	public double getPenaltyHandNo() {
 		return penaltyHandNo;
 	}
 
-	public void setPenaltyHandNo(int penaltyHandNo) {
+	public void setPenaltyHandNo(double penaltyHandNo) {
 		this.penaltyHandNo = penaltyHandNo;
 	}
 
-	public int getOffenseRebs() {
+	public double getOffenseRebs() {
 		return offenseRebs;
 	}
 
-	public void setOffenseRebs(int offenseRebs) {
+	public void setOffenseRebs(double offenseRebs) {
 		this.offenseRebs = offenseRebs;
 	}
 
-	public int getDefenceRebs() {
+	public double getDefenceRebs() {
 		return defenceRebs;
 	}
 
-	public void setDefenceRebs(int defenceRebs) {
+	public void setDefenceRebs(double defenceRebs) {
 		this.defenceRebs = defenceRebs;
 	}
 
-	public int getRebs() {
+	public double getRebs() {
 		return rebs;
 	}
 
-	public void setRebs(int rebs) {
+	public void setRebs(double rebs) {
 		this.rebs = rebs;
 	}
 
-	public int getAssistNo() {
+	public double getAssistNo() {
 		return assistNo;
 	}
 
-	public void setAssistNo(int assistNo) {
+	public void setAssistNo(double assistNo) {
 		this.assistNo = assistNo;
 	}
 
-	public int getStealsNo() {
+	public double getStealsNo() {
 		return stealsNo;
 	}
 
-	public void setStealsNo(int stealsNo) {
+	public void setStealsNo(double stealsNo) {
 		this.stealsNo = stealsNo;
 	}
 
-	public int getBlockNo() {
+	public double getBlockNo() {
 		return blockNo;
 	}
 
-	public void setBlockNo(int blockNo) {
+	public void setBlockNo(double blockNo) {
 		this.blockNo = blockNo;
 	}
 
-	public int getMistakesNo() {
+	public double getMistakesNo() {
 		return mistakesNo;
 	}
 
-	public void setMistakesNo(int mistakesNo) {
+	public void setMistakesNo(double mistakesNo) {
 		this.mistakesNo = mistakesNo;
 	}
 
-	public int getFoulsNo() {
+	public double getFoulsNo() {
 		return foulsNo;
 	}
 
-	public void setFoulsNo(int foulsNo) {
+	public void setFoulsNo(double foulsNo) {
 		this.foulsNo = foulsNo;
 	}
 
-	public int getPoints() {
-		return points;
+	public double getPodoubles() {
+		return podoubles;
 	}
 
-	public void setPoints(int points) {
-		this.points = points;
+	public void setPodoubles(double podoubles) {
+		this.podoubles = podoubles;
 	}
 
 	public double getHitRate() {
@@ -369,7 +371,7 @@ public class TeamVO {
 		return manage;
 	}
 	
-	public int getFoundYear() {
+	public double getFoundYear() {
 		return foundYear;
 	}
 }
