@@ -176,6 +176,11 @@ public class PlayerQueue {
 	{
 		
 	}
+    
+	public PlayerMatchVO getPlayervo()
+	{
+		return null;
+	}
 	
 	public PlayerMatchVO getTotalPlayer()
 	{

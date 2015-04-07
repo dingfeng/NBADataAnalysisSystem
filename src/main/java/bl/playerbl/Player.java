@@ -11,6 +11,7 @@ import po.MatchTeamPO;
 import po.MatchesPO;
 import po.PlayerPO;
 import vo.Area;
+import vo.PlayerMatchVO;
 import vo.PlayerSortBy;
 import vo.SortType;
 
@@ -503,132 +504,133 @@ public class Player {
 		return matchplayer;
 	}
 	
-	public void setSortBy(PlayerSortBy PlayerSortBy, SortType sortType){
+	public void setSortBy(PlayerMatchVO player, PlayerSortBy PlayerSortBy, SortType sortType){
 		String strSort = null;
 		double doubleSort = -1;
 		switch(PlayerSortBy){
 		case name:
-			strSort = this.name;
+			strSort = player.getName();
 			break;
 		case team:
-			strSort = team;
+			strSort = player.getTeam();
 			break;
 		case matchNo:
-			doubleSort = matchNo;
+			doubleSort = player.getMatchNo();
 			break;
 		case firstServiceNo:
-			doubleSort = firstServiceNo;
+			doubleSort = player.getFirstServiceNo();
 			break;
 		case rebs:
-			doubleSort = rebs;
+			doubleSort = player.getRebs();
 			break;
 		case assistNo:
-			doubleSort = assistNo;
+			doubleSort = player.getAssistNo();
 			break;
 		case time:
-			doubleSort = time;
+			doubleSort = player.getTime();
 			break;
 		case hitRate:
-			doubleSort = hitRate;
+			doubleSort = player.getHitRate();
 			break;
-		case	threeHitRate:
-			doubleSort = this.threeHitRate;
+		case threeHitRate:
+			doubleSort = player.getThreeHitRate();
 			break;
-		case	penaltyHitRate:
-			doubleSort = this.penaltyHitRate;
+		case penaltyHitRate:
+			doubleSort = player.getPenaltyHitRate();
 			break;
-		case	offendNo:
-			doubleSort = this.offendNo;
+		case offendNo:
+			doubleSort = player.getOffendNo();
 			break;
-		case	defenceNo:
-			doubleSort = this.defenceNo;
+		case defenceNo:
+			doubleSort = player.getDefenceNo();
 			break;
-		case	stealsNo:
-			doubleSort = this.stealsNo;
+		case stealsNo:
+			doubleSort = player.getStealsNo();
 			break;
-		case	blockNo:
-			doubleSort = this.blockNo;
+		case blockNo:
+			doubleSort = player.getBlockNo();
 			break;
-		case	mistakesNo:
-			doubleSort = this.matchNo;
+		case mistakesNo:
+			doubleSort = player.getMistakesNo();
 			break;
-		case	foulsNo:
-			doubleSort = this.foulsNo;
+		case foulsNo:
+			doubleSort = player.getFoulsNo();
 			break;
-		case	points:
-			doubleSort = this.points;
+		case points:
+			doubleSort = player.getPoints();
 			break;
-		case	efficiency:
-			doubleSort = this.efficiency;
+		case efficiency:
+			doubleSort = player.getEfficiency();
 			break;
-		case	gmScEfficiency:
-			doubleSort = this.GmScEfficiency;
+		case gmScEfficiency:
+			doubleSort = player.getGmScEfficiency();
 			break;
-		case	trueHitRate:
-			doubleSort = this.trueHitRate;
+		case trueHitRate:
+			doubleSort = player.getTrueHitRate();
 			break;
-		case	hitEfficiency:
-			doubleSort = this.hitEfficiency;
+		case hitEfficiency:
+			doubleSort = player.getHitEfficiency();
 			break;
-		case	rebEfficiency:
-			doubleSort = this.rebEfficiency;
+		case rebEfficiency:
+			doubleSort = player.getRebEfficiency();
 			break;
-		case	offenseRebsEfficiency:
-			doubleSort = this.offenseRebsEfficiency;
-		case    defenceRebsEfficiency:
-			doubleSort = this.defenceRebsEfficiency;
+		case offenseRebsEfficiency:
+			doubleSort = player.getOffenseRebsEfficiency();
 			break;
-		case	 assistEfficiency:
-			doubleSort = this.assistEfficiency;
+		case defenceRebsEfficiency:
+			doubleSort = player.getDefenceRebsEfficiency();
 			break;
-		case	stealsEfficiency:
-			doubleSort = this.stealsEfficiency;
+		case assistEfficiency:
+			doubleSort = player.getAssistEfficiency();
 			break;
-		case	blockEfficiency:
-			doubleSort = this.blockEfficiency;
+		case stealsEfficiency:
+			doubleSort = player.getStealsEfficiency();
 			break;
-		case	mistakeEfficiency:
-			doubleSort = this.mistakeEfficiency;
+		case blockEfficiency:
+			doubleSort = player.getBlockEfficiency();
 			break;
-		case	useEfficiency:
-			doubleSort = this.useEfficiency;
+		case mistakeEfficiency:
+			doubleSort = player.getMistakeEfficiency();
+			break;
+		case useEfficiency:
+			doubleSort = player.getUseEfficiency();
 			break;
 
-		case   rebound://篮板
-			doubleSort = this.rebound;
+		case rebound://篮板
+			doubleSort = player.getRebound();
 			break;
-		case	assist://助攻
-			doubleSort = this.assist;
+		case assist://助攻
+			doubleSort = player.getAssist();
 			break;
 		case scoring_rebound_assist://得分/篮板/助攻（加权比1：1：1）
-			doubleSort = this.scoring_rebound_assist;
+			doubleSort = player.getScoring_rebound_assist();
 			break;
-		case	block://盖帽
-			doubleSort = this.block;
+		case block://盖帽
+			doubleSort = player.getBlock();
 			break;
-		case	steal://抢断
-			doubleSort = this.steal;
+		case steal://抢断
+			doubleSort = player.getSteal();
 			break;
-		case	foul://犯规
-			doubleSort = this.foul;
+		case foul://犯规
+			doubleSort = player.getFoul();
 			break;
-		case	mistake://失误
-			doubleSort = this.mistake;
+		case mistake://失误
+			doubleSort = player.getMistake();
 			break;
-		case	minute://分钟
-			doubleSort = this.minute;
+		case minute://分钟
+			doubleSort = player.getMinute();
 			break;
-		case	shot://投篮
-			doubleSort = this.shot;
+		case shot://投篮
+			doubleSort = player.getShot();
 			break;
-		case	three_points://三分
-			doubleSort = this.three_points;
+		case three_points://三分
+			doubleSort = player.getThree_points();
 			break;
-		case	freeThrow://罚球
-			doubleSort = this.freeThrow;
+		case freeThrow://罚球
+			doubleSort = player.getFreeThrow();
 			break;
-		case	twoPair://两双
-			doubleSort = twoPair;
+		case twoPair://两双
+			doubleSort = player.getTwoPair();
 			break;
 		}
 		if (doubleSort != -1)
