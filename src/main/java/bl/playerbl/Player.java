@@ -3,12 +3,16 @@ package bl.playerbl;
 import java.awt.Image;
 import java.util.ArrayList;
 
+import bl.Playerbl.SortBy;
 import bl.matchbl.MatchPlayer;
+import bl.teambl.Team;
 import po.MatchPlayerPO;
 import po.MatchTeamPO;
 import po.MatchesPO;
 import po.PlayerPO;
 import vo.Area;
+import vo.PlayerSortBy;
+import vo.SortType;
 
 public class Player {
 	// private Matchblservice match = new Match(); //得到比赛逻辑层服务
@@ -20,7 +24,7 @@ public class Player {
 	private Image action;// 大头图片
 	private Image portrait;// 全身图片
 	private int number;// 球衣号码
-	private char position;// 位置
+	private String position;// 位置
 	private int heightfeet;// 身高的英尺
 	private int heightinch;// 身高的英寸
 	private String birth;// 生日
@@ -214,6 +218,7 @@ public class Player {
 		myRebs += rebs;
 		teamDefenceNo += defenceRebs;
 		
+		/**
 		if (!location.equalsIgnoreCase("?")){
 			matchplayer.setLocation(location);
 		}
@@ -266,6 +271,7 @@ public class Player {
 		if(j >=2){
 			matchplayer.addTwoPair(1);
 		}
+		*/
 		return true;
 	}
 
@@ -289,7 +295,7 @@ public class Player {
 		return number;
 	}
 
-	public char getPosition() {
+	public String getPosition() {
 		return position;
 	}
 
@@ -495,5 +501,143 @@ public class Player {
 
 	public MatchPlayer getMatchPlayer() {
 		return matchplayer;
+	}
+	
+	public void setSortBy(PlayerSortBy PlayerSortBy, SortType sortType){
+		String strSort = null;
+		double doubleSort = -1;
+		switch(PlayerSortBy){
+		case name:
+			strSort = this.name;
+			break;
+		case team:
+			strSort = team;
+			break;
+		case matchNo:
+			doubleSort = matchNo;
+			break;
+		case firstServiceNo:
+			doubleSort = firstServiceNo;
+			break;
+		case rebs:
+			doubleSort = rebs;
+			break;
+		case assistNo:
+			doubleSort = assistNo;
+			break;
+		case time:
+			doubleSort = time;
+			break;
+		case hitRate:
+			doubleSort = hitRate;
+			break;
+		case	threeHitRate:
+			doubleSort = this.threeHitRate;
+			break;
+		case	penaltyHitRate:
+			doubleSort = this.penaltyHitRate;
+			break;
+		case	offendNo:
+			doubleSort = this.offendNo;
+			break;
+		case	defenceNo:
+			doubleSort = this.defenceNo;
+			break;
+		case	stealsNo:
+			doubleSort = this.stealsNo;
+			break;
+		case	blockNo:
+			doubleSort = this.blockNo;
+			break;
+		case	mistakesNo:
+			doubleSort = this.matchNo;
+			break;
+		case	foulsNo:
+			doubleSort = this.foulsNo;
+			break;
+		case	points:
+			doubleSort = this.points;
+			break;
+		case	efficiency:
+			doubleSort = this.efficiency;
+			break;
+		case	gmScEfficiency:
+			doubleSort = this.GmScEfficiency;
+			break;
+		case	trueHitRate:
+			doubleSort = this.trueHitRate;
+			break;
+		case	hitEfficiency:
+			doubleSort = this.hitEfficiency;
+			break;
+		case	rebEfficiency:
+			doubleSort = this.rebEfficiency;
+			break;
+		case	offenseRebsEfficiency:
+			doubleSort = this.offenseRebsEfficiency;
+		case    defenceRebsEfficiency:
+			doubleSort = this.defenceRebsEfficiency;
+			break;
+		case	 assistEfficiency:
+			doubleSort = this.assistEfficiency;
+			break;
+		case	stealsEfficiency:
+			doubleSort = this.stealsEfficiency;
+			break;
+		case	blockEfficiency:
+			doubleSort = this.blockEfficiency;
+			break;
+		case	mistakeEfficiency:
+			doubleSort = this.mistakeEfficiency;
+			break;
+		case	useEfficiency:
+			doubleSort = this.useEfficiency;
+			break;
+
+		case   rebound://篮板
+			doubleSort = this.rebound;
+			break;
+		case	assist://助攻
+			doubleSort = this.assist;
+			break;
+		case scoring_rebound_assist://得分/篮板/助攻（加权比1：1：1）
+			doubleSort = this.scoring_rebound_assist;
+			break;
+		case	block://盖帽
+			doubleSort = this.block;
+			break;
+		case	steal://抢断
+			doubleSort = this.steal;
+			break;
+		case	foul://犯规
+			doubleSort = this.foul;
+			break;
+		case	mistake://失误
+			doubleSort = this.mistake;
+			break;
+		case	minute://分钟
+			doubleSort = this.minute;
+			break;
+		case	shot://投篮
+			doubleSort = this.shot;
+			break;
+		case	three_points://三分
+			doubleSort = this.three_points;
+			break;
+		case	freeThrow://罚球
+			doubleSort = this.freeThrow;
+			break;
+		case	twoPair://两双
+			doubleSort = twoPair;
+			break;
+		}
+		if (doubleSort != -1)
+		{
+			sortBy = new SortBy(doubleSort,sortType);
+		}
+		else 
+		{
+			sortBy = new SortBy(strSort, sortType);
+		}
 	}
 }
