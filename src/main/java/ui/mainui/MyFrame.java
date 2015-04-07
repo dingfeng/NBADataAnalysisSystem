@@ -113,8 +113,8 @@ public class MyFrame extends JFrame {
 	}
 	
 	void setIndex(){
-		mainpanel.remove(teampanel);
-		mainpanel.remove(playerpanel);
+//		mainpanel.remove(teampanel);
+//		mainpanel.remove(playerpanel);
 		mainpanel.remove(matchpanel);
 		mainpanel.remove(hotpanel);
 		mainpanel.repaint();
@@ -137,16 +137,16 @@ public class MyFrame extends JFrame {
 	}
 	
 	void setHot(){
-		mainpanel.remove(playerpanel);
-		mainpanel.remove(teampanel);
+//		mainpanel.remove(playerpanel);
+//		mainpanel.remove(teampanel);
 		mainpanel.remove(matchpanel);
 		mainpanel.add(hotpanel);
 		mainpanel.repaint();
 	}
 	
 	void setMatch(){
-		mainpanel.remove(playerpanel);
-		mainpanel.remove(teampanel);
+//		mainpanel.remove(playerpanel);
+//		mainpanel.remove(teampanel);
 		mainpanel.remove(hotpanel);
 		mainpanel.add(matchpanel);
 		mainpanel.repaint();
