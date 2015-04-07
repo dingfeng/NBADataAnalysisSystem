@@ -13,7 +13,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 import DataFactory.DataFactoryImp;
 import DataFactoryService.NBADataFactory;
 import bl.matchbl.Match;
-import bl.matchbl.Queue;
+import bl.matchbl.AbstractQueue;
 import bl.matchbl.TeamQueue;
 
 public class Team 
