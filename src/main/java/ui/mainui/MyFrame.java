@@ -30,8 +30,8 @@ public class MyFrame extends JFrame {
 	JLabel frame;
 	MyFrame thisFrame = this;
 	JPanel mainpanel=new JPanel();
-	TeamPanel teampanel=new TeamPanel();
-	PlayerPanel playerpanel=new PlayerPanel();
+//	TeamPanel teampanel=new TeamPanel();
+//	PlayerPanel playerpanel=new PlayerPanel();
 	HotPanel hotpanel=new HotPanel();
 	MatchPanel matchpanel=new MatchPanel();
 	
