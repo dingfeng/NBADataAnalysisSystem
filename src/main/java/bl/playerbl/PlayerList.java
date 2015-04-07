@@ -111,15 +111,7 @@ public class PlayerList {
 	 * @return
 	 */
 	public PlayerMatchVO[] getDayHotPlayers(PlayerSortBy sortby){
-		PlayerQueue[] playerqueue = (PlayerQueue[])player_map.values();
-		for(Player p : playerqueue){
-			p.setSortBy(sortby, SortType.DESEND);
-		}
-		Arrays.sort(playerqueue);
-		PlayerMatchVO[] result = new PlayerMatchVO[5];
-		for(int i = 0; i < 5; i ++){
-			result[i] = 
-		}
+		return null;
 	}
 
 	/**
@@ -127,8 +119,21 @@ public class PlayerList {
 	 * 
 	 * @return
 	 */
-	public PlayerMatchVO[] getSeasonHotPlayers(SortBy sortby) {
-
+	public PlayerMatchVO[] getSeasonHotPlayers(PlayerSortBy sortby) {
+		PlayerQueue[] playerqueue = (PlayerQueue[])player_map.values();
+		int length = playerqueue.length;
+		PlayerMatchVO[] playermatches = new PlayerMatchVO[length];
+		for(int i = 0; i < length; i ++){
+			playermatches[i] = playerqueue[i].getPlayervo();
+			Player player = players.get(playermatches[i].getName().hashCode());
+			player.setSortBy(playermatches[i], sortby, SortType.DESEND);
+		}
+		Arrays.sort(playerqueue);
+		PlayerMatchVO[] result = new PlayerMatchVO[5];
+		for(int i = 0; i < 5; i ++){
+			result[i] = playermatches[i];
+		}
+		return result;
 	}
 
 	/**
@@ -136,8 +141,8 @@ public class PlayerList {
 	 * 
 	 * @return
 	 */
-	public PlayerMatchVO[] getPromotePlayer(SortBy sortby) {
-
+	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby) {
+		return null;
 	}
 
 	/**

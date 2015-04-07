@@ -28,21 +28,6 @@ public class PlayerController implements PlayerBlService{
 		return null;
 	}
 
-	public Iterator<PlayerVO> getDayHotPlayer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Iterator<PlayerVO> getSeasonHotPlayer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public Iterator<PlayerVO> getPromotePlayer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public void setAverage(boolean isAverage) {
 		// TODO Auto-generated method stub
 
@@ -57,5 +42,23 @@ public class PlayerController implements PlayerBlService{
 	public boolean updatePlayerInformation(MatchesPO[] matches) {
 		boolean result = player.updateMatchPlayerData(matches);
 		return result;
+	}
+
+	@Override
+	public Iterator<PlayerVO> getDayHotPlayer(PlayerSortBy sortby) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterator<PlayerVO> getSeasonHotPlayer(PlayerSortBy sortby) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterator<PlayerVO> getPromotePlayer(PlayerSortBy sortby) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

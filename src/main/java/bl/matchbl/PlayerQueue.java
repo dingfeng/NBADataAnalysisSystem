@@ -1,5 +1,6 @@
 package bl.matchbl;
 
+import vo.PlayerMatchVO;
 import vo.PlayerVO;
 
 public class PlayerQueue extends Queue{
@@ -14,7 +15,7 @@ public class PlayerQueue extends Queue{
 		
 	}
     
-	public PlayerVO getPlayervo()
+	public PlayerMatchVO getPlayervo()
 	{
 		return null;
 	}
