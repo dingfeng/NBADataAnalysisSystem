@@ -20,6 +20,8 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.batik.swing.JSVGCanvas;
+
 import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
@@ -39,33 +41,36 @@ public class MatchPanel extends JPanel {
 	DefaultTableModel matchTable;
 	JScrollPane matchScrollPane;
 	MyTable myMatchTable;
+	
 
 	public MatchPanel() {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height*7/8);
 		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
+		setShowPanel();
 		setMatchTable();
 		setHeader();
+		setWelcome();
 		this.add(matchScrollPane);
 		this.add(header);
+		this.add(showPanel);
 	}
 
 	/** 欢迎界面 */
 	private void setWelcome() {
 		welcomePanel.setLayout(null);
 		welcomePanel.setBackground(FrameSize.backColor);
-		welcomePanel.setBounds(0, FrameSize.height / 16, FrameSize.width / 3,485);
+		welcomePanel.setBounds(0, FrameSize.height / 16,FrameSize.width / 4, FrameSize.height*13/16);
 		JLabel nba = new JLabel(new ImageIcon("image/nba.png"));
-		nba.setBounds(FrameSize.width / 12, FrameSize.height / 8,
-				FrameSize.width / 6, 200);
+		nba.setBounds(FrameSize.width / 12, FrameSize.height / 8,FrameSize.width / 6, 200);
 		welcomePanel.add(nba);
 	}
 
-	/** */
+	/**设置查找栏*/
 	private void setHeader() {
 		header.setLayout(null);
-		header.setBounds(0, 0, FrameSize.width, FrameSize.height/ 16);
+		header.setBounds(0, 0, FrameSize.width, FrameSize.height/ 12);
 		header.setBackground(FrameSize.backColor);
 
 		timeBox = new MyComboBox(new String[] { "比赛时间", "df", "df", "df" });
@@ -88,21 +93,39 @@ public class MatchPanel extends JPanel {
 		header.add(yesButton);
 	}
 
+	private void setShowPanel(){
+		showPanel.setLayout(null);
+		showPanel.setBounds(FrameSize.width/4, FrameSize.height/12, FrameSize.width*3/4, FrameSize.height*19/24);
+		showPanel.setBackground(FrameSize.backColor);
+		
+		JSVGCanvas team1 = new JSVGCanvas();
+		JSVGCanvas team2 = new JSVGCanvas();
+		team1.setBackground(Color.yellow);
+		team2.setBackground(Color.red);
+		team1.setBounds(300,50,100,100);
+		team2.setBounds(500,50,100,100);
+		showPanel.add(team1);
+		showPanel.add(team2);
+		
+		JLabel teamName1 = new JLabel();
+		JLabel teamName2 = new JLabel();
+	}
+	
 	/** 设置表格 */
 	private void setMatchTable() {
 
 		Vector columnsName = new Vector();
 		columnsName.add("时间");
-		columnsName.add("球队1");
-		columnsName.add("球队2");
+		columnsName.add("球队-球队");
+		columnsName.add("比分");
 
 		Vector data = new Vector();
 		// while (true) {
 		for(int i=0;i<100;i++){
 		Vector rowData = new Vector();
-		rowData.add("df");
-		rowData.add("nn");
-		rowData.add("Ning");
+		rowData.add("2015-04-08");
+		rowData.add("ABC-ABC");
+		rowData.add("100-100");
 		data.add(rowData);
 		}
 		// }
@@ -113,10 +136,9 @@ public class MatchPanel extends JPanel {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		// matchScrollPane
 		// .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		matchScrollPane.setBounds(0, FrameSize.height / 16,
-				FrameSize.width / 3, FrameSize.height*13/16);
+		matchScrollPane.setBounds(0, FrameSize.height/12,
+				FrameSize.width / 4, FrameSize.height*19/24);
 		resizeTable(false, matchScrollPane, myMatchTable);
-		this.add(matchScrollPane);
 
 		myMatchTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
