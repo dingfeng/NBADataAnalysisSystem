@@ -30,6 +30,7 @@ import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyTable;
+import ui.mainui.UneditableTextField;
 import vo.SortType;
 import vo.TeamSortBy;
 import vo.TeamVO;
@@ -146,7 +147,7 @@ public class TeamPanel extends JPanel {
 			data.add(str.getBlockNo());
 			data.add(str.getMistakesNo());
 			data.add(str.getFoulsNo());
-			data.add(str.getPoints());
+			data.add(str.getPodoubles());
 			data.add(String.format("%.3f", str.getHitRate() * 100));
 			data.add(String.format("%.3f", str.getThreeHitRate() * 100));
 			data.add(String.format("%.3f", str.getPenaltyHitRate() * 100));
@@ -267,7 +268,7 @@ public class TeamPanel extends JPanel {
 		box = new MyComboBox(new String[] { "球队名称", "比赛场数", "投篮命中数", "投篮出手次数",
 				"三分命中数", "三分出手数", "罚球命中数", "罚球出手数", "进攻篮板数", "防守篮板数", "篮板数",
 				"助攻数", "抢断数", "盖帽数", "失误数", "犯规数", "比赛得分", "投篮命中率", "三分命中率",
-				"罚球命中率", "胜率", "进攻回合", "进攻效率", "防守效率", "篮板效率", "抢断效率", "助攻率" });
+				"罚球命中率", "胜率", "进攻回合", "进攻效率", "防守效率", "进攻篮板效率","防守篮板效率", "抢断效率", "助攻率" });
 		box.setBounds(FrameSize.width / 8, FrameSize.height / 5, 150, 40);
 		box.setFont(new Font("宋体", Font.PLAIN, 12));
 		sort.add(box);
@@ -431,11 +432,13 @@ public class TeamPanel extends JPanel {
 			teamSortBy = TeamSortBy.offenseEfficiency;
 		} else if (sortby.equals("防守效率")) {
 			teamSortBy = TeamSortBy.defenceEfficiency;
-		} else if (sortby.equals("篮板效率")) {
-			teamSortBy = TeamSortBy.rebsEfficiency;
+		} else if (sortby.equals("进攻篮板效率")) {
+			teamSortBy = TeamSortBy.drebsEfficiency;
+		} else if (sortby.equals("防守篮板效率")) {
+			teamSortBy = TeamSortBy.orebsEfficiency;
 		} else if (sortby.equals("抢断效率")) {
 			teamSortBy = TeamSortBy.stealsEfficiency;
-		} else if (sortby.equals("助攻率")) {
+		}else if (sortby.equals("助攻率")) {
 			teamSortBy = TeamSortBy.assistEfficiency;
 		}
 		Iterator<TeamVO> sortteam = tc.sortTeams(teamSortBy, type);

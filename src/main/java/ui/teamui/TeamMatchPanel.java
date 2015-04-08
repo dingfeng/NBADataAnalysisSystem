@@ -30,7 +30,9 @@ public class TeamMatchPanel extends JPanel{
 	void setText(){
 		JLabel recent =new JLabel("近期比赛");
 		JLabel past=new JLabel("过往查询");
+		JLabel teamname =new JLabel("队名");
 		
+		teamname.setBounds(10, 20, 50,50);
 		recent.setBounds(10, 100, 2 * FrameSize.width / 3-20, 50);
 		past.setBounds(10, 253, 2 * FrameSize.width / 3-20, 50);
 		
@@ -40,7 +42,9 @@ public class TeamMatchPanel extends JPanel{
 		past.setBackground(Color.black);
 		recent.setForeground(Color.white);
 		past.setForeground(Color.white);
+		teamname.setForeground(Color.white);
 		
+		this.add(teamname);
 		this.add(past);
 		this.add(recent);
 
