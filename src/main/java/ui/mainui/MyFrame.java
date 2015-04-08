@@ -147,7 +147,7 @@ public class MyFrame extends JFrame {
 	}
 	
 	void setTeam(){
-		mainpanel.remove(playerpanel);
+//		mainpanel.remove(playerpanel);
 		mainpanel.remove(matchpanel);
 		mainpanel.remove(hotpanel);
 		mainpanel.add(teampanel);

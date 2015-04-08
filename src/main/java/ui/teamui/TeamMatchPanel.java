@@ -20,7 +20,7 @@ public class TeamMatchPanel extends JPanel{
 	public TeamMatchPanel() {
 		this.setLayout(null);
 		this.setBounds(FrameSize.width / 3, FrameSize.height / 12,
-				2 * FrameSize.width / 3, FrameSize.height*15/16-FrameSize.height / 12);
+				2 * FrameSize.width / 3, FrameSize.height*7/8- FrameSize.height / 12);
 		this.setBackground(FrameSize.backColor);;
 		setText();
 		setRecentTable();
@@ -100,7 +100,7 @@ public class TeamMatchPanel extends JPanel{
 		JScrollPane pastjScrollPane = new JScrollPane(pasttable);
 		pastjScrollPane
 		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		pastjScrollPane.setBounds(10, 303, 2 * FrameSize.width / 3-20, FrameSize.height*15/16-FrameSize.height / 12-380);
+		pastjScrollPane.setBounds(10, 303, 2 * FrameSize.width / 3-20, FrameSize.height*7/8- FrameSize.height / 12-320);
 		pastjScrollPane.setOpaque(false);
 		pastjScrollPane.getViewport().setOpaque(false);
 		this.add(pastjScrollPane);
