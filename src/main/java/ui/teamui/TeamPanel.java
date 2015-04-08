@@ -470,16 +470,16 @@ public class TeamPanel extends JPanel {
 		
 		svgCanvas.setOpaque(false);
 		
-		match.setBounds(FrameSize.width/3-20, 20, 10, 10);
-		svgCanvas.setBounds(30, FrameSize.height / 8, FrameSize.width / 4, 120);
-		nameresult.setBounds(50, FrameSize.height / 8 - 50, 100, 30);
+		match.setBounds(FrameSize.width/3-20, FrameSize.height /40, 10, 10);
+		svgCanvas.setBounds(FrameSize.width /40, FrameSize.height / 8, FrameSize.width / 4, 3*FrameSize.height /20);
+		nameresult.setBounds(FrameSize.width /24, FrameSize.height / 8 - 50, 100, 3*FrameSize.height/80 );
 		nameAbridgeresult.setBounds(FrameSize.width / 4,
 				FrameSize.height / 8 - 50, 50, 30);
-		addressresult.setBounds(120, FrameSize.height / 8 + 130, 150, 30);
-		matchArearesult.setBounds(120, FrameSize.height / 8 + 190, 150, 30);
-		playerArearesult.setBounds(120, FrameSize.height / 8 + 250, 150, 30);
-		manageresult.setBounds(120, FrameSize.height / 8 + 310, 150, 30);
-		foundYearresult.setBounds(120, FrameSize.height / 8 + 370, 150, 30);
+		addressresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 130, FrameSize.width /8, 3*FrameSize.height/80);
+		matchArearesult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 190, FrameSize.width /8, 3*FrameSize.height/80);
+		playerArearesult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 250, FrameSize.width /8, 3*FrameSize.height/80);
+		manageresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 310, FrameSize.width /8, 3*FrameSize.height/80);
+		foundYearresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 370, FrameSize.width /8, 3*FrameSize.height/80);
 		
 		match.addActionListener(e->setMatch());
 		

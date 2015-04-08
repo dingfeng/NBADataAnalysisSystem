@@ -156,7 +156,7 @@ public class MyFrame extends JFrame {
 	
 	void setHot(){
 //		mainpanel.remove(playerpanel);
-//		mainpanel.remove(teampanel);
+		mainpanel.remove(teampanel);
 		mainpanel.remove(matchpanel);
 		mainpanel.add(hotpanel);
 		mainpanel.repaint();
@@ -164,7 +164,7 @@ public class MyFrame extends JFrame {
 	
 	void setMatch(){
 //		mainpanel.remove(playerpanel);
-//		mainpanel.remove(teampanel);
+		mainpanel.remove(teampanel);
 		mainpanel.remove(hotpanel);
 		mainpanel.add(matchpanel);
 		mainpanel.repaint();
