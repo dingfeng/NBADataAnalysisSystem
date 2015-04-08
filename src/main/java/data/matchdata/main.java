@@ -19,7 +19,7 @@ public static void main(String[] args) throws IOException
 //      System.out.println("old : "+ testMatchTime_old());
 //      System.out.println("old : "+ testMatchTime_old());
 //       System.out.println("new : "+testMatchTime_new());
-	vExecute();
+	System.out.println(testMatchTime_new());
 }
 
 public static void print(File[] files)

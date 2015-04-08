@@ -13,7 +13,7 @@ import DataFactoryService.NBADataFactory;
 
 public class DataFactoryImp implements NBADataFactory
 {
-	private static  String dataSource = null;
+	private static  String dataSource = "G:/NBAData";
 	private static MatchDataService match_data;
 	private static PlayerDataService player_data;
 	private static TeamDataService team_data;

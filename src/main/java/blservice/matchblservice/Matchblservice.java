@@ -1,12 +1,25 @@
 package blservice.matchblservice;
 
-import java.sql.Date;
-import java.util.Iterator;
+import gnu.trove.map.TIntObjectMap;
 
-import vo.MatchVO;
+import java.util.Date;
+
+import po.MatchesPO;
+import bl.matchbl.PlayerQueue;
+import bl.matchbl.TeamQueue;
 
 public interface Matchblservice 
 {
-  public Iterator<MatchVO> getAllMatches();
-  public Iterator<MatchVO> findMatches(Date date1, Date date2);
+	public void update();
+	public boolean changed();
+    public MatchesPO[] getTodayMatches();
+	public MatchesPO[] getAllMatches();
+	public MatchesPO[] getRecentPlayerMatches(String playerName, int num);
+	public MatchesPO[] getRecentTeamMatches(String teamName, int num);
+	public MatchesPO[] getPlayerMatches(String playername);
+	public MatchesPO[] getTeamMatches(String teamname);
+    public TIntObjectMap<TeamQueue> getTeam_map();
+    public TIntObjectMap<PlayerQueue> getPlayer_map();
+    public MatchesPO[] getTimeMatches(Date date1, Date date2);
+     
 }
