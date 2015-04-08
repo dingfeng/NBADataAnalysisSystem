@@ -74,7 +74,7 @@ public class MyFrame extends JFrame {
 		frame.setLayout(null);
 		frame.setBackground(new Color(0, 0, 0, 0));
 		
-		mainpanel.setBounds(0, FrameSize.height/6, FrameSize.width, FrameSize.height*15/16);
+		mainpanel.setBounds(0, FrameSize.height/8, FrameSize.width, FrameSize.height*7/8);
 		mainpanel.setOpaque(false);
 		setExit();
 		setMini();
