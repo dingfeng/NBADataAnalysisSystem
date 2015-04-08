@@ -17,7 +17,7 @@ import vo.SortType;
 
 public class Player {
 	// private Matchblservice match = new Match(); //得到比赛逻辑层服务
-	// private PlayerDataService playerData = new PlayerData(); //得到球员数据层服务
+	// private PayerDataService playerData = new PlayerData(); //得到球员数据层服务
 	final int SCREENSIZE = 50;
 
 	// personal information

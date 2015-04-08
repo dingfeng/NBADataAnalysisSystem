@@ -1,9 +1,6 @@
 package bl.playerbl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import DataFactory.DataFactoryImp;
 import DataFactoryService.NBADataFactory;
@@ -17,9 +14,7 @@ import po.MatchesPO;
 import po.PlayerPO;
 import vo.PlayerMatchVO;
 import vo.PlayerSortBy;
-import vo.PlayerVO;
 import vo.SortType;
-import data.playerdata.PlayerData;
 import dataservice.playerdataservice.PlayerDataService;
 
 /**
@@ -124,7 +119,7 @@ public class PlayerList {
 		int length = playerqueue.length;
 		PlayerMatchVO[] playermatches = new PlayerMatchVO[length];
 		for(int i = 0; i < length; i ++){
-			playermatches[i] = playerqueue[i].getPlayervo();
+			playermatches[i] = playerqueue[i].getAvePlayer();
 			Player player = players.get(playermatches[i].getName().hashCode());
 			player.setSortBy(playermatches[i], sortby, SortType.DESEND);
 		}
