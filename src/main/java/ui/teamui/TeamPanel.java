@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
@@ -45,7 +44,7 @@ public class TeamPanel extends JPanel {
 	JPanel header = new JPanel();
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
-	JSplitPane jsplitPane;
+	
 	JTextField searchField;
 	JPanel sort = new JPanel();
 	JPanel find = new JPanel();
@@ -62,6 +61,8 @@ public class TeamPanel extends JPanel {
 	JTextField playerArearesult = new UneditableTextField();// 分区
 	JTextField manageresult = new UneditableTextField();// 主场
 	JTextField foundYearresult = new UneditableTextField();// 建立时间
+	JButton match;
+	
 	TeamController tc = new TeamController();
 
 	public TeamPanel() {
@@ -465,9 +466,11 @@ public class TeamPanel extends JPanel {
 		playerArearesult.setText(teamresult.getPlayerArea().toString());// 分区
 		manageresult.setText(teamresult.getManage());// 主场
 		foundYearresult.setText(String.valueOf(teamresult.getFoundYear()));// 建立时间
-
+		match=new JButton("赛");
+		
 		svgCanvas.setOpaque(false);
-
+		
+		match.setBounds(FrameSize.width/3-20, 20, 10, 10);
 		svgCanvas.setBounds(30, FrameSize.height / 8, FrameSize.width / 4, 120);
 		nameresult.setBounds(50, FrameSize.height / 8 - 50, 100, 30);
 		nameAbridgeresult.setBounds(FrameSize.width / 4,
@@ -477,6 +480,10 @@ public class TeamPanel extends JPanel {
 		playerArearesult.setBounds(120, FrameSize.height / 8 + 250, 150, 30);
 		manageresult.setBounds(120, FrameSize.height / 8 + 310, 150, 30);
 		foundYearresult.setBounds(120, FrameSize.height / 8 + 370, 150, 30);
+		
+		match.addActionListener(e->setMatch());
+		
+		find.add(match);
 		find.add(svgCanvas);
 		find.add(nameresult);
 		find.add(nameAbridgeresult);
@@ -524,6 +531,13 @@ public class TeamPanel extends JPanel {
 
 	}
 
+	void setMatch(){
+		TeamMatchPanel teammatch=new TeamMatchPanel();
+		this.remove(jScrollPane);
+		this.add(teammatch);
+		this.repaint();
+	}
+	
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
 		Dimension containerwidth = null;
 		if (!bool) {

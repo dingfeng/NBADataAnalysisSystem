@@ -9,6 +9,8 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
+import org.apache.batik.swing.JSVGCanvas;
+
 import ui.mainui.FrameSize;
 import ui.mainui.MyTable;
 
@@ -31,6 +33,7 @@ public class TeamMatchPanel extends JPanel{
 		JLabel recent =new JLabel("近期比赛");
 		JLabel past=new JLabel("过往查询");
 		JLabel teamname =new JLabel("队名");
+		JSVGCanvas svgCanvas = new JSVGCanvas();
 		
 		teamname.setBounds(10, 20, 50,50);
 		recent.setBounds(10, 100, 2 * FrameSize.width / 3-20, 50);
@@ -97,7 +100,7 @@ public class TeamMatchPanel extends JPanel{
 		JScrollPane pastjScrollPane = new JScrollPane(pasttable);
 		pastjScrollPane
 		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		pastjScrollPane.setBounds(10, 303, 2 * FrameSize.width / 3-20, FrameSize.height*15/16-FrameSize.height / 12-400);
+		pastjScrollPane.setBounds(10, 303, 2 * FrameSize.width / 3-20, FrameSize.height*15/16-FrameSize.height / 12-380);
 		pastjScrollPane.setOpaque(false);
 		pastjScrollPane.getViewport().setOpaque(false);
 		this.add(pastjScrollPane);
