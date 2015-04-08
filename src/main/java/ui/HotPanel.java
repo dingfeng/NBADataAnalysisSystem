@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
+import ui.teamui.TeamMatchPanel;
 import ui.teamui.UneditableTextField;
 
 public class HotPanel extends JPanel {
@@ -21,10 +22,11 @@ public class HotPanel extends JPanel {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
 		this.setOpaque(false);
+		TeamMatchPanel team=new TeamMatchPanel();
 		setTag();
 		setShow();
 		this.add(tag);
-		this.add(show);
+		this.add(team);
 		this.repaint();
 		
 	} 

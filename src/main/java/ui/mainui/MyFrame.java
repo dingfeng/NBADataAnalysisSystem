@@ -1,5 +1,8 @@
 package ui.mainui;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,8 +15,6 @@ import javax.swing.JPanel;
 
 import ui.HotPanel;
 import ui.MatchPanel;
-import ui.playerui.PlayerPanel;
-import ui.teamui.TeamPanel;
 
 public class MyFrame extends JFrame {
 	
@@ -27,9 +28,21 @@ public class MyFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	String titleText = new String();
 	public JPanel mainPanel;
-	JLabel frame;
+	JPanel frame = new JPanel()
+	{
+		protected void paintComponent(Graphics g) {  
+            java.awt.Image img = Toolkit.getDefaultToolkit().getImage("image/NBAbackground.png");  
+            g.drawImage(img, 0, 0, this.getWidth(),this.getHeight(),this);  
+              
+            // 细致渲染、绘制背景，可控制截取图片，显示于指定的JPanel位置  
+//          g.drawImage(img, 0, 0, frameSize.width, frameSize.height,   
+//                      0, 0, icon.getIconWidth(), icon.getIconHeight(), icon.getImageObserver());  
+        }  
+	};
 	MyFrame thisFrame = this;
 	JPanel mainpanel=new JPanel();
+	CardLayout card = new CardLayout();
+	
 //	TeamPanel teampanel=new TeamPanel();
 //	PlayerPanel playerpanel=new PlayerPanel();
 	HotPanel hotpanel=new HotPanel();
@@ -53,8 +66,8 @@ public class MyFrame extends JFrame {
 	void setFrame(){
 		
 		ImageIcon image = new ImageIcon("image/NBAbackground.png");
-		frame = new JLabel(image);
-		frame.setIcon(image);
+		
+		frame.setLayout(null);
 		frame.setBackground(new Color(0, 0, 0, 0));
 		
 		mainpanel.setBounds(0, FrameSize.height/6, FrameSize.width, FrameSize.height*15/16);
@@ -67,7 +80,9 @@ public class MyFrame extends JFrame {
 		int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 		this.setBounds((screenWidth-width)/2, (screenHeight-height)/2, FrameSize.width, FrameSize.height);
 		this.setTitle("NBA Analysis System");
-		this.add(frame);
+		CardLayout card = new CardLayout();
+		this.setLayout(new BorderLayout());
+		this.add(frame, BorderLayout.CENTER);
 		frame.add(mainpanel);
 		this.setVisible(true);
 		
