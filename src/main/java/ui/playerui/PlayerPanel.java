@@ -28,7 +28,7 @@ import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyTable;
-import ui.teamui.UneditableTextField;
+import ui.mainui.UneditableTextField;
 import vo.Area;
 import vo.PlayerSortBy;
 import vo.PlayerVO;

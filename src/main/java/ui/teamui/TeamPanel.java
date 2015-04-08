@@ -18,7 +18,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
@@ -30,6 +29,7 @@ import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyTable;
+import ui.mainui.UneditableTextField;
 import vo.SortType;
 import vo.TeamSortBy;
 import vo.TeamVO;
@@ -44,7 +44,7 @@ public class TeamPanel extends JPanel {
 	JPanel header = new JPanel();
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
-	JSplitPane jsplitPane;
+	
 	JTextField searchField;
 	JPanel sort = new JPanel();
 	JPanel find = new JPanel();
@@ -61,6 +61,8 @@ public class TeamPanel extends JPanel {
 	JTextField playerArearesult = new UneditableTextField();// 分区
 	JTextField manageresult = new UneditableTextField();// 主场
 	JTextField foundYearresult = new UneditableTextField();// 建立时间
+	JButton match;
+	
 	TeamController tc = new TeamController();
 
 	public TeamPanel() {
@@ -146,7 +148,7 @@ public class TeamPanel extends JPanel {
 			data.add(str.getBlockNo());
 			data.add(str.getMistakesNo());
 			data.add(str.getFoulsNo());
-			data.add(str.getPoints());
+			data.add(str.getPodoubles());
 			data.add(String.format("%.3f", str.getHitRate() * 100));
 			data.add(String.format("%.3f", str.getThreeHitRate() * 100));
 			data.add(String.format("%.3f", str.getPenaltyHitRate() * 100));
@@ -267,7 +269,7 @@ public class TeamPanel extends JPanel {
 		box = new MyComboBox(new String[] { "球队名称", "比赛场数", "投篮命中数", "投篮出手次数",
 				"三分命中数", "三分出手数", "罚球命中数", "罚球出手数", "进攻篮板数", "防守篮板数", "篮板数",
 				"助攻数", "抢断数", "盖帽数", "失误数", "犯规数", "比赛得分", "投篮命中率", "三分命中率",
-				"罚球命中率", "胜率", "进攻回合", "进攻效率", "防守效率", "篮板效率", "抢断效率", "助攻率" });
+				"罚球命中率", "胜率", "进攻回合", "进攻效率", "防守效率", "进攻篮板效率","防守篮板效率", "抢断效率", "助攻率" });
 		box.setBounds(FrameSize.width / 8, FrameSize.height / 5, 150, 40);
 		box.setFont(new Font("宋体", Font.PLAIN, 12));
 		sort.add(box);
@@ -431,11 +433,13 @@ public class TeamPanel extends JPanel {
 			teamSortBy = TeamSortBy.offenseEfficiency;
 		} else if (sortby.equals("防守效率")) {
 			teamSortBy = TeamSortBy.defenceEfficiency;
-		} else if (sortby.equals("篮板效率")) {
-			teamSortBy = TeamSortBy.rebsEfficiency;
+		} else if (sortby.equals("进攻篮板效率")) {
+			teamSortBy = TeamSortBy.drebsEfficiency;
+		} else if (sortby.equals("防守篮板效率")) {
+			teamSortBy = TeamSortBy.orebsEfficiency;
 		} else if (sortby.equals("抢断效率")) {
 			teamSortBy = TeamSortBy.stealsEfficiency;
-		} else if (sortby.equals("助攻率")) {
+		}else if (sortby.equals("助攻率")) {
 			teamSortBy = TeamSortBy.assistEfficiency;
 		}
 		Iterator<TeamVO> sortteam = tc.sortTeams(teamSortBy, type);
@@ -462,9 +466,11 @@ public class TeamPanel extends JPanel {
 		playerArearesult.setText(teamresult.getPlayerArea().toString());// 分区
 		manageresult.setText(teamresult.getManage());// 主场
 		foundYearresult.setText(String.valueOf(teamresult.getFoundYear()));// 建立时间
-
+		match=new JButton("赛");
+		
 		svgCanvas.setOpaque(false);
-
+		
+		match.setBounds(FrameSize.width/3-20, 20, 10, 10);
 		svgCanvas.setBounds(30, FrameSize.height / 8, FrameSize.width / 4, 120);
 		nameresult.setBounds(50, FrameSize.height / 8 - 50, 100, 30);
 		nameAbridgeresult.setBounds(FrameSize.width / 4,
@@ -474,6 +480,10 @@ public class TeamPanel extends JPanel {
 		playerArearesult.setBounds(120, FrameSize.height / 8 + 250, 150, 30);
 		manageresult.setBounds(120, FrameSize.height / 8 + 310, 150, 30);
 		foundYearresult.setBounds(120, FrameSize.height / 8 + 370, 150, 30);
+		
+		match.addActionListener(e->setMatch());
+		
+		find.add(match);
 		find.add(svgCanvas);
 		find.add(nameresult);
 		find.add(nameAbridgeresult);
@@ -521,6 +531,13 @@ public class TeamPanel extends JPanel {
 
 	}
 
+	void setMatch(){
+		TeamMatchPanel teammatch=new TeamMatchPanel();
+		this.remove(jScrollPane);
+		this.add(teammatch);
+		this.repaint();
+	}
+	
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
 		Dimension containerwidth = null;
 		if (!bool) {

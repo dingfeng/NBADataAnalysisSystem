@@ -14,10 +14,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import org.mozilla.javascript.Kit;
-
 import ui.HotPanel;
 import ui.MatchPanel;
+import ui.teamui.TeamPanel;
 
 public class MyFrame extends JFrame {
 	
@@ -46,7 +45,7 @@ public class MyFrame extends JFrame {
 	JPanel mainpanel=new JPanel();
 	CardLayout card = new CardLayout();
 	
-//	TeamPanel teampanel=new TeamPanel();
+	TeamPanel teampanel=new TeamPanel();
 //	PlayerPanel playerpanel=new PlayerPanel();
 	HotPanel hotpanel=new HotPanel();
 	MatchPanel matchpanel=new MatchPanel();

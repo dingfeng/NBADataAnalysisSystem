@@ -1,10 +1,8 @@
-package ui.teamui;
+package ui.mainui;
 
 import java.awt.Color;
 
 import javax.swing.JTextField;
-
-import ui.mainui.TextFieldAction;
 
 public class UneditableTextField extends JTextField {
 
