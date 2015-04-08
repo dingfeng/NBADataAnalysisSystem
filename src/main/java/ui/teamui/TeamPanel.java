@@ -69,17 +69,17 @@ public class TeamPanel extends JPanel {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
 		this.setOpaque(false);
-		new Thread() {
-			public void run() {
-				setTable(tc.getAllTeams());
-			}
-		}.start();
+//		new Thread() {
+//			public void run() {
+//				setTable(tc.getAllTeams());
+//			}
+//		}.start();
 
 		setSort();
 		setHeader();
 		setFind();
 		setWelcome();
-		this.add(welcome);
+		this.add(find);
 		this.add(header);
 		this.repaint();
 	}
@@ -175,7 +175,7 @@ public class TeamPanel extends JPanel {
 		jScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		jScrollPane.setBounds(FrameSize.width / 3, FrameSize.height / 12,
-				2 * FrameSize.width / 3, FrameSize.height*15/16-FrameSize.height / 12);
+				2 * FrameSize.width / 3, FrameSize.height*7/8- FrameSize.height / 12);
 		jScrollPane.setOpaque(false);
 
 		resizeTable(false, jScrollPane, mytable);
@@ -258,10 +258,10 @@ public class TeamPanel extends JPanel {
 		sort.setLayout(null);
 		sort.setBackground(FrameSize.backColor);
 		sort.setBounds(0, FrameSize.height / 12, FrameSize.width / 3,
-				11 * FrameSize.height / 12);
+				FrameSize.height*7/8- FrameSize.height / 12);
 
 		JLabel sortby = new JLabel("排序依据");
-		sortby.setBounds(FrameSize.width / 30, FrameSize.height / 5, 100, 40);
+		sortby.setBounds(FrameSize.width / 30, FrameSize.height / 5, FrameSize.width / 12, FrameSize.height /20);
 		sortby.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		sortby.setForeground(Color.white);
 		sort.add(sortby);
@@ -328,14 +328,14 @@ public class TeamPanel extends JPanel {
 		manage.setForeground(Color.white);
 		foundYear.setForeground(Color.white);
 
-		name.setBounds(5, FrameSize.height / 8 - 50, 100, 30);
+		name.setBounds(FrameSize.width/40, FrameSize.height / 8 - 50, FrameSize.width/12, 30);
 		nameAbridge.setBounds(FrameSize.width / 5, FrameSize.height / 8 - 50,
-				50, 30);
-		address.setBounds(20, FrameSize.height / 8 + 130, 100, 30);
-		matchArea.setBounds(20, FrameSize.height / 8 + 190, 100, 30);
-		playerArea.setBounds(20, FrameSize.height / 8 + 250, 100, 30);
-		manage.setBounds(20, FrameSize.height / 8 + 310, 100, 30);
-		foundYear.setBounds(20, FrameSize.height / 8 + 370, 100, 30);
+				FrameSize.width/24, 30);
+		address.setBounds(FrameSize.width/40, FrameSize.height / 8 + 130, FrameSize.width/12, 30);
+		matchArea.setBounds(FrameSize.width/40, FrameSize.height / 8 + 190, FrameSize.width/12, 30);
+		playerArea.setBounds(FrameSize.width/40, FrameSize.height / 8 + 250, FrameSize.width/12, 30);
+		manage.setBounds(FrameSize.width/40, FrameSize.height / 8 + 310, FrameSize.width/12, 30);
+		foundYear.setBounds(FrameSize.width/40, FrameSize.height / 8 + 370, FrameSize.width/12, 30);
 
 		find.add(name);
 		find.add(nameAbridge);
@@ -531,6 +531,7 @@ public class TeamPanel extends JPanel {
 
 	}
 
+	/**点击查看比赛按钮*/
 	void setMatch(){
 		TeamMatchPanel teammatch=new TeamMatchPanel();
 		this.remove(jScrollPane);
