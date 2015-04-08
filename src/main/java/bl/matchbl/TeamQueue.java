@@ -8,7 +8,7 @@ import gnu.trove.map.TIntObjectMap;
 import vo.TeamMatchVO;
 import vo.TeamVO;
 
-public class TeamQueue extends Queue{  
+public class TeamQueue extends AbstractQueue{  
 	private TeamMatchVO   teamvo_total;
 	private TeamMatchVO teamvo_average;
 	private String[] players = new String[25];
@@ -54,7 +54,7 @@ public class TeamQueue extends Queue{
 	public void update()
 	{
 		
-		 int matchNo = 0; // 比赛场数
+		 double matchNo = 0; // 比赛场数
 		 double hitNo = 0; // 投篮命中数
 		 double handNo = 0; // 投篮出手次数
 		 double threeHitNo = 0; // 三分命中数
@@ -80,6 +80,19 @@ public class TeamQueue extends Queue{
 		MatchTeamPO team2 = null;
 		MatchTeamPO temp = null;
 		MatchPlayerPO [] players = null;
+		
+
+		 double hitRate0 =  0; // 投篮命中率
+		 double threeHitRate0 = 0;// 三分命中率
+		 double penaltyHitRate0 = 0;// 罚球命中率
+		 double offenseEfficiency0 = 0 ;// 进攻效率
+		 double defenceEfficiency0 = 0;// 防守效率
+		 double orebsEfficiency0 = 0;// 篮板效率
+		 double drebsEfficiency0 =  0;
+		 double stealsEfficiency0 = 0;// 抢断效率
+		 double assistEfficiency0 = 0;// 助攻率
+		 
+		
 		for (MatchesPO match : matches)
 		{
 			++matchNo;
@@ -104,24 +117,46 @@ public class TeamQueue extends Queue{
 			 int offenseRebs0 = 0; // 进攻篮板数
 			 int mistakesNo0 = 0; // 失误数
 			 int defenceRebs0 = 0;
+			 int threeHitNo0 = 0;
+			 int threeHandNo0 = 0;
+			 int penaltyHitNo0 = 0;
+			 int rebs0 = 0;
+			 int assistNo0 = 0;
+			 int stealsNo0 = 0;
+			 int blockNo0 = 0 ;
+			 int foulsNo0 = 0;
+			 int yourPoints0 = team2.getTotalScores();
+			 int point0 = team1.getTotalScores();
+			 int defenceRound0 = 0;
+			 int offenseRound0 = 0;
 			for (MatchPlayerPO player : players)
 			{
 				  addPlayer(player.getName());
 				  hitNo0 += player.getHitNo(); // 投篮命中数
 				  handNo0 += player.getHandNo(); // 投篮出手次数
-				  threeHitNo += player.getThreeHitNo(); // 三分命中数
-				  threeHandNo += player.getThreeHandNo(); // 三分出手数
-				  penaltyHitNo += player.getPenaltyHitNo(); // 罚球命中数
+				  threeHitNo0 += player.getThreeHitNo(); // 三分命中数
+				  threeHandNo0 += player.getThreeHandNo(); // 三分出手数
+				  penaltyHitNo0 += player.getPenaltyHitNo(); // 罚球命中数
 				  penaltyHandNo0 += player.getPenaltyHandNo(); // 罚球出手数
 				  offenseRebs0 += player.getOffenseRebs(); // 进攻篮板数
 				  defenceRebs0 += player.getDefenceRebs(); // 防守篮板数
-				  rebs += player.getRebs(); // 篮板数
-				  assistNo += player.getHelp(); // 助攻数
-				  stealsNo += player.getStealsNo(); // 抢断数
-				  blockNo += player.getBlockNo(); // 盖帽数
+				  rebs0 += player.getRebs(); // 篮板数
+				  assistNo0 += player.getHelp(); // 助攻数
+				  stealsNo0 += player.getStealsNo(); // 抢断数
+				  blockNo0 += player.getBlockNo(); // 盖帽数
 				  mistakesNo0 += player.getMistakesNo(); // 失误数
-				  foulsNo += player.getFoulsNo(); // 犯规数
+				  foulsNo0 += player.getFoulsNo(); // 犯规数
 			}
+			
+			rebs += rebs0;
+			assistNo += assistNo0;
+			stealsNo += stealsNo0;
+			blockNo += blockNo0;
+			foulsNo += foulsNo0;
+			
+			threeHitNo += threeHitNo0;
+			threeHandNo += threeHandNo0;
+			penaltyHitNo += penaltyHitNo0;
 			defenceRebs += defenceRebs0;
 			hitNo += hitNo0;
 			handNo += handNo0;
@@ -146,17 +181,31 @@ public class TeamQueue extends Queue{
 			}
 			yourOffenseRebs += yourOffenseRebs0;
 			yourDefenceRebs += yourDefenceRebs0;
-			defenceRound += yourHandNo + 0.4 * yourPenaltyNo -
+			defenceRound0 += yourHandNo + 0.4 * yourPenaltyNo -
 		    1.07 * (1.0 * yourOffenseRebs0 / (yourOffenseRebs0 + defenceRebs0) * (yourHandNo - yourHitNo))
 		    + 1.07 * yourMistakeNo;
-			offenseRound += handNo0 + 0.4 * penaltyHandNo0 -
+			defenceRound += defenceRound0;
+			offenseRound0 += handNo0 + 0.4 * penaltyHandNo0 -
 					1.07 * (1.0 * offenseRebs0/(offenseRebs0+defenceRebs0)*(handNo0-hitNo0))
 			        + 1.07 * mistakesNo0;
+			offenseRound += offenseRound0;
+			
+			  hitRate0 +=  1.0* hitNo0 / handNo0; // 投篮命中率
+			  threeHitRate0 += 1.0 * threeHitNo0 / threeHandNo0;// 三分命中率
+			  penaltyHitRate0 += 1.0 * penaltyHitNo0 / penaltyHandNo0;// 罚球命中率
+			  offenseEfficiency0 += 100.0 *  point0 /  offenseRound0 ;// 进攻效率
+			  defenceEfficiency0 += 100.0 * yourPoints0 / defenceRound0;// 防守效率
+			  orebsEfficiency0 += 1.0 * offenseRebs0 / (offenseRebs0 + yourDefenceRebs0);// 篮板效率
+			  drebsEfficiency0 += 1.0 * defenceRebs0 / (defenceRebs0 + yourOffenseRebs0);
+			  stealsEfficiency0 += 100.0 * stealsNo0 / defenceRound0;// 抢断效率
+			  assistEfficiency0 += 100.0 * assistNo0 / offenseRound0;// 助攻率
+			 
 		}
+		
 		 double hitRate =  hitNo / handNo; // 投篮命中率
 		 double threeHitRate = threeHitNo / threeHandNo;// 三分命中率
 		 double penaltyHitRate = penaltyHitNo / penaltyHandNo;// 罚球命中率
-		 double winRate = 1.0 * win / matchNo; // 胜率
+		 double winRate =  win / matchNo; // 胜率
 		 double offenseEfficiency = 100 *  points /  offenseRound ;// 进攻效率
 		 double defenceEfficiency = 100 * yourPoints / defenceRound;// 防守效率
 		 double orebsEfficiency = offenseRebs / (offenseRebs + yourDefenceRebs);// 篮板效率
@@ -164,7 +213,7 @@ public class TeamQueue extends Queue{
 		 double stealsEfficiency = 100 * stealsNo / defenceRound;// 抢断效率
 		 double assistEfficiency = 100 * assistNo / offenseRound;// 助攻率
 		 
-		 teamvo_total = new TeamMatchVO( name,  matchNo,  hitNo,  handNo,
+		 teamvo_total = new TeamMatchVO( name, (int) matchNo,  hitNo,  handNo,
 					 threeHitNo,  threeHandNo,  penaltyHitNo,
 					 penaltyHandNo,  offenseRebs,  defenceRebs,  rebs,
 					 assistNo,  stealsNo,  blockNo,  mistakesNo,
@@ -173,15 +222,16 @@ public class TeamQueue extends Queue{
 					 offenseEfficiency,  defenceEfficiency,
 					 orebsEfficiency, drebsEfficiency , stealsEfficiency,
 					 assistEfficiency);
-		 teamvo_average = new TeamMatchVO(name,  matchNo,  hitNo / matchNo,  handNo/ matchNo,
+		 
+		 teamvo_average = new TeamMatchVO(name, (int) matchNo,  hitNo / matchNo,  handNo/ matchNo,
 				 threeHitNo/ matchNo,  threeHandNo/ matchNo,  penaltyHitNo/ matchNo,
 				 penaltyHandNo/ matchNo,  offenseRebs/ matchNo,  defenceRebs/ matchNo,  rebs/ matchNo,
 				 assistNo/ matchNo,  stealsNo/ matchNo,  blockNo/ matchNo,  mistakesNo/ matchNo,
-				 foulsNo/ matchNo,  points/ matchNo,  hitRate,  threeHitRate,
-				 penaltyHitRate,  winRate,  offenseRound,
-				 offenseEfficiency,  defenceEfficiency,
-				 orebsEfficiency, drebsEfficiency , stealsEfficiency,
-				 assistEfficiency);
+				 foulsNo/ matchNo,  points/ matchNo,  hitRate0/ matchNo,  threeHitRate0/ matchNo,
+				 penaltyHitRate0/ matchNo,  winRate,  offenseRound,
+				 offenseEfficiency0 / matchNo,  defenceEfficiency0 / matchNo,
+				 orebsEfficiency0/ matchNo, drebsEfficiency0/ matchNo , stealsEfficiency0/ matchNo,
+				 assistEfficiency0/ matchNo);
 	}
 	
 }

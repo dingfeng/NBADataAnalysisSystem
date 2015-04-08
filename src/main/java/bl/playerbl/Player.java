@@ -3,12 +3,17 @@ package bl.playerbl;
 import java.awt.Image;
 import java.util.ArrayList;
 
+import bl.Playerbl.SortBy;
 import bl.matchbl.MatchPlayer;
+import bl.teambl.Team;
 import po.MatchPlayerPO;
 import po.MatchTeamPO;
 import po.MatchesPO;
 import po.PlayerPO;
 import vo.Area;
+import vo.PlayerMatchVO;
+import vo.PlayerSortBy;
+import vo.SortType;
 
 public class Player {
 	// private Matchblservice match = new Match(); //得到比赛逻辑层服务
@@ -20,7 +25,7 @@ public class Player {
 	private Image action;// 大头图片
 	private Image portrait;// 全身图片
 	private int number;// 球衣号码
-	private char position;// 位置
+	private String position;// 位置
 	private int heightfeet;// 身高的英尺
 	private int heightinch;// 身高的英寸
 	private String birth;// 生日
@@ -214,6 +219,7 @@ public class Player {
 		myRebs += rebs;
 		teamDefenceNo += defenceRebs;
 		
+		/**
 		if (!location.equalsIgnoreCase("?")){
 			matchplayer.setLocation(location);
 		}
@@ -266,6 +272,7 @@ public class Player {
 		if(j >=2){
 			matchplayer.addTwoPair(1);
 		}
+		*/
 		return true;
 	}
 
@@ -289,7 +296,7 @@ public class Player {
 		return number;
 	}
 
-	public char getPosition() {
+	public String getPosition() {
 		return position;
 	}
 
@@ -495,5 +502,144 @@ public class Player {
 
 	public MatchPlayer getMatchPlayer() {
 		return matchplayer;
+	}
+	
+	public void setSortBy(PlayerMatchVO player, PlayerSortBy PlayerSortBy, SortType sortType){
+		String strSort = null;
+		double doubleSort = -1;
+		switch(PlayerSortBy){
+		case name:
+			strSort = player.getName();
+			break;
+		case team:
+			strSort = player.getTeam();
+			break;
+		case matchNo:
+			doubleSort = player.getMatchNo();
+			break;
+		case firstServiceNo:
+			doubleSort = player.getFirstServiceNo();
+			break;
+		case rebs:
+			doubleSort = player.getRebs();
+			break;
+		case assistNo:
+			doubleSort = player.getAssistNo();
+			break;
+		case time:
+			doubleSort = player.getTime();
+			break;
+		case hitRate:
+			doubleSort = player.getHitRate();
+			break;
+		case threeHitRate:
+			doubleSort = player.getThreeHitRate();
+			break;
+		case penaltyHitRate:
+			doubleSort = player.getPenaltyHitRate();
+			break;
+		case offendNo:
+			doubleSort = player.getOffendNo();
+			break;
+		case defenceNo:
+			doubleSort = player.getDefenceNo();
+			break;
+		case stealsNo:
+			doubleSort = player.getStealsNo();
+			break;
+		case blockNo:
+			doubleSort = player.getBlockNo();
+			break;
+		case mistakesNo:
+			doubleSort = player.getMistakesNo();
+			break;
+		case foulsNo:
+			doubleSort = player.getFoulsNo();
+			break;
+		case points:
+			doubleSort = player.getPoints();
+			break;
+		case efficiency:
+			doubleSort = player.getEfficiency();
+			break;
+		case gmScEfficiency:
+			doubleSort = player.getGmScEfficiency();
+			break;
+		case trueHitRate:
+			doubleSort = player.getTrueHitRate();
+			break;
+		case hitEfficiency:
+			doubleSort = player.getHitEfficiency();
+			break;
+		case rebEfficiency:
+			doubleSort = player.getRebEfficiency();
+			break;
+		case offenseRebsEfficiency:
+			doubleSort = player.getOffenseRebsEfficiency();
+			break;
+		case defenceRebsEfficiency:
+			doubleSort = player.getDefenceRebsEfficiency();
+			break;
+		case assistEfficiency:
+			doubleSort = player.getAssistEfficiency();
+			break;
+		case stealsEfficiency:
+			doubleSort = player.getStealsEfficiency();
+			break;
+		case blockEfficiency:
+			doubleSort = player.getBlockEfficiency();
+			break;
+		case mistakeEfficiency:
+			doubleSort = player.getMistakeEfficiency();
+			break;
+		case useEfficiency:
+			doubleSort = player.getUseEfficiency();
+			break;
+
+		case rebound://篮板
+			doubleSort = player.getRebound();
+			break;
+		case assist://助攻
+			doubleSort = player.getAssist();
+			break;
+		case scoring_rebound_assist://得分/篮板/助攻（加权比1：1：1）
+			doubleSort = player.getScoring_rebound_assist();
+			break;
+		case block://盖帽
+			doubleSort = player.getBlock();
+			break;
+		case steal://抢断
+			doubleSort = player.getSteal();
+			break;
+		case foul://犯规
+			doubleSort = player.getFoul();
+			break;
+		case mistake://失误
+			doubleSort = player.getMistake();
+			break;
+		case minute://分钟
+			doubleSort = player.getMinute();
+			break;
+		case shot://投篮
+			doubleSort = player.getShot();
+			break;
+		case three_points://三分
+			doubleSort = player.getThree_points();
+			break;
+		case freeThrow://罚球
+			doubleSort = player.getFreeThrow();
+			break;
+		case twoPair://两双
+			doubleSort = player.getTwoPair();
+			break;
+		}
+		if (doubleSort != -1)
+		{
+			sortBy = new SortBy(doubleSort,sortType);
+		}
+		else 
+		{
+			sortBy = new SortBy(strSort, sortType);
+		}
 	}
 }

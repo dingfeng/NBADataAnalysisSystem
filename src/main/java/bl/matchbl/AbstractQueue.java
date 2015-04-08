@@ -2,14 +2,14 @@ package bl.matchbl;
 
 import po.MatchesPO;
 
-abstract public class Queue 
+abstract public class AbstractQueue
 {
   protected MatchesPO[] matches;
   private int max;
   private int lenth;
   //如果是球队则使用缩写
   protected String name;
-  public Queue(int max,String name)
+  public AbstractQueue(int max,String name)
   {
 	  this.max = max;
 	  matches = new MatchesPO[max];

@@ -59,8 +59,8 @@ public class Match
 	{
 		MatchTeamPO team1 = match.getTeam1();
 		MatchTeamPO team2 = match.getTeam2();
-		Queue team1_q = team_map.get(team1.getName().hashCode());
-		Queue team2_q = team_map.get(team2.getName().hashCode());
+		AbstractQueue team1_q = team_map.get(team1.getName().hashCode());
+		AbstractQueue team2_q = team_map.get(team2.getName().hashCode());
 		team1_q.enQueue(match);
 		team2_q.enQueue(match);
 		team1_q.update();
@@ -81,7 +81,7 @@ public class Match
             {
         	   q = player_map.get(p.getName().hashCode());
             }
-        	q.enQueue(match);
+            dealWithPlayer(q,p,match);
         	q.update();
         }
         
@@ -97,9 +97,14 @@ public class Match
             {
         	   q = player_map.get(p.getName().hashCode());
             }
-        	q.enQueue(match);
+        	dealWithPlayer(q,p,match);
         	q.update();
         }
+	}
+	
+	private void dealWithPlayer(PlayerQueue q,MatchPlayerPO player, MatchesPO match)
+	{
+		
 	}
 	
 	public void update()
