@@ -5,17 +5,24 @@ import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.table.DefaultTableModel;
 
 import ui.mainui.FrameSize;
+import ui.mainui.MyTable;
 
 public class TeamMatchPanel extends JPanel{
 
+	
 	public TeamMatchPanel() {
 		this.setLayout(null);
 		this.setBounds(FrameSize.width / 3, FrameSize.height / 12,
 				2 * FrameSize.width / 3, FrameSize.height*15/16-FrameSize.height / 12);
 		this.setBackground(FrameSize.backColor);;
 		setText();
+		setRecentTable();
+		setPastTable();
 		this.repaint();
 		
 	} 
@@ -25,7 +32,7 @@ public class TeamMatchPanel extends JPanel{
 		JLabel past=new JLabel("过往查询");
 		
 		recent.setBounds(10, 100, 2 * FrameSize.width / 3-20, 50);
-		past.setBounds(10, 300, 2 * FrameSize.width / 3-20, 50);
+		past.setBounds(10, 253, 2 * FrameSize.width / 3-20, 50);
 		
 		recent.setOpaque(true);
 		past.setOpaque(true);
@@ -36,6 +43,7 @@ public class TeamMatchPanel extends JPanel{
 		
 		this.add(past);
 		this.add(recent);
+
 	}
 	
 	void setRecentTable(){
@@ -43,5 +51,52 @@ public class TeamMatchPanel extends JPanel{
 		columnsName.add("时间");
 		columnsName.add("对阵队伍");
 		columnsName.add("比分");
+		
+		Vector rowimage = new Vector();
+		for(int i=0;i<5;i++){
+			Vector data=new Vector();
+			data.add("ball");
+			data.add("lala");
+			data.add("df");
+			
+			rowimage.add(data);
+		}
+		
+		DefaultTableModel table = new DefaultTableModel(rowimage, columnsName);
+		MyTable recenttable = new MyTable(table);
+		JScrollPane jScrollPane = new JScrollPane(recenttable);
+		
+		jScrollPane.setBounds(10, 150, 2 * FrameSize.width / 3-20, 103);
+		jScrollPane.setOpaque(false);
+		jScrollPane.getViewport().setOpaque(false);
+		this.add(jScrollPane);
 	}
+	
+	void setPastTable(){
+		Vector<String> columnsName = new Vector<String>();
+		columnsName.add("时间");
+		columnsName.add("对阵队伍");
+		columnsName.add("比分");
+		
+		Vector rowimage = new Vector();
+		for(int i=0;i<100;i++){
+			Vector data=new Vector();
+			data.add("ball");
+			data.add("lala");
+			data.add("df");
+			
+			rowimage.add(data);
+		}
+		
+		DefaultTableModel table = new DefaultTableModel(rowimage, columnsName);
+		MyTable pasttable = new MyTable(table);
+		JScrollPane pastjScrollPane = new JScrollPane(pasttable);
+		pastjScrollPane
+		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		pastjScrollPane.setBounds(10, 303, 2 * FrameSize.width / 3-20, FrameSize.height*15/16-FrameSize.height / 12-400);
+		pastjScrollPane.setOpaque(false);
+		pastjScrollPane.getViewport().setOpaque(false);
+		this.add(pastjScrollPane);
+	}
+	
 }
