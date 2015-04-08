@@ -3,6 +3,7 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,6 +13,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import org.mozilla.javascript.Kit;
 
 import ui.HotPanel;
 import ui.MatchPanel;
@@ -48,14 +51,15 @@ public class MyFrame extends JFrame {
 	HotPanel hotpanel=new HotPanel();
 	MatchPanel matchpanel=new MatchPanel();
 	
-	int width=900;
-	int height=600;
+	
 	public MyFrame(String titleText){
 		this.setUndecorated(true);
 	    
 //		this.setBackground(new Color(0.0f,0.0f,0.0f,0.0f));
 		this.titleText = titleText;
-		
+		//修改图标
+		Image image = Toolkit.getDefaultToolkit().getImage("image/basketball.png");
+		this.setIconImage(image);
 		
 
 		setFrame();
@@ -78,7 +82,7 @@ public class MyFrame extends JFrame {
 		setHeadButton();
 		int screenWidth = (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 		int screenHeight = (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-		this.setBounds((screenWidth-width)/2, (screenHeight-height)/2, FrameSize.width, FrameSize.height);
+		this.setBounds((screenWidth-FrameSize.width)/2, (screenHeight-FrameSize.height)/2, FrameSize.width, FrameSize.height);
 		this.setTitle("NBA Analysis System");
 		CardLayout card = new CardLayout();
 		this.setLayout(new BorderLayout());
@@ -171,7 +175,7 @@ public class MyFrame extends JFrame {
 		JLabel el = new JLabel();
 		ImageIcon image = new ImageIcon("image/close.png");
 		el.setIcon(image);
-		el.setBounds(width-50, -8, 40, 40);
+		el.setBounds(FrameSize.width-50, -8, 40, 40);
 		el.addMouseListener(new ExitButtonAction());
 		frame.add(el);
 		//this.add(el);
@@ -181,7 +185,7 @@ public class MyFrame extends JFrame {
 		JLabel el = new JLabel();
 		ImageIcon image = new ImageIcon("image/mini.png");
 		el.setIcon(image);
-		el.setBounds(width-90, -8, 40, 40);
+		el.setBounds(FrameSize.width-90, -8, 40, 40);
 		el.addMouseListener(new MiniButtonAction());
 		frame.add(el);
 	}
