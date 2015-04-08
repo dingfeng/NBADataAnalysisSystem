@@ -19,7 +19,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
@@ -41,7 +40,6 @@ public class PlayerPanel extends JPanel {
 	JPanel welcomePanel = new JPanel();
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
-	JSplitPane jsplitPane;
 	JTextField searchField = new JTextField();
 	JPanel sortPanel = new JPanel();
 	JPanel findPanel = new JPanel();
@@ -618,10 +616,7 @@ public class PlayerPanel extends JPanel {
 		screenButton.addActionListener(e -> screenPlayerClick());
 		panel.add(screenButton);
 
-//		dataType = new JComboBox<String>(new String[] { "赛季总数据", "场均数据" });
 		dataType = new MyComboBox(new String[]{"赛季总数据","场均数据"});
-		dataType.setBackground(new Color(68,68,68));
-		dataType.setForeground(Color.white);
 		dataType.setBounds(20, 10, 100, 35);
 		panel.add(dataType);
 
@@ -867,6 +862,4 @@ public class PlayerPanel extends JPanel {
 		return new ImageIcon(image); 
 		}
 	
-	
-
 }
