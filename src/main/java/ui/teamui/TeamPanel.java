@@ -173,7 +173,7 @@ public class TeamPanel extends JPanel {
 		jScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		jScrollPane.setBounds(FrameSize.width / 3, FrameSize.height / 12,
-				2 * FrameSize.width / 3, 485);
+				2 * FrameSize.width / 3, FrameSize.height*15/16-FrameSize.height / 12);
 		jScrollPane.setOpaque(false);
 
 		resizeTable(false, jScrollPane, mytable);
