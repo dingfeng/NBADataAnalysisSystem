@@ -137,4 +137,21 @@ public class MatchPlayerPO
 	{
 		this.time = time;
 	}
+	public double getHitRate()
+	{
+		if (handNo == 0)
+			return 0;
+		return 1.0 * hitNo / handNo;
+	}
+	public double getThreeHitRate()
+	{
+		if (threeHandNo == 0)
+			return 0;
+		return 1.0 * threeHitNo / threeHandNo ;
+	}
+	public double getPenaltyHitRate()
+	{
+		if (penaltyHitNo == 0) return 0;
+		return 1.0 * penaltyHandNo / penaltyHitNo;
+	}
 }

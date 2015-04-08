@@ -24,7 +24,7 @@ public class PlayerQueue {
 	private int myRebs;
 	private PlayerYourInfo[] yourInfos;
 	private MatchesPO [] matches = new MatchesPO[100];
-	private int matchlen = 0;
+	private int matchlen = -1;
 	public PlayerQueue(int max, String name) 
 	{
 		match_datas = new MatchPlayerPO[max];

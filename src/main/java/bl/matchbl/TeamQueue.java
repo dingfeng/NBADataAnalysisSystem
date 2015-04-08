@@ -93,7 +93,7 @@ public class TeamQueue extends AbstractQueue{
 		 double assistEfficiency0 = 0;// 助攻率
 		 
 		
-		for (MatchesPO match : matches)
+		for (MatchesPO match : getAllMatches())
 		{
 			++matchNo;
 			team1 = match.getTeam1();

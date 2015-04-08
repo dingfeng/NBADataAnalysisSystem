@@ -6,7 +6,7 @@ abstract public class AbstractQueue
 {
   protected MatchesPO[] matches;
   private int max;
-  private int lenth;
+  private int lenth = -1;
   //如果是球队则使用缩写
   protected String name;
   public AbstractQueue(int max,String name)

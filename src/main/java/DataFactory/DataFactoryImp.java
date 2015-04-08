@@ -38,14 +38,14 @@ public class DataFactoryImp implements NBADataFactory
 	public  MatchDataService getMatchData(){
 		if (match_data == null)
 		{
-			match_data = new MatchData(dataSource + "\\matches");
+			match_data = new MatchData(dataSource + "/matches");
 		}
 		return match_data;
 	}
 
 	public PlayerDataService getPlayerData() {
 		   if (player_data == null)
-			 player_data = new PlayerData(dataSource + "\\players");
+			 player_data = new PlayerData(dataSource + "/players");
 		return player_data;
 	}
 
