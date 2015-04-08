@@ -26,6 +26,7 @@ import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyTable;
+import ui.mainui.UneditableTextField;
 import vo.PlayerVO;
 
 public class MatchPanel extends JPanel {
@@ -95,20 +96,36 @@ public class MatchPanel extends JPanel {
 
 	private void setShowPanel(){
 		showPanel.setLayout(null);
-		showPanel.setBounds(FrameSize.width/4, FrameSize.height/12, FrameSize.width*3/4, FrameSize.height*19/24);
+		showPanel.setBounds(FrameSize.width/4, FrameSize.height/12,FrameSize.width*3/4, FrameSize.height*19/24);
 		showPanel.setBackground(FrameSize.backColor);
+		
+		int panelWidth=FrameSize.width*3/4;
+		int panelHeight=FrameSize.height*19/24;
 		
 		JSVGCanvas team1 = new JSVGCanvas();
 		JSVGCanvas team2 = new JSVGCanvas();
 		team1.setBackground(Color.yellow);
 		team2.setBackground(Color.red);
-		team1.setBounds(300,50,100,100);
-		team2.setBounds(500,50,100,100);
+		team1.setBounds(panelWidth*3/10,panelHeight/15,panelWidth/8,panelWidth/8);
+		team2.setBounds(panelWidth*23/40,panelHeight/15,panelWidth/8,panelWidth/8);
 		showPanel.add(team1);
 		showPanel.add(team2);
 		
-		JLabel teamName1 = new JLabel();
-		JLabel teamName2 = new JLabel();
+		UneditableTextField teamName1 = new UneditableTextField("ABC");
+		UneditableTextField teamName2 = new UneditableTextField("DEF");
+		teamName1.setBounds(panelWidth*3/10,panelWidth*31/240,panelWidth/8,panelWidth/8);
+		teamName2.setBounds(panelWidth*23/40,panelHeight*31/240,panelWidth/8,panelWidth/8);
+		showPanel.add(teamName1);
+		showPanel.add(teamName2);
+		
+		UneditableTextField score1 = new UneditableTextField("100");
+		UneditableTextField score2 = new UneditableTextField("200");
+		score1.setBounds(250,130,25,10);
+		score2.setBounds(625,130,30,10);
+		showPanel.add(score1);
+		showPanel.add(score2);
+
+
 	}
 	
 	/** 设置表格 */

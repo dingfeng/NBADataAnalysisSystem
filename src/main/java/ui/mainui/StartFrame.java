@@ -1,6 +1,7 @@
 package ui.mainui;
 
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
@@ -15,6 +16,7 @@ import ui.teamui.TeamPanel;
 public class StartFrame extends JFrame{
 	
 	public static void main(String [] args){
+		
 		new StartFrame();
 	}
 	
