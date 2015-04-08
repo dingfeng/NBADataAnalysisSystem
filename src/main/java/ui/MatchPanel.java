@@ -33,8 +33,7 @@ public class MatchPanel extends JPanel {
 	JPanel showPanel = new JPanel();
 
 	JComboBox<String> timeBox;
-	JComboBox<String> team1Box;
-	JComboBox<String> team2Box;
+	JComboBox<String> teamBox;
 	JComboBox<String> playerBox;
 
 	DefaultTableModel matchTable;
@@ -43,7 +42,7 @@ public class MatchPanel extends JPanel {
 
 	public MatchPanel() {
 		this.setLayout(null);
-		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
+		this.setBounds(0, 0, FrameSize.width, FrameSize.height*7/8);
 		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
 		setMatchTable();
@@ -56,8 +55,7 @@ public class MatchPanel extends JPanel {
 	private void setWelcome() {
 		welcomePanel.setLayout(null);
 		welcomePanel.setBackground(FrameSize.backColor);
-		welcomePanel.setBounds(0, FrameSize.height / 12, FrameSize.width / 3,
-				485);
+		welcomePanel.setBounds(0, FrameSize.height / 16, FrameSize.width / 3,485);
 		JLabel nba = new JLabel(new ImageIcon("image/nba.png"));
 		nba.setBounds(FrameSize.width / 12, FrameSize.height / 8,
 				FrameSize.width / 6, 200);
@@ -67,21 +65,17 @@ public class MatchPanel extends JPanel {
 	/** */
 	private void setHeader() {
 		header.setLayout(null);
-		header.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
+		header.setBounds(0, 0, FrameSize.width, FrameSize.height/ 16);
 		header.setBackground(FrameSize.backColor);
 
 		timeBox = new MyComboBox(new String[] { "比赛时间", "df", "df", "df" });
 		timeBox.setBounds(50, 10, 150, 35);
 		header.add(timeBox);
 
-		team1Box = new MyComboBox(
-				new String[] { "队伍1", "Ning", "Ning", "Ning" });
-		team1Box.setBounds(230, 10, 150, 35);
-		header.add(team1Box);
-
-		team2Box = new MyComboBox(new String[] { "队伍2", "Qiu", "Qiu", "Qiu" });
-		team2Box.setBounds(410, 10, 150, 35);
-		header.add(team2Box);
+		teamBox = new MyComboBox(
+				new String[] { "队伍", "Ning", "Ning", "Ning" });
+		teamBox.setBounds(230, 10, 150, 35);
+		header.add(teamBox);
 
 		playerBox = new MyComboBox(new String[] { "球员", "nn", "nn", "nn" });
 		playerBox.setBounds(590, 10, 150, 35);
@@ -104,11 +98,13 @@ public class MatchPanel extends JPanel {
 
 		Vector data = new Vector();
 		// while (true) {
+		for(int i=0;i<100;i++){
 		Vector rowData = new Vector();
 		rowData.add("df");
 		rowData.add("nn");
 		rowData.add("Ning");
 		data.add(rowData);
+		}
 		// }
 		matchTable = new DefaultTableModel(data, columnsName);
 		myMatchTable = new MyTable(matchTable);
@@ -117,14 +113,15 @@ public class MatchPanel extends JPanel {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		// matchScrollPane
 		// .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		matchScrollPane.setBounds(0, FrameSize.height / 12,
-				FrameSize.width / 3, 485);
+		matchScrollPane.setBounds(0, FrameSize.height / 16,
+				FrameSize.width / 3, FrameSize.height*13/16);
 		resizeTable(false, matchScrollPane, myMatchTable);
 		this.add(matchScrollPane);
 
 		myMatchTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
+					System.out.println(myMatchTable.getSelectedRow());
 					// showOne((String) mytable.getModel().getValueAt(
 					// mytable.getSelectedRow(), 0));
 				}
