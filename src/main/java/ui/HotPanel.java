@@ -18,7 +18,9 @@ public class HotPanel extends JPanel {
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
 		this.setOpaque(false);
 		setTag();
+		setShow();
 		this.add(tag);
+		this.add(show);
 		this.repaint();
 		
 	} 
@@ -57,6 +59,11 @@ public class HotPanel extends JPanel {
 	}
 
 	void setShow(){
+		show.setLayout(null);
+		show.setBackground(FrameSize.backColor);
+		show.setBounds(0, FrameSize.height / 12, FrameSize.width / 5,
+				11 * FrameSize.height / 12);
+		
 		JLabel portrait=new JLabel();
 		UneditableTextField num_1=new UneditableTextField();
 		UneditableTextField num_2=new UneditableTextField();
@@ -69,6 +76,20 @@ public class HotPanel extends JPanel {
 		num_3.setBounds(FrameSize.width/3, FrameSize.height/6, 200, 100);
 		num_4.setBounds(FrameSize.width/3, FrameSize.height/6, 200, 100);
 		num_5.setBounds(FrameSize.width/3, FrameSize.height/6, 200, 100);
+		
+		num_1.setBackground(FrameSize.buttonbackColor);
+		num_2.setBackground(FrameSize.buttonbackColor);
+		num_3.setBackground(FrameSize.buttonbackColor);
+		num_4.setBackground(FrameSize.buttonbackColor);
+		num_5.setBackground(FrameSize.buttonbackColor);
+		
+		
+		show.add(num_1);
+		show.add(num_2);
+		show.add(num_3);
+		show.add(num_4);
+		show.add(num_5);
+	
 	}
 }
 
