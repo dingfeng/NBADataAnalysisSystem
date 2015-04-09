@@ -3,8 +3,6 @@ package bl.playerbl;
 import java.awt.Image;
 import java.util.ArrayList;
 
-import bl.Playerbl.SortBy;
-import bl.matchbl.MatchPlayer;
 import bl.teambl.Team;
 import po.MatchPlayerPO;
 import po.MatchTeamPO;
@@ -77,9 +75,6 @@ public class Player {
 	private double twoPair;// 两双
 	public static boolean isAverage = false;
 	private Area playerArea = Area.ATLANTIC; // 分区
-
-	//player对象中保有一个累计了相应player数据的MatchPlayer对象
-	private MatchPlayer matchplayer;
 	
 	private SortBy sortBy;
 	private ArrayList<MatchesPO> matches = new ArrayList<MatchesPO>(82);// 球员参加的比赛的信息
@@ -108,7 +103,7 @@ public class Player {
 		if (data != null) {
 			this.team = data.getTeam();
 			Team team1 = new Team();
-			playerArea = team1.getMatchArea(team);
+			//playerArea = team1.getMatchArea(team);
 			this.GmScEfficiency = data.getGmScEfficiency();
 			this.matchNo = data.getMatchNo();
 			this.firstServiceNo = data.getFirstServiceNo();
@@ -148,7 +143,6 @@ public class Player {
 			this.three_points = data.getThree_points();// 三分
 			this.freeThrow = data.getFreeThrow();// 罚球
 			this.twoPair = data.getTwoPair();// 两双
-			this.matchplayer = data.getMatchPlayer();//球员比赛数据
 		}
 	}
 
@@ -500,9 +494,6 @@ public class Player {
 		return sortBy.compareTo(arg0.getSortBy());
 	}
 
-	public MatchPlayer getMatchPlayer() {
-		return matchplayer;
-	}
 	
 	public void setSortBy(PlayerMatchVO player, PlayerSortBy PlayerSortBy, SortType sortType){
 		String strSort = null;
@@ -597,37 +588,37 @@ public class Player {
 			break;
 
 		case rebound://篮板
-			doubleSort = player.getRebound();
+			doubleSort = player.getRebs();
 			break;
 		case assist://助攻
-			doubleSort = player.getAssist();
+			doubleSort = player.getAssistNo();
 			break;
 		case scoring_rebound_assist://得分/篮板/助攻（加权比1：1：1）
 			doubleSort = player.getScoring_rebound_assist();
 			break;
 		case block://盖帽
-			doubleSort = player.getBlock();
+			doubleSort = player.getBlockNo();
 			break;
 		case steal://抢断
-			doubleSort = player.getSteal();
+			doubleSort = player.getStealsNo();
 			break;
 		case foul://犯规
-			doubleSort = player.getFoul();
+			doubleSort = player.getFoulsNo();
 			break;
 		case mistake://失误
-			doubleSort = player.getMistake();
+			doubleSort = player.getMistakesNo();
 			break;
 		case minute://分钟
 			doubleSort = player.getMinute();
 			break;
 		case shot://投篮
-			doubleSort = player.getShot();
+			doubleSort = player.getHandNo();
 			break;
 		case three_points://三分
 			doubleSort = player.getThree_points();
 			break;
 		case freeThrow://罚球
-			doubleSort = player.getFreeThrow();
+			doubleSort = player.getPenaltyHandNo();
 			break;
 		case twoPair://两双
 			doubleSort = player.getTwoPair();
