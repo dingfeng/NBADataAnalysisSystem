@@ -66,10 +66,10 @@ public class MatchPanel extends JPanel {
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
 		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
-		setShowPanel();
-		// setMatchTable();
+		setMatchTable(matchController.getAllMatches());
 		setHeader();
-//		this.add(matchScrollPane);
+		setShowPanel();
+		this.add(matchScrollPane);
 		this.add(header);
 		this.add(showPanel);
 	}
@@ -108,7 +108,7 @@ public class MatchPanel extends JPanel {
 		header.add(yesButton);
 	}
 
-	private void setShowPanel() {
+	private void setShowPanel(MatchTeamPO team1,MatchTeamPO team2) {
 		showPanel.setLayout(null);
 		showPanel.setBounds(FrameSize.width / 4, FrameSize.height / 12,
 				FrameSize.width * 3 / 4, FrameSize.height * 19 / 24);
@@ -117,16 +117,17 @@ public class MatchPanel extends JPanel {
 		int panelWidth = FrameSize.width * 3 / 4;
 		int panelHeight = FrameSize.height * 19 / 24;
 
-		JSVGCanvas team1 = new JSVGCanvas();
-		JSVGCanvas team2 = new JSVGCanvas();
-		team1.setBackground(Color.yellow);
-		team2.setBackground(Color.red);
-		team1.setBounds(panelWidth * 3 / 15, panelHeight / 20, panelWidth / 8,
+		JSVGCanvas teamImage1 = new JSVGCanvas();
+//		teamImage1.setDocument();
+		JSVGCanvas teamImage2 = new JSVGCanvas();
+		teamImage1.setBackground(Color.yellow);
+		teamImage2.setBackground(Color.red);
+		teamImage1.setBounds(panelWidth * 3 / 15, panelHeight / 20, panelWidth / 8,
 				panelWidth / 8);
-		team2.setBounds(panelWidth * 81 / 120, panelHeight / 20,
+		teamImage2.setBounds(panelWidth * 81 / 120, panelHeight / 20,
 				panelWidth / 8, panelWidth / 8);
-		showPanel.add(team1);
-		showPanel.add(team2);
+		showPanel.add(teamImage1);
+		showPanel.add(teamImage2);
 
 		UneditableTextField teamName1 = new UneditableTextField("ABC");
 		UneditableTextField teamName2 = new UneditableTextField("DEF");
@@ -171,7 +172,7 @@ public class MatchPanel extends JPanel {
 		for (int i = 0; i < matches.length; i++) {
 			Vector rowData = new Vector();
 			rowData.add(matches[i].getDate());
-			rowData.add(matches[i].getTeam1() + "-" + matches[i].getTeam2());
+			rowData.add(matches[i].getTeam1().getName() + "-" + matches[i].getTeam2().getName());
 			rowData.add(matches[i].getTeam1().getTotalScores() + ":"
 					+ matches[i].getTeam2().getTotalScores());
 			data.add(rowData);
