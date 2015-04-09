@@ -18,10 +18,14 @@ public class TeamController implements Teamblservice{
 	}
 
 	@Override
-	public TeamMatchVO[] getSortedTeams(TeamSortBy sortby, SortType type) {
-		return team.getSortedTeams(sortby, type);
+	public TeamMatchVO[] getSortedAveTeams(TeamSortBy sortby, SortType type) {
+		return team.getSortedAveTeams(sortby, type);
 	}
 
+	public TeamMatchVO[] getSortedTotalTeams(TeamSortBy sortby , SortType type)
+	{
+		return team.getSortedTotalTeams(sortby, type);
+	}
 	@Override
 	public String[] getPlayers(String team) {
 		return  this.team.getPlayers(team);

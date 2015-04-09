@@ -49,7 +49,7 @@ public class PlayerQueue {
 		   this.teamMistakes += teamMistakes;
 		   this.firstServiceNo += firstServiceNo;
 		   this.myRebs += myRebs;
-		   yourInfos[++len] = new PlayerYourInfo( teamTotalTime,  yourRebs,  totalHit,
+		   yourInfos[len] = new PlayerYourInfo( teamTotalTime,  yourRebs,  totalHit,
 					   yourAttackNO,  teamHand,
 					 teamPenalty,  teamMistakes,   myRebs, team1, team2, date);
 			}
@@ -348,5 +348,16 @@ public class PlayerQueue {
 		 temp[i] = matches[i];	
 		}
 		return temp;
+	}
+	public MatchesPO[] getRecentPlayerMatches(int num)
+	{
+		if (matchlen == -1) return null;
+		int size = (num < matchlen+1) ? num : (matchlen + 1);
+		MatchesPO[] temp_matches = new MatchesPO[size];
+		for (int i = 0; i < size; i++)
+		{
+			temp_matches[i] = matches[i];
+		}
+		return temp_matches;
 	}
 }

@@ -199,10 +199,12 @@ public class Match implements Matchblservice
 		return match_data.getAllMatches();
 	}
 	public MatchesPO[] getRecentPlayerMatches(String playerName, int num) {
-		return match_data.getRecentPlayerMatches(playerName, num);
+		PlayerQueue player = player_map.get(playerName.hashCode());
+		return  player.getRecentPlayerMatches(num);
 	}
 	public MatchesPO[] getRecentTeamMatches(String teamName, int num) {
-		return match_data.getRecentTeamMatches(teamName, num);
+		TeamQueue team =  team_map.get(teamName.hashCode());
+		return team.getRecentMatches(num);
 	}
     
 	public MatchesPO[] getPlayerMatches(String playername)
@@ -226,8 +228,6 @@ public class Match implements Matchblservice
     
     public MatchesPO[] getTimeMatches(Date date1, Date date2)
     {
-    	long  time1 = date1.getTime();
-    	long time2 = date2.getTime();
     	MatchesPO[] allMatches =  match_data.getAllMatches();
     	String date;
     	LinkedList<MatchesPO>  match_list = new LinkedList<MatchesPO>();
@@ -239,7 +239,9 @@ public class Match implements Matchblservice
     	}
     	if (match_list.size() == 0)
     		return null;
-    	else return (MatchesPO[]) match_list.toArray();
+    	MatchesPO[] result = new MatchesPO[match_list.size()];
+    	match_list.toArray(result);
+    	 return result;
     }
        
     private boolean  betweenTime(String date0,Date date1, Date date2)
@@ -247,16 +249,16 @@ public class Match implements Matchblservice
     	String time   = null;
     	if (date0.charAt(0) == '0')
     	{
-    		time = "2012-"+date0;
+    		time = "2013-"+date0;
     	}
     	else 
     	{
-    		time = "2013-"+date0;
+    		time = "2012-"+date0;
     	}
     	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     	Date  date= null;
     	try {
-			 date = format.parse(date0);
+			 date = format.parse(time);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

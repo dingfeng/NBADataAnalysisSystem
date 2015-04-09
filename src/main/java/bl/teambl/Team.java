@@ -41,9 +41,34 @@ public class Team implements  Teamblservice
 	    }
 	}
 	
+	public TeamMatchVO[] getAllTotalTeams()
+	{
+		
+		TeamQueue[] team_queues = new TeamQueue[team_map.size()];
+		team_map.values(team_queues);
+		TeamMatchVO[] allMatchVOs = new TeamMatchVO[team_queues.length];
+		for (int i = 0; i < team_queues.length; i++)
+		{
+			allMatchVOs[i] = team_queues[i].getTeamvoTotal();
+		}
+		return allMatchVOs;
+	}
+	
+	public TeamMatchVO[] getAllAveTeams()
+	{
+		TeamQueue[] team_queues = new TeamQueue[team_map.size()];
+		team_map.values(team_queues);
+		TeamMatchVO[] allMatchVOs = new TeamMatchVO[team_queues.length];
+		for (int i = 0; i < team_queues.length; i++)
+		{
+			allMatchVOs[i] = team_queues[i].getTeamvoAverage();
+		}
+		return allMatchVOs;
+	}
+	
 	public  TeamMatchVO[] getHotTeams(TeamSortBy sortby)
 	{
-		TeamMatchVO[] teams = getSortedTeams(sortby,SortType.DESEND);
+		TeamMatchVO[] teams = getSortedAveTeams(sortby,SortType.DESEND);
         TeamMatchVO[] result = new TeamMatchVO[5];
         for (int i = 0; i < 5; i++)
         {
@@ -52,9 +77,10 @@ public class Team implements  Teamblservice
 		return result;
 	}
      
-	public TeamMatchVO[] getSortedTeams(TeamSortBy sortby, SortType type)
+	public TeamMatchVO[] getSortedAveTeams(TeamSortBy sortby, SortType type)
 	{
-		TeamQueue[] teams = (TeamQueue[]) team_map.values();
+		TeamQueue[] teams = new TeamQueue[team_map.size()];
+		team_map.values(teams);
 		TeamMatchVO[] team_ms = new TeamMatchVO[TEAM_NUM];
 		for (int i = 0; i < TEAM_NUM; i++)
 		{
@@ -64,6 +90,20 @@ public class Team implements  Teamblservice
         Arrays.sort(team_ms);
 		return team_ms;
 	}
+
+	public TeamMatchVO[] getSortedTotalTeams(TeamSortBy sortby, SortType type) {
+		TeamQueue[] teams = new TeamQueue[team_map.size()];
+		team_map.values(teams);
+		TeamMatchVO[] team_ms = new TeamMatchVO[TEAM_NUM];
+		for (int i = 0; i < TEAM_NUM; i++)
+		{
+			team_ms[i] = teams[i].getTeamvoTotal();
+			setSortBy(team_ms[i],sortby,type);
+		}
+        Arrays.sort(team_ms);
+		return team_ms;
+	}
+	
     private void setSortBy(TeamMatchVO team, TeamSortBy sortby, SortType type)
     {
     	double doubleSort = 0;
@@ -280,4 +320,5 @@ public class Team implements  Teamblservice
         }
 		return team_match_list.iterator();
 	}
+
 }

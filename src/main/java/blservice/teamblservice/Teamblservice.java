@@ -12,7 +12,8 @@ import vo.TeamVO;
 public interface Teamblservice
 {
 	public  TeamMatchVO[] getHotTeams(TeamSortBy sortby);
-	public TeamMatchVO[] getSortedTeams(TeamSortBy sortby, SortType type);
+	public TeamMatchVO[] getSortedAveTeams(TeamSortBy sortby, SortType type);
+	public TeamMatchVO[] getSortedTotalTeams(TeamSortBy sortby, SortType type);
 	public String[] getPlayers(String team);
 	public TeamMatchVO getTotalTeam(String teamname);
 	public  TeamMatchVO getAveTeam(String teamname);

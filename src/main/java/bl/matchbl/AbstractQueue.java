@@ -5,14 +5,15 @@ import po.MatchesPO;
 abstract public class AbstractQueue
 {
   protected MatchesPO[] matches;
-  private int max;
-  private int lenth = -1;
+  protected int max;
+  protected int lenth = -1;
   //如果是球队则使用缩写
   protected String name;
   public AbstractQueue(int max,String name)
   {
 	  this.max = max;
 	  matches = new MatchesPO[max];
+	  this.name = name;
   }
   
   public String getName()
