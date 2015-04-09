@@ -1,9 +1,6 @@
 package bl.playerbl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import DataFactory.DataFactoryImp;
 import DataFactoryService.NBADataFactory;
@@ -15,11 +12,11 @@ import po.MatchPlayerPO;
 import po.MatchTeamPO;
 import po.MatchesPO;
 import po.PlayerPO;
+import vo.Area;
 import vo.PlayerMatchVO;
 import vo.PlayerSortBy;
 import vo.PlayerVO;
 import vo.SortType;
-import data.playerdata.PlayerData;
 import dataservice.playerdataservice.PlayerDataService;
 
 /**
@@ -104,6 +101,11 @@ public class PlayerList {
 		// 数据正常添加完毕，返回true
 		return true;
 	}
+	
+	public PlayerVO findPlayerInfo(String name){
+		Player result = players.get(name.hashCode());
+		return result.toVo();
+	}
 
 	/**
 	 * 得到当日热点球员
@@ -124,7 +126,7 @@ public class PlayerList {
 		int length = playerqueue.length;
 		PlayerMatchVO[] playermatches = new PlayerMatchVO[length];
 		for(int i = 0; i < length; i ++){
-			playermatches[i] = playerqueue[i].getPlayervo();
+			playermatches[i] = playerqueue[i].getAvePlayer();
 			Player player = players.get(playermatches[i].getName().hashCode());
 			player.setSortBy(playermatches[i], sortby, SortType.DESEND);
 		}
@@ -142,6 +144,31 @@ public class PlayerList {
 	 * @return
 	 */
 	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby) {
+		return null;
+	}
+	
+	/**
+	 * 返回按照依据排序的结果数组
+	 * @param playerSortBy
+	 * @param sortType
+	 * @param num
+	 * @return
+	 */
+	public PlayerMatchVO[] sortPlayers(PlayerSortBy playerSortBy,
+			SortType sortType, int num){
+		return null;
+	}
+	
+	/**
+	 * 返回num个筛选条件
+	 * @param playerPosition
+	 * @param playerArea
+	 * @param sortBy
+	 * @param num
+	 * @return
+	 */
+	public PlayerMatchVO[] sreenPlayers(String playerPosition, Area playerArea,
+			PlayerSortBy sortBy, int num){
 		return null;
 	}
 

@@ -32,6 +32,40 @@ public class TeamMatchVO implements Comparable<TeamMatchVO>{
 	private double stealsEfficiency;// 抢断效率
 	private double assistEfficiency;// 助攻率
 	private TeamSortTool tool;
+	
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		  sb.append("name:  "+name); // 球队名称
+		  sb.append("matchNo: "+matchNo); // 比赛场数
+		  sb.append("hitNo:  "+hitNo); // 投篮命中数
+		  sb.append("handNo:  "+handNo); // 投篮出手次数
+		  sb.append("threeHitNo:  "+threeHitNo); // 三分命中数
+		  sb.append("threeHandNo:  "+threeHandNo); // 三分出手数
+		  sb.append("penaltyHitNo:  "+penaltyHitNo); // 罚球命中数
+		  sb.append("penaltyHandNo:  "+penaltyHandNo); // 罚球出手数
+		  sb.append("offenseRebs:  "+offenseRebs); // 进攻篮板数
+		  sb.append("defenceRebs:  "+defenceRebs); // 防守篮板数
+		  sb.append("rebs:  "+rebs); // 篮板数
+		  sb.append("assistNo:  "+assistNo); // 助攻数
+		  sb.append("stealsNo:  "+stealsNo); // 抢断数
+		  sb.append("blockNo:  "+blockNo); // 盖帽数
+		  sb.append("mistakesNo:  "+mistakesNo); // 失误数
+		  sb.append("foulsNo:  "+foulsNo); // 犯规数
+		  sb.append("points:  "+points); // 比赛得分
+		  sb.append("hitRate:  "+hitRate); // 投篮命中率
+		  sb.append("threeHitRate:  "+threeHitRate);// 三分命中率
+		  sb.append("penaltyHitRate:  "+penaltyHitRate);// 罚球命中率
+		  sb.append("winRate:  "+winRate); // 胜率
+		  sb.append("offenseRound:  "+offenseRound); // 进攻回合
+		  sb.append("offenseEfficiency: "+offenseEfficiency);// 进攻效率
+		  sb.append("defenceEfficiency:  "+defenceEfficiency);// 防守效率
+		  sb.append("orebsEfficiency:  "+orebsEfficiency);// 进攻篮板效率
+		  sb.append("drebsEfficiency:  "+drebsEfficiency);// 防守篮板效率
+		  sb.append("stealsEfficiency:  "+stealsEfficiency);// 抢断效率
+		  sb.append("assistEfficiency: "+assistEfficiency);// 助攻率
+		  return sb.toString();
+	}
 	public TeamMatchVO(String name, int matchNo, double hitNo, double handNo,
 			double threeHitNo, double threeHandNo, double penaltyHitNo,
 			double penaltyHandNo, double offenseRebs, double defenceRebs, double rebs,

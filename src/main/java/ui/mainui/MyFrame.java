@@ -45,7 +45,7 @@ public class MyFrame extends JFrame {
 	JPanel mainpanel=new JPanel();
 	CardLayout card = new CardLayout();
 	
-	TeamPanel teampanel=new TeamPanel();
+//	TeamPanel teampanel=new TeamPanel();
 //	PlayerPanel playerpanel=new PlayerPanel();
 	HotPanel hotpanel=new HotPanel();
 	MatchPanel matchpanel=new MatchPanel();
