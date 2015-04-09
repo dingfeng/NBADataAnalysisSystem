@@ -87,7 +87,6 @@ public class TeamPanel extends JPanel {
 	void setTable(TeamMatchVO[] team) {
 		Vector<String> columnsName = new Vector<String>();
 		columnsName.add("球队全名");
-		columnsName.add("建立时间");
 		columnsName.add("比赛场数");
 		columnsName.add("投篮命中数");
 		columnsName.add("投篮出手次数");
@@ -428,7 +427,7 @@ public class TeamPanel extends JPanel {
 		}else if (sortby.equals("助攻率")) {
 			teamSortBy = TeamSortBy.assistEfficiency;
 		}
-		TeamMatchVO[] sortteam=null;
+		TeamMatchVO[] sortteam;
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
 			sortteam = tc.getSortedTotalTeams(teamSortBy, type);
 		} else {
@@ -526,7 +525,7 @@ public class TeamPanel extends JPanel {
 
 	/**点击查看比赛按钮*/
 	void setMatch(){
-		TeamMatchPanel teammatch=new TeamMatchPanel();
+		TeamMatchPanel teammatch=new TeamMatchPanel(nameAbridgeresult.getText());
 		this.remove(jScrollPane);
 		this.add(teammatch);
 		this.repaint();
