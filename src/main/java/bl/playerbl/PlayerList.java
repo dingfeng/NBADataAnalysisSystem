@@ -12,6 +12,7 @@ import po.MatchPlayerPO;
 import po.MatchTeamPO;
 import po.MatchesPO;
 import po.PlayerPO;
+import vo.Area;
 import vo.PlayerMatchVO;
 import vo.PlayerSortBy;
 import vo.PlayerVO;
@@ -146,7 +147,30 @@ public class PlayerList {
 		return null;
 	}
 	
-	//public PlayerMatchVO[] sortPlayers
+	/**
+	 * 返回按照依据排序的结果数组
+	 * @param playerSortBy
+	 * @param sortType
+	 * @param num
+	 * @return
+	 */
+	public PlayerMatchVO[] sortPlayers(PlayerSortBy playerSortBy,
+			SortType sortType, int num){
+		return null;
+	}
+	
+	/**
+	 * 返回num个筛选条件
+	 * @param playerPosition
+	 * @param playerArea
+	 * @param sortBy
+	 * @param num
+	 * @return
+	 */
+	public PlayerMatchVO[] sreenPlayers(String playerPosition, Area playerArea,
+			PlayerSortBy sortBy, int num){
+		return null;
+	}
 
 	/**
 	 * 得到player的最新对象
