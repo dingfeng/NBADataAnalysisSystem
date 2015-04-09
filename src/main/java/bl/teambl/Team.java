@@ -37,7 +37,7 @@ public class Team implements  Teamblservice
 	    teams = teamData.getAllTeamData();
 	    for (TeamPO po : teams)
 	    {
-	    	po_map.put(po.getName().hashCode(), po);
+	    	po_map.put(po.getNameAbridge().hashCode(), po);
 	    }
 	}
 	
