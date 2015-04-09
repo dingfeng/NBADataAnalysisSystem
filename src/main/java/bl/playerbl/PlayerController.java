@@ -12,7 +12,7 @@ public class PlayerController implements PlayerBlService{
 	private PlayerList player;
 
 	public PlayerController() {
-		player = player.getPlayserListInstance();
+		player = PlayerList.getPlayserListInstance();
 	}
 
 	public void setAverage(boolean isAverage) {
@@ -20,8 +20,7 @@ public class PlayerController implements PlayerBlService{
 	}
 
 	public PlayerVO findPlayer(String info) {
-		// TODO Auto-generated method stub
-		return null;
+		return player.findPlayerInfo(info);
 	}
 
 	@Override
@@ -46,20 +45,16 @@ public class PlayerController implements PlayerBlService{
 
 	@Override
 	public PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby) {
-		// TODO Auto-generated method stub
-		return null;
+		return player.getDayHotPlayers(sortby);
 	}
 
 	@Override
 	public PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby) {
-		// TODO Auto-generated method stub
-		return null;
+		return player.getSeasonHotPlayers(sortby);
 	}
 
 	@Override
 	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby) {
-		// TODO Auto-generated method stub
-		return null;
+		return player.getPromotePlayer(sortby);
 	}
-
 }

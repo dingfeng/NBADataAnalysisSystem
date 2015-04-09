@@ -11,6 +11,7 @@ import po.PlayerPO;
 import vo.Area;
 import vo.PlayerMatchVO;
 import vo.PlayerSortBy;
+import vo.PlayerVO;
 import vo.SortType;
 
 public class Player {
@@ -75,7 +76,7 @@ public class Player {
 	private double twoPair;// 两双
 	public static boolean isAverage = false;
 	private Area playerArea = Area.ATLANTIC; // 分区
-	
+
 	private SortBy sortBy;
 	private ArrayList<MatchesPO> matches = new ArrayList<MatchesPO>(82);// 球员参加的比赛的信息
 
@@ -103,7 +104,7 @@ public class Player {
 		if (data != null) {
 			this.team = data.getTeam();
 			Team team1 = new Team();
-			//playerArea = team1.getMatchArea(team);
+			// playerArea = team1.getMatchArea(team);
 			this.GmScEfficiency = data.getGmScEfficiency();
 			this.matchNo = data.getMatchNo();
 			this.firstServiceNo = data.getFirstServiceNo();
@@ -153,8 +154,7 @@ public class Player {
 	 * @return boolean
 	 */
 	public boolean addMatchInformation(MatchesPO match,
-			MatchPlayerPO matchPlayer, MatchTeamPO rival,
-			String TeamName) {
+			MatchPlayerPO matchPlayer, MatchTeamPO rival, String TeamName) {
 		// 向相应的player对象中添加一个match数据
 		matches.add(match);
 
@@ -212,62 +212,59 @@ public class Player {
 		teamMistakes += mistakesNo;
 		myRebs += rebs;
 		teamDefenceNo += defenceRebs;
-		
+
 		/**
-		if (!location.equalsIgnoreCase("?")){
-			matchplayer.setLocation(location);
-		}
-		if(i < 6){
-			matchplayer.addFirstServiceNo(1);
-		}
-		i ++;
-		matchplayer.addMatchNO(1);
-		if(time == -1){
-			matchplayer.addDirtyData(1);
-		} else{
-			matchplayer.addTime(time);
-		}
-		matchplayer.addDate(TeamName, match.getDate());
-		matchplayer.addHitNo(hitNo);
-		matchplayer.addHandNo(handNo);
-		matchplayer.addThreeHitNo(threeHitNo);;
-		matchplayer.addThreeHandNo(threeHandNo);
-		matchplayer.addPenaltyHandNo(penaltyHandNo);
-		matchplayer.addPenaltyHitNo(penaltyHitNo);;
-		matchplayer.addOffenseRebs(offenseRebs);
-		matchplayer.addDefenceRebs(defenceRebs);
-		matchplayer.addRebs(rebs);
-		matchplayer.addHelp(help);
-		matchplayer.addStealsNo(stealsNo);
-		matchplayer.addBlockNo(blockNo);
-		matchplayer.addMistakesNo(mistakesNo);
-		matchplayer.addFoulsNo(foulsNo);
-		matchplayer.addPoints(points);
-		if(matchPlayer.isDirty()){
-			matchplayer.addDirtyData();
-		}
-		//计算两双
-		int j = 0;
-		if(points > 9){
-			j ++;
-		}
-		if(rebs > 9){
-			j ++;
-		}
-		if(help > 9){
-			j ++;
-		}
-		if(stealsNo > 9){
-			j ++;
-		}
-		if(blockNo > 9){
-			j ++;
-		}
-		if(j >=2){
-			matchplayer.addTwoPair(1);
-		}
-		*/
+		 * if (!location.equalsIgnoreCase("?")){
+		 * matchplayer.setLocation(location); } if(i < 6){
+		 * matchplayer.addFirstServiceNo(1); } i ++; matchplayer.addMatchNO(1);
+		 * if(time == -1){ matchplayer.addDirtyData(1); } else{
+		 * matchplayer.addTime(time); } matchplayer.addDate(TeamName,
+		 * match.getDate()); matchplayer.addHitNo(hitNo);
+		 * matchplayer.addHandNo(handNo);
+		 * matchplayer.addThreeHitNo(threeHitNo);;
+		 * matchplayer.addThreeHandNo(threeHandNo);
+		 * matchplayer.addPenaltyHandNo(penaltyHandNo);
+		 * matchplayer.addPenaltyHitNo(penaltyHitNo);;
+		 * matchplayer.addOffenseRebs(offenseRebs);
+		 * matchplayer.addDefenceRebs(defenceRebs); matchplayer.addRebs(rebs);
+		 * matchplayer.addHelp(help); matchplayer.addStealsNo(stealsNo);
+		 * matchplayer.addBlockNo(blockNo);
+		 * matchplayer.addMistakesNo(mistakesNo);
+		 * matchplayer.addFoulsNo(foulsNo); matchplayer.addPoints(points);
+		 * if(matchPlayer.isDirty()){ matchplayer.addDirtyData(); } //计算两双 int j
+		 * = 0; if(points > 9){ j ++; } if(rebs > 9){ j ++; } if(help > 9){ j
+		 * ++; } if(stealsNo > 9){ j ++; } if(blockNo > 9){ j ++; } if(j >=2){
+		 * matchplayer.addTwoPair(1); }
+		 */
 		return true;
+	}
+
+	/**
+	 * 将球员信息打包成VO
+	 * 
+	 * @return
+	 */
+	public PlayerVO toVo() {
+		return new PlayerVO(action, portrait, number, position, heightfeet,
+				heightinch, birth, age, exp, school, name, team, matchNo,
+				firstServiceNo, rebs, assistNo, time, hitRate, threeHitRate,
+				penaltyHitRate, offendNo, defenceNo, stealsNo, blockNo,
+				mistakesNo, foulsNo, points, efficiency, GmScEfficiency,
+				trueHitRate, hitEfficiency, rebEfficiency,
+				offenseRebsEfficiency, defenceRebsEfficiency, assistEfficiency,
+				stealsEfficiency, blockEfficiency, mistakeEfficiency,
+				useEfficiency, playerArea, rebound,// 篮板
+				assist,// 助攻
+				scoring_rebound_assist,// 得分/篮板/助攻（加权比1：1：1）
+				block,// 盖帽
+				steal,// 抢断
+				foul,// 犯规
+				mistake,// 失误
+				minute,// 分钟
+				shot,// 投篮
+				three_points,// 三分
+				freeThrow,// 罚球
+				twoPair);
 	}
 
 	public int getSCREENSIZE() {
@@ -494,11 +491,11 @@ public class Player {
 		return sortBy.compareTo(arg0.getSortBy());
 	}
 
-	
-	public void setSortBy(PlayerMatchVO player, PlayerSortBy PlayerSortBy, SortType sortType){
+	public void setSortBy(PlayerMatchVO player, PlayerSortBy PlayerSortBy,
+			SortType sortType) {
 		String strSort = null;
 		double doubleSort = -1;
-		switch(PlayerSortBy){
+		switch (PlayerSortBy) {
 		case name:
 			strSort = player.getName();
 			break;
@@ -587,49 +584,46 @@ public class Player {
 			doubleSort = player.getUseEfficiency();
 			break;
 
-		case rebound://篮板
+		case rebound:// 篮板
 			doubleSort = player.getRebs();
 			break;
-		case assist://助攻
+		case assist:// 助攻
 			doubleSort = player.getAssistNo();
 			break;
-		case scoring_rebound_assist://得分/篮板/助攻（加权比1：1：1）
+		case scoring_rebound_assist:// 得分/篮板/助攻（加权比1：1：1）
 			doubleSort = player.getScoring_rebound_assist();
 			break;
-		case block://盖帽
+		case block:// 盖帽
 			doubleSort = player.getBlockNo();
 			break;
-		case steal://抢断
+		case steal:// 抢断
 			doubleSort = player.getStealsNo();
 			break;
-		case foul://犯规
+		case foul:// 犯规
 			doubleSort = player.getFoulsNo();
 			break;
-		case mistake://失误
+		case mistake:// 失误
 			doubleSort = player.getMistakesNo();
 			break;
-		case minute://分钟
+		case minute:// 分钟
 			doubleSort = player.getMinute();
 			break;
-		case shot://投篮
+		case shot:// 投篮
 			doubleSort = player.getHandNo();
 			break;
-		case three_points://三分
+		case three_points:// 三分
 			doubleSort = player.getThree_points();
 			break;
-		case freeThrow://罚球
+		case freeThrow:// 罚球
 			doubleSort = player.getPenaltyHandNo();
 			break;
-		case twoPair://两双
+		case twoPair:// 两双
 			doubleSort = player.getTwoPair();
 			break;
 		}
-		if (doubleSort != -1)
-		{
-			sortBy = new SortBy(doubleSort,sortType);
-		}
-		else 
-		{
+		if (doubleSort != -1) {
+			sortBy = new SortBy(doubleSort, sortType);
+		} else {
 			sortBy = new SortBy(strSort, sortType);
 		}
 	}

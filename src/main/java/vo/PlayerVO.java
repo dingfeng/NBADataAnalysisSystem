@@ -1,7 +1,6 @@
 package vo;
 
 import java.awt.Image;
-import java.util.Date;
 
 public class PlayerVO
 {
@@ -9,7 +8,7 @@ public class PlayerVO
 	private Image action;//大头图片
 	private Image portrait;//全身图片
 	private int number;//球衣号码
-	private char position;//位置 
+	private String position;//位置 
 	private int heightfeet;//身高的英尺
 	private int heightinch;//身高的英寸
 	private String birth;//生日
@@ -126,7 +125,7 @@ public class PlayerVO
 		return playerArea;
 	}
 	public PlayerVO(Image action, Image portrait,  int number,
-			char position, int heightfeet, int heightinch, String birth,
+			String position, int heightfeet, int heightinch, String birth,
 			int age, int exp, String school,String name, String team, int matchNo, double firstServiceNo,
 			double rebs, double assistNo, double time, double hitRate,
 			double threeHitRate, double penaltyHitRate, double offendNo,
@@ -216,7 +215,7 @@ public class PlayerVO
 	public int getNumber() {
 		return number;
 	}
-	public char getPosition() {
+	public String getPosition() {
 		return position;
 	}
 	public int getHeightfeet() {
