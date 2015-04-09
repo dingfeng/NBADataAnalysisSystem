@@ -69,7 +69,7 @@ public class MatchPanel extends JPanel {
 		setShowPanel();
 		// setMatchTable();
 		setHeader();
-		this.add(matchScrollPane);
+//		this.add(matchScrollPane);
 		this.add(header);
 		this.add(showPanel);
 	}
