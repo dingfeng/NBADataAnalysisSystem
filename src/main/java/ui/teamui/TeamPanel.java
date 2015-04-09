@@ -25,12 +25,14 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.batik.swing.JSVGCanvas;
 
+import po.TeamPO;
 import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyTable;
 import ui.mainui.UneditableTextField;
 import vo.SortType;
+import vo.TeamMatchVO;
 import vo.TeamSortBy;
 import vo.TeamVO;
 import bl.teambl.TeamController;
@@ -69,30 +71,25 @@ public class TeamPanel extends JPanel {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
 		this.setOpaque(false);
-//		new Thread() {
-//			public void run() {
-//				setTable(tc.getAllTeams());
-//			}
-//		}.start();
+		new Thread() {
+			public void run() {
+				setTable(tc.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
+			}
+		}.start();
 
 		setSort();
 		setHeader();
 		setFind();
 		setWelcome();
-		this.add(find);
+		this.add(welcome);
 		this.add(header);
 		this.repaint();
 	}
 
 	/** 设置表格 */
-	void setTable(Iterator allteam) {
+	void setTable(TeamMatchVO[] team) {
 		Vector<String> columnsName = new Vector<String>();
 		columnsName.add("球队全名");
-		columnsName.add("缩写");
-		columnsName.add("所在地");
-		columnsName.add("赛区");
-		columnsName.add("分区");
-		columnsName.add("主场");
 		columnsName.add("建立时间");
 		columnsName.add("比赛场数");
 		columnsName.add("投篮命中数");
@@ -117,22 +114,17 @@ public class TeamPanel extends JPanel {
 		columnsName.add("进攻回合");
 		columnsName.add("进攻效率");
 		columnsName.add("防守效率");
-		columnsName.add("篮板效率");
+		columnsName.add("进攻篮板效率");
+		columnsName.add("防守篮板效率");
 		columnsName.add("抢断效率");
 		columnsName.add("助攻率");
 
 		// allteam = tc.getAllTeams();
 		Vector rowimage = new Vector();
-		while (allteam.hasNext()) {
-			TeamVO str = (TeamVO) allteam.next();
+		for(int i=0;i<team.length;i++) {
+			TeamMatchVO str = team[i];
 			Vector data = new Vector();
 			data.add(str.getName());
-			data.add(str.getNameAbridge());
-			data.add(str.getAddress());
-			data.add(str.getMatchArea());
-			data.add(str.getPlayerArea());
-			data.add(str.getManage());
-			data.add(str.getFoundYear());
 			data.add(str.getMatchNo());
 			data.add(str.getHitNo());
 			data.add(str.getHandNo());
@@ -148,7 +140,7 @@ public class TeamPanel extends JPanel {
 			data.add(str.getBlockNo());
 			data.add(str.getMistakesNo());
 			data.add(str.getFoulsNo());
-			data.add(str.getPodoubles());
+			data.add(str.getPoints());
 			data.add(String.format("%.3f", str.getHitRate() * 100));
 			data.add(String.format("%.3f", str.getThreeHitRate() * 100));
 			data.add(String.format("%.3f", str.getPenaltyHitRate() * 100));
@@ -156,7 +148,8 @@ public class TeamPanel extends JPanel {
 			data.add(String.format("%.3f", str.getOffenseRound()));
 			data.add(String.format("%.3f", str.getOffenseEfficiency()));
 			data.add(String.format("%.3f", str.getDefenceEfficiency()));
-			data.add(String.format("%.3f", str.getRebsEfficiency()));
+			data.add(String.format("%.3f", str.getoRebsEfficiency()));
+			data.add(String.format("%.3f", str.getdRebsEfficiency()));
 			data.add(String.format("%.3f", str.getStealsEfficiency()));
 			data.add(String.format("%.3f", str.getAssistEfficiency()));
 
@@ -175,7 +168,7 @@ public class TeamPanel extends JPanel {
 		jScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		jScrollPane.setBounds(FrameSize.width / 3, FrameSize.height / 12,
-				2 * FrameSize.width / 3, FrameSize.height*7/8- FrameSize.height / 12);
+				2*FrameSize.width / 3, FrameSize.height*7/8- FrameSize.height / 12);
 		jScrollPane.setOpaque(false);
 
 		resizeTable(false, jScrollPane, mytable);
@@ -235,12 +228,12 @@ public class TeamPanel extends JPanel {
 	void showAllData() {
 		jScrollPane.setVisible(false);
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
-			tc.setAverage(false);
+			setTable(tc.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
 		} else {
-			tc.setAverage(true);
+			setTable(tc.getSortedAveTeams(TeamSortBy.name, SortType.ASEND));
 		}
 
-		setTable(tc.getAllTeams());
+		
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
@@ -350,7 +343,7 @@ public class TeamPanel extends JPanel {
 	/** 欢迎页面 */
 	void setWelcome() {
 		welcome.setLayout(null);
-		welcome.setBounds(0, FrameSize.height / 12, FrameSize.width / 3, 485);
+		welcome.setBounds(0, FrameSize.height / 12, FrameSize.width / 3, 11 * FrameSize.height / 12);
 		welcome.setBackground(FrameSize.backColor);
 		JLabel nba = new JLabel(new ImageIcon("image/nba.png"));
 		nba.setBounds(FrameSize.width / 12, FrameSize.height / 8,
@@ -371,11 +364,7 @@ public class TeamPanel extends JPanel {
 	/** 点击排序确认按钮 */
 	void confirmClick() {
 		SortType type = null;
-		if (dataType.getSelectedItem().equals("赛季总数据")) {
-			tc.setAverage(false);
-		} else {
-			tc.setAverage(true);
-		}
+		
 
 		jScrollPane.setVisible(false);
 		if (sorttype == true) {
@@ -442,7 +431,13 @@ public class TeamPanel extends JPanel {
 		}else if (sortby.equals("助攻率")) {
 			teamSortBy = TeamSortBy.assistEfficiency;
 		}
-		Iterator<TeamVO> sortteam = tc.sortTeams(teamSortBy, type);
+		TeamMatchVO[] sortteam=null;
+		if (dataType.getSelectedItem().equals("赛季总数据")) {
+			sortteam = tc.getSortedTotalTeams(teamSortBy, type);
+		} else {
+			sortteam = tc.getSortedAveTeams(teamSortBy, type);
+		}
+		
 
 		setTable(sortteam);
 
@@ -453,12 +448,12 @@ public class TeamPanel extends JPanel {
 		this.repaint();
 	}
 
-	/** 在findPanel上显示一个球员的信息 */
+	/** 在findPanel上显示一个球队的信息 */
 	private void showOne(String teamname) {
 		this.remove(welcome);
 		this.remove(sort);
-		TeamVO teamresult = tc.findTeam(teamname);
-		svgCanvas.setDocument(teamresult.getImage());
+		TeamPO teamresult = tc.getTeamData(teamname);
+//		svgCanvas.setDocument(teamresult.getImage());
 		nameresult.setText(teamresult.getName());// 队伍名称
 		nameAbridgeresult.setText(teamresult.getNameAbridge());// 名称缩写
 		addressresult.setText(teamresult.getAddress());// 所在地
@@ -470,16 +465,16 @@ public class TeamPanel extends JPanel {
 		
 		svgCanvas.setOpaque(false);
 		
-		match.setBounds(FrameSize.width/3-20, 20, 10, 10);
-		svgCanvas.setBounds(30, FrameSize.height / 8, FrameSize.width / 4, 120);
-		nameresult.setBounds(50, FrameSize.height / 8 - 50, 100, 30);
+		match.setBounds(FrameSize.width/3-20, FrameSize.height /40, 10, 10);
+		svgCanvas.setBounds(FrameSize.width /40, FrameSize.height / 8, FrameSize.width / 4, 3*FrameSize.height /20);
+		nameresult.setBounds(FrameSize.width /24, FrameSize.height / 8 - 50, 100, 3*FrameSize.height/80 );
 		nameAbridgeresult.setBounds(FrameSize.width / 4,
 				FrameSize.height / 8 - 50, 50, 30);
-		addressresult.setBounds(120, FrameSize.height / 8 + 130, 150, 30);
-		matchArearesult.setBounds(120, FrameSize.height / 8 + 190, 150, 30);
-		playerArearesult.setBounds(120, FrameSize.height / 8 + 250, 150, 30);
-		manageresult.setBounds(120, FrameSize.height / 8 + 310, 150, 30);
-		foundYearresult.setBounds(120, FrameSize.height / 8 + 370, 150, 30);
+		addressresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 130, FrameSize.width /8, 3*FrameSize.height/80);
+		matchArearesult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 190, FrameSize.width /8, 3*FrameSize.height/80);
+		playerArearesult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 250, FrameSize.width /8, 3*FrameSize.height/80);
+		manageresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 310, FrameSize.width /8, 3*FrameSize.height/80);
+		foundYearresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 370, FrameSize.width /8, 3*FrameSize.height/80);
 		
 		match.addActionListener(e->setMatch());
 		
@@ -507,24 +502,25 @@ public class TeamPanel extends JPanel {
 		if (searchField.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, "请输入查找球队的缩写");
 			return;
-		} else if (tc.findTeam(searchField.getText()) == null) {
+		} else if (tc.getTotalTeam(searchField.getText()) == null) {
 			JOptionPane.showMessageDialog(this, "未查到球队信息");
 			return;
 		}
 
 		jScrollPane.setVisible(false);
-		if (dataType.getSelectedItem().equals("赛季总数据")) {
-			tc.setAverage(false);
-		} else {
-			tc.setAverage(true);
-		}
+		
+		TeamMatchVO []teamresult=null;
+		
 		find.setVisible(false);
 		String teamname = searchField.getText();
 		showOne(teamname);
-		TeamVO teamresult = tc.findTeam(teamname);
-		ArrayList<TeamVO> oneteam = new ArrayList<TeamVO>();
-		oneteam.add(teamresult);
-		setTable(oneteam.iterator());
+		if (dataType.getSelectedItem().equals("赛季总数据")) {
+			teamresult[0]=tc.getTotalTeam(teamname);
+		} else {
+			teamresult[0]=tc.getAveTeam(teamname);
+		}
+		
+		setTable(teamresult);
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
