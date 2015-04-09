@@ -160,7 +160,7 @@ public class PlayerQueue {
 			hitNo += hitNo0;
 			handNo += handNo0;
 			threeHitNo +=  threeHitNo0; // 三分命中数
-			threeHandNo += threeHandNo ; // 三分出手数
+			threeHandNo += threeHandNo0 ; // 三分出手数
 			penaltyHitNo += penaltyHitNo0; // 罚球命中数
 			penaltyHandNo += penaltyHandNo0; // 罚球出手数
 			offenseRebs += offenseRebs0; // 进攻篮板数
