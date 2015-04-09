@@ -18,7 +18,8 @@ public class HotPanel extends JPanel {
 
 	JPanel tag = new JPanel();
 	JPanel show = new JPanel();
-
+	int hottype=0;
+	
 	public HotPanel() {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height*7/8);
@@ -57,6 +58,11 @@ public class HotPanel extends JPanel {
 		season_player.setForeground(Color.white);
 		season_team.setForeground(Color.white);
 		fast_player.setForeground(Color.white);
+		
+		today_player.addActionListener(e->hottype=0);
+		season_player.addActionListener(e->hottype=1);
+		season_team.addActionListener(e->hottype=2);
+		fast_player.addActionListener(e->hottype=3);
 
 		tag.add(today_player);
 		tag.add(season_player);
@@ -71,6 +77,7 @@ public class HotPanel extends JPanel {
 				FrameSize.height*7/8- FrameSize.height / 12);
 
 		JComboBox<String> choose;
+		
 		choose = new MyComboBox(new String[] { "得分", "篮板", "助攻", "抢断", "盖帽" });
 		choose.setBounds(10, 50, 80, 30);
 
