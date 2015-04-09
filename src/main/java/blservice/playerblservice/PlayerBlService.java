@@ -10,7 +10,7 @@ import vo.SortType;
 
 public interface PlayerBlService {
 	public PlayerMatchVO[] sortPlayers(PlayerSortBy playerSortBy, SortType sortType);
-	public PlayerMatchVO[] sreenPlayers(char playerPosition, Area playerArea, PlayerSortBy sortBy);
+	public PlayerMatchVO[] sreenPlayers(String playerPosition, Area playerArea, PlayerSortBy sortBy);
 	public PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby);
 	public PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby);
 	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby);

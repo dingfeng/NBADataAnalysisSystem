@@ -32,15 +32,14 @@ public class PlayerController implements PlayerBlService{
 	@Override
 	public PlayerMatchVO[] sortPlayers(PlayerSortBy playerSortBy,
 			SortType sortType) {
-		// TODO Auto-generated method stub
-		return null;
+		return player.sortPlayers(playerSortBy, sortType, 500);
 	}
 
 	@Override
-	public PlayerMatchVO[] sreenPlayers(char playerPosition, Area playerArea,
+	public PlayerMatchVO[] sreenPlayers(String playerPosition, Area playerArea,
 			PlayerSortBy sortBy) {
-		// TODO Auto-generated method stub
-		return null;
+		//默认为前50名
+		return player.sreenPlayers(playerPosition, playerArea, sortBy, 50);
 	}
 
 	@Override
