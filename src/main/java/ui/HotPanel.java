@@ -21,6 +21,20 @@ public class HotPanel extends JPanel {
 
 	JPanel tag = new JPanel();
 	JPanel show = new JPanel();
+	
+	UneditableTextField name_1;
+	UneditableTextField name_2;
+	UneditableTextField name_3;
+	UneditableTextField name_4;
+	UneditableTextField name_5;
+	
+	JLabel portrait_1;
+	JLabel portrait_2;
+	JLabel portrait_3;
+	JLabel portrait_4;
+	JLabel portrait_5;
+	
+	
 	JComboBox<String> choose;
 	TeamController tc = new TeamController();
 	int hottype=0;
@@ -84,41 +98,41 @@ public class HotPanel extends JPanel {
 				"盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分", "罚球", "两双" });
 		choose.setBounds(10, 50, 80, 30);
 
-		JLabel portrait_1 = new JLabel("头像");
+		portrait_1 = new JLabel("头像");
 		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
 		portrait_1.setBackground(FrameSize.buttonbackColor);
 		portrait_1.setOpaque(true);
 		portrait_1.setBounds(FrameSize.width / 3 - 228, 80, 185, 123);
 
-		JLabel portrait_2 = new JLabel("头像");
+		portrait_2 = new JLabel("头像");
 		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
 		portrait_2.setBackground(FrameSize.buttonbackColor);
 		portrait_2.setOpaque(true);
 		portrait_2.setBounds(FrameSize.width / 3 - 100, 240, 57, 46);
 
-		JLabel portrait_3 = new JLabel("头像");
+		portrait_3 = new JLabel("头像");
 		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
 		portrait_3.setBackground(FrameSize.buttonbackColor);
 		portrait_3.setOpaque(true);
 		portrait_3.setBounds(FrameSize.width / 3 - 100, 320, 57, 46);
 
-		JLabel portrait_4 = new JLabel("头像");
+		portrait_4 = new JLabel("头像");
 		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
 		portrait_4.setBackground(FrameSize.buttonbackColor);
 		portrait_4.setOpaque(true);
 		portrait_4.setBounds(FrameSize.width / 3 - 100, 400, 57, 46);
 
-		JLabel portrait_5 = new JLabel("头像");
+		portrait_5 = new JLabel("头像");
 		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
 		portrait_5.setBackground(FrameSize.buttonbackColor);
 		portrait_5.setOpaque(true);
 		portrait_5.setBounds(FrameSize.width / 3 - 100, 480, 57, 46);
 
-		UneditableTextField name_1 = new UneditableTextField();
-		UneditableTextField name_2 = new UneditableTextField();
-		UneditableTextField name_3 = new UneditableTextField();
-		UneditableTextField name_4 = new UneditableTextField();
-		UneditableTextField name_5 = new UneditableTextField();
+		 name_1 = new UneditableTextField();
+		 name_2 = new UneditableTextField();
+		 name_3 = new UneditableTextField();
+		 name_4 = new UneditableTextField();
+		 name_5 = new UneditableTextField();
 
 		name_1.setBounds(FrameSize.width / 3, 80, 200, 80);
 		name_2.setBounds(FrameSize.width / 3, 240, 200, 50);
@@ -173,17 +187,12 @@ public class HotPanel extends JPanel {
 
 	}
 
+
 	void showchoose(int type) {
 		hottype=type;
 		choose.setVisible(false);
 		switch (type) {
 		case 3:
-			choose = new MyComboBox(new String[] { "得分", "篮板", "助攻",
-					"得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分",
-					"罚球", "两双" });
-			choose.addActionListener(e->showMessage_player());
-			break;
-		default:
 			choose = new MyComboBox(new String[] { "球队名称", "比赛场数", "投篮命中数",
 					"投篮出手次数", "三分命中数", "三分出手数", "罚球命中数", "罚球出手数", "进攻篮板数",
 					"防守篮板数", "篮板数", "助攻数", "抢断数", "盖帽数", "失误数", "犯规数", "比赛得分",
@@ -191,8 +200,15 @@ public class HotPanel extends JPanel {
 					"进攻篮板效率", "防守篮板效率", "抢断效率", "助攻率" });
 			choose.addActionListener(e->showMessage_team());
 			break;
+		default:
+			choose = new MyComboBox(new String[] { "得分", "篮板", "助攻",
+					"得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分",
+					"罚球", "两双" });
+			choose.addActionListener(e->showMessage_player());
+			
+			break;
 		}
-		choose.setBounds(10, 50, 80, 30);
+		choose.setBounds(10, 50, 150, 30);
 		choose.repaint();
 		choose.setVisible(true);
 		show.add(choose);
@@ -200,6 +216,7 @@ public class HotPanel extends JPanel {
 		this.repaint();
 	}
 
+	
 	void showMessage_player() {
 		
 
@@ -211,7 +228,6 @@ public class HotPanel extends JPanel {
 
 	/** 赛季热点球队 */
 	void showMessage_team() {
-
 		TeamSortBy teamSortBy = null;
 		String sortby = (String) choose.getSelectedItem();
 		if (sortby.equals("球队名称")) {
@@ -273,12 +289,15 @@ public class HotPanel extends JPanel {
 		}
 
 		TeamMatchVO[] hotteam = tc.getHotTeams(teamSortBy);
-
-		choose.setBounds(10, 50, 80, 30);
-		show.remove(choose);
-		choose.repaint();
-		choose.setVisible(true);
-		show.add(choose);
+		
+		name_1.setText(hotteam[0].getName());
+		name_2.setText(hotteam[1].getName());
+		name_3.setText(hotteam[2].getName());
+		name_4.setText(hotteam[3].getName());
+		name_5.setText(hotteam[4].getName());
+		
+		
+		
 		show.repaint();
 		this.repaint();
 	}
