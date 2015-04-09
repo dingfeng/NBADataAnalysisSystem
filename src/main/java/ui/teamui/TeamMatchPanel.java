@@ -17,7 +17,7 @@ import ui.mainui.MyTable;
 public class TeamMatchPanel extends JPanel{
 
 	
-	public TeamMatchPanel() {
+	public TeamMatchPanel(String teamname) {
 		this.setLayout(null);
 		this.setBounds(FrameSize.width / 3, FrameSize.height / 12,
 				2 * FrameSize.width / 3, FrameSize.height*7/8- FrameSize.height / 12);
