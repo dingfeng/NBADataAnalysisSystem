@@ -24,10 +24,10 @@ public class TeamTest {
 	public void testGetAllTotalTeams()
 	{
 		TeamMatchVO[]  totalTeams =  team.getAllTotalTeams();
-		for (int i = 0 ;i < totalTeams.length; i++)
-		{
-			System.out.println(totalTeams[i]);
-		}
+//		for (int i = 0 ;i < totalTeams.length; i++)
+//		{
+//			System.out.println(totalTeams[i]);
+//		}
 		assertEquals(totalTeams.length, 30);
 	}
 
@@ -35,10 +35,10 @@ public class TeamTest {
 	public void testGetAllAveTeams() 
 	{
 		TeamMatchVO[]  totalTeams =  team.getAllAveTeams();
-		for (int i = 0 ;i < totalTeams.length; i++)
-		{
-			System.out.println(totalTeams[i]);
-		}
+//		for (int i = 0 ;i < totalTeams.length; i++)
+//		{
+//			System.out.println(totalTeams[i]);
+//		}
 		assertEquals(totalTeams.length, 30);
 	}
 
@@ -46,10 +46,10 @@ public class TeamTest {
 	public void testGetHotTeams()
 	{
 		TeamMatchVO[] hotTeams =  team.getHotTeams(TeamSortBy.assistNo);
-		for (int i = 0;i < hotTeams.length; i++)
-		{
-			System.out.println(hotTeams[i]);
-		}
+//		for (int i = 0;i < hotTeams.length; i++)
+//		{
+//			System.out.println(hotTeams[i]);
+//		}
 		assertEquals(hotTeams.length, 5);
 	}
 
@@ -88,12 +88,12 @@ public class TeamTest {
 	public void testFuzzilyFindAve() {
 		System.out.println("test: testFuzzilyFindAve");
 		Iterator<TeamMatchVO> teamItr =	team.fuzzilyFindAve("M");
-		while (teamItr.hasNext())
-		{
-			TeamMatchVO teamvo = teamItr.next();
-			System.out.println(teamvo.toString());
-		}
-		System.out.println("test end !");
+//		while (teamItr.hasNext())
+//		{
+//			TeamMatchVO teamvo = teamItr.next();
+//			System.out.println(teamvo.toString());
+//		}
+//		System.out.println("test end !");
 	}
 
 	@Test

@@ -6,6 +6,7 @@ import vo.PlayerMatchVO;
 import vo.PlayerVO;
 
 public class PlayerQueue {
+	private final static double MIN_DOUBLE = -1000;
     private MatchPlayerPO[] match_datas;
     private int len = -1;
     private String name;
@@ -285,9 +286,15 @@ public class PlayerQueue {
 		double scoring_rebound_assist = (points + rebs + help) / 3;// 得分/篮板/助攻（加权比1：1：1）
 		
 		double matchNO = len +  1;
-		double points_uprate = (points2 / (len -4) - points1 / 5) / (points1 / 5);
-		double rebs_uprate = (rebs2 / (len - 4) - rebs1 / 5) / (rebs1 / 5);
-		double help_uprate = (help2 / (len - 4) - help1 / 5) / (help1 / 5);
+		double points_uprate = MIN_DOUBLE;
+		double rebs_uprate = MIN_DOUBLE;
+		double help_uprate = MIN_DOUBLE;
+		if (len > 4)
+		{
+		 points_uprate = (points2 / 5 - points1 / (len -4)) / (points1 / (len - 4));
+		 rebs_uprate = (rebs2 / 5 - rebs1 / (len -4)) / (rebs1 / (len - 4));
+		 help_uprate = (help2 / 5 - help1 / (len -4)) / (help1 / (len - 4));
+		}
 		playervo_total = new  PlayerMatchVO(  name,  teamname,  len + 1,
 				 firstServiceNo,  rebs,  help,  time,
 				 hitRate,  threeHitRate,  penaltyHitRate,

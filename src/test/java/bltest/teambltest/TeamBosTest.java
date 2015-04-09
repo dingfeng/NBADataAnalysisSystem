@@ -7,7 +7,8 @@ import org.junit.Test;
 import vo.TeamMatchVO;
 import bl.teambl.Team;
 
-public class TeamBosTest {
+public class TeamBosTest 
+{
 
 	@Test
 	public void test()

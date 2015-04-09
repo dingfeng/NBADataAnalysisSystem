@@ -45,7 +45,6 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	private double help_uprate; //助攻提升率
 	
 	private SortBy sortby;
-	
 	private SortType type;
 	public PlayerMatchVO(String name, String team, int matchNo,
 			double firstServiceNo, double rebs, double assistNo, double time,
@@ -238,6 +237,53 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	public double getHelp_uprate() {
 		return help_uprate;
 	}
+	
+	public String toString()
+	{
+		StringBuilder sb = new StringBuilder();
+		  sb.append("name : "+name);// 球员名称
+		  sb.append(" team : "+team);// 所属球队
+		  sb.append("matchNo : "+matchNo);// 参赛场数
+		  sb.append("firstServiceNo : "+firstServiceNo);// 先发场数
+		  sb.append("rebs : "+rebs);// 篮板数
+		  sb.append("assistNo : "+assistNo);// 助攻数
+		  sb.append("time : "+time);// 在场时间
+		  sb.append("hitRate : "+hitRate);// 投篮命中率
+		  sb.append("threeHitRate : "+threeHitRate);// 三分命中率
+		  sb.append("penaltyHitRate : "+penaltyHitRate);// 罚球命中率
+		  sb.append( "offendRebsNo : "+offendRebsNo);// 进攻篮板数
+		  sb.append("defenceRebsNo : "+defenceRebsNo);// 防守篮板数
+		  sb.append( "stealsNo : "+stealsNo);// 抢断数
+		  sb.append("blockNo : "+blockNo);// 盖帽数
+		  sb.append( "mistakesNo : "+mistakesNo);// 失误数
+		  sb.append("foulsNo : "+foulsNo);// 犯规数
+		  sb.append( "points : "+points);// 得分
+		  sb.append("efficiency : "+efficiency);// 效率
+		  sb.append("GmScEfficiency : "+GmScEfficiency);// GmSc效率值
+		  sb.append( "trueHitRate : "+trueHitRate);// 真实命中率
+		  sb.append("hitEfficiency : "+hitEfficiency);// 投篮效率
+		  sb.append( "rebEfficiency : "+rebEfficiency);// 篮板率
+		  sb.append("offenseRebsEfficiency : "+offenseRebsEfficiency);// 进攻篮板率
+		  sb.append("defenceRebsEfficiency : "+defenceRebsEfficiency);// 防守篮板率
+		  sb.append("assistEfficiency : "+assistEfficiency);// 助攻率
+		  sb.append(" stealsEfficiency : "+stealsEfficiency);// 抢断率
+		  sb.append( "blockEfficiency : "+blockEfficiency);// 盖帽率
+		  sb.append( "mistakeEfficiency : "+mistakeEfficiency);// 失误率
+		  sb.append("useEfficiency : "+useEfficiency);// 使用率
+		
+		  sb.append( "scoring_rebound_assist : "+scoring_rebound_assist);//得分/篮板/助攻（加权比1：1：1）
+		  sb.append(  "minute : "+minute);//分钟
+		  sb.append( "handNo : "+handNo);//投篮
+		  sb.append( "three_points : "+three_points);//三分
+		  sb.append( "penaltyHandNo : "+penaltyHandNo);//罚球
+		  sb.append(  "twoPair : "+twoPair);//两双
+		
+		  sb.append( "points_uprate : "+points_uprate); //得分提升率
+		  sb.append( "rebs_uprate : "+rebs_uprate); //篮板提升率
+		  sb.append( "help_uprate : "+help_uprate); //助攻提升率
+		  return sb.toString();
+	}
+	
 	@Override
 	public int compareTo(PlayerMatchVO arg0) {
 		return sortby.compareTo(arg0.getSortby());
