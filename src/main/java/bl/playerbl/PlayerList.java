@@ -14,6 +14,7 @@ import po.MatchesPO;
 import po.PlayerPO;
 import vo.PlayerMatchVO;
 import vo.PlayerSortBy;
+import vo.PlayerVO;
 import vo.SortType;
 import dataservice.playerdataservice.PlayerDataService;
 
@@ -99,6 +100,11 @@ public class PlayerList {
 		// 数据正常添加完毕，返回true
 		return true;
 	}
+	
+	public PlayerVO findPlayerInfo(String name){
+		Player result = players.get(name.hashCode());
+		return result.toVo();
+	}
 
 	/**
 	 * 得到当日热点球员
@@ -139,6 +145,8 @@ public class PlayerList {
 	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby) {
 		return null;
 	}
+	
+	//public PlayerMatchVO[] sortPlayers
 
 	/**
 	 * 得到player的最新对象
