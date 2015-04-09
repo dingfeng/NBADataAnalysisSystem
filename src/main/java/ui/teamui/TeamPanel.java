@@ -174,7 +174,7 @@ public class TeamPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					showOne((String) mytable.getModel().getValueAt(
-							mytable.getSelectedRow(), 1));
+							mytable.getSelectedRow(), 0));
 				}
 			}
 
@@ -506,7 +506,7 @@ public class TeamPanel extends JPanel {
 
 		jScrollPane.setVisible(false);
 		
-		TeamMatchVO []teamresult = null;
+		TeamMatchVO []teamresult = new TeamMatchVO [1];
 		
 		find.setVisible(false);
 		String teamname = searchField.getText();
