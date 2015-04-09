@@ -94,14 +94,20 @@ public class Team implements  Teamblservice
 			{
 				for ( int i = 0; i < this.teams.length; i++)
 				{
-					team_ms[i] = getAveTeam(this.teams[i].getNameAbridge());
+					String teamname = this.teams[i].getNameAbridge();
+					if (teamname.equals("NOP"))
+						teamname = "NOH";
+					team_ms[i] = getAveTeam(teamname);
 				}
 			}
 			else 
 			{
 				for (int i = this.teams.length - 1; i >= 0; --i)
 				{
-					team_ms[i-this.teams.length+1] = getAveTeam(this.teams[i].getNameAbridge());
+					String teamname = this.teams[i].getNameAbridge();
+					if (teamname.equals("NOP"))
+						teamname = "NOH";
+					team_ms[this.teams.length-1-i] = getAveTeam(teamname);
 				}
 			}
 			return team_ms;
@@ -126,14 +132,20 @@ public class Team implements  Teamblservice
 			{
 				for ( int i = 0; i < this.teams.length; i++)
 				{
-					team_ms[i] = getTotalTeam(this.teams[i].getNameAbridge());
+					String teamname = this.teams[i].getNameAbridge();
+					if (teamname.equals("NOP"))
+						teamname = "NOH";
+					team_ms[i] = getTotalTeam(teamname);
 				}
 			}
 			else 
 			{
 				for (int i = this.teams.length - 1; i >= 0; --i)
 				{
-					team_ms[i-this.teams.length+1] = getTotalTeam(this.teams[i].getNameAbridge());
+					String teamname = this.teams[i].getNameAbridge();
+					if (teamname.equals("NOP"))
+						teamname = "NOH";
+					team_ms[this.teams.length-1-i] = getTotalTeam(teamname);
 				}
 			}
 			return team_ms;
