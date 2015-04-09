@@ -109,8 +109,8 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("所属球队");
 		columnsName.add("参赛场数");
 		columnsName.add("先发场数");
-		columnsName.add("篮板数");
-		columnsName.add("助攻数");
+		columnsName.add("篮板");
+		columnsName.add("助攻");
 		columnsName.add("在场时间");
 
 		columnsName.add("盖帽数");
@@ -125,18 +125,18 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("两双");
 
 		
-		columnsName.add("投篮命中率(%)");
-		columnsName.add("三分命中率(%)");
-		columnsName.add("罚球命中率(%)");
-		columnsName.add("进攻数");
-		columnsName.add("防守数");
-		columnsName.add("抢断数");
-		columnsName.add("盖帽数");
-		columnsName.add("失误数");
-		columnsName.add("犯规数");
+		columnsName.add("投篮(%)");
+		columnsName.add("三分(%)");
+		columnsName.add("罚球(%)");
+		columnsName.add("进攻");
+		columnsName.add("防守");
+		columnsName.add("抢断");
+		columnsName.add("盖帽");
+		columnsName.add("失误");
+		columnsName.add("犯规");
 		columnsName.add("得分");
 		columnsName.add("效率");
-		columnsName.add("GmSc效率值");
+		columnsName.add("GmSc效率");
 		columnsName.add("真实命中率(%)");
 		columnsName.add("投篮效率");
 		columnsName.add("篮板率");
