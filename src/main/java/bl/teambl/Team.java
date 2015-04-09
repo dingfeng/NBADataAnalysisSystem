@@ -35,6 +35,7 @@ public class Team implements  Teamblservice
 		teamData = factory.getTeamData();
 	    po_map = new TIntObjectHashMap<TeamPO>();
 	    teams = teamData.getAllTeamData();
+	    Arrays.sort(teams);
 	    for (TeamPO po : teams)
 	    {
 	    	po_map.put(po.getNameAbridge().hashCode(), po);
@@ -87,6 +88,25 @@ public class Team implements  Teamblservice
 		TeamQueue[] teams = new TeamQueue[team_map.size()];
 		team_map.values(teams);
 		TeamMatchVO[] team_ms = new TeamMatchVO[TEAM_NUM];
+		if (sortby == TeamSortBy.name)
+		{
+			if (type == SortType.ASEND)
+			{
+				for ( int i = 0; i < this.teams.length; i++)
+				{
+					team_ms[i] = getAveTeam(this.teams[i].getNameAbridge());
+				}
+			}
+			else 
+			{
+				for (int i = this.teams.length - 1; i >= 0; --i)
+				{
+					team_ms[i-this.teams.length+1] = getAveTeam(this.teams[i].getNameAbridge());
+				}
+			}
+			return team_ms;
+		}
+		
 		for (int i = 0; i < TEAM_NUM; i++)
 		{
 			team_ms[i] = teams[i].getTeamvoAverage();
@@ -100,6 +120,25 @@ public class Team implements  Teamblservice
 		TeamQueue[] teams = new TeamQueue[team_map.size()];
 		team_map.values(teams);
 		TeamMatchVO[] team_ms = new TeamMatchVO[TEAM_NUM];
+		if (sortby == TeamSortBy.name)
+		{
+			if (type == SortType.ASEND)
+			{
+				for ( int i = 0; i < this.teams.length; i++)
+				{
+					team_ms[i] = getTotalTeam(this.teams[i].getNameAbridge());
+				}
+			}
+			else 
+			{
+				for (int i = this.teams.length - 1; i >= 0; --i)
+				{
+					team_ms[i-this.teams.length+1] = getTotalTeam(this.teams[i].getNameAbridge());
+				}
+			}
+			return team_ms;
+		}
+		
 		for (int i = 0; i < TEAM_NUM; i++)
 		{
 			team_ms[i] = teams[i].getTeamvoTotal();

@@ -62,6 +62,20 @@ public class TeamTest {
 	@Test
 	public void testGetSortedTotalTeams() {
 		TeamMatchVO[] sortedTotalTeams = team.getSortedTotalTeams(TeamSortBy.blockNo, SortType.DESEND);
+		double temp = 0;
+		boolean result = true;
+		for (TeamMatchVO vo : sortedTotalTeams)
+		{
+			if (temp == 0)
+				temp = vo.getBlockNo();
+			if (temp < vo.getBlockNo())
+			{
+				result = false;
+			}
+			temp = vo.getBlockNo();
+			System.out.println(vo.getBlockNo());
+		}
+		assertEquals(result, true);
 	}
 
 	@Test
@@ -71,12 +85,14 @@ public class TeamTest {
 
 	@Test
 	public void testGetTotalTeam() {
-		TeamMatchVO totalTeam = team.getTotalTeam("LAL");
+		TeamMatchVO totalTeam = team.getTotalTeam("MIN");
+		System.out.println("totalTeam : "+totalTeam.toString());
 	}
 
 	@Test
 	public void testGetAveTeam() {
 		TeamMatchVO aveTeam = team.getAveTeam("LAL");
+		System.out.println(aveTeam.toString());
 	}
 
 	@Test
