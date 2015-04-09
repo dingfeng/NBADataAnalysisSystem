@@ -33,7 +33,7 @@ public class MyFrame extends JFrame {
 	JPanel frame = new JPanel()
 	{
 		protected void paintComponent(Graphics g) {  
-            java.awt.Image img = Toolkit.getDefaultToolkit().getImage("image/NBAbackground.png");  
+            java.awt.Image img = Toolkit.getDefaultToolkit().getImage("image/NBAbackground1.png");  
             g.drawImage(img, 0, 0, this.getWidth(),this.getHeight(),this);  
             java.awt.Image gif = Toolkit.getDefaultToolkit().getImage("image/activebasketball.gif");
             g.drawImage(gif, 100, 100, this);
