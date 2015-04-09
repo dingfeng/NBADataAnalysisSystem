@@ -68,15 +68,20 @@ public class Team implements  Teamblservice
 	
 	public  TeamMatchVO[] getHotTeams(TeamSortBy sortby)
 	{
+		 return getHotTeams(sortby,5);
+	}
+     
+	public TeamMatchVO[] getHotTeams(TeamSortBy sortby, int num)
+	{
 		TeamMatchVO[] teams = getSortedAveTeams(sortby,SortType.DESEND);
-        TeamMatchVO[] result = new TeamMatchVO[5];
-        for (int i = 0; i < 5; i++)
+        TeamMatchVO[] result = new TeamMatchVO[num];
+        for (int i = 0; i < num; i++)
         {
         	result[i] = teams[i];
         }
 		return result;
 	}
-     
+	
 	public TeamMatchVO[] getSortedAveTeams(TeamSortBy sortby, SortType type)
 	{
 		TeamQueue[] teams = new TeamQueue[team_map.size()];

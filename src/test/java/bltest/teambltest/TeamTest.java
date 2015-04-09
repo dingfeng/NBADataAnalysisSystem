@@ -2,6 +2,8 @@ package bltest.teambltest;
 
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -84,7 +86,14 @@ public class TeamTest {
 
 	@Test
 	public void testFuzzilyFindAve() {
-		team.fuzzilyFindAve("a");
+		System.out.println("test: testFuzzilyFindAve");
+		Iterator<TeamMatchVO> teamItr =	team.fuzzilyFindAve("M");
+		while (teamItr.hasNext())
+		{
+			TeamMatchVO teamvo = teamItr.next();
+			System.out.println(teamvo.toString());
+		}
+		System.out.println("test end !");
 	}
 
 	@Test
