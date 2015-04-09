@@ -15,6 +15,7 @@ public class MatchTeamPO {
     	   this.scores = scores;
     	   this.totalScores = totalScores;
     	   this.name = name;
+    	   this.time = time;
        }
     public int getTime()
     {

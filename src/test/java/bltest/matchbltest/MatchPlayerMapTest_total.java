@@ -18,8 +18,8 @@ public class MatchPlayerMapTest_total {
 		player_map.values(players);
 		for (PlayerQueue q : players)
 		{
-			if(q.getName().equals("Kobe Bryant"))
-			   System.out.println(q.getTotalPlayer());
+//			if(q.getName().equals("Kobe Bryant"))
+			   System.out.println(q.getTotalPlayer().getBlockEfficiency());
 		}
 	}
 

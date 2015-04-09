@@ -77,9 +77,9 @@ public class Match
 		int key = -1;
         PlayerQueue q = null;
         int rebs1 = 0, totalHit1 = 0,   teamHand1 = 0,  teamPenalty1 = 0,  teamMistakes1 = 0,   rebs11 = 0;
-        int  penaltyHandNo1 = 0, offenseRebs1 = 0, defenceRebs1 = 0, hitNo1 = 0;
+        int  penaltyHandNo1 = 0, offenseRebs1 = 0, defenceRebs1 = 0, hitNo1 = 0, threeHand1 = 0;
         int rebs2 = 0, totalHit2 = 0, teamHand2 = 0, teamPenalty2 = 0, teamMistakes2 = 0, rebs22 = 0;
-        int  penaltyHandNo2 = 0, offenseRebs2 = 0, defenceRebs2 = 0, hitNo2 = 0;
+        int  penaltyHandNo2 = 0, offenseRebs2 = 0, defenceRebs2 = 0, hitNo2 = 0, threeHand2 = 0;
         
 //        handNo0 + 0.4 * penaltyHandNo0 -
 //		1.07 * (1.0 * offenseRebs0/(offenseRebs0+defenceRebs0)*(handNo0-hitNo0))
@@ -87,6 +87,7 @@ public class Match
         
         for (MatchPlayerPO p : player_team1)
         {
+        	threeHand1 += p.getThreeHandNo();
         	rebs1 += p.getRebs();
         	totalHit1 += p.getHitNo();
         	teamHand1 += p.getHandNo();
@@ -101,6 +102,7 @@ public class Match
         
         for (MatchPlayerPO p : player_team2)
         {
+        	threeHand2 += p.getThreeHandNo();
         	rebs2 += p.getRebs();
         	totalHit2 += p.getHitNo();
         	teamHand2 += p.getHandNo();
@@ -137,13 +139,13 @@ public class Match
             }
             if (count <= 5)
             	firstServiceNO = 1;
-            q.enqueue(match,p, team1.getName(), team1.getTime(), rebs2, totalHit1, attackNO1, teamHand1, teamPenalty1, teamMistakes1, firstServiceNO, rebs1, team1.getName(), team2.getName(), match.getDate());
+            q.enqueue(match,p, team1.getName(),teamHand2-threeHand2, team1.getTime(), rebs2, totalHit1, attackNO1, teamHand1, teamPenalty1, teamMistakes1, firstServiceNO, rebs1, team1.getName(), team2.getName(), match.getDate());
         	q.update();
         }
         
         count = 0;
         for (MatchPlayerPO p : player_team2)
-      {
+        {
         	++count;
         	firstServiceNO = 0;
             key = p.getName().hashCode();
@@ -158,7 +160,7 @@ public class Match
             }
             if (count <= 5)
             	firstServiceNO = 1;
-        	q.enqueue(match,p, team2.getName(), team2.getTime(), rebs1, totalHit2, attackNO2, teamHand2, teamPenalty2, teamMistakes2, firstServiceNO, rebs2, team1.getName(), team2.getName(), match.getDate());
+        	q.enqueue(match,p, team2.getName(), teamHand1 - threeHand1,team2.getTime(), rebs1, totalHit2, attackNO2, teamHand2, teamPenalty2, teamMistakes2, firstServiceNO, rebs2, team1.getName(), team2.getName(), match.getDate());
         	q.update();
         }
 	}
