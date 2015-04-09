@@ -82,23 +82,19 @@ public class TeamTest {
 	@Test
 	public void testGetTeamData() {
 		TeamPO po = team.getTeamData("LAL");
+		System.out.println(po.toString());
 	}
 
 	@Test
 	public void testFuzzilyFindAve() {
 		System.out.println("test: testFuzzilyFindAve");
-		Iterator<TeamMatchVO> teamItr =	team.fuzzilyFindAve("M");
+		Iterator<String> teamItr =	team.fuzzilyFind("M");
 //		while (teamItr.hasNext())
 //		{
 //			TeamMatchVO teamvo = teamItr.next();
 //			System.out.println(teamvo.toString());
 //		}
 //		System.out.println("test end !");
-	}
-
-	@Test
-	public void testFuzzilyFindTotal() {
-		team.fuzzilyFindTotal("b");
 	}
 
 }
