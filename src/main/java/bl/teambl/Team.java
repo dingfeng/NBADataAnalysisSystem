@@ -286,44 +286,18 @@ public class Team implements  Teamblservice
 		"Jazz",
 		"Wizards"
 			};
-	@Override
-	public Iterator<TeamMatchVO> fuzzilyFindAve(String info) {
-		LinkedList<TeamPO>  team_list = new LinkedList<TeamPO>();
-		LinkedList<TeamMatchVO> team_match_list = new LinkedList<TeamMatchVO>();
+	
+	public Iterator<String> fuzzilyFind(String info) {
+		LinkedList<String>  team_list = new LinkedList<String>();
 		for (TeamPO team : teams)
 		{
 			if (team.getName().startsWith(info))
 			{
-				team_list.add(team);
+				team_list.add(team.getName());
 			}
 		}
-        Iterator<TeamPO> poItr = team_list.iterator();
-        while (poItr.hasNext())
-        {
-        	TeamPO t = poItr.next();
-        	team_match_list.add(getAveTeam(t.getNameAbridge()));
-        }
-		return team_match_list.iterator();
+		return team_list.iterator();
 	}
 
-	@Override
-	public Iterator<TeamMatchVO> fuzzilyFindTotal(String info) {
-		LinkedList<TeamPO>  team_list = new LinkedList<TeamPO>();
-		LinkedList<TeamMatchVO> team_match_list = new LinkedList<TeamMatchVO>();
-		for (TeamPO team : teams)
-		{
-			if (team.getName().startsWith(info))
-			{
-				team_list.add(team);
-			}
-		}
-        Iterator<TeamPO> poItr = team_list.iterator();
-        while (poItr.hasNext())
-        {
-        	TeamPO t = poItr.next();
-        	team_match_list.add(getTotalTeam(t.getNameAbridge()));
-        }
-		return team_match_list.iterator();
-	}
 
 }

@@ -12,46 +12,41 @@ import vo.TeamVO;
 
 public class TeamController implements Teamblservice{
     Team team = new Team();
-	@Override
+    //获得热门对球队
 	public TeamMatchVO[] getHotTeams(TeamSortBy sortby) {
 		return team.getHotTeams(sortby);
 	}
 
-	@Override
+	//获得场均排序后的球队
 	public TeamMatchVO[] getSortedAveTeams(TeamSortBy sortby, SortType type) {
 		return team.getSortedAveTeams(sortby, type);
 	}
-
+    
+	//获得赛季数据排序后的球队
 	public TeamMatchVO[] getSortedTotalTeams(TeamSortBy sortby , SortType type)
 	{
 		return team.getSortedTotalTeams(sortby, type);
 	}
-	@Override
+	//获得该球队的所有球员名
 	public String[] getPlayers(String team) {
 		return  this.team.getPlayers(team);
 	}
 
-	@Override
+	//获得该球队的赛季数据
 	public TeamMatchVO getTotalTeam(String teamname) {
 		return this.team.getTotalTeam(teamname);
 	}
 
-	@Override
+	//获得该球队的场均数据
 	public TeamMatchVO getAveTeam(String teamname) {
 		return this.getAveTeam(teamname);
 	}
 
-	@Override
-	public Iterator<TeamMatchVO> fuzzilyFindAve(String info) {
-		return this.team.fuzzilyFindAve(info);
+	//模糊查找该球队的场均数据
+	public Iterator<String> fuzzilyFind(String info) {
+		return this.team.fuzzilyFind(info);
 	}
-
-	@Override
-	public Iterator<TeamMatchVO> fuzzilyFindTotal(String info) {
-		return this.team.fuzzilyFindTotal(info);
-	}
-
-	@Override
+	//获得球队的基本信息
 	public TeamPO getTeamData(String team) {
 		return this.team.getTeamData(team);
 	}

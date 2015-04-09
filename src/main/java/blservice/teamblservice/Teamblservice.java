@@ -17,7 +17,6 @@ public interface Teamblservice
 	public String[] getPlayers(String team);
 	public TeamMatchVO getTotalTeam(String teamname);
 	public  TeamMatchVO getAveTeam(String teamname);
-	public Iterator<TeamMatchVO> fuzzilyFindAve(String info);
-	public Iterator<TeamMatchVO> fuzzilyFindTotal(String info);
+	public Iterator<String> fuzzilyFind(String info);
 	public TeamPO getTeamData(String team);
 }

@@ -18,8 +18,6 @@ public interface Matchblservice
 	public MatchesPO[] getRecentTeamMatches(String teamName, int num);
 	public MatchesPO[] getPlayerMatches(String playername);
 	public MatchesPO[] getTeamMatches(String teamname);
-    public TIntObjectMap<TeamQueue> getTeam_map();
-    public TIntObjectMap<PlayerQueue> getPlayer_map();
     public MatchesPO[] getTimeMatches(Date date1, Date date2);
      
 }
