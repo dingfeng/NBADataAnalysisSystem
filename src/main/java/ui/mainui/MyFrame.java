@@ -74,6 +74,11 @@ public class MyFrame extends JFrame {
 		frame.setBackground(new Color(0, 0, 0, 0));
 		
 		mainpanel.setBounds(0, FrameSize.height/8, FrameSize.width, FrameSize.height*7/8);
+		mainpanel.setLayout(card);
+//		mainpanel.add(playerpanel,"player");
+		mainpanel.add(teampanel,"team");
+		mainpanel.add(matchpanel,"match");
+		mainpanel.add(hotpanel,"hot");
 		mainpanel.setOpaque(false);
 		setExit();
 		setMini();
@@ -139,35 +144,19 @@ public class MyFrame extends JFrame {
 	}
 	
 	void setPlayer(){
-		mainpanel.remove(teampanel);
-		mainpanel.remove(matchpanel);
-		mainpanel.remove(hotpanel);
-		mainpanel.add(playerpanel);
-		mainpanel.repaint();
+		card.show(mainpanel, "player");
 	}
 	
 	void setTeam(){
-//		mainpanel.remove(playerpanel);
-		mainpanel.remove(matchpanel);
-		mainpanel.remove(hotpanel);
-		mainpanel.add(teampanel);
-		mainpanel.repaint();
+		card.show(mainpanel, "team");
 	}
 	
 	void setHot(){
-//		mainpanel.remove(playerpanel);
-		mainpanel.remove(teampanel);
-		mainpanel.remove(matchpanel);
-		mainpanel.add(hotpanel);
-		mainpanel.repaint();
+		card.show(mainpanel, "hot");
 	}
 	
 	void setMatch(){
-//		mainpanel.remove(playerpanel);
-		mainpanel.remove(teampanel);
-		mainpanel.remove(hotpanel);
-		mainpanel.add(matchpanel);
-		mainpanel.repaint();
+		card.show(mainpanel, "match");
 	}
 	
 	void setExit(){
