@@ -17,7 +17,7 @@ import po.MatchPlayerPO;
 import po.MatchTeamPO;
 import po.MatchesPO;
 
-public class Match implements Matchblservice
+public class Match 
 {
    private	MatchDataService match_data;
    private	TIntObjectMap<TeamQueue> team_map;
