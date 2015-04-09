@@ -367,4 +367,19 @@ public class PlayerQueue {
 		}
 		return temp_matches;
 	}
+	
+	/**
+	 * 得到该球员最近num场数据
+	 * @param num
+	 * @return
+	 */
+	public MatchPlayerPO[] getRecentPlayerInfo(int num){
+		if (matchlen == -1) return null;
+		int size = (num < matchlen+1) ? num : (matchlen + 1);
+		MatchPlayerPO[] temp_MatchPlayers = new MatchPlayerPO[size];
+		for(int i = 0; i < size; i ++){
+			temp_MatchPlayers[i] = match_datas[i];
+		}
+		return temp_MatchPlayers;
+	}
 }
