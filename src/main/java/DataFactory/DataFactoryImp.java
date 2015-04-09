@@ -1,7 +1,6 @@
 package DataFactory;
 
 import data.matchdata.MatchData;
-import data.matchdata.MatchData_old;
 import data.playerdata.PlayerData;
 import data.playerdata.PlayerData_old;
 import data.teamdata.TeamData;
@@ -23,7 +22,7 @@ public class DataFactoryImp implements NBADataFactory
 		dataSource = dataSource0;
 	}
 	private DataFactoryImp(){}
-	public static NBADataFactory instance()
+	public static NBADataFactory  instance()
 	{
 		if (dataSource == null)
 		{

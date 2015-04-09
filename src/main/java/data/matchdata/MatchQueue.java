@@ -36,7 +36,8 @@ public class MatchQueue
  
  public void enQueue(MatchesPO match)
  {
-	 matches[++lenth] = match; 
+	 if (match.getTeam1().getPlayers().length != 0)
+	  matches[++lenth] = match; 
  }
  
  
