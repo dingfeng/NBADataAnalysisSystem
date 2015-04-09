@@ -36,7 +36,7 @@ public class MatchData  implements MatchDataService
   public MatchData(){}
   public  MatchData(String path)
   {
-	  matchesPath = path + "/matches";
+	  matchesPath = path  ;
 	  file = new File(matchesPath);
 	  matches = new MatchQueue();
 	  initData();

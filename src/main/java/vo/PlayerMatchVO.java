@@ -13,8 +13,8 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	private double hitRate;// 投篮命中率
 	private double threeHitRate;// 三分命中率
 	private double penaltyHitRate;// 罚球命中率
-	private double offendNo;// 进攻数
-	private double defenceNo;// 防守数
+	private double offendRebsNo;// 进攻篮板数
+	private double defenceRebsNo;// 防守篮板数
 	private double stealsNo;// 抢断数
 	private double blockNo;// 盖帽数
 	private double mistakesNo;// 失误数
@@ -33,37 +33,41 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	private double mistakeEfficiency;// 失误率
 	private double useEfficiency;// 使用率
 	
-	private double block;//盖帽
 	private double scoring_rebound_assist;//得分/篮板/助攻（加权比1：1：1）
-	private Area playerArea; // 
-	private double assist;//助攻
-	private double rebound;//篮板
-	private double steal;//抢断
-	private double foul;//犯规
-	private double mistake;//失误
 	private double minute;//分钟
-    private double shot;//投篮
+    private double handNo;//投篮
     private double three_points;//三分
-    private double freeThrow;//罚球
+    private double penaltyHandNo;//罚球
 	private double twoPair;//两双
+	
+	private double points_uprate; //得分提升率
+	private double rebs_uprate; //篮板提升率
+	private double help_uprate; //助攻提升率
 	
 	private SortBy sortby;
 	
+	private SortType type;
 	public PlayerMatchVO(String name, String team, int matchNo,
 			double firstServiceNo, double rebs, double assistNo, double time,
 			double hitRate, double threeHitRate, double penaltyHitRate,
-			double offendNo, double defenceNo, double stealsNo, double blockNo,
-			double mistakesNo, double foulsNo, double points,
+			double offendRebsNo, double defenceRebsNo, double stealsNo, double blockNo,
+			double mistakesNo, double foulsNo, double points,double points_uprate, double rebs_uprate, double help_uprate,
 			double efficiency, double gmScEfficiency, double trueHitRate,
 			double hitEfficiency, double rebEfficiency,
 			double offenseRebsEfficiency, double defenceRebsEfficiency,
 			double assistEfficiency, double stealsEfficiency,
 			double blockEfficiency, double mistakeEfficiency,
-			double useEfficiency, double block, double scoring_rebound_assist,
-			Area playerArea, double assist, double rebound, double steal,
-			double foul, double mistake, double minute, double shot,
-			double three_points, double freeThrow, double twoPair, SortBy sortby) {
+			double useEfficiency,  double scoring_rebound_assist,
+			double penaltyHandNo,
+			double minute, double handNo,
+			double three_points,  double twoPair) {
 		super();
+		this.handNo = handNo;
+		this.minute = minute;
+		this.three_points = three_points;
+		this.points_uprate = points_uprate;
+		this.rebs_uprate = rebs_uprate;
+		this.help_uprate = help_uprate;
 		this.name = name;
 		this.team = team;
 		this.matchNo = matchNo;
@@ -74,8 +78,8 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		this.hitRate = hitRate;
 		this.threeHitRate = threeHitRate;
 		this.penaltyHitRate = penaltyHitRate;
-		this.offendNo = offendNo;
-		this.defenceNo = defenceNo;
+		this.offendRebsNo = offendRebsNo;
+		this.defenceRebsNo = defenceRebsNo;
 		this.stealsNo = stealsNo;
 		this.blockNo = blockNo;
 		this.mistakesNo = mistakesNo;
@@ -93,22 +97,33 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		this.blockEfficiency = blockEfficiency;
 		this.mistakeEfficiency = mistakeEfficiency;
 		this.useEfficiency = useEfficiency;
-		this.block = block;
 		this.scoring_rebound_assist = scoring_rebound_assist;
-		this.playerArea = playerArea;
-		this.assist = assist;
-		this.rebound = rebound;
-		this.steal = steal;
-		this.foul = foul;
-		this.mistake = mistake;
-		this.minute = minute;
-		this.shot = shot;
-		this.three_points = three_points;
-		this.freeThrow = freeThrow;
 		this.twoPair = twoPair;
-		this.sortby = sortby;
+		this.penaltyHandNo = penaltyHandNo;
+	    
 	}
 
+	public double getOffendRebsNo() {
+		return offendRebsNo;
+	}
+
+	public double getDefenceRebsNo() {
+		return defenceRebsNo;
+	}
+
+	public double getHandNo() {
+		return handNo;
+	}
+
+	public double getPenaltyHandNo() {
+		return penaltyHandNo;
+	}
+
+	public void setSortBy(SortBy sortby, SortType type)
+	{
+		this.sortby = sortby;
+		this.type = type;
+	}
 	public SortBy getSortby(){
 		return sortby;
 	}
@@ -144,10 +159,10 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		return penaltyHitRate;
 	}
 	public double getOffendNo() {
-		return offendNo;
+		return offendRebsNo;
 	}
 	public double getDefenceNo() {
-		return defenceNo;
+		return defenceRebsNo;
 	}
 	public double getStealsNo() {
 		return stealsNo;
@@ -200,44 +215,28 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	public double getUseEfficiency() {
 		return useEfficiency;
 	}
-	public double getBlock() {
-		return block;
-	}
 	public double getScoring_rebound_assist() {
 		return scoring_rebound_assist;
-	}
-	public Area getPlayerArea() {
-		return playerArea;
-	}
-	public double getAssist() {
-		return assist;
-	}
-	public double getRebound() {
-		return rebound;
-	}
-	public double getSteal() {
-		return steal;
-	}
-	public double getFoul() {
-		return foul;
-	}
-	public double getMistake() {
-		return mistake;
 	}
 	public double getMinute() {
 		return minute;
 	}
-	public double getShot() {
-		return shot;
-	}
 	public double getThree_points() {
 		return three_points;
 	}
-	public double getFreeThrow() {
-		return freeThrow;
-	}
 	public double getTwoPair() {
 		return twoPair;
+	}
+	public double getPoints_uprate() {
+		return points_uprate;
+	}
+
+	public double getRebs_uprate() {
+		return rebs_uprate;
+	}
+
+	public double getHelp_uprate() {
+		return help_uprate;
 	}
 	@Override
 	public int compareTo(PlayerMatchVO arg0) {

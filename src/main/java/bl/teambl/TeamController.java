@@ -2,37 +2,58 @@ package bl.teambl;
 
 import java.util.Iterator;
 
+import po.TeamPO;
 import blservice.teamblservice.Teamblservice;
 import vo.Area;
 import vo.SortType;
+import vo.TeamMatchVO;
 import vo.TeamSortBy;
 import vo.TeamVO;
 
 public class TeamController implements Teamblservice{
-	public Iterator<TeamVO> sortTeams(TeamSortBy teamSortBy, SortType sortType) {
-		return null;
+    Team team = new Team();
+	@Override
+	public TeamMatchVO[] getHotTeams(TeamSortBy sortby) {
+		return team.getHotTeams(sortby);
 	}
 
-	public void setAverage(boolean average)
+	@Override
+	public TeamMatchVO[] getSortedAveTeams(TeamSortBy sortby, SortType type) {
+		return team.getSortedAveTeams(sortby, type);
+	}
+
+	public TeamMatchVO[] getSortedTotalTeams(TeamSortBy sortby , SortType type)
 	{
+		return team.getSortedTotalTeams(sortby, type);
+	}
+	@Override
+	public String[] getPlayers(String team) {
+		return  this.team.getPlayers(team);
 	}
 
-	public TeamVO findTeam(String name) {
-		return null;
+	@Override
+	public TeamMatchVO getTotalTeam(String teamname) {
+		return this.team.getTotalTeam(teamname);
+	}
+
+	@Override
+	public TeamMatchVO getAveTeam(String teamname) {
+		return this.getAveTeam(teamname);
+	}
+
+	@Override
+	public Iterator<TeamMatchVO> fuzzilyFindAve(String info) {
+		return this.team.fuzzilyFindAve(info);
+	}
+
+	@Override
+	public Iterator<TeamMatchVO> fuzzilyFindTotal(String info) {
+		return this.team.fuzzilyFindTotal(info);
+	}
+
+	@Override
+	public TeamPO getTeamData(String team) {
+		return this.team.getTeamData(team);
 	}
 	
-	public Iterator<TeamVO> getAllTeams()
-	{
-		return null;
-	}
-
-	public TeamVO getRecentData(String teamName, int matchNo) {
-		return null;
-	}
-    
-	public Iterator<TeamVO> getHotTeams(TeamSortBy sortBy) {
-		return null;
-	}
-
-
 }

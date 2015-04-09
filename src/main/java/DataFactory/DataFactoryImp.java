@@ -13,7 +13,7 @@ import DataFactoryService.NBADataFactory;
 
 public class DataFactoryImp implements NBADataFactory
 {
-	private static  String dataSource = null;
+	private static  String dataSource = "C:/NBAData";
 	private static MatchDataService match_data;
 	private static PlayerDataService player_data;
 	private static TeamDataService team_data;
@@ -38,14 +38,14 @@ public class DataFactoryImp implements NBADataFactory
 	public  MatchDataService getMatchData(){
 		if (match_data == null)
 		{
-			match_data = new MatchData(dataSource + "\\matches");
+			match_data = new MatchData(dataSource + "/matches");
 		}
 		return match_data;
 	}
 
 	public PlayerDataService getPlayerData() {
 		   if (player_data == null)
-			 player_data = new PlayerData(dataSource + "\\players");
+			 player_data = new PlayerData(dataSource + "/players");
 		return player_data;
 	}
 

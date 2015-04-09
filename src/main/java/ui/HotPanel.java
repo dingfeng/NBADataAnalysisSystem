@@ -21,7 +21,7 @@ public class HotPanel extends JPanel {
 
 	public HotPanel() {
 		this.setLayout(null);
-		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 15 / 16);
+		this.setBounds(0, 0, FrameSize.width, FrameSize.height*7/8);
 		this.setOpaque(false);
 		TeamMatchPanel team = new TeamMatchPanel();
 		setTag();
@@ -68,7 +68,7 @@ public class HotPanel extends JPanel {
 		show.setLayout(null);
 		show.setBackground(FrameSize.backColor);
 		show.setBounds(FrameSize.width / 6, 0, 5 * FrameSize.width / 6,
-				11 * FrameSize.height / 12);
+				FrameSize.height*7/8- FrameSize.height / 12);
 
 		JComboBox<String> choose;
 		choose = new MyComboBox(new String[] { "得分", "篮板", "助攻", "抢断", "盖帽" });

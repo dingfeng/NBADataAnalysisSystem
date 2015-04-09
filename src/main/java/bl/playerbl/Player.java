@@ -166,7 +166,7 @@ public class Player {
 
 		String location;// 位置
 		double time;// 在场时间
-		int hitNo = 0; // 投篮命中数
+		int hitNo = 0; // 投篮命中数0
 		int handNo = 0; // 投篮出手次数
 		int threeHitNo = 0; // 三分命中数
 		int threeHandNo = 0; // 三分出手数

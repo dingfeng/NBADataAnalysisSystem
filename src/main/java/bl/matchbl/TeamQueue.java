@@ -16,7 +16,6 @@ public class TeamQueue extends AbstractQueue{
 	public TeamQueue(int max, String name) 
 	{
 		super(max, name);
-		
 	}
 	
 	private void addPlayer(String playername)
@@ -93,7 +92,7 @@ public class TeamQueue extends AbstractQueue{
 		 double assistEfficiency0 = 0;// 助攻率
 		 
 		
-		for (MatchesPO match : matches)
+		for (MatchesPO match : getAllMatches())
 		{
 			++matchNo;
 			team1 = match.getTeam1();
@@ -199,7 +198,7 @@ public class TeamQueue extends AbstractQueue{
 			  drebsEfficiency0 += 1.0 * defenceRebs0 / (defenceRebs0 + yourOffenseRebs0);
 			  stealsEfficiency0 += 100.0 * stealsNo0 / defenceRound0;// 抢断效率
 			  assistEfficiency0 += 100.0 * assistNo0 / offenseRound0;// 助攻率
-			 
+			
 		}
 		
 		 double hitRate =  hitNo / handNo; // 投篮命中率
@@ -212,7 +211,7 @@ public class TeamQueue extends AbstractQueue{
 		 double drebsEfficiency =  defenceRebs / (defenceRebs + yourOffenseRebs);
 		 double stealsEfficiency = 100 * stealsNo / defenceRound;// 抢断效率
 		 double assistEfficiency = 100 * assistNo / offenseRound;// 助攻率
-		 
+	
 		 teamvo_total = new TeamMatchVO( name, (int) matchNo,  hitNo,  handNo,
 					 threeHitNo,  threeHandNo,  penaltyHitNo,
 					 penaltyHandNo,  offenseRebs,  defenceRebs,  rebs,
@@ -233,5 +232,18 @@ public class TeamQueue extends AbstractQueue{
 				 orebsEfficiency0/ matchNo, drebsEfficiency0/ matchNo , stealsEfficiency0/ matchNo,
 				 assistEfficiency0/ matchNo);
 	}
-	
+	public MatchesPO[] getRecentMatches(int num )
+	{
+		if (len == -1)
+		{
+			return null;
+		}
+		int size = (num<len+1)? num : (len+1);
+		MatchesPO[] temp_matches = new MatchesPO[size];
+		for (int i = 0 ;i < size; i++)
+		{
+			temp_matches[i] = matches[i];
+		}
+		return temp_matches;
+	}
 }

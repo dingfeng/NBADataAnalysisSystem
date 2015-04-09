@@ -1,6 +1,8 @@
 package bl.teambl;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import po.TeamPO;
 import dataservice.teamdataservice.TeamDataService;
@@ -15,8 +17,9 @@ import DataFactoryService.NBADataFactory;
 import bl.matchbl.Match;
 import bl.matchbl.AbstractQueue;
 import bl.matchbl.TeamQueue;
+import blservice.teamblservice.Teamblservice;
 
-public class Team 
+public class Team implements  Teamblservice
 {
 	private	TIntObjectMap<TeamQueue> team_map;
 	private Match match;
@@ -38,25 +41,69 @@ public class Team
 	    }
 	}
 	
+	public TeamMatchVO[] getAllTotalTeams()
+	{
+		
+		TeamQueue[] team_queues = new TeamQueue[team_map.size()];
+		team_map.values(team_queues);
+		TeamMatchVO[] allMatchVOs = new TeamMatchVO[team_queues.length];
+		for (int i = 0; i < team_queues.length; i++)
+		{
+			allMatchVOs[i] = team_queues[i].getTeamvoTotal();
+		}
+		return allMatchVOs;
+	}
+	
+	public TeamMatchVO[] getAllAveTeams()
+	{
+		TeamQueue[] team_queues = new TeamQueue[team_map.size()];
+		team_map.values(team_queues);
+		TeamMatchVO[] allMatchVOs = new TeamMatchVO[team_queues.length];
+		for (int i = 0; i < team_queues.length; i++)
+		{
+			allMatchVOs[i] = team_queues[i].getTeamvoAverage();
+		}
+		return allMatchVOs;
+	}
+	
 	public  TeamMatchVO[] getHotTeams(TeamSortBy sortby)
 	{
-		TeamSortTool[] sorts = new TeamSortTool[TEAM_NUM];
-		TeamQueue[] teams = (TeamQueue[]) team_map.values();
-		TeamMatchVO[] team_ms = new TeamMatchVO[TEAM_NUM];
-		for (int i = 0; i < TEAM_NUM; i++)
-		{
-			team_ms[i] = teams[i].getTeamvoAverage();
-			setSortBy(team_ms[i],sortby,SortType.DESEND);
-		}
-        Arrays.sort(team_ms);
+		TeamMatchVO[] teams = getSortedAveTeams(sortby,SortType.DESEND);
         TeamMatchVO[] result = new TeamMatchVO[5];
         for (int i = 0; i < 5; i++)
         {
-        	result[i] = team_ms[i];
+        	result[i] = teams[i];
         }
 		return result;
 	}
      
+	public TeamMatchVO[] getSortedAveTeams(TeamSortBy sortby, SortType type)
+	{
+		TeamQueue[] teams = new TeamQueue[team_map.size()];
+		team_map.values(teams);
+		TeamMatchVO[] team_ms = new TeamMatchVO[TEAM_NUM];
+		for (int i = 0; i < TEAM_NUM; i++)
+		{
+			team_ms[i] = teams[i].getTeamvoAverage();
+			setSortBy(team_ms[i],sortby,type);
+		}
+        Arrays.sort(team_ms);
+		return team_ms;
+	}
+
+	public TeamMatchVO[] getSortedTotalTeams(TeamSortBy sortby, SortType type) {
+		TeamQueue[] teams = new TeamQueue[team_map.size()];
+		team_map.values(teams);
+		TeamMatchVO[] team_ms = new TeamMatchVO[TEAM_NUM];
+		for (int i = 0; i < TEAM_NUM; i++)
+		{
+			team_ms[i] = teams[i].getTeamvoTotal();
+			setSortBy(team_ms[i],sortby,type);
+		}
+        Arrays.sort(team_ms);
+		return team_ms;
+	}
+	
     private void setSortBy(TeamMatchVO team, TeamSortBy sortby, SortType type)
     {
     	double doubleSort = 0;
@@ -153,6 +200,15 @@ public class Team
 		return team_map.get(team.hashCode()).getAllPlayers();
 	}
 	
+	public TeamMatchVO getTotalTeam(String teamname)
+	{
+		return team_map.get(teamname.hashCode()).getTeamvoTotal();
+	}
+	
+	public  TeamMatchVO getAveTeam(String teamname)
+	{
+		return team_map.get(teamname.hashCode()).getTeamvoAverage();
+	}
 	public TeamPO getTeamData(String team)
 	{
 		return  po_map.get(team.hashCode());
@@ -225,4 +281,44 @@ public class Team
 		"Jazz",
 		"Wizards"
 			};
+	@Override
+	public Iterator<TeamMatchVO> fuzzilyFindAve(String info) {
+		LinkedList<TeamPO>  team_list = new LinkedList<TeamPO>();
+		LinkedList<TeamMatchVO> team_match_list = new LinkedList<TeamMatchVO>();
+		for (TeamPO team : teams)
+		{
+			if (team.getName().startsWith(info))
+			{
+				team_list.add(team);
+			}
+		}
+        Iterator<TeamPO> poItr = team_list.iterator();
+        while (poItr.hasNext())
+        {
+        	TeamPO t = poItr.next();
+        	team_match_list.add(getAveTeam(t.getNameAbridge()));
+        }
+		return team_match_list.iterator();
+	}
+
+	@Override
+	public Iterator<TeamMatchVO> fuzzilyFindTotal(String info) {
+		LinkedList<TeamPO>  team_list = new LinkedList<TeamPO>();
+		LinkedList<TeamMatchVO> team_match_list = new LinkedList<TeamMatchVO>();
+		for (TeamPO team : teams)
+		{
+			if (team.getName().startsWith(info))
+			{
+				team_list.add(team);
+			}
+		}
+        Iterator<TeamPO> poItr = team_list.iterator();
+        while (poItr.hasNext())
+        {
+        	TeamPO t = poItr.next();
+        	team_match_list.add(getTotalTeam(t.getNameAbridge()));
+        }
+		return team_match_list.iterator();
+	}
+
 }
