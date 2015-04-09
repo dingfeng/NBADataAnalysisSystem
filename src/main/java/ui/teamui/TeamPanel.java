@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -34,7 +32,6 @@ import ui.mainui.UneditableTextField;
 import vo.SortType;
 import vo.TeamMatchVO;
 import vo.TeamSortBy;
-import vo.TeamVO;
 import bl.teambl.TeamController;
 
 public class TeamPanel extends JPanel {
@@ -453,7 +450,7 @@ public class TeamPanel extends JPanel {
 		this.remove(welcome);
 		this.remove(sort);
 		TeamPO teamresult = tc.getTeamData(teamname);
-//		svgCanvas.setDocument(teamresult.getImage());
+		svgCanvas.setDocument(teamresult.getImage());
 		nameresult.setText(teamresult.getName());// 队伍名称
 		nameAbridgeresult.setText(teamresult.getNameAbridge());// 名称缩写
 		addressresult.setText(teamresult.getAddress());// 所在地
@@ -461,13 +458,13 @@ public class TeamPanel extends JPanel {
 		playerArearesult.setText(teamresult.getPlayerArea().toString());// 分区
 		manageresult.setText(teamresult.getManage());// 主场
 		foundYearresult.setText(String.valueOf(teamresult.getFoundYear()));// 建立时间
-		match=new JButton("赛");
+		match=new JButton("");
 		
 		svgCanvas.setOpaque(false);
 		
-		match.setBounds(FrameSize.width/3-20, FrameSize.height /40, 10, 10);
+		match.setBounds(FrameSize.width/3-45, FrameSize.height /40, 40,40);
 		svgCanvas.setBounds(FrameSize.width /40, FrameSize.height / 8, FrameSize.width / 4, 3*FrameSize.height /20);
-		nameresult.setBounds(FrameSize.width /24, FrameSize.height / 8 - 50, 100, 3*FrameSize.height/80 );
+		nameresult.setBounds(FrameSize.width /20, FrameSize.height / 8 - 50, 100, 3*FrameSize.height/80 );
 		nameAbridgeresult.setBounds(FrameSize.width / 4,
 				FrameSize.height / 8 - 50, 50, 30);
 		addressresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 130, FrameSize.width /8, 3*FrameSize.height/80);
@@ -509,7 +506,7 @@ public class TeamPanel extends JPanel {
 
 		jScrollPane.setVisible(false);
 		
-		TeamMatchVO []teamresult=null;
+		TeamMatchVO []teamresult = null;
 		
 		find.setVisible(false);
 		String teamname = searchField.getText();
