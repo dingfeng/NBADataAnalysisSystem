@@ -38,7 +38,7 @@ public class TeamData implements TeamDataService
 	{
 	tempStr = reader.readLine();
 	items = dealWithLine(tempStr);
-    image = tool.getImage(filename +"/"+items[0]+".png");
+    image = tool.getImage(filename +"/"+items[1]+".png");
 	teampos[i] = new TeamPO(image,items[0],items[1],items[2],
 	items[3],convToPlayerArea(items[4]),items[5],Integer.parseInt(items[6]));
 	}

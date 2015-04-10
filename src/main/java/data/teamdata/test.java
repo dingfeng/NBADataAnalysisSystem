@@ -1,5 +1,16 @@
 package data.teamdata;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 import po.TeamPO;
 
 
@@ -41,9 +52,28 @@ public class test
    {
 	   TeamData t = new TeamData(filename+"/teams");
 	   TeamPO[] teams = t.getAllTeamData();
+	   int i = 0;
 	   for (TeamPO t1 : teams)
 	   {
-		   System.out.println("\""+t1.getName()+"\",");
+		    JFrame frame = new JFrame();
+		    frame.setBackground(Color.blue);
+		    frame.setBounds(0, 0, 500, 500);
+		    JPanel panel = new JPanel();
+
+		    panel.setLayout(null);
+		    
+		    frame.setLayout(new BorderLayout());
+		    frame.add(panel,BorderLayout.CENTER);
+		    frame.setVisible(true);
+		    panel.setOpaque(false);
+		    Graphics g = panel.getGraphics();
+		    g.drawImage(t1.getImage(),0,0,100,100,panel);
+		    panel.paint(g);
+		    panel.repaint();
+		    
+		    frame.repaint();
+		    
+		    break;
 	   }
    }
    
