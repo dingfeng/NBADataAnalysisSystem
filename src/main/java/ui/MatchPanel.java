@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.batik.swing.JSVGCanvas;
 
 import bl.matchbl.MatchController;
+import bl.teambl.TeamController;
 import po.MatchPlayerPO;
 import po.MatchTeamPO;
 import po.MatchesPO;
@@ -34,8 +35,11 @@ import ui.mainui.UneditableTextField;
 import vo.PlayerVO;
 
 public class MatchPanel extends JPanel {
+	
+	MatchesPO[] matches ;
 
 	MatchController matchController = new MatchController();
+	TeamController teamController = new TeamController();
 
 	JPanel welcomePanel = new JPanel();
 	JPanel header = new JPanel();
@@ -60,15 +64,23 @@ public class MatchPanel extends JPanel {
 	DefaultTableModel player2Table;
 	MyTable myPlayer2Table;
 	JScrollPane player2sScrollPane;
+	
+	UneditableTextField score1; 
+	UneditableTextField score2;
+	UneditableTextField teamName1; 
+	UneditableTextField teamName2;
+	JSVGCanvas teamImage1;
+	JSVGCanvas teamImage2;
 
 	public MatchPanel() {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
 		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
-		setMatchTable(matchController.getAllMatches());
+		matches = matchController.getAllMatches();
+		setMatchTable(matches);
 		setHeader();
-		setShowPanel();
+		setShowPanel(matches[0].getTeam1(),matches[0].getTeam2());
 		this.add(matchScrollPane);
 		this.add(header);
 		this.add(showPanel);
@@ -117,11 +129,12 @@ public class MatchPanel extends JPanel {
 		int panelWidth = FrameSize.width * 3 / 4;
 		int panelHeight = FrameSize.height * 19 / 24;
 
-		JSVGCanvas teamImage1 = new JSVGCanvas();
-//		teamImage1.setDocument();
-		JSVGCanvas teamImage2 = new JSVGCanvas();
-		teamImage1.setBackground(Color.yellow);
-		teamImage2.setBackground(Color.red);
+		teamImage1 = new JSVGCanvas();
+		teamImage1.setDocument(teamController.getTeamData(team1.getName()).getImage());
+		teamImage2 = new JSVGCanvas();
+		teamImage2.setDocument(teamController.getTeamData(team2.getName()).getImage());
+		teamImage1.setBackground(FrameSize.buttonbackColor);
+		teamImage2.setBackground(FrameSize.buttonbackColor);
 		teamImage1.setBounds(panelWidth * 3 / 15, panelHeight / 20, panelWidth / 8,
 				panelWidth / 8);
 		teamImage2.setBounds(panelWidth * 81 / 120, panelHeight / 20,
@@ -129,8 +142,8 @@ public class MatchPanel extends JPanel {
 		showPanel.add(teamImage1);
 		showPanel.add(teamImage2);
 
-		UneditableTextField teamName1 = new UneditableTextField("ABC");
-		UneditableTextField teamName2 = new UneditableTextField("DEF");
+		teamName1 = new UneditableTextField(team1.getName());
+		teamName2 = new UneditableTextField(team2.getName());
 		teamName1.setBounds(panelWidth * 3 / 15 - 30, panelHeight * 2 / 20, 25,
 				10);
 		teamName2.setBounds(panelWidth * 81 / 120 + panelWidth / 8 + 5,
@@ -138,25 +151,31 @@ public class MatchPanel extends JPanel {
 		showPanel.add(teamName1);
 		showPanel.add(teamName2);
 
-		UneditableTextField score1 = new UneditableTextField("100");
-		UneditableTextField score2 = new UneditableTextField("200");
+		score1 = new UneditableTextField(team1.getTotalScores());
+		score2 = new UneditableTextField(team2.getTotalScores());
 		score1.setBounds(panelWidth * 3 / 15 - 30, panelHeight * 4 / 20, 25, 10);
 		score2.setBounds(panelWidth * 81 / 120 + panelWidth / 8 + 5,
 				panelHeight * 4 / 20, 25, 10);
 		showPanel.add(score1);
 		showPanel.add(score2);
 
-		/**
 		// 设置比分表格
-		 setScoreTable();
+		setScoreTable(team1,team2);
 		scoreScrollPane.setBounds(panelWidth * 39 / 120, panelHeight * 2 / 20,
 				panelWidth * 42 / 120, 55);
 		resizeTable(false, scoreScrollPane, myScoreTable);
+		 scoreScrollPane.repaint();
 		showPanel.add(scoreScrollPane);
-		*/
+
 
 		// 设置每个球队的球员表现的表格
-		setPlayerTable();
+//		setPlayerTable();
+		
+		showPanel.repaint();
+		showPanel.validate();
+		this.add(showPanel);
+		this.validate();
+
 	}
 
 
@@ -191,10 +210,12 @@ public class MatchPanel extends JPanel {
 		myMatchTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					System.out.println(myMatchTable.getSelectedRow());
-					// showOne((String) mytable.getModel().getValueAt(
-					// mytable.getSelectedRow(), 0));
+					showPanel.setVisible(false);
+					setShowPanel(matches[myMatchTable.getSelectedRow()].getTeam1(),matches[myMatchTable.getSelectedRow()].getTeam2());
+					showPanel.repaint();
+					showPanel.setVisible(true);
 				}
+
 			}
 
 		});
@@ -230,11 +251,13 @@ public class MatchPanel extends JPanel {
 
 		scoreTable = new DefaultTableModel(data, columnsName);
 		myScoreTable = new MyTable(scoreTable);
+		myScoreTable.repaint();
 		scoreScrollPane = new JScrollPane(myScoreTable);
 		// scoreScrollPane
 		// .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		// matchScrollPane
 		// .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		scoreScrollPane.repaint();
 	}
 
 	/**设置球员表现的表格*/

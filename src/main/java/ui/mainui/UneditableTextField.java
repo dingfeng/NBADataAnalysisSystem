@@ -14,6 +14,11 @@ public class UneditableTextField extends JTextField {
 		setText(text);
 		setFeature();
 	}
+	
+	public UneditableTextField(int text){
+		setText(String.valueOf(text));
+		setFeature();
+	}
 
 	private void setFeature() {
 		this.setBorder(null);
