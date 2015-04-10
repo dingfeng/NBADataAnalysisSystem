@@ -31,6 +31,7 @@ public class TeamMatchVO implements Comparable<TeamMatchVO>{
 	private double drebsEfficiency;// 防守篮板效率
 	private double stealsEfficiency;// 抢断效率
 	private double assistEfficiency;// 助攻率
+	private double hotdata;//热点数据
 	private SortTool tool;
 	
 	public String toString()
@@ -194,7 +195,14 @@ public class TeamMatchVO implements Comparable<TeamMatchVO>{
 	public void setTeamSortTool(double data, SortType type)
 	{
 		tool = new SortTool(data,type);
+		this.hotdata = data;
 	}
+	
+	public double getHotData()
+	{
+		return hotdata;
+	}
+	
 	public SortTool getTeamSortTool()
 	{
 		return tool;
