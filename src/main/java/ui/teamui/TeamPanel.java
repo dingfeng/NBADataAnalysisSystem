@@ -65,7 +65,7 @@ public class TeamPanel extends JPanel {
 	JButton match;
 	
 	TeamMatchPanel teammatch;
-	
+	boolean matchpanel=false;
 	TeamController tc = new TeamController();
 
 	public TeamPanel() {
@@ -226,6 +226,10 @@ public class TeamPanel extends JPanel {
 
 	/** 显示场均数据/总数据 */
 	void showAllData() {
+		if(matchpanel){
+			this.remove(teammatch);
+			matchpanel=false;
+		}
 		jScrollPane.setVisible(false);
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
 			setTable(tc.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
@@ -349,6 +353,7 @@ public class TeamPanel extends JPanel {
 
 	/** 点击排序按钮 */
 	void sortClick() {
+		
 		this.remove(welcome);
 		this.remove(find);
 		sort.repaint();
@@ -440,12 +445,20 @@ public class TeamPanel extends JPanel {
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 
+		if(matchpanel){
+			this.remove(teammatch);
+			matchpanel=false;
+		}
 		this.add(jScrollPane);
 		this.repaint();
 	}
 
 	/** 在findPanel上显示一个球队的信息 */
 	private void showOne(String teamname) {
+		if(matchpanel){
+			this.remove(teammatch);
+			matchpanel=false;
+		}
 		this.remove(welcome);
 		this.remove(sort);
 		
@@ -526,6 +539,7 @@ public class TeamPanel extends JPanel {
 
 	/**点击查看比赛按钮*/
 	void setMatch(){
+		matchpanel=true;
 		teammatch=new TeamMatchPanel(nameAbridgeresult.getText());
 		JButton showAllButton=new JButton();
 		JButton showTeamButton=new JButton();
