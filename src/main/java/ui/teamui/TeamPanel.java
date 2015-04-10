@@ -3,11 +3,13 @@ package ui.teamui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -52,7 +54,7 @@ public class TeamPanel extends JPanel {
 	JComboBox<String> box;
 	JComboBox<String> dataType;
 	boolean sorttype;
-	JSVGCanvas svgCanvas = new JSVGCanvas();
+	JLabel image=new JLabel();//图片
 	JTextField nameresult = new UneditableTextField();// 队伍名称
 	JTextField nameAbridgeresult = new UneditableTextField();// 名称缩写
 	JTextField addressresult = new UneditableTextField();// 所在地
@@ -451,7 +453,7 @@ public class TeamPanel extends JPanel {
 		this.remove(sort);
 		
 		TeamPO teamresult = tc.getTeamData(teamname);
-		svgCanvas.setDocument(teamresult.getImage());
+		image.setIcon(scaleImage(new ImageIcon(teamresult.getImage()),FrameSize.width / 4, 3*FrameSize.height /20));
 		nameresult.setText(teamresult.getName());// 队伍名称
 		nameAbridgeresult.setText(teamresult.getNameAbridge());// 名称缩写
 		addressresult.setText(teamresult.getAddress());// 所在地
@@ -461,10 +463,10 @@ public class TeamPanel extends JPanel {
 		foundYearresult.setText(String.valueOf(teamresult.getFoundYear()));// 建立时间
 		match=new JButton(new ImageIcon("image/showMatch.jpg"));
 		
-		svgCanvas.setOpaque(false);
+		image.setOpaque(false);
 		
 		match.setBounds(FrameSize.width/3-45, FrameSize.height /40, 40,40);
-		svgCanvas.setBounds(FrameSize.width /40, FrameSize.height / 8, FrameSize.width / 4, 3*FrameSize.height /20);
+		image.setBounds(FrameSize.width /40, FrameSize.height / 8, FrameSize.width / 4, 3*FrameSize.height /20);
 		nameresult.setBounds(FrameSize.width /20, FrameSize.height / 8 - 50, 100, 3*FrameSize.height/80 );
 		nameAbridgeresult.setBounds(FrameSize.width / 4,
 				FrameSize.height / 8 - 50, 50, 30);
@@ -477,7 +479,7 @@ public class TeamPanel extends JPanel {
 		match.addActionListener(e->setMatch());
 		
 		find.add(match);
-		find.add(svgCanvas);
+		find.add(image);
 		find.add(nameresult);
 		find.add(nameAbridgeresult);
 		find.add(addressresult);
@@ -490,8 +492,8 @@ public class TeamPanel extends JPanel {
 		this.add(find);
 		this.repaint();
 		this.validate();
-		svgCanvas.setVisible(true);
-		svgCanvas.repaint();
+		image.setVisible(true);
+		image.repaint();
 
 	}
 
@@ -580,5 +582,18 @@ public class TeamPanel extends JPanel {
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 		}
 	}
+	
+	private ImageIcon scaleImage(ImageIcon icon, int iconWidth, int iconHeight) { 
+		int width = icon.getIconWidth(); 
+		int height = icon.getIconHeight(); 
+
+		if (width == iconWidth && height == iconHeight) { 
+		return icon; 
+		} 
+		Image image = icon.getImage(); 
+		image = image.getScaledInstance(iconWidth, iconHeight, Image.SCALE_DEFAULT); 
+
+		return new ImageIcon(image); 
+		}
 
 }
