@@ -2,6 +2,7 @@ package bl.playerbl;
 
 import java.util.Iterator;
 
+import po.MatchPlayerPO;
 import po.PlayerPO;
 import vo.Area;
 import vo.PlayerMatchVO;
@@ -32,12 +33,12 @@ public class PlayerController implements PlayerBlService{
 		return player.screenTotalPlayers(playerPosition, playerArea, sortBy);
 	}
 	//获得当天热点球员   
-	public PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby) {
+	public  MatchPlayerPO[] getDayHotPlayer(PlayerSortBy sortby) {
 		return player.getDayHotPlayer(sortby);
 	}
 	//获得赛季热点球员
 	public PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby) {
-		return player.getDayHotPlayer(sortby);
+		return player.getSeasonHotPlayer(sortby);
 	}
 	//获得进步最快球员
 	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby) {

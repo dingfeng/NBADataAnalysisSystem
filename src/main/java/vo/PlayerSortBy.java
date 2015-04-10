@@ -30,6 +30,7 @@ public enum PlayerSortBy {
 	blockEfficiency,
 	mistakeEfficiency,
 	useEfficiency,
+	
 	points_uprate, //得分提升率
 	rebs_uprate, //篮板提升率
 	help_uprate, //助攻提升率

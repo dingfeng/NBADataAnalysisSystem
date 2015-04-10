@@ -4,6 +4,7 @@ package blservice.playerblservice;
 import java.util.Iterator;
 
 import bl.matchbl.Match;
+import po.MatchPlayerPO;
 import po.PlayerPO;
 import vo.Area;
 import vo.PlayerMatchVO;
@@ -20,7 +21,7 @@ public interface PlayerBlService {
 	//筛选球员 赛季数据
 	public Iterator<PlayerMatchVO> screenTotalPlayers(String playerPosition, Area playerArea, PlayerSortBy sortBy);
 	//获得当天热点球员
-	public PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby);
+	public MatchPlayerPO[] getDayHotPlayer(PlayerSortBy sortby);
 	//获得赛季热点球员
 	public PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby);
 	//获得进步最快球员 5名

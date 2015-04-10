@@ -16,6 +16,13 @@ public class MatchTeamPO {
     	   this.totalScores = totalScores;
     	   this.name = name;
     	   this.time = time;
+    	   if (player != null)
+    	   {
+    		   for (MatchPlayerPO p : player)
+    		   {
+    			   p.setTeamnameAbridge(name);
+    		   }
+    	   }
        }
     public int getTime()
     {

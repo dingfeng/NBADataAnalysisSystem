@@ -5,10 +5,14 @@ import gnu.trove.map.hash.TIntObjectHashMap;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 import dataservice.playerdataservice.PlayerDataService;
+import po.MatchPlayerPO;
+import po.MatchTeamPO;
+import po.MatchesPO;
 import po.PlayerPO;
 import vo.Area;
 import vo.PlayerMatchVO;
@@ -22,15 +26,16 @@ import bl.teambl.SortTool;
 import bl.teambl.Team;
 import blservice.playerblservice.PlayerBlService;
 
-public class Player implements PlayerBlService{
+public class Player  {
 
 	private	TIntObjectMap<PlayerQueue> player_map;
 	private PlayerDataService playerData;
 	private TIntObjectMap<PlayerPO>  player_base_map;
-	PlayerPO[] allPlayerpos;
+	private PlayerPO[] allPlayerpos;
+	private Match  match ;
 	public Player()
 	{
-	  Match match = Match.instance();
+	  match = Match.instance();
 	  player_map  = match.getPlayer_map();
 	  
 	  NBADataFactory factory = DataFactoryImp.instance();
@@ -42,7 +47,6 @@ public class Player implements PlayerBlService{
 		  player_base_map.put(p.getName().hashCode(), p);
 	  }
 	}
-	@Override
 	public PlayerMatchVO[] sortAvePlayers(PlayerSortBy playerSortBy,
 			SortType sortType) {
 		PlayerQueue[] matchPlayers = new PlayerQueue[player_map.size()];
@@ -91,7 +95,6 @@ public class Player implements PlayerBlService{
 		}
 	}
 
-	@Override
 	public PlayerMatchVO[] sortTotalPlayers(PlayerSortBy playerSortBy,
 			SortType sortType) {
 		PlayerQueue[] matchPlayers = new PlayerQueue[player_map.size()];
@@ -140,7 +143,6 @@ public class Player implements PlayerBlService{
 		}
 	}
 
-	@Override
 	public Iterator<PlayerMatchVO> screenAvePlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
 		Team team = new Team();
@@ -157,7 +159,6 @@ public class Player implements PlayerBlService{
 		return screen_players.iterator();
 	}
 
-	@Override
 	public Iterator<PlayerMatchVO> screenTotalPlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
 		
@@ -175,33 +176,102 @@ public class Player implements PlayerBlService{
 			return screen_players.iterator();
 	}
 
-	@Override
-	public PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby) {
-		
-		return null;
+	public  MatchPlayerPO[] getDayHotPlayer(PlayerSortBy sortby) {
+		MatchesPO[]  todayMatches = match.getTodayMatches();
+		ArrayList<MatchPlayerPO> todayPlayers = new ArrayList<MatchPlayerPO>(500);
+		MatchTeamPO team = null;
+		MatchPlayerPO[] teamPlayers = null;
+		for (MatchesPO m : todayMatches)
+		{
+           teamPlayers = m.getTeam1().getPlayers();
+           for (MatchPlayerPO p : teamPlayers)
+           {
+        	   setHotSortTool(p, sortby);
+        	   todayPlayers.add(p);
+           }
+           teamPlayers = m.getTeam2().getPlayers();
+           for (MatchPlayerPO p : teamPlayers)
+           {
+        	   setHotSortTool(p, sortby);
+        	   todayPlayers.add(p);
+           }
+		}
+		Collections.sort(todayPlayers);
+		int size = todayPlayers.size() > 5 ? 5 : todayPlayers.size();
+		MatchPlayerPO[] m_players = new MatchPlayerPO[size];
+		for (int i = 0; i < size; i++)
+		{
+			m_players[i] = todayPlayers.get(i);
+		}
+		return m_players;
 	}
 
-	@Override
 	public PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby) {
-		return null;
+		PlayerMatchVO[] playerMatchVOs = sortAvePlayers(sortby,SortType.DESEND);
+		int size = 5;
+		int len = playerMatchVOs.length;
+		if (len < 5)
+		{
+			size = len;
+		}
+        PlayerMatchVO[] resultMatches = new PlayerMatchVO[size];
+        for (int i = 0; i < size; i++)
+        {
+        	resultMatches[i] = playerMatchVOs[i];
+        }
+		return resultMatches;
 	}
 
-	@Override
 	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby) {
-		return null;
+		PlayerMatchVO[] playerMatchVOs = sortAvePlayers(sortby,SortType.DESEND);
+		int size = 5;
+		int len = playerMatchVOs.length;
+		if (len < 5)
+		{
+			size = len;
+		}
+        PlayerMatchVO[] resultMatches = new PlayerMatchVO[size];
+        for (int i = 0; i < size; i++)
+        {
+        	resultMatches[i] = playerMatchVOs[i];
+        }
+		return resultMatches;
 	}
 
-	@Override
 	public Iterator<String> fuzzilyFind(String info) {
 		return null;
 	}
 
-	@Override
-	public PlayerPO findPlayer(String info) {
-		return null;
+	public PlayerPO findPlayer(String info) 
+	{
+		return player_base_map.get(info.hashCode());
 	}
 	
     
+	private void setHotSortTool(MatchPlayerPO player, PlayerSortBy sortby)
+	{
+		double data = -1;
+		switch (sortby)
+		{
+		case points:
+			data = player.getPoints();
+			break;
+		case rebs:
+			data = player.getRebs();
+			break;
+		case assistNo:
+			data = player.getHelp();
+			break;
+		case blockNo:
+			data = player.getBlockNo();
+			break;
+		case  stealsNo:
+			data = player.getStealsNo();
+			break;
+		}
+		player.setHotData(data);
+	}
+	
 	private void setSortTool(PlayerMatchVO playervo, PlayerSortBy sortby, SortType sortType)
 	{
 		double data = -1;
