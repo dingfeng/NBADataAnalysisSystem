@@ -2,11 +2,11 @@ package bl.teambl;
 
 import vo.SortType;
 
-public class TeamSortTool  implements Comparable<TeamSortTool>
+public class SortTool  implements Comparable<SortTool>
 {
   private double data;
   private SortType type;
-  public TeamSortTool(double data, SortType type)
+  public SortTool(double data, SortType type)
   {
 	  this.data = data;
 	  this.type = type;
@@ -17,7 +17,7 @@ public class TeamSortTool  implements Comparable<TeamSortTool>
 	  return data;
   }
   
- public int compareTo(TeamSortTool e) {
+ public int compareTo(SortTool e) {
 	if (type == SortType.ASEND)
 	{
 		double data1 = e.getData();

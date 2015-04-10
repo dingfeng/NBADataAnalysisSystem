@@ -11,17 +11,22 @@ import vo.PlayerSortBy;
 import vo.SortType;
 
 public interface PlayerBlService {
-	public PlayerMatchVO[] sortPlayers(PlayerSortBy playerSortBy, SortType sortType);
-	public PlayerMatchVO[] sreenPlayers(String playerPosition, Area playerArea, PlayerSortBy sortBy);
+	//排序球员 场均数据
+	public PlayerMatchVO[] sortAvePlayers(PlayerSortBy playerSortBy, SortType sortType);
+	//排序球员 赛季数据
+	public PlayerMatchVO[] sortTotalPlayers(PlayerSortBy playerSortBy, SortType sortType);
+	//筛选球员 场均数据
+	public PlayerMatchVO[] screenAvePlayers(String playerPosition, Area playerArea, PlayerSortBy sortBy);
+	//筛选球员 赛季数据
+	public PlayerMatchVO[] screenTotalPlayers(String playerPosition, Area playerArea, PlayerSortBy sortBy);
+	//获得当天热点球员
 	public PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby);
+	//获得赛季热点球员
 	public PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby);
+	//获得进步最快球员 5名
 	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby);
-	public boolean updatePlayerInformation();
-	//模糊查找
-	public Iterator<PlayerMatchVO> fuzzilyFindAve(String info);
-	public Iterator<PlayerMatchVO> fuzzilyFindTotal(String info);
-	public Match[] getRecentPlayerMatches(String playername, int num);
-	public Match[] getAllPlayerMatches(String playername, int num);
-	public void setAverage(boolean isAverage);
+	//查找模糊
+	public Iterator<String> fuzzilyFind(String info);
+	//查找球员 并获得球员基本信息
     public PlayerPO findPlayer(String info);
 }

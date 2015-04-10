@@ -1,6 +1,7 @@
 package vo;
 
-import bl.playerbl.SortBy;
+import bl.teambl.SortTool;
+
 
 public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	private String name;// 球员名称
@@ -44,7 +45,7 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	private double rebs_uprate; //篮板提升率
 	private double help_uprate; //助攻提升率
 	
-	private SortBy sortby;
+	private SortTool sortTool; //排序工具
 	private SortType type;
 	public PlayerMatchVO(String name, String team, int matchNo,
 			double firstServiceNo, double rebs, double assistNo, double time,
@@ -118,14 +119,6 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		return penaltyHandNo;
 	}
 
-	public void setSortBy(SortBy sortby, SortType type)
-	{
-		this.sortby = sortby;
-		this.type = type;
-	}
-	public SortBy getSortby(){
-		return sortby;
-	}
 	
 	public String getName() {
 		return name;
@@ -284,8 +277,18 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		  return sb.toString();
 	}
 	
+	public void setSortTool(SortTool sortTool)
+	{
+		this.sortTool = sortTool;
+	}
+	
+	public SortTool getSortTool()
+	{
+		return sortTool;
+	}
+	
 	@Override
 	public int compareTo(PlayerMatchVO arg0) {
-		return sortby.compareTo(arg0.getSortby());
+		return sortTool.compareTo(arg0.getSortTool());
 	}
 }

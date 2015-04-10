@@ -1,6 +1,6 @@
 package vo;
 
-import bl.teambl.TeamSortTool;
+import bl.teambl.SortTool;
 
 public class TeamMatchVO implements Comparable<TeamMatchVO>{
 	private String name; // 球队名称
@@ -31,7 +31,7 @@ public class TeamMatchVO implements Comparable<TeamMatchVO>{
 	private double drebsEfficiency;// 防守篮板效率
 	private double stealsEfficiency;// 抢断效率
 	private double assistEfficiency;// 助攻率
-	private TeamSortTool tool;
+	private SortTool tool;
 	
 	public String toString()
 	{
@@ -193,9 +193,9 @@ public class TeamMatchVO implements Comparable<TeamMatchVO>{
 	}
 	public void setTeamSortTool(double data, SortType type)
 	{
-		tool = new TeamSortTool(data,type);
+		tool = new SortTool(data,type);
 	}
-	public TeamSortTool getTeamSortTool()
+	public SortTool getTeamSortTool()
 	{
 		return tool;
 	}
