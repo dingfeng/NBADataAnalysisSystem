@@ -162,17 +162,16 @@ public class MatchPanel extends JPanel {
 
 		// 设置每个球队的球员表现的表格
 		setPlayerTable(team1.getPlayers(),team2.getPlayers());
-		player1ScrollPane.setBounds(0,150,panelWidth,200);
+		player1ScrollPane.setBounds(5,(panelHeight*19/20-panelWidth/8)/2<((myPlayer1Table.getRowCount()+1)*myPlayer1Table.getRowHeight()+23)?(panelHeight/20+panelWidth/8+5):panelHeight/20+panelWidth/8+((panelHeight*19/20-panelWidth/8)/2-((myPlayer1Table.getRowCount()+1)*myPlayer1Table.getRowHeight()+23))/2,panelWidth-10,(panelHeight*19/20-panelWidth/8)/2<((myPlayer1Table.getRowCount()+1)*myPlayer1Table.getRowHeight()+23)?((panelHeight*19/20-panelWidth/8)/2-10):((myPlayer1Table.getRowCount()+1)*myPlayer1Table.getRowHeight()+23));
 		showPanel.add(player1ScrollPane);
-		player2ScrollPane.setBounds(0,350,panelWidth,200);
+		player2ScrollPane.setBounds(5,(panelHeight*19/20-panelWidth/8)/2<((myPlayer2Table.getRowCount()+1)*myPlayer2Table.getRowHeight()+23)?(panelHeight/20+panelWidth/8+(panelHeight*19/20-panelWidth/8)/2+5):panelHeight/20+panelWidth/8+(panelHeight*19/20-panelWidth/8)/2+((panelHeight*19/20-panelWidth/8)/2-((myPlayer2Table.getRowCount()+1)*myPlayer2Table.getRowHeight()+23))/2,panelWidth-10,(panelHeight*19/20-panelWidth/8)/2<((myPlayer2Table.getRowCount()+1)*myPlayer2Table.getRowHeight()+23)?((panelHeight*19/20-panelWidth/8)/2-10):((myPlayer2Table.getRowCount()+1)*myPlayer2Table.getRowHeight()+23));
 		showPanel.add(player2ScrollPane);
 		showPanel.repaint();
 		showPanel.validate();
 		this.add(showPanel);
+		this.repaint();
 		this.validate();
-
 	}
-
 
 	/** 设置比赛表格 */
 	private void setMatchTable(MatchesPO[] matches) {
@@ -206,8 +205,15 @@ public class MatchPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					showPanel.setVisible(false);
+					showPanel.remove(scoreScrollPane);
+					showPanel.remove(player1ScrollPane);
+					showPanel.remove(player2ScrollPane);
 					setShowPanel(matches[myMatchTable.getSelectedRow()].getTeam1(),matches[myMatchTable.getSelectedRow()].getTeam2());
+					showPanel.add(scoreScrollPane);
+					showPanel.add(player1ScrollPane);
+					showPanel.add(player2ScrollPane);
 					showPanel.repaint();
+					showPanel.validate();
 					showPanel.setVisible(true);
 				}
 
@@ -219,6 +225,7 @@ public class MatchPanel extends JPanel {
 	/** 设置比分表格 */
 	private void setScoreTable(MatchTeamPO team1, MatchTeamPO team2) {
 
+		showPanel.setVisible(false);
 		Vector columnsName = new Vector();
 		columnsName.add("球队");
 		columnsName.add("1");
@@ -246,13 +253,24 @@ public class MatchPanel extends JPanel {
 
 		scoreTable = new DefaultTableModel(data, columnsName);
 		myScoreTable = new MyTable(scoreTable);
-		myScoreTable.repaint();
+		myScoreTable.updateUI();
 		scoreScrollPane = new JScrollPane(myScoreTable);
 		// scoreScrollPane
 		// .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		// matchScrollPane
 		// .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-		scoreScrollPane.repaint();
+		scoreScrollPane.setBackground(FrameSize.backColor);
+		scoreScrollPane.getViewport().setOpaque(false);
+		resizeTable(false,scoreScrollPane,myScoreTable);
+//		scoreScrollPane.repaint();
+//		scoreScrollPane.validate();
+		scoreScrollPane.setVisible(false);
+		showPanel.add(scoreScrollPane);
+		showPanel.repaint();
+		scoreScrollPane.setVisible(true);
+		showPanel.setVisible(true);
+		this.add(showPanel);
+		this.repaint();
 	}
 
 	/**设置球员表现的表格*/
@@ -303,6 +321,7 @@ public class MatchPanel extends JPanel {
 		}
 		player1Table = new DefaultTableModel(data1, columnsName);
 		myPlayer1Table = new MyTable(player1Table);
+		myPlayer1Table.updateUI();
 		player1ScrollPane = new JScrollPane(myPlayer1Table);
 		player1ScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -310,6 +329,7 @@ public class MatchPanel extends JPanel {
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		resizeTable(false,player1ScrollPane,myPlayer1Table);
 		player1ScrollPane.repaint();
+		player1ScrollPane.validate();
 		
 		Vector data2 = new Vector();
 		for (int i = 0; i <players2.length; i++) {
@@ -343,6 +363,7 @@ public class MatchPanel extends JPanel {
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		resizeTable(false,player2ScrollPane,myPlayer2Table);
 		player2ScrollPane.repaint();
+		player2ScrollPane.validate();
 	}
 
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
