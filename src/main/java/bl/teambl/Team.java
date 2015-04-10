@@ -351,9 +351,13 @@ public class Team implements  Teamblservice
 
 	public Area getPlayerArea(String playername)
 	{
+		String teamname = null;
 		for (TeamPO t : teams)
 		{
-			if (team_map.get(t.getNameAbridge().hashCode()).hasPlayer(playername))
+			teamname = t.getNameAbridge();
+			if (teamname.equals("NOP"))
+				teamname = "NOH";
+			if (team_map.get(teamname.hashCode()).hasPlayer(playername))
 			{
 			  return t.getPlayerArea();
 			}

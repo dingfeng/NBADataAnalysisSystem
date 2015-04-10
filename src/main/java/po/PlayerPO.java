@@ -19,7 +19,7 @@ public class PlayerPO implements Comparable<PlayerPO>{
 	private String school;// 毕业学校
     private String teamnameAbridge; //球队
 	
-	public PlayerPO(Image action, String teamnameAbridge,Image portrait, String name, int number,
+	public PlayerPO(Image action, Image portrait, String name, int number,
 			String position, int heightfeet, int heightinch, int weight,
 			String birth, int age, int exp, String school) {
 		super();

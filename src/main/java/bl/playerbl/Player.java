@@ -239,7 +239,13 @@ public class Player  {
 	}
 
 	public Iterator<String> fuzzilyFind(String info) {
-		return null;
+		ArrayList<String> names = new ArrayList<String>(500);
+		for (PlayerPO p : allPlayerpos)
+		{
+			if (p.getName().startsWith(info))
+				names.add(p.getName());
+		}
+		return names.iterator(); 
 	}
 
 	public PlayerPO findPlayer(String info) 

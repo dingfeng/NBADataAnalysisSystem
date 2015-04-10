@@ -250,9 +250,9 @@ public class TeamQueue extends AbstractQueue{
 	public boolean hasPlayer(String playername)
 	{
 		boolean result = false;
-		for (String name : players)
+		for (int i = 0 ; i < len + 1; i++)
 		{
-			if (name.equals(playername))
+			if (players[i].equals(playername))
 			{
 				result = true;
 			}
