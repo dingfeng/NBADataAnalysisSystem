@@ -1,6 +1,12 @@
 package bl.playerbl;
 
+import java.util.Iterator;
+
 import po.MatchesPO;
+import po.PlayerPO;
+import bl.matchbl.Match;
+import bl.matchbl.MatchController;
+import blservice.matchblservice.Matchblservice;
 import blservice.playerblservice.PlayerBlService;
 import vo.Area;
 import vo.PlayerMatchVO;
@@ -10,6 +16,7 @@ import vo.SortType;
 
 public class PlayerController implements PlayerBlService{
 	private PlayerList player;
+	private Matchblservice matchservice = new MatchController();
 
 	public PlayerController() {
 		player = PlayerList.getPlayserListInstance();
@@ -19,14 +26,13 @@ public class PlayerController implements PlayerBlService{
 		// TODO Auto-generated method stub
 	}
 
-	public PlayerVO findPlayer(String info) {
+	public PlayerPO findPlayer(String info) {
 		return player.findPlayerInfo(info);
 	}
 
 	@Override
-	public boolean updatePlayerInformation(MatchesPO[] matches) {
-		boolean result = player.updateMatchPlayerData(matches);
-		return result;
+	public boolean updatePlayerInformation() {
+		return true;
 	}
 
 	@Override
@@ -44,16 +50,41 @@ public class PlayerController implements PlayerBlService{
 
 	@Override
 	public PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby) {
-		return player.getDayHotPlayers(sortby);
+		return player.getDayHotPlayers(sortby, 5);
 	}
 
 	@Override
 	public PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby) {
-		return player.getSeasonHotPlayers(sortby);
+		//热点球员默认为5个
+		return player.getSeasonHotPlayers(sortby, 5);
 	}
 
 	@Override
 	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby) {
-		return player.getPromotePlayer(sortby);
+		return player.getPromotePlayer(sortby, 5);
+	}
+
+	@Override
+	public Iterator<PlayerMatchVO> fuzzilyFindAve(String info) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Iterator<PlayerMatchVO> fuzzilyFindTotal(String info) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Match[] getRecentPlayerMatches(String playername, int num) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Match[] getAllPlayerMatches(String playername, int num) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

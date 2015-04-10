@@ -22,6 +22,11 @@ import javax.swing.table.DefaultTableModel;
 
 import org.apache.batik.swing.JSVGCanvas;
 
+import bl.matchbl.MatchController;
+import bl.teambl.TeamController;
+import po.MatchPlayerPO;
+import po.MatchTeamPO;
+import po.MatchesPO;
 import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
@@ -30,6 +35,11 @@ import ui.mainui.UneditableTextField;
 import vo.PlayerVO;
 
 public class MatchPanel extends JPanel {
+	
+	MatchesPO[] matches ;
+
+	MatchController matchController = new MatchController();
+	TeamController teamController = new TeamController();
 
 	JPanel welcomePanel = new JPanel();
 	JPanel header = new JPanel();
@@ -42,44 +52,60 @@ public class MatchPanel extends JPanel {
 	DefaultTableModel matchTable;
 	JScrollPane matchScrollPane;
 	MyTable myMatchTable;
+
+	DefaultTableModel scoreTable;
+	MyTable myScoreTable;
+	JScrollPane scoreScrollPane;
+
+	DefaultTableModel player1Table;
+	MyTable myPlayer1Table;
+	JScrollPane player1ScrollPane;
+
+	DefaultTableModel player2Table;
+	MyTable myPlayer2Table;
+	JScrollPane player2sScrollPane;
 	
+	UneditableTextField score1; 
+	UneditableTextField score2;
+	UneditableTextField teamName1; 
+	UneditableTextField teamName2;
+	JSVGCanvas 	teamImage1 = new JSVGCanvas();
+	JSVGCanvas teamImage2= new JSVGCanvas();
 
 	public MatchPanel() {
 		this.setLayout(null);
-		this.setBounds(0, 0, FrameSize.width, FrameSize.height*7/8);
+		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
 		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
-		setShowPanel();
-		setMatchTable();
+		matches = matchController.getAllMatches();
+		setMatchTable(matches);
 		setHeader();
-		setWelcome();
+		setShowPanel(matches[0].getTeam1(),matches[0].getTeam2());
 		this.add(matchScrollPane);
 		this.add(header);
 		this.add(showPanel);
 	}
 
-	/** 欢迎界面 */
-	private void setWelcome() {
-		welcomePanel.setLayout(null);
-		welcomePanel.setBackground(FrameSize.backColor);
-		welcomePanel.setBounds(0, FrameSize.height / 16,FrameSize.width / 4, FrameSize.height*13/16);
-		JLabel nba = new JLabel(new ImageIcon("image/nba.png"));
-		nba.setBounds(FrameSize.width / 12, FrameSize.height / 8,FrameSize.width / 6, 200);
-		welcomePanel.add(nba);
-	}
+	/**欢迎界面
+	 *  private void setWelcome() { welcomePanel.setLayout(null);
+	 * welcomePanel.setBackground(FrameSize.backColor);
+	 * welcomePanel.setBounds(0, FrameSize.height / 16, FrameSize.width / 4,
+	 * FrameSize.height * 13 / 16); JLabel nba = new JLabel(new
+	 * ImageIcon("image/nba.png")); nba.setBounds(FrameSize.width / 12,
+	 * FrameSize.height / 8, FrameSize.width / 6, 200); welcomePanel.add(nba); }
+	 */
 
-	/**设置查找栏*/
+	/** 设置查找栏 */
 	private void setHeader() {
 		header.setLayout(null);
-		header.setBounds(0, 0, FrameSize.width, FrameSize.height/ 12);
+		header.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		header.setBackground(FrameSize.backColor);
 
 		timeBox = new MyComboBox(new String[] { "比赛时间", "df", "df", "df" });
 		timeBox.setBounds(50, 10, 150, 35);
 		header.add(timeBox);
 
-		teamBox = new MyComboBox(
-				new String[] { "队伍", "Ning", "Ning", "Ning" });
+		teamBox = new MyComboBox(new String[] { "队伍", "Ning", "Ning", "Ning" });
 		teamBox.setBounds(230, 10, 150, 35);
 		header.add(teamBox);
 
@@ -94,42 +120,67 @@ public class MatchPanel extends JPanel {
 		header.add(yesButton);
 	}
 
-	private void setShowPanel(){
+	private void setShowPanel(MatchTeamPO team1,MatchTeamPO team2) {
 		showPanel.setLayout(null);
-		showPanel.setBounds(FrameSize.width/4, FrameSize.height/12,FrameSize.width*3/4, FrameSize.height*19/24);
+		showPanel.setBounds(FrameSize.width / 4, FrameSize.height / 12,
+				FrameSize.width * 3 / 4, FrameSize.height * 19 / 24);
 		showPanel.setBackground(FrameSize.backColor);
+
+		int panelWidth = FrameSize.width * 3 / 4;
+		int panelHeight = FrameSize.height * 19 / 24;
+
+	
+		teamImage1.setDocument(teamController.getTeamData(team1.getName()).getImage());
 		
-		int panelWidth=FrameSize.width*3/4;
-		int panelHeight=FrameSize.height*19/24;
-		
-		JSVGCanvas team1 = new JSVGCanvas();
-		JSVGCanvas team2 = new JSVGCanvas();
-		team1.setBackground(Color.yellow);
-		team2.setBackground(Color.red);
-		team1.setBounds(panelWidth*3/10,panelHeight/15,panelWidth/8,panelWidth/8);
-		team2.setBounds(panelWidth*23/40,panelHeight/15,panelWidth/8,panelWidth/8);
-		showPanel.add(team1);
-		showPanel.add(team2);
-		
-		UneditableTextField teamName1 = new UneditableTextField("ABC");
-		UneditableTextField teamName2 = new UneditableTextField("DEF");
-		teamName1.setBounds(panelWidth*3/10,panelWidth*31/240,panelWidth/8,panelWidth/8);
-		teamName2.setBounds(panelWidth*23/40,panelHeight*31/240,panelWidth/8,panelWidth/8);
+		teamImage2.setDocument(teamController.getTeamData(team2.getName()).getImage());
+		teamImage1.setBackground(FrameSize.buttonbackColor);
+		teamImage2.setBackground(FrameSize.buttonbackColor);
+		teamImage1.setBounds(panelWidth * 3 / 15, panelHeight / 20, panelWidth / 8,
+				panelWidth / 8);
+		teamImage2.setBounds(panelWidth * 81 / 120, panelHeight / 20,
+				panelWidth / 8, panelWidth / 8);
+		showPanel.add(teamImage1);
+		showPanel.add(teamImage2);
+
+		teamName1 = new UneditableTextField(team1.getName());
+		teamName2 = new UneditableTextField(team2.getName());
+		teamName1.setBounds(panelWidth * 3 / 15 - 30, panelHeight * 2 / 20, 25,
+				10);
+		teamName2.setBounds(panelWidth * 81 / 120 + panelWidth / 8 + 5,
+				panelHeight * 2 / 20, 25, 10);
 		showPanel.add(teamName1);
 		showPanel.add(teamName2);
-		
-		UneditableTextField score1 = new UneditableTextField("100");
-		UneditableTextField score2 = new UneditableTextField("200");
-		score1.setBounds(250,130,25,10);
-		score2.setBounds(625,130,30,10);
+
+		score1 = new UneditableTextField(team1.getTotalScores());
+		score2 = new UneditableTextField(team2.getTotalScores());
+		score1.setBounds(panelWidth * 3 / 15 - 30, panelHeight * 4 / 20, 25, 10);
+		score2.setBounds(panelWidth * 81 / 120 + panelWidth / 8 + 5,
+				panelHeight * 4 / 20, 25, 10);
 		showPanel.add(score1);
 		showPanel.add(score2);
 
+		// 设置比分表格
+		setScoreTable(team1,team2);
+		scoreScrollPane.setBounds(panelWidth * 39 / 120, panelHeight * 2 / 20,
+				panelWidth * 42 / 120, 55);
+		resizeTable(false, scoreScrollPane, myScoreTable);
+		 scoreScrollPane.repaint();
+		showPanel.add(scoreScrollPane);
+
+
+		// 设置每个球队的球员表现的表格
+//		setPlayerTable();
+		
+		showPanel.repaint();
+		showPanel.validate();
+		this.add(showPanel);
+		this.validate();
 
 	}
-	
-	/** 设置表格 */
-	private void setMatchTable() {
+
+
+	/** 设置比赛表格 */
+	private void setMatchTable(MatchesPO[] matches) {
 
 		Vector columnsName = new Vector();
 		columnsName.add("时间");
@@ -137,15 +188,14 @@ public class MatchPanel extends JPanel {
 		columnsName.add("比分");
 
 		Vector data = new Vector();
-		// while (true) {
-		for(int i=0;i<100;i++){
-		Vector rowData = new Vector();
-		rowData.add("2015-04-08");
-		rowData.add("ABC-ABC");
-		rowData.add("100-100");
-		data.add(rowData);
+		for (int i = 0; i < matches.length; i++) {
+			Vector rowData = new Vector();
+			rowData.add(matches[i].getDate());
+			rowData.add(matches[i].getTeam1().getName() + "-" + matches[i].getTeam2().getName());
+			rowData.add(matches[i].getTeam1().getTotalScores() + ":"
+					+ matches[i].getTeam2().getTotalScores());
+			data.add(rowData);
 		}
-		// }
 		matchTable = new DefaultTableModel(data, columnsName);
 		myMatchTable = new MyTable(matchTable);
 		matchScrollPane = new JScrollPane(myMatchTable);
@@ -153,20 +203,120 @@ public class MatchPanel extends JPanel {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		// matchScrollPane
 		// .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		matchScrollPane.setBounds(0, FrameSize.height/12,
-				FrameSize.width / 4, FrameSize.height*19/24);
+		matchScrollPane.setBounds(0, FrameSize.height / 12,
+				FrameSize.width / 4, FrameSize.height * 19 / 24);
 		resizeTable(false, matchScrollPane, myMatchTable);
 
 		myMatchTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					System.out.println(myMatchTable.getSelectedRow());
-					// showOne((String) mytable.getModel().getValueAt(
-					// mytable.getSelectedRow(), 0));
+					showPanel.setVisible(false);
+					setShowPanel(matches[myMatchTable.getSelectedRow()].getTeam1(),matches[myMatchTable.getSelectedRow()].getTeam2());
+					showPanel.repaint();
+					showPanel.setVisible(true);
 				}
+
 			}
 
 		});
+	}
+
+	/** 设置比分表格 */
+	private void setScoreTable(MatchTeamPO team1, MatchTeamPO team2) {
+
+		Vector columnsName = new Vector();
+		columnsName.add("球队");
+		columnsName.add("1");
+		columnsName.add("2");
+		columnsName.add("3");
+		columnsName.add("4");
+		for (int i = 4; i < team1.getScores().length; i++) {
+			columnsName.add("+");
+		}
+
+		Vector data = new Vector();
+		Vector rowData1 = new Vector();
+		rowData1.add(team1.getName());
+		for (int i = 0; i < team1.getScores().length; i++) {
+			rowData1.add(team1.getScores()[i]);
+		}
+		data.add(rowData1);
+
+		Vector rowData2 = new Vector();
+		rowData2.add(team2.getName());
+		for (int i = 0; i < team2.getScores().length; i++) {
+			rowData2.add(team2.getScores()[i]);
+		}
+		data.add(rowData2);
+
+		scoreTable = new DefaultTableModel(data, columnsName);
+		myScoreTable = new MyTable(scoreTable);
+		myScoreTable.repaint();
+		scoreScrollPane = new JScrollPane(myScoreTable);
+		// scoreScrollPane
+		// .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		// matchScrollPane
+		// .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+		scoreScrollPane.repaint();
+	}
+
+	/**设置球员表现的表格*/
+	private void setPlayerTable(/**MatchPlayerPO player*/) {
+
+		Vector columnsName = new Vector();
+		columnsName.add("球员");
+		columnsName.add("位置");
+		columnsName.add("在场时间");
+		columnsName.add("命中");
+		columnsName.add("出手");
+		columnsName.add("三分命中");
+		columnsName.add("三分出手");
+		columnsName.add("罚球命中");
+		columnsName.add("罚球出手");
+		columnsName.add("投篮出手");
+		columnsName.add("进攻");
+		columnsName.add("防守");
+		columnsName.add("篮板");
+		columnsName.add("助攻");
+		columnsName.add("抢断");
+		columnsName.add("失误");
+		columnsName.add("犯规");
+		columnsName.add("得分");
+
+		Vector data = new Vector();
+		// while (true) {
+		for (int i = 0; i < 10; i++) {
+			Vector rowData = new Vector();
+			rowData.add("ABC");
+			rowData.add("100");
+			rowData.add("200");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+			rowData.add("100");
+
+			data.add(rowData);
+		}
+		// }
+		player1Table = new DefaultTableModel(data, columnsName);
+		myPlayer1Table = new MyTable(player1Table);
+		player1ScrollPane = new JScrollPane(myPlayer1Table);
+		// scoreScrollPane
+		// .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		// matchScrollPane
+		// .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
 	}
 
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {

@@ -80,11 +80,7 @@ public class Player {
 	private SortBy sortBy;
 	private ArrayList<MatchesPO> matches = new ArrayList<MatchesPO>(82);// 球员参加的比赛的信息
 
-	/**
-	 * 使用playerpo初始化player的构造器
-	 * 
-	 * @param playerPo
-	 */
+	/*
 	public Player(PlayerPO playerPo) {
 		this.name = playerPo.getName();
 		this.action = playerPo.getAction();
@@ -146,6 +142,7 @@ public class Player {
 			this.twoPair = data.getTwoPair();// 两双
 		}
 	}
+	*/
 
 	/**
 	 * 向player对象中添加一个match的数据
