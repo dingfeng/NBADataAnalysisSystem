@@ -34,7 +34,7 @@ public class MyFrame extends JFrame {
 	JPanel frame = new JPanel()
 	{
 		protected void paintComponent(Graphics g) {  
-            java.awt.Image img = Toolkit.getDefaultToolkit().getImage("image/NBAbackground1.png");  
+            java.awt.Image img = Toolkit.getDefaultToolkit().getImage("image/kobe1.jpg");  
             g.drawImage(img, 0, 0, this.getWidth(),this.getHeight(),this);  
             // 细致渲染、绘制背景，可控制截取图片，显示于指定的JPanel位置  
 //          g.drawImage(img, 0, 0, frameSize.width, frameSize.height,   

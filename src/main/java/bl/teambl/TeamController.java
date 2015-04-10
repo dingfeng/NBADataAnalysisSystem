@@ -48,6 +48,8 @@ public class TeamController implements Teamblservice{
 	}
 	//获得球队的基本信息
 	public TeamPO getTeamData(String team) {
+		if (team.equals("NOH"))
+			team = "NOP";
 		return this.team.getTeamData(team);
 	}
 	
