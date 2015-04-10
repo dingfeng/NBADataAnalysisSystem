@@ -57,13 +57,13 @@ public class MatchPanel extends JPanel {
 	MyTable myScoreTable;
 	JScrollPane scoreScrollPane;
 
-	DefaultTableModel player1Table;
-	MyTable myPlayer1Table;
-	JScrollPane player1ScrollPane;
+	DefaultTableModel player1Table = new DefaultTableModel();
+	MyTable myPlayer1Table = new MyTable(player1Table);
+	JScrollPane player1ScrollPane = new JScrollPane();
 
 	DefaultTableModel player2Table;
 	MyTable myPlayer2Table;
-	JScrollPane player2sScrollPane;
+	JScrollPane player2ScrollPane;
 	
 	UneditableTextField score1; 
 	UneditableTextField score2;
@@ -85,15 +85,6 @@ public class MatchPanel extends JPanel {
 		this.add(header);
 		this.add(showPanel);
 	}
-
-	/**欢迎界面
-	 *  private void setWelcome() { welcomePanel.setLayout(null);
-	 * welcomePanel.setBackground(FrameSize.backColor);
-	 * welcomePanel.setBounds(0, FrameSize.height / 16, FrameSize.width / 4,
-	 * FrameSize.height * 13 / 16); JLabel nba = new JLabel(new
-	 * ImageIcon("image/nba.png")); nba.setBounds(FrameSize.width / 12,
-	 * FrameSize.height / 8, FrameSize.width / 6, 200); welcomePanel.add(nba); }
-	 */
 
 	/** 设置查找栏 */
 	private void setHeader() {
@@ -120,6 +111,7 @@ public class MatchPanel extends JPanel {
 		header.add(yesButton);
 	}
 
+	/**设置每场比赛具体信息显示*/
 	private void setShowPanel(MatchTeamPO team1,MatchTeamPO team2) {
 		showPanel.setLayout(null);
 		showPanel.setBounds(FrameSize.width / 4, FrameSize.height / 12,
@@ -169,8 +161,11 @@ public class MatchPanel extends JPanel {
 
 
 		// 设置每个球队的球员表现的表格
-//		setPlayerTable();
-		
+		setPlayerTable(team1.getPlayers(),team2.getPlayers());
+		player1ScrollPane.setBounds(0,150,panelWidth,200);
+		showPanel.add(player1ScrollPane);
+		player2ScrollPane.setBounds(0,350,panelWidth,200);
+		showPanel.add(player2ScrollPane);
 		showPanel.repaint();
 		showPanel.validate();
 		this.add(showPanel);
@@ -261,7 +256,7 @@ public class MatchPanel extends JPanel {
 	}
 
 	/**设置球员表现的表格*/
-	private void setPlayerTable(/**MatchPlayerPO player*/) {
+	private void setPlayerTable(MatchPlayerPO[] players1,MatchPlayerPO[] players2) {
 
 		Vector columnsName = new Vector();
 		columnsName.add("球员");
@@ -273,50 +268,81 @@ public class MatchPanel extends JPanel {
 		columnsName.add("三分出手");
 		columnsName.add("罚球命中");
 		columnsName.add("罚球出手");
-		columnsName.add("投篮出手");
 		columnsName.add("进攻");
 		columnsName.add("防守");
 		columnsName.add("篮板");
 		columnsName.add("助攻");
 		columnsName.add("抢断");
+		columnsName.add("盖帽");
 		columnsName.add("失误");
 		columnsName.add("犯规");
 		columnsName.add("得分");
 
-		Vector data = new Vector();
-		// while (true) {
-		for (int i = 0; i < 10; i++) {
+		Vector data1 = new Vector();
+		for (int i = 0; i <players1.length; i++) {
 			Vector rowData = new Vector();
-			rowData.add("ABC");
-			rowData.add("100");
-			rowData.add("200");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-			rowData.add("100");
-
-			data.add(rowData);
+			rowData.add(players1[i].getName());
+			rowData.add(players1[i].getLocation());
+			rowData.add(players1[i].getTime());
+			rowData.add(players1[i].getHitNo());
+			rowData.add(players1[i].getHandNo());
+			rowData.add(players1[i].getThreeHitNo());
+			rowData.add(players1[i].getThreeHandNo());
+			rowData.add(players1[i].getPenaltyHitNo());
+			rowData.add(players1[i].getPenaltyHandNo());
+			rowData.add(players1[i].getOffenseRebs());
+			rowData.add(players1[i].getDefenceRebs());
+			rowData.add(players1[i].getRebs());
+			rowData.add(players1[i].getHelp());
+			rowData.add(players1[i].getStealsNo());
+			rowData.add(players1[i].getBlockNo());
+			rowData.add(players1[i].getMistakesNo());
+			rowData.add(players1[i].getFoulsNo());
+			rowData.add(players1[i].getPoints());
+			data1.add(rowData);
 		}
-		// }
-		player1Table = new DefaultTableModel(data, columnsName);
+		player1Table = new DefaultTableModel(data1, columnsName);
 		myPlayer1Table = new MyTable(player1Table);
 		player1ScrollPane = new JScrollPane(myPlayer1Table);
-		// scoreScrollPane
-		// .setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		// matchScrollPane
-		// .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
+		player1ScrollPane
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		player1ScrollPane
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		resizeTable(false,player1ScrollPane,myPlayer1Table);
+		player1ScrollPane.repaint();
+		
+		Vector data2 = new Vector();
+		for (int i = 0; i <players2.length; i++) {
+			Vector rowData = new Vector();
+			rowData.add(players2[i].getName());
+			rowData.add(players2[i].getLocation());
+			rowData.add(players2[i].getTime());
+			rowData.add(players2[i].getHitNo());
+			rowData.add(players2[i].getHandNo());
+			rowData.add(players2[i].getThreeHitNo());
+			rowData.add(players2[i].getThreeHandNo());
+			rowData.add(players2[i].getPenaltyHitNo());
+			rowData.add(players2[i].getPenaltyHandNo());
+			rowData.add(players2[i].getOffenseRebs());
+			rowData.add(players2[i].getDefenceRebs());
+			rowData.add(players2[i].getRebs());
+			rowData.add(players2[i].getHelp());
+			rowData.add(players2[i].getStealsNo());
+			rowData.add(players2[i].getBlockNo());
+			rowData.add(players2[i].getMistakesNo());
+			rowData.add(players2[i].getFoulsNo());
+			rowData.add(players2[i].getPoints());
+			data2.add(rowData);
+		}
+		player2Table = new DefaultTableModel(data2, columnsName);
+		myPlayer2Table = new MyTable(player2Table);
+		player2ScrollPane = new JScrollPane(myPlayer2Table);
+		player2ScrollPane
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		player2ScrollPane
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		resizeTable(false,player2ScrollPane,myPlayer2Table);
+		player2ScrollPane.repaint();
 	}
 
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
