@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import vo.Area;
+import vo.PlayerMatchVO;
 import vo.PlayerSortBy;
 import vo.SortType;
 
@@ -18,7 +19,11 @@ public class PlayerTest {
     }
 	@Test
 	public void testSortAvePlayers() {
-		player.sortAvePlayers(PlayerSortBy.assist, SortType.ASEND);
+		PlayerMatchVO[] players = player.sortAvePlayers(PlayerSortBy.assist, SortType.ASEND);
+		for (int i = 0; i < players.length; i++)
+		{
+			System.out.println(players[i].getAssistNo());
+		}
 	}
 
 	@Test
