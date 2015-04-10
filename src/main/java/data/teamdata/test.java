@@ -3,6 +3,7 @@ package data.teamdata;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -55,24 +56,20 @@ public class test
 	   int i = 0;
 	   for (TeamPO t1 : teams)
 	   {
-		    JFrame frame = new JFrame();
-		    frame.setBackground(Color.blue);
-		    frame.setBounds(0, 0, 500, 500);
-		    JPanel panel = new JPanel();
-
-		    panel.setLayout(null);
-		    
-		    frame.setLayout(new BorderLayout());
-		    frame.add(panel,BorderLayout.CENTER);
-		    frame.setVisible(true);
-		    panel.setOpaque(false);
-		    Graphics g = panel.getGraphics();
-		    g.drawImage(t1.getImage(),0,0,100,100,panel);
-		    panel.paint(g);
-		    panel.repaint();
-		    
-		    frame.repaint();
-		    
+//		    JFrame frame = new JFrame();
+//		    frame.setBackground(Color.blue);
+//		    frame.setBounds(0, 0, 500, 500);
+//		    JPanel panel = new JPanel();
+//
+//		    panel.setLayout(null);
+//		    
+//		    frame.setLayout(new BorderLayout());
+//		    frame.add(panel,BorderLayout.CENTER);
+//		    frame.setVisible(true);frame.repaint();
+//		    Graphics2D g = (Graphics2D) panel.getGraphics();
+//		    g.drawImage(Toolkit.getDefaultToolkit().getImage("data/teams/ATL.png"),0,0,100,100,frame);
+//		    panel.paint(g);
+//		    panel.repaint();
 		    break;
 	   }
    }
