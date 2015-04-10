@@ -69,8 +69,8 @@ public class MatchPanel extends JPanel {
 	UneditableTextField score2;
 	UneditableTextField teamName1; 
 	UneditableTextField teamName2;
-	JSVGCanvas teamImage1;
-	JSVGCanvas teamImage2;
+	JSVGCanvas 	teamImage1 = new JSVGCanvas();
+	JSVGCanvas teamImage2= new JSVGCanvas();
 
 	public MatchPanel() {
 		this.setLayout(null);
@@ -129,9 +129,9 @@ public class MatchPanel extends JPanel {
 		int panelWidth = FrameSize.width * 3 / 4;
 		int panelHeight = FrameSize.height * 19 / 24;
 
-		teamImage1 = new JSVGCanvas();
+	
 		teamImage1.setDocument(teamController.getTeamData(team1.getName()).getImage());
-		teamImage2 = new JSVGCanvas();
+		
 		teamImage2.setDocument(teamController.getTeamData(team2.getName()).getImage());
 		teamImage1.setBackground(FrameSize.buttonbackColor);
 		teamImage2.setBackground(FrameSize.buttonbackColor);
