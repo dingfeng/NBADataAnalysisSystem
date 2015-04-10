@@ -64,6 +64,8 @@ public class TeamPanel extends JPanel {
 	JTextField foundYearresult = new UneditableTextField();// 建立时间
 	JButton match;
 	
+	TeamMatchPanel teammatch;
+	
 	TeamController tc = new TeamController();
 
 	public TeamPanel() {
@@ -235,11 +237,6 @@ public class TeamPanel extends JPanel {
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
-		
-		
-		this.remove(find);
-		this.remove(sort);
-		this.add(welcome);
 
 		this.repaint();
 
@@ -367,9 +364,9 @@ public class TeamPanel extends JPanel {
 
 		jScrollPane.setVisible(false);
 		if (sorttype == true) {
-			type = SortType.ASEND;
-		} else {
 			type = SortType.DESEND;
+		} else {
+			type = SortType.ASEND;
 		}
 		TeamSortBy teamSortBy = null;
 		String sortby = (String) box.getSelectedItem();
@@ -453,7 +450,7 @@ public class TeamPanel extends JPanel {
 		this.remove(sort);
 		
 		TeamPO teamresult = tc.getTeamData(teamname);
-		image.setIcon(scaleImage(new ImageIcon(teamresult.getImage()),FrameSize.width / 4, 3*FrameSize.height /20));
+		image.setIcon(scaleImage(new ImageIcon(teamresult.getImage()), 3*FrameSize.height /20, 3*FrameSize.height /20));
 		nameresult.setText(teamresult.getName());// 队伍名称
 		nameAbridgeresult.setText(teamresult.getNameAbridge());// 名称缩写
 		addressresult.setText(teamresult.getAddress());// 所在地
@@ -466,9 +463,9 @@ public class TeamPanel extends JPanel {
 		image.setOpaque(false);
 		
 		match.setBounds(FrameSize.width/3-45, FrameSize.height /40, 40,40);
-		image.setBounds(FrameSize.width /40, FrameSize.height / 8, FrameSize.width / 4, 3*FrameSize.height /20);
+		image.setBounds(FrameSize.width /10, FrameSize.height / 8, FrameSize.width / 4, 3*FrameSize.height /20);
 		nameresult.setBounds(FrameSize.width /20, FrameSize.height / 8 - 50, 100, 3*FrameSize.height/80 );
-		nameAbridgeresult.setBounds(FrameSize.width / 4,
+		nameAbridgeresult.setBounds(9*FrameSize.width /40 ,
 				FrameSize.height / 8 - 50, 50, 30);
 		addressresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 130, FrameSize.width /8, 3*FrameSize.height/80);
 		matchArearesult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 190, FrameSize.width /8, 3*FrameSize.height/80);
@@ -529,10 +526,30 @@ public class TeamPanel extends JPanel {
 
 	/**点击查看比赛按钮*/
 	void setMatch(){
-		TeamMatchPanel teammatch=new TeamMatchPanel(nameAbridgeresult.getText());
+		teammatch=new TeamMatchPanel(nameAbridgeresult.getText());
+		JButton showAllButton=new JButton();
+		JButton showTeamButton=new JButton();
+
+		showAllButton.setBounds(0, 0, 20, 20);
+		showTeamButton.setBounds(40, 0,20 ,20);
+		teammatch.add(showAllButton);
+		teammatch.add(showTeamButton);
+		showAllButton.addActionListener(e->close_showall());
+		showTeamButton.addActionListener(e->close_showteam());
 		this.remove(jScrollPane);
 		this.add(teammatch);
 		this.repaint();
+	}
+	/**关掉比赛panel 显示全部球队*/
+	void close_showall(){
+		this.remove(teammatch);
+		showAllData();
+	}
+	/**关掉比赛panel 显示该球队*/
+	void close_showteam(){
+		this.remove(teammatch);
+		searchField.setText(nameAbridgeresult.getText());
+		findClick();
 	}
 	
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
