@@ -3,6 +3,7 @@ package ui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
@@ -69,9 +70,9 @@ public class MatchPanel extends JPanel {
 	UneditableTextField score2;
 	UneditableTextField teamName1; 
 	UneditableTextField teamName2;
-	JSVGCanvas 	teamImage1 = new JSVGCanvas();
-	JSVGCanvas teamImage2= new JSVGCanvas();
-
+	JLabel teamImage1 = new JLabel();
+	JLabel teamImage2 = new JLabel();
+	
 	public MatchPanel() {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
@@ -122,9 +123,8 @@ public class MatchPanel extends JPanel {
 		int panelHeight = FrameSize.height * 19 / 24;
 
 	
-		teamImage1.setDocument(teamController.getTeamData(team1.getName()).getImage());
-		
-		teamImage2.setDocument(teamController.getTeamData(team2.getName()).getImage());
+		teamImage1.setIcon(scaleImage(new ImageIcon(teamController.getTeamData(team1.getName()).getImage()), panelWidth/8,panelWidth/8));
+		teamImage2.setIcon(scaleImage(new ImageIcon(teamController.getTeamData(team2.getName()).getImage()), panelWidth/8,panelWidth/8));
 		teamImage1.setBackground(FrameSize.buttonbackColor);
 		teamImage2.setBackground(FrameSize.buttonbackColor);
 		teamImage1.setBounds(panelWidth * 3 / 15, panelHeight / 20, panelWidth / 8,
@@ -392,4 +392,17 @@ public class MatchPanel extends JPanel {
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 		}
 	}
+
+	private ImageIcon scaleImage(ImageIcon icon, int iconWidth, int iconHeight) { 
+		int width = icon.getIconWidth(); 
+		int height = icon.getIconHeight(); 
+
+		if (width == iconWidth && height == iconHeight) { 
+		return icon; 
+		} 
+		Image image = icon.getImage(); 
+		image = image.getScaledInstance(iconWidth, iconHeight, Image.SCALE_DEFAULT); 
+
+		return new ImageIcon(image); 
+		}
 }
