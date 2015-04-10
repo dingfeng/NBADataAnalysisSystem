@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import ui.HotPanel;
+import ui.IndexPanel;
 import ui.MatchPanel;
 import ui.teamui.TeamPanel;
 
@@ -44,6 +45,7 @@ public class MyFrame extends JFrame {
 	JPanel mainpanel=new JPanel();
 	CardLayout card = new CardLayout();
 	
+	IndexPanel indexpanel=new IndexPanel();
 	TeamPanel teampanel=new TeamPanel();
 //	PlayerPanel playerpanel=new PlayerPanel();
 	HotPanel hotpanel=new HotPanel();
@@ -74,6 +76,7 @@ public class MyFrame extends JFrame {
 		
 		mainpanel.setBounds(0, FrameSize.height/8, FrameSize.width, FrameSize.height*7/8);
 		mainpanel.setLayout(card);
+		mainpanel.add(indexpanel,"index");
 //		mainpanel.add(playerpanel,"player");
 		mainpanel.add(teampanel,"team");
 		mainpanel.add(matchpanel,"match");
@@ -135,11 +138,7 @@ public class MyFrame extends JFrame {
 	}
 	
 	void setIndex(){
-//		mainpanel.remove(teampanel);
-//		mainpanel.remove(playerpanel);
-		mainpanel.remove(matchpanel);
-		mainpanel.remove(hotpanel);
-		mainpanel.repaint();
+		card.show(mainpanel, "index");
 	}
 	
 	void setPlayer(){
