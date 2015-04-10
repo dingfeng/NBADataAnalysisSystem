@@ -14,7 +14,6 @@ import org.apache.batik.swing.JSVGCanvas;
 
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
-import ui.mainui.UneditableTextField;
 import vo.PlayerSortBy;
 import vo.TeamMatchVO;
 import vo.TeamSortBy;
@@ -25,23 +24,23 @@ public class HotPanel extends JPanel {
 	JPanel tag = new JPanel();
 	JPanel show = new JPanel();
 
-	UneditableTextField name_1;
-	UneditableTextField name_2;
-	UneditableTextField name_3;
-	UneditableTextField name_4;
-	UneditableTextField name_5;
+	JLabel name_1=new JLabel();
+	JLabel name_2=new JLabel();
+	JLabel name_3=new JLabel();
+	JLabel name_4=new JLabel();
+	JLabel name_5=new JLabel();
 
-	JLabel portrait_1;
-	JLabel portrait_2;
-	JLabel portrait_3;
-	JLabel portrait_4;
-	JLabel portrait_5;
+	JLabel portrait_1=new JLabel();
+	JLabel portrait_2=new JLabel();
+	JLabel portrait_3=new JLabel();
+	JLabel portrait_4=new JLabel();
+	JLabel portrait_5=new JLabel();
 
-	JSVGCanvas svgCanvas_1 = new JSVGCanvas();
-	JSVGCanvas svgCanvas_2 = new JSVGCanvas();
-	JSVGCanvas svgCanvas_3 = new JSVGCanvas();
-	JSVGCanvas svgCanvas_4 = new JSVGCanvas();
-	JSVGCanvas svgCanvas_5 = new JSVGCanvas();
+	JLabel score_1 = new JLabel();
+	JLabel score_2 = new JLabel();
+	JLabel score_3 = new JLabel();
+	JLabel score_4 = new JLabel();
+	JLabel score_5 = new JLabel();
 
 	JComboBox<String> choose;
 	TeamController tc = new TeamController();
@@ -109,11 +108,6 @@ public class HotPanel extends JPanel {
 				"盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分", "罚球", "两双" });
 		choose.setBounds(10, 50, 80, 30);
 
-		name_1 = new UneditableTextField();
-		name_2 = new UneditableTextField();
-		name_3 = new UneditableTextField();
-		name_4 = new UneditableTextField();
-		name_5 = new UneditableTextField();
 
 		name_1.setBounds(FrameSize.width / 3, 80, 200, 80);
 		name_2.setBounds(FrameSize.width / 3, 240, 200, 50);
@@ -127,11 +121,7 @@ public class HotPanel extends JPanel {
 		name_4.setBackground(FrameSize.buttonbackColor);
 		name_5.setBackground(FrameSize.buttonbackColor);
 
-		UneditableTextField score_1 = new UneditableTextField();
-		UneditableTextField score_2 = new UneditableTextField();
-		UneditableTextField score_3 = new UneditableTextField();
-		UneditableTextField score_4 = new UneditableTextField();
-		UneditableTextField score_5 = new UneditableTextField();
+		
 
 		score_1.setBounds(FrameSize.width / 3 + 250, 80, 100, 100);
 		score_2.setBounds(FrameSize.width / 3 + 250,
@@ -199,35 +189,30 @@ public class HotPanel extends JPanel {
 		String sortBy = (String) choose.getSelectedItem();
 		PlayerSortBy playerSortBy = sortby(sortBy);
 
-		portrait_1 = new JLabel("头像");
 		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
 		portrait_1.setBackground(FrameSize.buttonbackColor);
 		portrait_1.setOpaque(true);
 		portrait_1.setBounds(FrameSize.width / 3 - 228, FrameSize.height / 10,
 				185, 123);
 
-		portrait_2 = new JLabel("头像");
 		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
 		portrait_2.setBackground(FrameSize.buttonbackColor);
 		portrait_2.setOpaque(true);
 		portrait_2.setBounds(FrameSize.width / 3 - 100,
 				3 * FrameSize.height / 10, 57, 46);
 
-		portrait_3 = new JLabel("头像");
 		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
 		portrait_3.setBackground(FrameSize.buttonbackColor);
 		portrait_3.setOpaque(true);
 		portrait_3.setBounds(FrameSize.width / 3 - 100,
 				4 * FrameSize.height / 10, 57, 46);
 
-		portrait_4 = new JLabel("头像");
 		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
 		portrait_4.setBackground(FrameSize.buttonbackColor);
 		portrait_4.setOpaque(true);
 		portrait_4.setBounds(FrameSize.width / 3 - 100,
 				5 * FrameSize.height / 10, 57, 46);
 
-		portrait_5 = new JLabel("头像");
 		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
 		portrait_5.setBackground(FrameSize.buttonbackColor);
 		portrait_5.setOpaque(true);
@@ -318,52 +303,29 @@ public class HotPanel extends JPanel {
 
 		name_1.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
 
-		svgCanvas_1
-				.setDocument(tc.getTeamData(hotteam[0].getName()).getImage());
-		svgCanvas_2
-				.setDocument(tc.getTeamData(hotteam[1].getName()).getImage());
-		svgCanvas_3
-				.setDocument(tc.getTeamData(hotteam[2].getName()).getImage());
-		svgCanvas_4
-				.setDocument(tc.getTeamData(hotteam[3].getName()).getImage());
-		svgCanvas_5
-				.setDocument(tc.getTeamData(hotteam[4].getName()).getImage());
+		portrait_1.setIcon(scaleImage(new ImageIcon(tc.getTeamData(hotteam[0].getName()).getImage()),FrameSize.width/8,FrameSize.width/8));
+		portrait_2.setIcon(scaleImage(new ImageIcon(tc.getTeamData(hotteam[1].getName()).getImage()),FrameSize.width/12,FrameSize.width/12));
+		portrait_3.setIcon(scaleImage(new ImageIcon(tc.getTeamData(hotteam[2].getName()).getImage()),FrameSize.width/12,FrameSize.width/12));
+		portrait_4.setIcon(scaleImage(new ImageIcon(tc.getTeamData(hotteam[3].getName()).getImage()),FrameSize.width/12,FrameSize.width/12));
+		portrait_5.setIcon(scaleImage(new ImageIcon(tc.getTeamData(hotteam[4].getName()).getImage()),FrameSize.width/12,FrameSize.width/12));
+		
+		portrait_1.setBounds(13*FrameSize.width / 60, FrameSize.height / 10,
+				FrameSize.width/8,FrameSize.width/8);
+		portrait_2.setBounds(7*FrameSize.width / 30,
+				3 * FrameSize.height / 10, FrameSize.width/12,FrameSize.width/12);
+		portrait_3.setBounds(7*FrameSize.width / 30,
+				4* FrameSize.height / 10, FrameSize.width/12,FrameSize.width/12);
+		portrait_4.setBounds(7*FrameSize.width / 30,
+				5 * FrameSize.height / 10, FrameSize.width/12,FrameSize.width/12);
+		portrait_5.setBounds(7*FrameSize.width / 30,
+				6 * FrameSize.height / 10, FrameSize.width/12,FrameSize.width/12);
 
-		svgCanvas_1.setBounds(FrameSize.width / 3 - 228, FrameSize.height / 10,
-				185, 123);
-		svgCanvas_2.setBounds(FrameSize.width / 3 - 100,
-				3 * FrameSize.height / 10, 115, 92);
-		svgCanvas_3.setBounds(FrameSize.width / 3 - 100,
-				4 * FrameSize.height / 10, 115, 92);
-		svgCanvas_4.setBounds(FrameSize.width / 3 - 100,
-				5 * FrameSize.height / 10, 115, 92);
-		svgCanvas_5.setBounds(FrameSize.width / 3 - 100,
-				6 * FrameSize.height / 10, 115, 92);
-
-		svgCanvas_1.setVisible(false);
-		svgCanvas_2.setVisible(false);
-		svgCanvas_3.setVisible(false);
-		svgCanvas_4.setVisible(false);
-		svgCanvas_5.setVisible(false);
-
-		svgCanvas_1.repaint();
-		svgCanvas_2.repaint();
-		svgCanvas_3.repaint();
-		svgCanvas_4.repaint();
-		svgCanvas_5.repaint();
-
-		show.add(svgCanvas_5);
-		show.add(svgCanvas_4);
-		show.add(svgCanvas_3);
-		show.add(svgCanvas_2);
-		show.add(svgCanvas_1);
-
-		this.validate();
-		svgCanvas_1.setVisible(true);
-		svgCanvas_2.setVisible(true);
-		svgCanvas_3.setVisible(true);
-		svgCanvas_4.setVisible(true);
-		svgCanvas_5.setVisible(true);
+		
+		show.add(portrait_1);
+		show.add(portrait_2);
+		show.add(portrait_3);
+		show.add(portrait_4);
+		show.add(portrait_5);
 
 		show.repaint();
 		this.repaint();
