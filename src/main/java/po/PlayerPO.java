@@ -3,7 +3,7 @@ package po;
 import java.awt.Image;
 
 
-public class PlayerPO {
+public class PlayerPO implements Comparable<PlayerPO>{
 
 	private Image action;// 大头图片
 	private Image portrait;// 全身图片
@@ -17,8 +17,9 @@ public class PlayerPO {
 	private int age;// 年龄
 	private int exp;// 球龄
 	private String school;// 毕业学校
-
-	public PlayerPO(Image action, Image portrait, String name, int number,
+    private String teamnameAbridge; //球队
+	
+	public PlayerPO(Image action, String teamnameAbridge,Image portrait, String name, int number,
 			String position, int heightfeet, int heightinch, int weight,
 			String birth, int age, int exp, String school) {
 		super();
@@ -36,6 +37,11 @@ public class PlayerPO {
 		this.school = school;
 	}
 
+	public String getTeamnameAbridge()
+	{
+		return teamnameAbridge;
+	}
+	
 	public Image getAction() {
 		return action;
 	}
@@ -95,5 +101,10 @@ public class PlayerPO {
 		sb.append(age+" ");
 		sb.append(school+" ");
 		return sb.toString();
+	}
+
+	@Override
+	public int compareTo(PlayerPO e) {
+		return name.compareTo(e.getName());
 	}
 }

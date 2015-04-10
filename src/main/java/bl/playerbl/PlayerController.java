@@ -22,12 +22,12 @@ public class PlayerController implements PlayerBlService{
 		return player.sortTotalPlayers(playerSortBy, sortType);
 	}
 	//筛选球员数据  场均  
-	public PlayerMatchVO[] screenAvePlayers(String playerPosition,
+	public Iterator<PlayerMatchVO> screenAvePlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
 		return player.screenAvePlayers(playerPosition, playerArea, sortBy);
 	}
 	//筛选球员数据  赛季
-	public PlayerMatchVO[] screenTotalPlayers(String playerPosition,
+	public Iterator<PlayerMatchVO> screenTotalPlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
 		return player.screenTotalPlayers(playerPosition, playerArea, sortBy);
 	}
