@@ -6,16 +6,15 @@ import java.util.LinkedList;
 
 import po.TeamPO;
 import dataservice.teamdataservice.TeamDataService;
+import vo.Area;
 import vo.SortType;
 import vo.TeamMatchVO;
 import vo.TeamSortBy;
-import vo.TeamVO;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import DataFactory.DataFactoryImp;
 import DataFactoryService.NBADataFactory;
 import bl.matchbl.Match;
-import bl.matchbl.AbstractQueue;
 import bl.matchbl.TeamQueue;
 import blservice.teamblservice.Teamblservice;
 
@@ -350,5 +349,16 @@ public class Team implements  Teamblservice
 		return team_list.iterator();
 	}
 
-
+	public Area getPlayerArea(String playername)
+	{
+		for (TeamPO t : teams)
+		{
+			if (team_map.get(t.getNameAbridge().hashCode()).hasPlayer(playername))
+			{
+			  return t.getPlayerArea();
+			}
+		}
+		return null;
+	}
+	
 }

@@ -31,6 +31,10 @@ public enum PlayerSortBy {
 	mistakeEfficiency,
 	useEfficiency,
 	
+	points_uprate, //得分提升率
+	rebs_uprate, //篮板提升率
+	help_uprate, //助攻提升率
+	
     rebound,//篮板
 	assist,//助攻
 	scoring_rebound_assist,//得分/篮板/助攻（加权比1：1：1）

@@ -2,6 +2,7 @@ package bl.playerbl;
 
 import java.util.Iterator;
 
+import po.MatchPlayerPO;
 import po.PlayerPO;
 import vo.Area;
 import vo.PlayerMatchVO;
@@ -22,22 +23,22 @@ public class PlayerController implements PlayerBlService{
 		return player.sortTotalPlayers(playerSortBy, sortType);
 	}
 	//筛选球员数据  场均  
-	public PlayerMatchVO[] screenAvePlayers(String playerPosition,
+	public Iterator<PlayerMatchVO> screenAvePlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
 		return player.screenAvePlayers(playerPosition, playerArea, sortBy);
 	}
 	//筛选球员数据  赛季
-	public PlayerMatchVO[] screenTotalPlayers(String playerPosition,
+	public Iterator<PlayerMatchVO> screenTotalPlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
 		return player.screenTotalPlayers(playerPosition, playerArea, sortBy);
 	}
 	//获得当天热点球员   
-	public PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby) {
+	public  MatchPlayerPO[] getDayHotPlayer(PlayerSortBy sortby) {
 		return player.getDayHotPlayer(sortby);
 	}
 	//获得赛季热点球员
 	public PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby) {
-		return player.getDayHotPlayer(sortby);
+		return player.getSeasonHotPlayer(sortby);
 	}
 	//获得进步最快球员
 	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby) {

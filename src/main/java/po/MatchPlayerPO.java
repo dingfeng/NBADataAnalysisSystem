@@ -1,6 +1,6 @@
 package po;
 
-public class MatchPlayerPO
+public class MatchPlayerPO implements Comparable<MatchPlayerPO>
 {
 	private String name;// 球员名称
 	private String location;//位置
@@ -21,6 +21,8 @@ public class MatchPlayerPO
 	private int foulsNo;// 犯规数
 	private int points;// 得分
 	private boolean dirty;  //脏数据
+	private String teamnameAbridge; //球队缩写名
+	private double data;//热点球队排序的依据
 	public String toString()
 	{
 		StringBuilder sb = new StringBuilder();
@@ -153,5 +155,31 @@ public class MatchPlayerPO
 	{
 		if (penaltyHitNo == 0) return 0;
 		return 1.0 * penaltyHandNo / penaltyHitNo;
+	}
+	public  void setTeamnameAbridge(String teamnameAbridge)
+	{
+		this.teamnameAbridge   = teamnameAbridge;
+	}
+	public String getTeamnameAbridge()
+	{
+		return teamnameAbridge;
+	}
+	public void setHotData(double data)
+	{
+		this.data = data;
+	}
+	public double getHotData()
+	{
+		return this.data;
+	}
+	public int compareTo(MatchPlayerPO o) {
+		double yourdata  = o.getHotData();
+		if (yourdata > data)
+			return 1;
+		else if ( yourdata < data)
+		{
+			return -1;
+		}
+		else return 0;
 	}
 }

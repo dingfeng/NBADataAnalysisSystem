@@ -242,8 +242,22 @@ public class TeamQueue extends AbstractQueue{
 		MatchesPO[] temp_matches = new MatchesPO[size];
 		for (int i = 0 ;i < size; i++)
 		{
-			temp_matches[i] = matches[i];
+			temp_matches[i] = matches[len - i];
 		}
 		return temp_matches;
 	}
+	
+	public boolean hasPlayer(String playername)
+	{
+		boolean result = false;
+		for (String name : players)
+		{
+			if (name.equals(playername))
+			{
+				result = true;
+			}
+		}
+		return result;
+	}
+	
 }

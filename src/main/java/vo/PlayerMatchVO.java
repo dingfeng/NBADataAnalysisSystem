@@ -44,6 +44,7 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	private double points_uprate; //得分提升率
 	private double rebs_uprate; //篮板提升率
 	private double help_uprate; //助攻提升率
+	private double hotData;    //热点数据
 	
 	private SortTool sortTool; //排序工具
 	private SortType type;
@@ -277,9 +278,15 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		  return sb.toString();
 	}
 	
+	public double getHotData()
+	{
+		return  hotData;
+	}
+	
 	public void setSortTool(SortTool sortTool)
 	{
 		this.sortTool = sortTool;
+		this.hotData = sortTool.getData();
 	}
 	
 	public SortTool getSortTool()
