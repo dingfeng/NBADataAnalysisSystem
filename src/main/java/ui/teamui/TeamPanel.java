@@ -539,6 +539,9 @@ public class TeamPanel extends JPanel {
 
 	/**点击查看比赛按钮*/
 	void setMatch(){
+		if(matchpanel){
+			this.remove(teammatch);
+		}
 		matchpanel=true;
 		teammatch=new TeamMatchPanel(nameAbridgeresult.getText());
 		JButton showAllButton=new JButton();

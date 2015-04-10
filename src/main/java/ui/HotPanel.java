@@ -133,11 +133,7 @@ public class HotPanel extends JPanel {
 		score_5.setBounds(FrameSize.width / 3 + 250,
 				4 * FrameSize.height / 7 + 100, 80, 80);
 
-		score_1.setBackground(FrameSize.buttonbackColor);
-		score_2.setBackground(FrameSize.buttonbackColor);
-		score_3.setBackground(FrameSize.buttonbackColor);
-		score_4.setBackground(FrameSize.buttonbackColor);
-		score_5.setBackground(FrameSize.buttonbackColor);
+		
 
 		show.add(choose);
 
@@ -320,6 +316,7 @@ public class HotPanel extends JPanel {
 		portrait_5.setBounds(7*FrameSize.width / 30,
 				6 * FrameSize.height / 10, FrameSize.width/12,FrameSize.width/12);
 
+		
 		
 		show.add(portrait_1);
 		show.add(portrait_2);
