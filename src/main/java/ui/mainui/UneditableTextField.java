@@ -3,6 +3,9 @@ package ui.mainui;
 import java.awt.Color;
 
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
+import org.apache.batik.svggen.font.Font;
 
 public class UneditableTextField extends JTextField {
 
@@ -21,5 +24,11 @@ public class UneditableTextField extends JTextField {
 		this.addFocusListener(new TextFieldAction());
 		this.setBackground(new Color(68, 68, 68));
 		this.setForeground(Color.white);
+		this.setHorizontalAlignment(SwingConstants.CENTER);//居中
+	}
+
+	public void setFont(Font font) {
+		// TODO Auto-generated method stub
+		this.setFont(font);
 	}
 }

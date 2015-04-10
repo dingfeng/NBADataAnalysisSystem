@@ -6,22 +6,30 @@ import java.util.Vector;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
 import org.apache.batik.swing.JSVGCanvas;
 
+import po.MatchesPO;
 import ui.mainui.FrameSize;
 import ui.mainui.MyTable;
+import ui.mainui.UneditableTextField;
+import bl.matchbl.MatchController;
 
 public class TeamMatchPanel extends JPanel{
 
+	MatchController mc=new MatchController();
+	String teamName;
 	
 	public TeamMatchPanel(String teamname) {
 		this.setLayout(null);
 		this.setBounds(FrameSize.width / 3, FrameSize.height / 12,
 				2 * FrameSize.width / 3, FrameSize.height*7/8- FrameSize.height / 12);
 		this.setBackground(FrameSize.backColor);;
+		this.teamName=teamname;
+		
 		setText();
 		setRecentTable();
 		setPastTable();
@@ -33,9 +41,11 @@ public class TeamMatchPanel extends JPanel{
 		JLabel recent =new JLabel("近期比赛");
 		JLabel past=new JLabel("过往查询");
 		JLabel teamname =new JLabel("队名");
-		JSVGCanvas svgCanvas = new JSVGCanvas();
+		JLabel team =new JLabel();
+		team.setText(teamName);
 		
 		teamname.setBounds(10, 20, 50,50);
+		team.setBounds(80, 20, 50,50);
 		recent.setBounds(10, 100, 2 * FrameSize.width / 3-20, 50);
 		past.setBounds(10, 253, 2 * FrameSize.width / 3-20, 50);
 		
@@ -46,7 +56,9 @@ public class TeamMatchPanel extends JPanel{
 		recent.setForeground(Color.white);
 		past.setForeground(Color.white);
 		teamname.setForeground(Color.white);
+		team.setForeground(Color.white);
 		
+		this.add(team);
 		this.add(teamname);
 		this.add(past);
 		this.add(recent);
@@ -55,16 +67,16 @@ public class TeamMatchPanel extends JPanel{
 	
 	void setRecentTable(){
 		Vector<String> columnsName = new Vector<String>();
-		columnsName.add("时间");
+		columnsName.add("日期");
 		columnsName.add("对阵队伍");
 		columnsName.add("比分");
-		
+		MatchesPO[] match=mc.getRecentTeamMatches(teamName, 5);
 		Vector rowimage = new Vector();
 		for(int i=0;i<5;i++){
 			Vector data=new Vector();
-			data.add("ball");
-			data.add("lala");
-			data.add("df");
+			data.add(match[i].getDate());
+			data.add(match[i].getTeam1().getName()+"-"+match[i].getTeam2().getName());
+			data.add(match[i].getTeam1().getTotalScores()+"-"+match[i].getTeam2().getTotalScores());
 			
 			rowimage.add(data);
 		}
@@ -81,16 +93,17 @@ public class TeamMatchPanel extends JPanel{
 	
 	void setPastTable(){
 		Vector<String> columnsName = new Vector<String>();
-		columnsName.add("时间");
+		columnsName.add("日期");
 		columnsName.add("对阵队伍");
 		columnsName.add("比分");
 		
+		MatchesPO[] match=mc.getTeamMatches(teamName);
 		Vector rowimage = new Vector();
-		for(int i=0;i<100;i++){
+		for(int i=0;i<match.length;i++){
 			Vector data=new Vector();
-			data.add("ball");
-			data.add("lala");
-			data.add("df");
+			data.add(match[i].getDate());
+			data.add(match[i].getTeam1().getName()+"-"+match[i].getTeam2().getName());
+			data.add(match[i].getTeam1().getTotalScores()+"-"+match[i].getTeam2().getTotalScores());
 			
 			rowimage.add(data);
 		}

@@ -8,6 +8,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.Font;
+
+import org.apache.batik.swing.JSVGCanvas;
 
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
@@ -21,23 +24,29 @@ public class HotPanel extends JPanel {
 
 	JPanel tag = new JPanel();
 	JPanel show = new JPanel();
-	
+
 	UneditableTextField name_1;
 	UneditableTextField name_2;
 	UneditableTextField name_3;
 	UneditableTextField name_4;
 	UneditableTextField name_5;
-	
+
 	JLabel portrait_1;
 	JLabel portrait_2;
 	JLabel portrait_3;
 	JLabel portrait_4;
 	JLabel portrait_5;
-	
-	
+
+	JSVGCanvas svgCanvas_1 = new JSVGCanvas();
+	JSVGCanvas svgCanvas_2 = new JSVGCanvas();
+	JSVGCanvas svgCanvas_3 = new JSVGCanvas();
+	JSVGCanvas svgCanvas_4 = new JSVGCanvas();
+	JSVGCanvas svgCanvas_5 = new JSVGCanvas();
+
 	JComboBox<String> choose;
 	TeamController tc = new TeamController();
-	int hottype=0;
+	int hottype = 0;
+
 	public HotPanel() {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
@@ -51,6 +60,7 @@ public class HotPanel extends JPanel {
 
 	}
 
+	/** 设置左侧选择框 */
 	void setTag() {
 
 		tag.setLayout(null);
@@ -88,6 +98,7 @@ public class HotPanel extends JPanel {
 		tag.add(fast_player);
 	}
 
+	/** 设置右侧显示panel */
 	void setShow() {
 		show.setLayout(null);
 		show.setBackground(FrameSize.backColor);
@@ -98,41 +109,11 @@ public class HotPanel extends JPanel {
 				"盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分", "罚球", "两双" });
 		choose.setBounds(10, 50, 80, 30);
 
-		portrait_1 = new JLabel("头像");
-		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
-		portrait_1.setBackground(FrameSize.buttonbackColor);
-		portrait_1.setOpaque(true);
-		portrait_1.setBounds(FrameSize.width / 3 - 228, 80, 185, 123);
-
-		portrait_2 = new JLabel("头像");
-		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
-		portrait_2.setBackground(FrameSize.buttonbackColor);
-		portrait_2.setOpaque(true);
-		portrait_2.setBounds(FrameSize.width / 3 - 100, 240, 57, 46);
-
-		portrait_3 = new JLabel("头像");
-		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
-		portrait_3.setBackground(FrameSize.buttonbackColor);
-		portrait_3.setOpaque(true);
-		portrait_3.setBounds(FrameSize.width / 3 - 100, 320, 57, 46);
-
-		portrait_4 = new JLabel("头像");
-		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
-		portrait_4.setBackground(FrameSize.buttonbackColor);
-		portrait_4.setOpaque(true);
-		portrait_4.setBounds(FrameSize.width / 3 - 100, 400, 57, 46);
-
-		portrait_5 = new JLabel("头像");
-		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
-		portrait_5.setBackground(FrameSize.buttonbackColor);
-		portrait_5.setOpaque(true);
-		portrait_5.setBounds(FrameSize.width / 3 - 100, 480, 57, 46);
-
-		 name_1 = new UneditableTextField();
-		 name_2 = new UneditableTextField();
-		 name_3 = new UneditableTextField();
-		 name_4 = new UneditableTextField();
-		 name_5 = new UneditableTextField();
+		name_1 = new UneditableTextField();
+		name_2 = new UneditableTextField();
+		name_3 = new UneditableTextField();
+		name_4 = new UneditableTextField();
+		name_5 = new UneditableTextField();
 
 		name_1.setBounds(FrameSize.width / 3, 80, 200, 80);
 		name_2.setBounds(FrameSize.width / 3, 240, 200, 50);
@@ -169,11 +150,7 @@ public class HotPanel extends JPanel {
 		score_5.setBackground(FrameSize.buttonbackColor);
 
 		show.add(choose);
-		show.add(portrait_1);
-		show.add(portrait_2);
-		show.add(portrait_3);
-		show.add(portrait_4);
-		show.add(portrait_5);
+
 		show.add(name_1);
 		show.add(name_2);
 		show.add(name_3);
@@ -187,9 +164,9 @@ public class HotPanel extends JPanel {
 
 	}
 
-
+	/** 设置下拉框 */
 	void showchoose(int type) {
-		hottype=type;
+		hottype = type;
 		choose.setVisible(false);
 		switch (type) {
 		case 3:
@@ -198,14 +175,14 @@ public class HotPanel extends JPanel {
 					"防守篮板数", "篮板数", "助攻数", "抢断数", "盖帽数", "失误数", "犯规数", "比赛得分",
 					"投篮命中率", "三分命中率", "罚球命中率", "胜率", "进攻回合", "进攻效率", "防守效率",
 					"进攻篮板效率", "防守篮板效率", "抢断效率", "助攻率" });
-			choose.addActionListener(e->showMessage_team());
+			choose.addActionListener(e -> showMessage_team());
 			break;
 		default:
 			choose = new MyComboBox(new String[] { "得分", "篮板", "助攻",
 					"得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分",
 					"罚球", "两双" });
-			choose.addActionListener(e->showMessage_player());
-			
+			choose.addActionListener(e -> showMessage_player());
+
 			break;
 		}
 		choose.setBounds(10, 50, 150, 30);
@@ -216,15 +193,53 @@ public class HotPanel extends JPanel {
 		this.repaint();
 	}
 
-	
+	/** 热点球员 */
 	void showMessage_player() {
-		
 
 		String sortBy = (String) choose.getSelectedItem();
 		PlayerSortBy playerSortBy = sortby(sortBy);
 
-	}
+		portrait_1 = new JLabel("头像");
+		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
+		portrait_1.setBackground(FrameSize.buttonbackColor);
+		portrait_1.setOpaque(true);
+		portrait_1.setBounds(FrameSize.width / 3 - 228, FrameSize.height / 10,
+				185, 123);
 
+		portrait_2 = new JLabel("头像");
+		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
+		portrait_2.setBackground(FrameSize.buttonbackColor);
+		portrait_2.setOpaque(true);
+		portrait_2.setBounds(FrameSize.width / 3 - 100,
+				3 * FrameSize.height / 10, 57, 46);
+
+		portrait_3 = new JLabel("头像");
+		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
+		portrait_3.setBackground(FrameSize.buttonbackColor);
+		portrait_3.setOpaque(true);
+		portrait_3.setBounds(FrameSize.width / 3 - 100,
+				4 * FrameSize.height / 10, 57, 46);
+
+		portrait_4 = new JLabel("头像");
+		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
+		portrait_4.setBackground(FrameSize.buttonbackColor);
+		portrait_4.setOpaque(true);
+		portrait_4.setBounds(FrameSize.width / 3 - 100,
+				5 * FrameSize.height / 10, 57, 46);
+
+		portrait_5 = new JLabel("头像");
+		// portraitLabel.setIcon(scaleImage(new ImageIcon(),115,92));
+		portrait_5.setBackground(FrameSize.buttonbackColor);
+		portrait_5.setOpaque(true);
+		portrait_5.setBounds(FrameSize.width / 3 - 100,
+				6 * FrameSize.height / 10, 57, 46);
+
+		show.add(portrait_1);
+		show.add(portrait_2);
+		show.add(portrait_3);
+		show.add(portrait_4);
+		show.add(portrait_5);
+	}
 
 	/** 赛季热点球队 */
 	void showMessage_team() {
@@ -289,19 +304,70 @@ public class HotPanel extends JPanel {
 		}
 
 		TeamMatchVO[] hotteam = tc.getHotTeams(teamSortBy);
-		
-		name_1.setText(hotteam[0].getName());
-		name_2.setText(hotteam[1].getName());
-		name_3.setText(hotteam[2].getName());
-		name_4.setText(hotteam[3].getName());
-		name_5.setText(hotteam[4].getName());
-		
-		
-		
+
+		name_1.setText(tc.getTeamData(hotteam[0].getName()).getName() + "   "
+				+ hotteam[0].getName());
+		name_2.setText(tc.getTeamData(hotteam[1].getName()).getName() + "   "
+				+ hotteam[1].getName());
+		name_3.setText(tc.getTeamData(hotteam[2].getName()).getName() + "   "
+				+ hotteam[2].getName());
+		name_4.setText(tc.getTeamData(hotteam[3].getName()).getName() + "   "
+				+ hotteam[3].getName());
+		name_5.setText(tc.getTeamData(hotteam[4].getName()).getName() + "   "
+				+ hotteam[4].getName());
+
+		name_1.setFont(new Font("Comic Sans MS", Font.BOLD, 24));
+
+		svgCanvas_1
+				.setDocument(tc.getTeamData(hotteam[0].getName()).getImage());
+		svgCanvas_2
+				.setDocument(tc.getTeamData(hotteam[1].getName()).getImage());
+		svgCanvas_3
+				.setDocument(tc.getTeamData(hotteam[2].getName()).getImage());
+		svgCanvas_4
+				.setDocument(tc.getTeamData(hotteam[3].getName()).getImage());
+		svgCanvas_5
+				.setDocument(tc.getTeamData(hotteam[4].getName()).getImage());
+
+		svgCanvas_1.setBounds(FrameSize.width / 3 - 228, FrameSize.height / 10,
+				185, 123);
+		svgCanvas_2.setBounds(FrameSize.width / 3 - 100,
+				3 * FrameSize.height / 10, 115, 92);
+		svgCanvas_3.setBounds(FrameSize.width / 3 - 100,
+				4 * FrameSize.height / 10, 115, 92);
+		svgCanvas_4.setBounds(FrameSize.width / 3 - 100,
+				5 * FrameSize.height / 10, 115, 92);
+		svgCanvas_5.setBounds(FrameSize.width / 3 - 100,
+				6 * FrameSize.height / 10, 115, 92);
+
+		svgCanvas_1.setVisible(false);
+		svgCanvas_2.setVisible(false);
+		svgCanvas_3.setVisible(false);
+		svgCanvas_4.setVisible(false);
+		svgCanvas_5.setVisible(false);
+
+		svgCanvas_1.repaint();
+		svgCanvas_2.repaint();
+		svgCanvas_3.repaint();
+		svgCanvas_4.repaint();
+		svgCanvas_5.repaint();
+
+		show.add(svgCanvas_5);
+		show.add(svgCanvas_4);
+		show.add(svgCanvas_3);
+		show.add(svgCanvas_2);
+		show.add(svgCanvas_1);
+
+		this.validate();
+		svgCanvas_1.setVisible(true);
+		svgCanvas_2.setVisible(true);
+		svgCanvas_3.setVisible(true);
+		svgCanvas_4.setVisible(true);
+		svgCanvas_5.setVisible(true);
+
 		show.repaint();
 		this.repaint();
 	}
-
 
 	private PlayerSortBy sortby(String sortBy) {
 		PlayerSortBy playerSortBy = null;
