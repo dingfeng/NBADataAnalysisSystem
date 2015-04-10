@@ -1,5 +1,7 @@
 package data.teamdata;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,34 +16,30 @@ import vo.Area;
 
 public class TeamData implements TeamDataService
 {
-   String filename;
-   String svg_uri;
-   final static int TEAM_NUM = 30;
-   
+   private String filename;
+   private final static int TEAM_NUM = 30;
+   private Toolkit tool = Toolkit.getDefaultToolkit();
   public TeamData (String filename)
   {
 	  this.filename = filename;
-	  svg_uri = "file:\\"+filename+"/";
   }
   
   public TeamPO[] getAllTeamData()
   {
 	TeamPO[] teampos  = new TeamPO[TEAM_NUM];
-	String parser = XMLResourceDescriptor.getXMLParserClassName();
-    SAXSVGDocumentFactory f = new SAXSVGDocumentFactory(parser);
-    Document doc = null;
     BufferedReader reader= null;
 	try
 	{
     reader = new BufferedReader(new FileReader(filename+"/teams")  );
 	String tempStr = reader.readLine();
 	String[] items = null;
+	Image image = null;
 	for (int i  = 0; i < 30; i++)
 	{
 	tempStr = reader.readLine();
 	items = dealWithLine(tempStr);
-	doc = f.createDocument( svg_uri+ items[1]+ ".svg");
-	teampos[i] = new TeamPO(doc,items[0],items[1],items[2],
+    image = tool.getImage(filename +"/"+items[0]+".png");
+	teampos[i] = new TeamPO(image,items[0],items[1],items[2],
 	items[3],convToPlayerArea(items[4]),items[5],Integer.parseInt(items[6]));
 	}
 	reader.close();

@@ -14,7 +14,7 @@ public class test
 	   printTeamName();
    }
    
-   public  static String filename = "G:/NBAData/teams";
+   public  static String filename = "C:/NBAData";
    
    //test oldMatchTest return the time
    public static long oldTeamTest()
@@ -39,7 +39,7 @@ public class test
    }
    public static void printTeamName()
    {
-	   TeamData t = new TeamData(filename);
+	   TeamData t = new TeamData(filename+"/teams");
 	   TeamPO[] teams = t.getAllTeamData();
 	   for (TeamPO t1 : teams)
 	   {

@@ -9,7 +9,7 @@ import org.w3c.dom.Document;
 import vo.Area;
 
 public class TeamPO implements Comparable<TeamPO>{
-	private Document image; // 队伍图标
+	private Image image; // 队伍图标
 	private String name; // 队伍名称
 	private String nameAbridge; // 名称缩写
 	private String address; // 所在地
@@ -22,7 +22,7 @@ public class TeamPO implements Comparable<TeamPO>{
 	{
 	   return name+" "+nameAbridge+" "+address+" "+matchArea+" "+manage+" "+foundYear;
 	}
-	public TeamPO(Document image, String name, String nameAbridge, String address,
+	public TeamPO(Image image, String name, String nameAbridge, String address,
 			String matchArea, Area playerArea, String manage, int foundYear) {
 		super();
 		this.image = image;
@@ -35,7 +35,7 @@ public class TeamPO implements Comparable<TeamPO>{
 		this.foundYear = foundYear;
 	}
 
-	public Document getImage() {
+	public Image getImage() {
 		return image;
 	}
 
