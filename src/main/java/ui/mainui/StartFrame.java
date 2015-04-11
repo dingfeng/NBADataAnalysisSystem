@@ -24,7 +24,7 @@ public class StartFrame extends JFrame{
 	private Point origin = new Point();
 	StartFrame()
 	{  
-		MyFrame my=new MyFrame("NBA Analysis System");
+		MyFrame my=new MyFrame();
 		my.addMouseListener(new MouseAdapter()
 		{
 			public void mousePressed(MouseEvent e) {

@@ -24,12 +24,14 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
+import po.PlayerPO;
 import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyTable;
 import ui.mainui.UneditableTextField;
 import vo.Area;
+import vo.PlayerMatchVO;
 import vo.PlayerSortBy;
 import vo.PlayerVO;
 import vo.SortType;
@@ -79,7 +81,7 @@ public class PlayerPanel extends JPanel {
 		JPanel header = headerPanel();
 		new Thread() {
 			public void run() {
-				setTable(playerController.sortPlayers(PlayerSortBy.name,
+				setTable(playerController.sortTotalPlayers(PlayerSortBy.name,
 						SortType.ASEND));
 			}
 		}.start();
@@ -96,7 +98,7 @@ public class PlayerPanel extends JPanel {
 	}
 
 	/** 设置表格 */
-	private void setTable(Iterator allPlayer) {
+	private void setTable(PlayerMatchVO[] playerMatchVOs) {
 		Vector columnsName = new Vector();
 		columnsName.add("球员名称");
 		columnsName.add("球衣号码");
@@ -149,36 +151,36 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("使用率(%)");
 
 		Vector data = new Vector();
-		while (allPlayer.hasNext()) {
-			PlayerVO playerVO = (PlayerVO) allPlayer.next();
+		for(int i=0;i<playerMatchVOs.length;i++) {
+			PlayerMatchVO playerVO = (PlayerMatchVO) playerMatchVOs[i];
 			Vector rowData = new Vector();
 			rowData.add(playerVO.getName());
-			int playerNum = playerVO.getNumber();
-			String number = playerNum != -1 ? String.valueOf(playerNum) : "-";
-			rowData.add(number);
-			rowData.add(playerVO.getPosition());
-			rowData.add(playerVO.getHeightfeet() + "-"
-					+ playerVO.getHeightinch());
-			rowData.add(playerVO.getBirth());
-			rowData.add(playerVO.getAge());
-			rowData.add(playerVO.getExp());
-			rowData.add(playerVO.getSchool());
+//			int playerNum = playerVO.getNumber();
+//			String number = playerNum != -1 ? String.valueOf(playerNum) : "-";
+//			rowData.add(number);
+//			rowData.add(playerVO.getPosition());
+//			rowData.add(playerVO.getHeightfeet() + "-"
+//					+ playerVO.getHeightinch());
+//			rowData.add(playerVO.getBirth());
+//			rowData.add(playerVO.getAge());
+//			rowData.add(playerVO.getExp());
+//			rowData.add(playerVO.getSchool());
 			rowData.add(playerVO.getTeam());
 			rowData.add(playerVO.getMatchNo());
 			rowData.add(playerVO.getFirstServiceNo());
 			rowData.add(String.format("%.3f",playerVO.getRebs()));
-			rowData.add(String.format("%.3f",playerVO.getAssist()));
+			rowData.add(String.format("%.3f",playerVO.getAssistNo()));
 			rowData.add(String.format("%.3f",playerVO.getTime()));
 
-			rowData.add(String.format("%.3f",playerVO.getBlock()));
+			rowData.add(String.format("%.3f",playerVO.getBlockNo()));
 			rowData.add(String.format("%.3f",playerVO.getScoring_rebound_assist()));
-			rowData.add(String.format("%.3f",playerVO.getSteal()));
-			rowData.add(String.format("%.3f",playerVO.getFoul()));
-			rowData.add(String.format("%.3f",playerVO.getMistake()));
+			rowData.add(String.format("%.3f",playerVO.getStealsNo()));
+			rowData.add(String.format("%.3f",playerVO.getFoulsNo()));
+			rowData.add(String.format("%.3f",playerVO.getMistakesNo()));
 			rowData.add(String.format("%.3f",playerVO.getMinute()));
-			rowData.add(String.format("%.3f",playerVO.getShot()));
+			rowData.add(String.format("%.3f",playerVO.getHandNo()));
 			rowData.add(String.format("%.3f",playerVO.getThree_points()));
-			rowData.add(String.format("%.3f",playerVO.getBlock()));
+			rowData.add(String.format("%.3f",playerVO.getBlockNo()));
 			rowData.add(String.format("%.3f",playerVO.getTwoPair()));
 			double hitRate = playerVO.getHitRate() * 100;
 			if (hitRate >= 0)
@@ -225,7 +227,7 @@ public class PlayerPanel extends JPanel {
 		jScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		jScrollPane.setBounds(FrameSize.width / 3, FrameSize.height / 12,
-				2 * FrameSize.width / 3, 485);
+				2 * FrameSize.width / 3, FrameSize.height*7/8- FrameSize.height / 12);
 		resizeTable(false, jScrollPane, mytable);
 		this.add(jScrollPane);
 
@@ -247,11 +249,11 @@ public class PlayerPanel extends JPanel {
 		this.remove(screenPanel);
 		findPanel.remove(actionLabel);
 
-		PlayerVO playerVO = playerController.findPlayer(playerInfo);
+		PlayerPO playerVO = playerController.findPlayer(playerInfo);
 		nameText.setText(playerVO.getName());
 		numText.setText(String.valueOf(playerVO.getNumber()));
 		positionText.setText(String.valueOf(playerVO.getPosition()));
-		teamText.setText(playerVO.getTeam());
+		teamText.setText(playerVO.getTeamnameAbridge());
 		birthText.setText(playerVO.getBirth());
 		ageText.setText(String.valueOf(playerVO.getAge()));
 		expText.setText(String.valueOf(playerVO.getExp()));
@@ -344,7 +346,7 @@ public class PlayerPanel extends JPanel {
 	private void screenPlayerConfirmClick() {
 		jScrollPane.setVisible(false);
 		readDataType(dataType);
-		char position = ( positionBox.getSelectedItem().toString()).charAt(0);
+		String position = ( positionBox.getSelectedItem().toString());
 
 		Area area = null;
 		String selectArea = playerAreaBox.getSelectedItem().toString();
@@ -394,7 +396,7 @@ public class PlayerPanel extends JPanel {
 			playerSortBy = PlayerSortBy.twoPair;
 		}
 
-		Iterator<PlayerVO> screenPlayer = playerController.sreenPlayers(
+		Iterator<PlayerMatchVO> screenPlayer = playerController.screenAvePlayers(
 				position, area, playerSortBy);
 		setTable(screenPlayer);
 		jScrollPane.repaint();
@@ -655,7 +657,7 @@ public class PlayerPanel extends JPanel {
 		welcomePanel.setLayout(null);
 		welcomePanel.setBackground(FrameSize.backColor);
 		welcomePanel.setBounds(0, FrameSize.height / 12, FrameSize.width / 3,
-				485);
+				11*FrameSize.height / 12);
 		JLabel nba = new JLabel(new ImageIcon("image/nba.png"));
 		nba.setBounds(FrameSize.width / 12, FrameSize.height / 8,
 				FrameSize.width / 6, 200);
