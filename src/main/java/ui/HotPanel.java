@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyFrame;
-import ui.teamui.TeamPanel;
 import vo.PlayerMatchVO;
 import vo.PlayerSortBy;
 import vo.TeamMatchVO;
@@ -49,15 +48,17 @@ public class HotPanel extends JPanel {
 	JComboBox<String> choose;
 	TeamController tc = new TeamController();
 	PlayerController pc=new PlayerController();
-	int hottype = 1;
+	int hottype = 2;
 
+	HotPanel hotpanel=this;
 	public HotPanel() {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
 		this.setOpaque(false);
-
+		
 		setTag();
 		setShow();
+		showchoose(2);
 		this.add(tag);
 		this.add(show);
 		this.repaint();
@@ -113,6 +114,8 @@ public class HotPanel extends JPanel {
 				"得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分",
 				"罚球", "两双" });
 		
+		
+		
 		for(int i=0;i<5;i++){
 			name[i]=new JLabel();
 			name[i].setBounds(FrameSize.width / 3, (i+1)*FrameSize.height / 7 , FrameSize.width / 6, FrameSize.height/16);
@@ -120,25 +123,7 @@ public class HotPanel extends JPanel {
 			show.add(name[i]);
 		}
 
-		name[0].setBounds(FrameSize.width / 3, FrameSize.height/10, FrameSize.width / 3, FrameSize.height/10);
-//		name_2.setBounds(FrameSize.width / 3, 2*FrameSize.height / 7 , FrameSize.width / 6, FrameSize.height/16);
-//		name_3.setBounds(FrameSize.width / 3, 3*FrameSize.height / 7 , FrameSize.width / 6, FrameSize.height/16);
-//		name_4.setBounds(FrameSize.width / 3, 4*FrameSize.height / 7 , FrameSize.width / 6, FrameSize.height/16);
-//		name_5.setBounds(FrameSize.width / 3, 5*FrameSize.height / 7 , FrameSize.width / 6, FrameSize.height/16);
-//
-//		name_1.setBackground(FrameSize.buttonbackColor);
-//		name_2.setBackground(FrameSize.buttonbackColor);
-//		name_3.setBackground(FrameSize.buttonbackColor);
-//		name_4.setBackground(FrameSize.buttonbackColor);
-//		name_5.setBackground(FrameSize.buttonbackColor);
-//
-//
-//		name_1.setForeground(Color.white);	
-//		name_2.setForeground(Color.white);	
-//		name_3.setForeground(Color.white);	
-//		name_4.setForeground(Color.white);	
-//		name_5.setForeground(Color.white);	
-
+		name[0].setBounds(FrameSize.width / 3, FrameSize.height/10, FrameSize.width / 5, FrameSize.height/10);
 		name[0].setFont(new Font("Comic Sans MS", Font.BOLD, 24));
 		
 		score_1.setBounds(FrameSize.width / 3 + 250, FrameSize.height/10, 100, 100);
@@ -159,11 +144,6 @@ public class HotPanel extends JPanel {
 
 
 		show.add(choose);
-//		show.add(name_1);
-//		show.add(name_2);
-//		show.add(name_3);
-//		show.add(name_4);
-//		show.add(name_5);
 		show.add(score_1);
 		show.add(score_2);
 		show.add(score_3);
@@ -183,12 +163,16 @@ public class HotPanel extends JPanel {
 					"防守篮板数", "篮板数", "助攻数", "抢断数", "盖帽数", "失误数", "犯规数", "比赛得分",
 					"投篮命中率", "三分命中率", "罚球命中率", "胜率", "进攻回合", "进攻效率", "防守效率",
 					"进攻篮板效率", "防守篮板效率", "抢断效率", "助攻率" });
+			choose.setSelectedIndex(0);
+			showMessage_team();
 			choose.addActionListener(e -> showMessage_team());
 			break;
 		default:
 			choose = new MyComboBox(new String[] { "得分", "篮板", "助攻",
 					"得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分",
 					"罚球", "两双" });
+			choose.setSelectedIndex(0);
+			showMessage_player();
 			choose.addActionListener(e -> showMessage_player());
 
 			break;
@@ -226,25 +210,20 @@ public class HotPanel extends JPanel {
 
 		portrait_3.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[2].getName()).getPortrait()),69, 55));
 		portrait_3.setBounds(FrameSize.width / 3 - 100,
-				2*FrameSize.height / 7 , 69, 55);
+				3*FrameSize.height / 7 , 69, 55);
 
 		portrait_4.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[3].getName()).getPortrait()),69, 55));
 		portrait_4.setBounds(FrameSize.width / 3 - 100,
-				2*FrameSize.height / 7 , 69, 55);
+				4*FrameSize.height / 7 , 69, 55);
 
 		portrait_5.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[4].getName()).getPortrait()),69, 55));
 		portrait_5.setBounds(FrameSize.width / 3 - 100,
-				2*FrameSize.height / 7 , 69, 55);
+				5*FrameSize.height / 7 , 69, 55);
 		
 		for(int i=0;i<5;i++){
 			name[i].setText(players[i].getName());
-		}
-//		name_1.setText(players[0].getName());
-//		name_2.setText(players[1].getName());
-//		name_3.setText(players[2].getName());
-//		name_4.setText(players[3].getName());
-//		name_5.setText(players[4].getName());
-		
+			name[i].addMouseListener(new showPlayer());
+		}		
 		
 		show.add(portrait_1);
 		show.add(portrait_2);
@@ -321,7 +300,6 @@ public class HotPanel extends JPanel {
 		for(int i=0;i<5;i++){
 			name[i].setText(tc.getTeamData(hotteam[i].getName()).getName() + "|"
 				+ hotteam[i].getName());
-			
 			name[i].addMouseListener(new showTeam());
 		}
 
@@ -365,24 +343,27 @@ public class HotPanel extends JPanel {
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
 			String teamname=((JLabel) e.getSource()).getText();
-			System.out.println(teamname);
-			MyFrame my=new MyFrame();
-			System.out.print(teamname.substring(teamname.length()-3));
-			my.teampanel.findClick(teamname.substring(teamname.length()-3));
-			my.setTeam();
-		
+		    MyFrame.teampanel.findClick(teamname.substring(teamname.length()-3));
+			MyFrame.card.show(MyFrame.mainpanel, "team");
+			
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+			((JLabel)e.getSource()).setOpaque(true);
+			((JLabel)e.getSource()).setBackground(Color.gray);
+			show.repaint();
+			hotpanel.repaint();
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+			((JLabel)e.getSource()).setOpaque(false);
+			((JLabel)e.getSource()).repaint();
+			show.repaint();
+			hotpanel.repaint();
 		}
 
 		@Override
@@ -399,8 +380,46 @@ public class HotPanel extends JPanel {
 		
 	}
 	
-	
-	
+	class showPlayer implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			MyFrame.card.show(MyFrame.mainpanel, "player");
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			((JLabel)arg0.getSource()).setOpaque(true);
+			((JLabel)arg0.getSource()).setBackground(Color.white);
+			show.repaint();
+			hotpanel.repaint();
+		}
+
+		@Override
+		public void mouseExited(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			((JLabel)arg0.getSource()).setOpaque(false);
+			((JLabel)arg0.getSource()).repaint();
+			show.repaint();
+			hotpanel.repaint();
+		}
+
+		@Override
+		public void mousePressed(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+
 	private PlayerSortBy sortby(String sortBy) {
 		PlayerSortBy playerSortBy = null;
 

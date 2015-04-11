@@ -509,7 +509,6 @@ public class TeamPanel extends JPanel {
 
 	/** 点击查找按钮 */
 	public void findClick(String teamname) {
-		System.out.print(teamname);
 		if (teamname.equals("")) {
 			JOptionPane.showMessageDialog(this, "请输入查找球队的缩写");
 			return;
@@ -558,11 +557,13 @@ public class TeamPanel extends JPanel {
 		this.add(teammatch);
 		this.repaint();
 	}
+	
 	/**关掉比赛panel 显示全部球队*/
 	void close_showall(){
 		this.remove(teammatch);
 		showAllData();
 	}
+	
 	/**关掉比赛panel 显示该球队*/
 	void close_showteam(){
 		this.remove(teammatch);

@@ -43,11 +43,11 @@ public class MyFrame extends JFrame {
         }  
 	};
 	MyFrame thisFrame = this;
-	JPanel mainpanel=new JPanel();
-	CardLayout card = new CardLayout();
+	public static JPanel mainpanel=new JPanel();
+	public static CardLayout card = new CardLayout();
 	
 	IndexPanel indexpanel=new IndexPanel();
-	public TeamPanel teampanel=new TeamPanel();
+	public static TeamPanel teampanel=new TeamPanel();
 	PlayerPanel playerpanel=new PlayerPanel();
 	HotPanel hotpanel=new HotPanel();
 	MatchPanel matchpanel=new MatchPanel();
