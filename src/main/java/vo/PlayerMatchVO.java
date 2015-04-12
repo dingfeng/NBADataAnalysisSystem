@@ -1,5 +1,6 @@
 package vo;
 
+import po.MatchPlayerPO;
 import bl.teambl.SortTool;
 
 
@@ -104,6 +105,83 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	    
 	}
 
+	public PlayerMatchVO ( MatchPlayerPO playerpo )
+	{
+		name = playerpo.getName();
+		team = playerpo.getTeamnameAbridge();
+		this.time = playerpo.getTime();
+		this.hitNo = playerpo.getHitNo();
+		this.handNo = playerpo.getHandNo();
+		this.threeHitNo = playerpo.getThreeHitNo();
+		this.threeHandNo = playerpo.getThreeHandNo();
+		this.penaltyHandNo = playerpo.getPenaltyHitNo();
+		this.penaltyHitNo = playerpo.getPenaltyHitNo();
+		this.offendRebsNo = playerpo.getOffenseRebs();
+		this.defenceRebs = playerpo.getDefenceRebs();
+		this.rebs = playerpo.getRebs();
+		this.help = playerpo.getHelp();
+		this.stealsNo = playerpo.getStealsNo();
+		this.blockNo = playerpo.getBlockNo();
+		this.mistakesNo = playerpo.getMistakesNo();
+		this.foulsNo = playerpo.getFoulsNo();
+		this.points = playerpo.getPoints();
+	}
+//	private  name;// 球员名称
+	private String location;//位置
+//	private double time;// 在场时间
+	private int hitNo; // 投篮命中数
+//	private int handNo; // 投篮出手次数
+	private int threeHitNo; // 三分命中数
+	private int threeHandNo; // 三分出手数
+	private int penaltyHitNo; // 罚球命中数
+//	private int penaltyHandNo; // 罚球出手数
+	private int offenseRebs; // 进攻篮板数
+	private int defenceRebs; // 防守篮板数
+//	private int rebs; // 篮板数
+	private int help;//总篮板数
+//	private int stealsNo;// 抢断数
+//	private int blockNo;// 盖帽数
+//	private int mistakesNo;// 失误数
+//	private int foulsNo;// 犯规数
+//	private int points;// 得分
+//	private boolean dirty;  //脏数据
+	
+	
+	public int getHelp()
+	{
+		return help;
+	}
+	public int getDefenceRebs()
+	{
+		return defenceRebs;
+	}
+	
+	public int getOffenseRebs()
+	{
+		return offenseRebs;
+	}
+	public  int getPenaltyHitNo()
+	{
+		return penaltyHitNo;
+	}
+	
+	public String getLocation()
+	{
+		return location;
+	}
+	public int getHitNo()
+	{
+		return hitNo;
+	}
+	public int getThreeHitNo()
+	{
+		return this.threeHitNo;
+	}
+	public int getThreeHandNo()
+	{
+		return threeHandNo;
+	}
+	
 	public double getOffendRebsNo() {
 		return offendRebsNo;
 	}

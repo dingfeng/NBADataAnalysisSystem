@@ -33,8 +33,14 @@ public class PlayerController implements PlayerBlService{
 		return player.screenTotalPlayers(playerPosition, playerArea, sortBy);
 	}
 	//获得当天热点球员   
-	public  MatchPlayerPO[] getDayHotPlayer(PlayerSortBy sortby) {
-		return player.getDayHotPlayer(sortby);
+	public  PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby) {
+	    MatchPlayerPO[] pos = player.getDayHotPlayer(sortby);
+	    PlayerMatchVO[] vos = new PlayerMatchVO[pos.length];
+	    for (int i = 0; i < vos.length; i++)
+	    {
+	    	vos[i] = new PlayerMatchVO(pos[i]);
+	    }
+		return vos;
 	}
 	//获得赛季热点球员
 	public PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby) {
