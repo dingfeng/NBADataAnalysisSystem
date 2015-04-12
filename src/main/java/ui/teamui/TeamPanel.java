@@ -202,7 +202,7 @@ public class TeamPanel extends JPanel {
 		searchButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
 		searchButton.setBackground(FrameSize.buttonbackColor);
 		searchButton.setToolTipText("查找");
-		searchButton.addActionListener(e -> findClick());
+		searchButton.addActionListener(e -> findClick(searchField.getText()));
 		header.add(searchButton);
 
 		JButton sortButton = new JButton(new ImageIcon("image\\sort.png"));
@@ -508,11 +508,11 @@ public class TeamPanel extends JPanel {
 	}
 
 	/** 点击查找按钮 */
-	void findClick() {
-		if (searchField.getText().equals("")) {
+	public void findClick(String teamname) {
+		if (teamname.equals("")) {
 			JOptionPane.showMessageDialog(this, "请输入查找球队的缩写");
 			return;
-		} else if (tc.getTotalTeam(searchField.getText()) == null) {
+		} else if (tc.getTotalTeam(teamname) == null) {
 			JOptionPane.showMessageDialog(this, "未查到球队信息");
 			return;
 		}
@@ -522,7 +522,7 @@ public class TeamPanel extends JPanel {
 		TeamMatchVO []teamresult = new TeamMatchVO [1];
 		
 		find.setVisible(false);
-		String teamname = searchField.getText();
+		
 		showOne(teamname);
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
 			teamresult[0]=tc.getTotalTeam(teamname);
@@ -557,16 +557,18 @@ public class TeamPanel extends JPanel {
 		this.add(teammatch);
 		this.repaint();
 	}
+	
 	/**关掉比赛panel 显示全部球队*/
 	void close_showall(){
 		this.remove(teammatch);
 		showAllData();
 	}
+	
 	/**关掉比赛panel 显示该球队*/
 	void close_showteam(){
 		this.remove(teammatch);
-		searchField.setText(nameAbridgeresult.getText());
-		findClick();
+		
+		findClick(nameAbridgeresult.getText());
 	}
 	
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {

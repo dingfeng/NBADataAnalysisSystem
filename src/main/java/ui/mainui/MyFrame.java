@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import ui.HotPanel;
 import ui.IndexPanel;
 import ui.MatchPanel;
+import ui.playerui.PlayerPanel;
 import ui.teamui.TeamPanel;
 
 public class MyFrame extends JFrame {
@@ -42,21 +43,20 @@ public class MyFrame extends JFrame {
         }  
 	};
 	MyFrame thisFrame = this;
-	JPanel mainpanel=new JPanel();
-	CardLayout card = new CardLayout();
+	public static JPanel mainpanel=new JPanel();
+	public static CardLayout card = new CardLayout();
 	
 	IndexPanel indexpanel=new IndexPanel();
-	TeamPanel teampanel=new TeamPanel();
-//	PlayerPanel playerpanel=new PlayerPanel();
+	public static TeamPanel teampanel=new TeamPanel();
+	PlayerPanel playerpanel=new PlayerPanel();
 	HotPanel hotpanel=new HotPanel();
 	MatchPanel matchpanel=new MatchPanel();
 	
 	
-	public MyFrame(String titleText){
+	public MyFrame(){
 		this.setUndecorated(true);
 	    
 //		this.setBackground(new Color(0.0f,0.0f,0.0f,0.0f));
-		this.titleText = titleText;
 		//修改图标
 		Image image = Toolkit.getDefaultToolkit().getImage("image/basketball.png");
 		this.setIconImage(image);
@@ -77,7 +77,7 @@ public class MyFrame extends JFrame {
 		mainpanel.setBounds(0, FrameSize.height/8, FrameSize.width, FrameSize.height*7/8);
 		mainpanel.setLayout(card);
 		mainpanel.add(indexpanel,"index");
-//		mainpanel.add(playerpanel,"player");
+		mainpanel.add(playerpanel,"player");
 		mainpanel.add(teampanel,"team");
 		mainpanel.add(matchpanel,"match");
 		mainpanel.add(hotpanel,"hot");
@@ -145,7 +145,7 @@ public class MyFrame extends JFrame {
 		card.show(mainpanel, "player");
 	}
 	
-	void setTeam(){
+	public void setTeam(){
 		card.show(mainpanel, "team");
 	}
 	
