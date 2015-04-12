@@ -59,8 +59,7 @@ public class PlayerPanel extends JPanel {
 	JTextField expText = new UneditableTextField();
 	JTextField schoolText = new UneditableTextField();
 	JTextField heightText = new UneditableTextField();
-	
-	
+
 	JLabel actionLabel = new JLabel();
 	JLabel portraitLabel = new JLabel();
 
@@ -107,7 +106,7 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("生日");
 		columnsName.add("年龄");
 		columnsName.add("球龄");
-		columnsName.add("毕业学校");
+		columnsName.dd("毕业学校");
 		columnsName.add("所属球队");
 		columnsName.add("参赛场数");
 		columnsName.add("先发场数");
@@ -126,7 +125,6 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("罚球");
 		columnsName.add("两双");
 
-		
 		columnsName.add("投篮(%)");
 		columnsName.add("三分(%)");
 		columnsName.add("罚球(%)");
@@ -151,71 +149,78 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("使用率(%)");
 
 		Vector data = new Vector();
-		for(int i=0;i<playerMatchVOs.length;i++) {
+		for (int i = 0; i < playerMatchVOs.length; i++) {
 			PlayerMatchVO playerVO = (PlayerMatchVO) playerMatchVOs[i];
 			Vector rowData = new Vector();
 			rowData.add(playerVO.getName());
-//			int playerNum = playerVO.getNumber();
-//			String number = playerNum != -1 ? String.valueOf(playerNum) : "-";
-//			rowData.add(number);
-//			rowData.add(playerVO.getPosition());
-//			rowData.add(playerVO.getHeightfeet() + "-"
-//					+ playerVO.getHeightinch());
-//			rowData.add(playerVO.getBirth());
-//			rowData.add(playerVO.getAge());
-//			rowData.add(playerVO.getExp());
-//			rowData.add(playerVO.getSchool());
+			// int playerNum = playerVO.getNumber();
+			// String number = playerNum != -1 ? String.valueOf(playerNum) :
+			// "-";
+			// rowData.add(number);
+			// rowData.add(playerVO.getPosition());
+			// rowData.add(playerVO.getHeightfeet() + "-"
+			// + playerVO.getHeightinch());
+			// rowData.add(playerVO.getBirth());
+			// rowData.add(playerVO.getAge());
+			// rowData.add(playerVO.getExp());
+			// rowData.add(playerVO.getSchool());
 			rowData.add(playerVO.getTeam());
 			rowData.add(playerVO.getMatchNo());
 			rowData.add(playerVO.getFirstServiceNo());
-			rowData.add(String.format("%.3f",playerVO.getRebs()));
-			rowData.add(String.format("%.3f",playerVO.getAssistNo()));
-			rowData.add(String.format("%.3f",playerVO.getTime()));
+			rowData.add(String.format("%.3f", playerVO.getRebs()));
+			rowData.add(String.format("%.3f", playerVO.getAssistNo()));
+			rowData.add(String.format("%.3f", playerVO.getTime()));
 
-			rowData.add(String.format("%.3f",playerVO.getBlockNo()));
-			rowData.add(String.format("%.3f",playerVO.getScoring_rebound_assist()));
-			rowData.add(String.format("%.3f",playerVO.getStealsNo()));
-			rowData.add(String.format("%.3f",playerVO.getFoulsNo()));
-			rowData.add(String.format("%.3f",playerVO.getMistakesNo()));
-			rowData.add(String.format("%.3f",playerVO.getMinute()));
-			rowData.add(String.format("%.3f",playerVO.getHandNo()));
-			rowData.add(String.format("%.3f",playerVO.getThree_points()));
-			rowData.add(String.format("%.3f",playerVO.getBlockNo()));
-			rowData.add(String.format("%.3f",playerVO.getTwoPair()));
+			rowData.add(String.format("%.3f", playerVO.getBlockNo()));
+			rowData.add(String.format("%.3f",
+					playerVO.getScoring_rebound_assist()));
+			rowData.add(String.format("%.3f", playerVO.getStealsNo()));
+			rowData.add(String.format("%.3f", playerVO.getFoulsNo()));
+			rowData.add(String.format("%.3f", playerVO.getMistakesNo()));
+			rowData.add(String.format("%.3f", playerVO.getMinute()));
+			rowData.add(String.format("%.3f", playerVO.getHandNo()));
+			rowData.add(String.format("%.3f", playerVO.getThree_points()));
+			rowData.add(String.format("%.3f", playerVO.getBlockNo()));
+			rowData.add(String.format("%.3f", playerVO.getTwoPair()));
 			double hitRate = playerVO.getHitRate() * 100;
 			if (hitRate >= 0)
-				rowData.add(String.format("%.3f",hitRate));
+				rowData.add(String.format("%.3f", hitRate));
 			else
 				rowData.add("-");
 			double threeHitRate = playerVO.getThreeHitRate();
 			if (threeHitRate >= 0)
-				rowData.add(String.format("%.3f",threeHitRate * 100));
+				rowData.add(String.format("%.3f", threeHitRate * 100));
 			else
 				rowData.add("-");
 			double penaltyHitRate = playerVO.getPenaltyHitRate();
 			if (penaltyHitRate >= 0)
-				rowData.add(String.format("%.3f",penaltyHitRate * 100));
+				rowData.add(String.format("%.3f", penaltyHitRate * 100));
 			else
 				rowData.add("-");
-			rowData.add(String.format("%.3f",playerVO.getOffendNo()));
-			rowData.add(String.format("%.3f",playerVO.getDefenceNo()));
-			rowData.add(String.format("%.3f",playerVO.getStealsNo()));
-			rowData.add(String.format("%.3f",playerVO.getBlockNo()));
+			rowData.add(String.format("%.3f", playerVO.getOffendNo()));
+			rowData.add(String.format("%.3f", playerVO.getDefenceNo()));
+			rowData.add(String.format("%.3f", playerVO.getStealsNo()));
+			rowData.add(String.format("%.3f", playerVO.getBlockNo()));
 			rowData.add(playerVO.getMistakesNo());
-			rowData.add(String.format("%.3f",playerVO.getFoulsNo()));
-			rowData.add(String.format("%.3f",playerVO.getPoints()));
-			rowData.add(String.format("%.3f",playerVO.getEfficiency()));
-			rowData.add(String.format("%.3f",playerVO.getGmScEfficiency()));
-			rowData.add(String.format("%.3f",playerVO.getTrueHitRate() * 100));
-			rowData.add(String.format("%.3f",playerVO.getHitEfficiency()));
-			rowData.add(String.format("%.3f",playerVO.getRebEfficiency()));
-			rowData.add(String.format("%.3f",playerVO.getOffenseRebsEfficiency()));
-			rowData.add(String.format("%.3f",playerVO.getDefenceRebsEfficiency()));
-			rowData.add(String.format("%.3f",playerVO.getAssistEfficiency() * 100));
-			rowData.add(String.format("%.3f",playerVO.getStealsEfficiency()));
-			rowData.add(String.format("%.3f",playerVO.getBlockEfficiency() * 100));
-			rowData.add(String.format("%.3f",playerVO.getMistakeEfficiency() * 100));
-			rowData.add(String.format("%.3f",playerVO.getUseEfficiency() * 100));
+			rowData.add(String.format("%.3f", playerVO.getFoulsNo()));
+			rowData.add(String.format("%.3f", playerVO.getPoints()));
+			rowData.add(String.format("%.3f", playerVO.getEfficiency()));
+			rowData.add(String.format("%.3f", playerVO.getGmScEfficiency()));
+			rowData.add(String.format("%.3f", playerVO.getTrueHitRate() * 100));
+			rowData.add(String.format("%.3f", playerVO.getHitEfficiency()));
+			rowData.add(String.format("%.3f", playerVO.getRebEfficiency()));
+			rowData.add(String.format("%.3f",
+					playerVO.getOffenseRebsEfficiency()));
+			rowData.add(String.format("%.3f",
+					playerVO.getDefenceRebsEfficiency()));
+			rowData.add(String.format("%.3f",
+					playerVO.getAssistEfficiency() * 100));
+			rowData.add(String.format("%.3f", playerVO.getStealsEfficiency()));
+			rowData.add(String.format("%.3f",
+					playerVO.getBlockEfficiency() * 100));
+			rowData.add(String.format("%.3f",
+					playerVO.getMistakeEfficiency() * 100));
+			rowData.add(String.format("%.3f", playerVO.getUseEfficiency() * 100));
 
 			data.add(rowData);
 		}
@@ -227,7 +232,8 @@ public class PlayerPanel extends JPanel {
 		jScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		jScrollPane.setBounds(FrameSize.width / 3, FrameSize.height / 12,
-				2 * FrameSize.width / 3, FrameSize.height*7/8- FrameSize.height / 12);
+				2 * FrameSize.width / 3, FrameSize.height * 7 / 8
+						- FrameSize.height / 12);
 		resizeTable(false, jScrollPane, mytable);
 		this.add(jScrollPane);
 
@@ -242,7 +248,7 @@ public class PlayerPanel extends JPanel {
 		});
 	}
 
-	/**在findPanel上显示一个球员的信息*/
+	/** 在findPanel上显示一个球员的信息 */
 	private void showOne(String playerInfo) {
 		this.remove(welcomePanel);
 		this.remove(sortPanel);
@@ -261,9 +267,11 @@ public class PlayerPanel extends JPanel {
 		heightText.setText(String.valueOf(playerVO.getHeightfeet()) + "-"
 				+ String.valueOf(playerVO.getHeightinch()));
 
-		portraitLabel.setIcon(scaleImage(new ImageIcon(playerVO.getPortrait()),115,92));
-		actionLabel.setIcon(scaleImage(new ImageIcon(playerVO.getAction()),170,272));
-		
+		portraitLabel.setIcon(scaleImage(new ImageIcon(playerVO.getPortrait()),
+				115, 92));
+		actionLabel.setIcon(scaleImage(new ImageIcon(playerVO.getAction()),
+				170, 272));
+
 		findPanel.add(actionLabel);
 		this.add(findPanel);
 		this.repaint();
@@ -345,8 +353,7 @@ public class PlayerPanel extends JPanel {
 	/** 点击筛选确认按钮 */
 	private void screenPlayerConfirmClick() {
 		jScrollPane.setVisible(false);
-		readDataType(dataType);
-		String position = ( positionBox.getSelectedItem().toString());
+		String position = (positionBox.getSelectedItem().toString());
 
 		Area area = null;
 		String selectArea = playerAreaBox.getSelectedItem().toString();
@@ -396,8 +403,10 @@ public class PlayerPanel extends JPanel {
 			playerSortBy = PlayerSortBy.twoPair;
 		}
 
-		Iterator<PlayerMatchVO> screenPlayer = playerController.screenAvePlayers(
-				position, area, playerSortBy);
+		if(dataType.getSelectedItem().equals("赛季总数据"))
+			Iterator<PlayerMatchVO> screenPlayer = playerController.screenTotalPlayers(position, area, playerSortBy);
+		else
+			Iterator<PlayerMatchVO> screenPlayer = playerController.screenAvePlayers(position, area, playerSortBy);
 		setTable(screenPlayer);
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
@@ -409,18 +418,19 @@ public class PlayerPanel extends JPanel {
 	/** 按照赛区显示分区 */
 	private void setPlayerAreaBox() {
 		screenPanel.remove(playerAreaBox);
-		if(playerZoneBox.getSelectedItem().equals("东部")){
+		if (playerZoneBox.getSelectedItem().equals("东部")) {
 			playerAreaBox = new JComboBox<String>(new String[] { "ATLANTIC",
 					"CENTRAL", "SOUTHEAST" });
-			playerAreaBox.setBounds(FrameSize.width / 8, FrameSize.height / 3 + 20,
-					150, 40);
+			playerAreaBox.setBounds(FrameSize.width / 8,
+					FrameSize.height / 3 + 20, 150, 40);
 			playerAreaBox.setFont(new Font("宋体", Font.PLAIN, 12));
 		}
-		
-		else{
-			playerAreaBox = new JComboBox<String>(new String[] {"SOUTHWEST","NORTHWEST","PACIFIC"});
-			playerAreaBox.setBounds(FrameSize.width / 8, FrameSize.height / 3 + 20,
-					150, 40);
+
+		else {
+			playerAreaBox = new JComboBox<String>(new String[] { "SOUTHWEST",
+					"NORTHWEST", "PACIFIC" });
+			playerAreaBox.setBounds(FrameSize.width / 8,
+					FrameSize.height / 3 + 20, 150, 40);
 			playerAreaBox.setFont(new Font("宋体", Font.PLAIN, 12));
 		}
 		playerAreaBox.repaint();
@@ -446,7 +456,7 @@ public class PlayerPanel extends JPanel {
 		JLabel expLabel = new JLabel("球龄");
 		JLabel schoolLabel = new JLabel("学校");
 		JLabel heightLabel = new JLabel("身高");
-		
+
 		numLabel.setForeground(Color.white);
 		positionLabel.setForeground(Color.white);
 		teamLabel.setForeground(Color.white);
@@ -455,7 +465,6 @@ public class PlayerPanel extends JPanel {
 		expLabel.setForeground(Color.white);
 		schoolLabel.setForeground(Color.white);
 		heightLabel.setForeground(Color.white);
-
 
 		// nameLabel.setBounds(5,FrameSize.height/8-50,60,30);
 		numLabel.setBounds(5, FrameSize.height / 8 + 132, 60, 30);
@@ -470,14 +479,13 @@ public class PlayerPanel extends JPanel {
 		heightLabel.setBounds(FrameSize.width / 7 + 15,
 				FrameSize.height / 8 + 362, 60, 30);
 
-		
 		portraitLabel.setBounds(5, FrameSize.height / 8 + 10, 115, 92);// 230,185
-//		portraitLabel.setBorder(BorderFactory.createLineBorder(new Color(157,
-//				157, 255)));
+		// portraitLabel.setBorder(BorderFactory.createLineBorder(new Color(157,
+		// 157, 255)));
 		actionLabel.setBounds(FrameSize.width / 7, FrameSize.height / 8 - 50,
 				170, 272);// 440,700
-//		actionLabel.setBorder(BorderFactory.createLineBorder(new Color(157,
-//				157, 255)));
+		// actionLabel.setBorder(BorderFactory.createLineBorder(new Color(157,
+		// 157, 255)));
 		nameText.setBounds(5, FrameSize.height / 8 - 50, 115, 30);
 		numText.setBounds(45, FrameSize.height / 8 + 132, 60, 30);
 		positionText.setBounds(45, FrameSize.height / 8 + 192, 60, 30);
@@ -534,21 +542,23 @@ public class PlayerPanel extends JPanel {
 
 		JLabel sortPanelby = new JLabel("排序依据");
 		sortPanelby.setForeground(Color.white);
-		sortPanelby.setBounds(FrameSize.width / 30, FrameSize.height / 5, 100, 40);
+		sortPanelby.setBounds(FrameSize.width / 30, FrameSize.height / 5, 100,
+				40);
 		sortPanelby.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		sortPanel.add(sortPanelby);
 
-//		sortPlayerBox = new JComboBox<String>(new String[] { "球员名称", "所属球队",
-//				"参赛场数", "先发场数", "篮板数", "助攻数", "在场时间", "投篮命中率", "三分命中率",
-//				"罚球命中率", "进攻数", "防守数", "抢断数", "盖帽数", "失误数", "犯规数", "得分", "效率",
-//				"GmSc效率值", "真实命中率", "投篮效率", "篮板率", "进攻篮板率", "防守篮板率", "助攻率",
-//				"抢断率", "盖帽率", "失误率", "使用率" });
-		sortPlayerBox = new MyComboBox(new String[] { "球员名称", "所属球队",
-				"参赛场数", "先发场数", "篮板数", "助攻数", "在场时间", "投篮命中率", "三分命中率",
-				"罚球命中率", "进攻数", "防守数", "抢断数", "盖帽数", "失误数", "犯规数", "得分", "效率",
-				"GmSc效率值", "真实命中率", "投篮效率", "篮板率", "进攻篮板率", "防守篮板率", "助攻率",
-				"抢断率", "盖帽率", "失误率", "使用率" });
-		sortPlayerBox.setBounds(FrameSize.width / 8, FrameSize.height / 5, 150, 40);
+		// sortPlayerBox = new JComboBox<String>(new String[] { "球员名称", "所属球队",
+		// "参赛场数", "先发场数", "篮板数", "助攻数", "在场时间", "投篮命中率", "三分命中率",
+		// "罚球命中率", "进攻数", "防守数", "抢断数", "盖帽数", "失误数", "犯规数", "得分", "效率",
+		// "GmSc效率值", "真实命中率", "投篮效率", "篮板率", "进攻篮板率", "防守篮板率", "助攻率",
+		// "抢断率", "盖帽率", "失误率", "使用率" });
+		sortPlayerBox = new MyComboBox(new String[] { "球员名称", "所属球队", "参赛场数",
+				"先发场数", "篮板数", "助攻数", "在场时间", "投篮命中率", "三分命中率", "罚球命中率", "进攻数",
+				"防守数", "抢断数", "盖帽数", "失误数", "犯规数", "得分", "效率", "GmSc效率值",
+				"真实命中率", "投篮效率", "篮板率", "进攻篮板率", "防守篮板率", "助攻率", "抢断率", "盖帽率",
+				"失误率", "使用率" });
+		sortPlayerBox.setBounds(FrameSize.width / 8, FrameSize.height / 5, 150,
+				40);
 		sortPlayerBox.setFont(new Font("宋体", Font.PLAIN, 12));
 		sortPanel.add(sortPlayerBox);
 
@@ -564,13 +574,14 @@ public class PlayerPanel extends JPanel {
 		JLabel smallLabel = new JLabel(new ImageIcon("image/降序.png"));
 		JRadioButton downRadioButton = new JRadioButton("", false);
 		downRadioButton.addActionListener(e -> sortType = false);
-		bigLabel.setBounds(FrameSize.width / 10, FrameSize.height / 3+40, 50, 50);
-		upRadioButton.setBounds(FrameSize.width / 10 - 30, FrameSize.height / 3 + 50, 30,
-				30);
-		smallLabel.setBounds(FrameSize.width / 10 + 120, FrameSize.height / 3+40, 50,
+		bigLabel.setBounds(FrameSize.width / 10, FrameSize.height / 3 + 40, 50,
 				50);
-		downRadioButton.setBounds(FrameSize.width / 10 + 80, FrameSize.height / 3 + 50,
-				30, 30);
+		upRadioButton.setBounds(FrameSize.width / 10 - 30,
+				FrameSize.height / 3 + 50, 30, 30);
+		smallLabel.setBounds(FrameSize.width / 10 + 120,
+				FrameSize.height / 3 + 40, 50, 50);
+		downRadioButton.setBounds(FrameSize.width / 10 + 80,
+				FrameSize.height / 3 + 50, 30, 30);
 		bigLabel.setBackground(Color.white);
 		smallLabel.setBackground(Color.white);
 		ButtonGroup bg = new ButtonGroup();
@@ -587,7 +598,7 @@ public class PlayerPanel extends JPanel {
 	private JPanel headerPanel() {
 
 		JPanel panel = new JPanel();
-//		panel.setOpaque(false);
+		// panel.setOpaque(false);
 		panel.setLayout(null);
 		panel.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		panel.setBackground(FrameSize.backColor);
@@ -599,32 +610,32 @@ public class PlayerPanel extends JPanel {
 
 		JButton findButton = new JButton(new ImageIcon("image\\find.png"));
 		findButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
-		findButton.setBackground(new Color(68,68,68));
+		findButton.setBackground(new Color(68, 68, 68));
 		findButton.setToolTipText("查找");
 		findButton.addActionListener(e -> findPlayerClick());
 		panel.add(findButton);
 
 		JButton sortButton = new JButton(new ImageIcon("image\\sort.png"));
 		sortButton.setBounds(4 * FrameSize.width / 5 + 40, 10, 35, 35);
-		sortButton.setBackground(new Color(68,68,68));
+		sortButton.setBackground(new Color(68, 68, 68));
 		sortButton.setToolTipText("排序");
 		sortButton.addActionListener(e -> sortPlayerClick());
 		panel.add(sortButton);
 
 		JButton screenButton = new JButton(new ImageIcon("image\\screen.png"));
 		screenButton.setBounds(4 * FrameSize.width / 5 + 80, 10, 35, 35);
-		screenButton.setBackground(new Color(68,68,68));
+		screenButton.setBackground(new Color(68, 68, 68));
 		screenButton.setToolTipText("筛选");
 		screenButton.addActionListener(e -> screenPlayerClick());
 		panel.add(screenButton);
 
-		dataType = new MyComboBox(new String[]{"赛季总数据","场均数据"});
+		dataType = new MyComboBox(new String[] { "赛季总数据", "场均数据" });
 		dataType.setBounds(20, 10, 100, 35);
 		panel.add(dataType);
 
 		JButton allButton = new JButton(new ImageIcon("image\\show.png"));
 		allButton.setBounds(140, 10, 45, 35);
-		allButton.setBackground(new Color(68,68,68));
+		allButton.setBackground(new Color(68, 68, 68));
 		allButton.setToolTipText("显示");
 		allButton.addActionListener(e -> showAllData());
 		panel.add(allButton);
@@ -636,9 +647,12 @@ public class PlayerPanel extends JPanel {
 	/** 显示所有总数据/场均数据 */
 	private void showAllData() {
 		jScrollPane.setVisible(false);
-		readDataType(dataType);
-		setTable(playerController
-				.sortPlayers(PlayerSortBy.name, SortType.ASEND));
+		if (dataType.getSelectedItem().equals("赛季总数据"))
+			setTable(playerController.sortTotalPlayers(PlayerSortBy.name,
+					SortType.ASEND));
+		else
+			setTable(playerController.sortAvePlayers(PlayerSortBy.name,
+					SortType.ASEND));
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
@@ -657,7 +671,7 @@ public class PlayerPanel extends JPanel {
 		welcomePanel.setLayout(null);
 		welcomePanel.setBackground(FrameSize.backColor);
 		welcomePanel.setBounds(0, FrameSize.height / 12, FrameSize.width / 3,
-				11*FrameSize.height / 12);
+				11 * FrameSize.height / 12);
 		JLabel nba = new JLabel(new ImageIcon("image/nba.png"));
 		nba.setBounds(FrameSize.width / 12, FrameSize.height / 8,
 				FrameSize.width / 6, 200);
@@ -686,8 +700,6 @@ public class PlayerPanel extends JPanel {
 	private void sortPlayerConfirmClick() {
 
 		jScrollPane.setVisible(false);
-
-		readDataType(dataType);
 
 		SortType type = null;
 
@@ -759,7 +771,7 @@ public class PlayerPanel extends JPanel {
 			playerSortBy = PlayerSortBy.useEfficiency;
 		}
 
-		Iterator<PlayerVO> sortPlayer = playerController.sortPlayers(
+		Iterator<PlayerVO> sortPlayer = playerController.sortAvePlayers(
 				playerSortBy, type);
 		setTable(sortPlayer);
 		jScrollPane.repaint();
@@ -769,31 +781,21 @@ public class PlayerPanel extends JPanel {
 		this.repaint();
 	}
 
-	/** 数据类型（总数据/场均数据） */
-	private void readDataType(JComboBox<String> dataType) {
-		if (dataType.getSelectedItem().equals("赛季总数据")) {
-			playerController.setAverage(false);
-		} else {
-			playerController.setAverage(true);
-		}
-	}
-
 	/** 点击查找按钮 */
-	private void findPlayerClick() {
-		if (searchField.getText().equals("")){
-			JOptionPane.showMessageDialog(this,"请输入查找球队的缩写");
+	public void findPlayerClick() {
+		if (searchField.getText().equals("")) {
+			JOptionPane.showMessageDialog(this, "请输入查找球队的缩写");
+			return;
+		} else if (playerController.findPlayer(searchField.getText()) == null) {
+			JOptionPane.showMessageDialog(this, "未查到球队信息");
 			return;
 		}
-		else if(playerController.findPlayer(searchField.getText()) == null){
-			JOptionPane.showMessageDialog(this,"未查到球队信息");
-			return;
-		}
-		
+
 		String playerInfo = searchField.getText();
 		showOne(playerInfo);
 
 		jScrollPane.setVisible(false);
-		ArrayList<PlayerVO> onePlayer = new ArrayList<PlayerVO>();
+		ArrayList<PlayerPO> onePlayer = new ArrayList<PlayerPO>();
 		onePlayer.add(playerController.findPlayer(playerInfo));
 		setTable(onePlayer.iterator());
 		jScrollPane.repaint();
@@ -850,18 +852,19 @@ public class PlayerPanel extends JPanel {
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 		}
 	}
-	
-	private ImageIcon scaleImage(ImageIcon icon, int iconWidth, int iconHeight) { 
-		int width = icon.getIconWidth(); 
-		int height = icon.getIconHeight(); 
 
-		if (width == iconWidth && height == iconHeight) { 
-		return icon; 
-		} 
-		Image image = icon.getImage(); 
-		image = image.getScaledInstance(iconWidth, iconHeight, Image.SCALE_DEFAULT); 
+	private ImageIcon scaleImage(ImageIcon icon, int iconWidth, int iconHeight) {
+		int width = icon.getIconWidth();
+		int height = icon.getIconHeight();
 
-		return new ImageIcon(image); 
+		if (width == iconWidth && height == iconHeight) {
+			return icon;
 		}
-	
+		Image image = icon.getImage();
+		image = image.getScaledInstance(iconWidth, iconHeight,
+				Image.SCALE_DEFAULT);
+
+		return new ImageIcon(image);
+	}
+
 }
