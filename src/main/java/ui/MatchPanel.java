@@ -7,6 +7,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -25,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
 import org.apache.batik.swing.JSVGCanvas;
 
 import bl.matchbl.MatchController;
+import bl.playerbl.PlayerController;
 import bl.teambl.TeamController;
 import po.MatchPlayerPO;
 import po.MatchTeamPO;
@@ -34,6 +36,8 @@ import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyTable;
 import ui.mainui.UneditableTextField;
+import vo.PlayerMatchVO;
+import vo.PlayerSortBy;
 import vo.PlayerVO;
 import vo.SortType;
 import vo.TeamMatchVO;
@@ -45,6 +49,7 @@ public class MatchPanel extends JPanel {
 
 	MatchController matchController = new MatchController();
 	TeamController teamController = new TeamController();
+	PlayerController playerController = new PlayerController();
 
 	JPanel welcomePanel = new JPanel();
 	JPanel header = new JPanel();
@@ -102,6 +107,13 @@ public class MatchPanel extends JPanel {
 		for (int i = 0; i < team.length; i++) {
 			teamName.add(team[i].getName());
 		}
+		
+		PlayerMatchVO[] player = playerController.sortTotalPlayers(PlayerSortBy.name,
+			SortType.ASEND);
+		ArrayList<String> playerName = new ArrayList<String>();
+		for(int i=0;i<player.length;i++){
+			playerName.add(player[i].getName());
+		}
 
 		timeBox = new MyComboBox(new String[] { "比赛时间", "df", "df", "df" });
 		timeBox.setBounds(50, 10, 150, 35);
@@ -112,7 +124,7 @@ public class MatchPanel extends JPanel {
 		header.add(teamBox);
 		teamBox.addActionListener(e -> setPlayerBox());
 
-		playerBox = new MyComboBox(new String[] { "球员", "nn", "nn", "nn" });
+		playerBox = new MyComboBox("球员",playerName);
 		playerBox.setBounds(590, 10, 150, 35);
 		header.add(playerBox);
 
@@ -131,6 +143,25 @@ public class MatchPanel extends JPanel {
 		else if(!teamBox.getSelectedItem().equals("球队")){
 			findMatchAccordingTeam((String) teamBox.getSelectedItem());
 		}
+	}
+	
+	/**按时间查找比赛*/
+	public void findMatchAccordingTeam(Date date1,Date date2) {
+		this.remove(matchScrollPane);
+		showPanel.remove(scoreScrollPane);
+		showPanel.remove(player1ScrollPane);
+		showPanel.remove(player2ScrollPane);
+		this.remove(showPanel);
+		matches = matchController.getTimeMatches(date1, date2);
+		matchScrollPane.setVisible(false);
+		setMatchTable(matches);
+		matchScrollPane.setVisible(true);
+		showPanel.add(scoreScrollPane);
+		showPanel.add(player1ScrollPane);
+		showPanel.add(player2ScrollPane);
+		this.add(showPanel);
+		this.add(matchScrollPane);
+		this.repaint();	
 	}
 	
 	/**按球队查找比赛*/

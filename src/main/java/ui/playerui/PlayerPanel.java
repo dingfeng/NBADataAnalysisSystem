@@ -547,11 +547,6 @@ public class PlayerPanel extends JPanel {
 		sortPanelby.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		sortPanel.add(sortPanelby);
 
-		// sortPlayerBox = new JComboBox<String>(new String[] { "球员名称", "所属球队",
-		// "参赛场数", "先发场数", "篮板数", "助攻数", "在场时间", "投篮命中率", "三分命中率",
-		// "罚球命中率", "进攻数", "防守数", "抢断数", "盖帽数", "失误数", "犯规数", "得分", "效率",
-		// "GmSc效率值", "真实命中率", "投篮效率", "篮板率", "进攻篮板率", "防守篮板率", "助攻率",
-		// "抢断率", "盖帽率", "失误率", "使用率" });
 		sortPlayerBox = new MyComboBox(new String[] { "球员名称", "所属球队", "参赛场数",
 				"先发场数", "篮板数", "助攻数", "在场时间", "投篮命中率", "三分命中率", "罚球命中率", "进攻数",
 				"防守数", "抢断数", "盖帽数", "失误数", "犯规数", "得分", "效率", "GmSc效率值",
@@ -569,10 +564,12 @@ public class PlayerPanel extends JPanel {
 		sortPanel.add(yes);
 
 		JLabel bigLabel = new JLabel(new ImageIcon("image/升序.png"));
-		JRadioButton upRadioButton = new JRadioButton("", true);
+		JRadioButton upRadioButton = new JRadioButton();
+		upRadioButton.setBackground(FrameSize.backColor);
 		upRadioButton.addActionListener(e -> sortType = true);
 		JLabel smallLabel = new JLabel(new ImageIcon("image/降序.png"));
-		JRadioButton downRadioButton = new JRadioButton("", false);
+		JRadioButton downRadioButton = new JRadioButton();
+		downRadioButton.setBackground(FrameSize.backColor);
 		downRadioButton.addActionListener(e -> sortType = false);
 		bigLabel.setBounds(FrameSize.width / 10, FrameSize.height / 3 + 40, 50,
 				50);
