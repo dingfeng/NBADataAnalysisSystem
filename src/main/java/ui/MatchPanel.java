@@ -81,6 +81,9 @@ public class MatchPanel extends JPanel {
 	UneditableTextField teamName2;
 	JLabel teamImage1 = new JLabel();
 	JLabel teamImage2 = new JLabel();
+	
+	JRadioButton dateRadioButton ;
+	JRadioButton tpRadioButton;
 
 	public MatchPanel() {
 		this.setLayout(null);
@@ -128,13 +131,13 @@ public class MatchPanel extends JPanel {
 		playerBox.setBounds(590, 10, 150, 35);
 		header.add(playerBox);
 		
-		JRadioButton dateRadioButton = new JRadioButton();
-		JRadioButton tpRadioButton = new JRadioButton();
+		dateRadioButton = new JRadioButton();
+		tpRadioButton = new JRadioButton();
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(dateRadioButton);
 		bg.add(tpRadioButton);
-		dateRadioButton.setBounds(0,10,50,50);
-		tpRadioButton.setBounds(180,10,50,50);
+		dateRadioButton.setBounds(30,10,20,20);
+		tpRadioButton.setBounds(210,10,20,20);
 		header.add(dateRadioButton);
 		header.add(tpRadioButton);
 
