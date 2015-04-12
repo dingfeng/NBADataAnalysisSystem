@@ -127,6 +127,16 @@ public class MatchPanel extends JPanel {
 		playerBox = new MyComboBox("球员",playerName);
 		playerBox.setBounds(590, 10, 150, 35);
 		header.add(playerBox);
+		
+		JRadioButton dateRadioButton = new JRadioButton();
+		JRadioButton tpRadioButton = new JRadioButton();
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(dateRadioButton);
+		bg.add(tpRadioButton);
+		dateRadioButton.setBounds(0,10,50,50);
+		tpRadioButton.setBounds(180,10,50,50);
+		header.add(dateRadioButton);
+		header.add(tpRadioButton);
 
 		JButton yesButton = new JButton(new ImageIcon("image/yes.png"));
 		yesButton.setBounds(770, 10, 30, 30);
@@ -220,7 +230,7 @@ public class MatchPanel extends JPanel {
 	}
 
 	/** 设置每场比赛具体信息显示 */
-	private void setShowPanel(MatchTeamPO team1, MatchTeamPO team2) {
+	public void setShowPanel(MatchTeamPO team1, MatchTeamPO team2) {
 		showPanel.setLayout(null);
 		showPanel.setBounds(FrameSize.width / 4, FrameSize.height / 12,
 				FrameSize.width * 3 / 4, FrameSize.height * 19 / 24);
