@@ -1,5 +1,6 @@
 package bl.playerbl;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import po.MatchPlayerPO;
@@ -23,14 +24,30 @@ public class PlayerController implements PlayerBlService{
 		return player.sortTotalPlayers(playerSortBy, sortType);
 	}
 	//筛选球员数据  场均  
-	public Iterator<PlayerMatchVO> screenAvePlayers(String playerPosition,
+	public PlayerMatchVO[] screenAvePlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
-		return player.screenAvePlayers(playerPosition, playerArea, sortBy);
+		Iterator<PlayerMatchVO> itr = player.screenAvePlayers(playerPosition, playerArea, sortBy);
+		ArrayList<PlayerMatchVO> list = new ArrayList<PlayerMatchVO>();
+		while (itr.hasNext())
+		{
+			list.add(itr.next());
+		}
+		PlayerMatchVO[] players = new PlayerMatchVO[list.size()];
+		list.toArray(players);
+		return players;
 	}
 	//筛选球员数据  赛季
-	public Iterator<PlayerMatchVO> screenTotalPlayers(String playerPosition,
+	public PlayerMatchVO[] screenTotalPlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
-		return player.screenTotalPlayers(playerPosition, playerArea, sortBy);
+		Iterator<PlayerMatchVO> itr =  player.screenTotalPlayers(playerPosition, playerArea, sortBy);
+		ArrayList<PlayerMatchVO> list = new ArrayList<PlayerMatchVO>();
+		while (itr.hasNext())
+		{
+			list.add(itr.next());
+		}
+		PlayerMatchVO[] players = new PlayerMatchVO[list.size()];
+		list.toArray(players);
+		return players;
 	}
 	//获得当天热点球员   
 	public  PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby) {
