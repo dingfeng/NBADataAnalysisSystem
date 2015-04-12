@@ -552,6 +552,7 @@ public class TeamPanel extends JPanel {
 			players.add(pc.findPlayer(playernames[i]));
 		}
 		MyFrame.playerpanel.setTable(players.iterator());
+		MyFrame.playerpanel.showOne(players.get(0).getName());
 		MyFrame.card.show(MyFrame.mainpanel, "player");
 	}
 	
