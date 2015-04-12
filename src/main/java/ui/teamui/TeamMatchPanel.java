@@ -91,10 +91,8 @@ public class TeamMatchPanel extends JPanel{
 		recenttable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					MatchesPO[] onematch=new MatchesPO[1];
-					onematch[0]=match[recenttable.getSelectedRow()];
-					MyFrame.matchpanel.findMatchAccordingTeam(teamName);
-					MyFrame.matchpanel.setShowPanel(onematch[0].getTeam1(),onematch[0].getTeam2());
+					
+					MyFrame.matchpanel.findMatchAccordingMatch(match,recenttable.getSelectedRow());
 					MyFrame.card.show(MyFrame.mainpanel, "match");
 				}
 			}
@@ -133,9 +131,8 @@ public class TeamMatchPanel extends JPanel{
 		pasttable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					MatchesPO[] onematch=new MatchesPO[1];
-					onematch[0]=match[pasttable.getSelectedRow()];
-					MyFrame.matchpanel.setMatchTable(onematch);
+					
+					MyFrame.matchpanel.findMatchAccordingMatch(match,pasttable.getSelectedRow());
 					MyFrame.card.show(MyFrame.mainpanel, "match");
 				}
 			}
