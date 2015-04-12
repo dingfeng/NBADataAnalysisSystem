@@ -63,7 +63,7 @@ public class TeamPanel extends JPanel {
 	JTextField manageresult = new UneditableTextField();// 主场
 	JTextField foundYearresult = new UneditableTextField();// 建立时间
 	JButton match;
-	
+	JButton teamplayers;
 	TeamMatchPanel teammatch;
 	boolean matchpanel=false;
 	TeamController tc = new TeamController();
@@ -471,10 +471,13 @@ public class TeamPanel extends JPanel {
 		playerArearesult.setText(teamresult.getPlayerArea().toString());// 分区
 		manageresult.setText(teamresult.getManage());// 主场
 		foundYearresult.setText(String.valueOf(teamresult.getFoundYear()));// 建立时间
+		
 		match=new JButton(new ImageIcon("image/showMatch.jpg"));
+		teamplayers=new JButton("players");
 		
 		image.setOpaque(false);
 		
+		teamplayers.setBounds(FrameSize.width/3-45, 3*FrameSize.height /4, 40,40);
 		match.setBounds(FrameSize.width/3-45, FrameSize.height /40, 40,40);
 		image.setBounds(FrameSize.width /10, FrameSize.height / 8, FrameSize.width / 4, 3*FrameSize.height /20);
 		nameresult.setBounds(FrameSize.width /20, FrameSize.height / 8 - 50, 100, 3*FrameSize.height/80 );
@@ -487,7 +490,9 @@ public class TeamPanel extends JPanel {
 		foundYearresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 370, FrameSize.width /8, 3*FrameSize.height/80);
 		
 		match.addActionListener(e->setMatch());
+		teamplayers.addActionListener(e->setTeamPlayers());
 		
+		find.add(teamplayers);
 		find.add(match);
 		find.add(image);
 		find.add(nameresult);
@@ -536,7 +541,11 @@ public class TeamPanel extends JPanel {
 		this.add(jScrollPane);
 
 	}
-
+	/**查看该球队队员*/
+	void setTeamPlayers(){
+		
+	}
+	
 	/**点击查看比赛按钮*/
 	void setMatch(){
 		if(matchpanel){

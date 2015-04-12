@@ -1,21 +1,20 @@
 package ui.teamui;
 
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.batik.swing.JSVGCanvas;
-
 import po.MatchesPO;
 import ui.mainui.FrameSize;
+import ui.mainui.MyFrame;
 import ui.mainui.MyTable;
-import ui.mainui.UneditableTextField;
 import bl.matchbl.MatchController;
 
 public class TeamMatchPanel extends JPanel{
@@ -88,6 +87,19 @@ public class TeamMatchPanel extends JPanel{
 		jScrollPane.setBounds(10, 150, 2 * FrameSize.width / 3-20, 103);
 		jScrollPane.setOpaque(false);
 		jScrollPane.getViewport().setOpaque(false);
+		
+		recenttable.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					MatchesPO[] onematch=new MatchesPO[1];
+					onematch[0]=match[recenttable.getSelectedRow()];
+					MyFrame.matchpanel.setMatchTable(onematch);
+					MyFrame.card.show(MyFrame.mainpanel, "match");
+				}
+			}
+
+		});
+		
 		this.add(jScrollPane);
 	}
 	
@@ -116,6 +128,19 @@ public class TeamMatchPanel extends JPanel{
 		pastjScrollPane.setBounds(10, 303, 2 * FrameSize.width / 3-20, FrameSize.height*7/8- FrameSize.height / 12-320);
 		pastjScrollPane.setOpaque(false);
 		pastjScrollPane.getViewport().setOpaque(false);
+		
+		pasttable.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					MatchesPO[] onematch=new MatchesPO[1];
+					onematch[0]=match[pasttable.getSelectedRow()];
+					MyFrame.matchpanel.setMatchTable(onematch);
+					MyFrame.card.show(MyFrame.mainpanel, "match");
+				}
+			}
+
+		});
+		
 		this.add(pastjScrollPane);
 	}
 	

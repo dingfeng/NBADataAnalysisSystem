@@ -48,7 +48,7 @@ public class HotPanel extends JPanel {
 	JComboBox<String> choose;
 	TeamController tc = new TeamController();
 	PlayerController pc=new PlayerController();
-	int hottype = 2;
+	int hottype = 1;
 
 	HotPanel hotpanel=this;
 	public HotPanel() {
@@ -58,7 +58,7 @@ public class HotPanel extends JPanel {
 		
 		setTag();
 		setShow();
-		showchoose(2);
+		showchoose(1);
 		this.add(tag);
 		this.add(show);
 		this.repaint();
@@ -143,7 +143,7 @@ public class HotPanel extends JPanel {
 		score_5.setForeground(Color.white);
 
 
-		show.add(choose);
+//		show.add(choose);
 		show.add(score_1);
 		show.add(score_2);
 		show.add(score_3);
@@ -176,6 +176,7 @@ public class HotPanel extends JPanel {
 			choose.addActionListener(e -> showMessage_player());
 
 			break;
+			
 		}
 		
 		choose.setBounds(10, 50, 150, 30);
@@ -193,8 +194,8 @@ public class HotPanel extends JPanel {
 		PlayerSortBy playerSortBy = sortby(sortBy);
 		PlayerMatchVO[] players = new PlayerMatchVO[5];
 		switch(hottype){
-//		case 1:players=pc.getDayHotPlayer(playerSortBy);
-//		break;
+		case 1:players=pc.getDayHotPlayer(playerSortBy);
+		break;
 		case 2:players=pc.getSeasonHotPlayer(playerSortBy);
 		break;
 		case 4:players=pc.getPromotePlayer(playerSortBy);
@@ -224,6 +225,12 @@ public class HotPanel extends JPanel {
 			name[i].setText(players[i].getName());
 			name[i].addMouseListener(new showPlayer());
 		}		
+		
+		score_1.setText(String.format("%.3f",players[0].getHotData()));
+		score_2.setText(String.format("%.3f",players[1].getHotData()));
+		score_3.setText(String.format("%.3f",players[2].getHotData()));
+		score_4.setText(String.format("%.3f",players[3].getHotData()));
+		score_5.setText(String.format("%.3f",players[4].getHotData()));
 		
 		show.add(portrait_1);
 		show.add(portrait_2);
@@ -391,19 +398,13 @@ public class HotPanel extends JPanel {
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			((JLabel)arg0.getSource()).setOpaque(true);
-			((JLabel)arg0.getSource()).setBackground(Color.white);
-			show.repaint();
-			hotpanel.repaint();
+			
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			((JLabel)arg0.getSource()).setOpaque(false);
-			((JLabel)arg0.getSource()).repaint();
-			show.repaint();
-			hotpanel.repaint();
+			
 		}
 
 		@Override

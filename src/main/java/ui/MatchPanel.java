@@ -37,7 +37,7 @@ import vo.PlayerVO;
 
 public class MatchPanel extends JPanel {
 	
-	MatchesPO[] matches ;
+	public MatchesPO[] matches ;
 
 	MatchController matchController = new MatchController();
 	TeamController teamController = new TeamController();
@@ -174,8 +174,8 @@ public class MatchPanel extends JPanel {
 	}
 
 	/** 设置比赛表格 */
-	private void setMatchTable(MatchesPO[] matches) {
-
+	public void setMatchTable(MatchesPO[] matches) {
+//		System.out.print(matches[0].getDate());
 		Vector columnsName = new Vector();
 		columnsName.add("时间");
 		columnsName.add("球队-球队");

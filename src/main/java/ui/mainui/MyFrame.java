@@ -48,9 +48,9 @@ public class MyFrame extends JFrame {
 	
 	IndexPanel indexpanel=new IndexPanel();
 	public static TeamPanel teampanel=new TeamPanel();
-	PlayerPanel playerpanel=new PlayerPanel();
-	HotPanel hotpanel=new HotPanel();
-	MatchPanel matchpanel=new MatchPanel();
+	public static PlayerPanel playerpanel=new PlayerPanel();
+	public static HotPanel hotpanel=new HotPanel();
+	public static MatchPanel matchpanel=new MatchPanel();
 	
 	
 	public MyFrame(){
@@ -111,18 +111,21 @@ public class MyFrame extends JFrame {
 		JButton teambutton=new JButton(new ImageIcon("image/team.png"));
 		JButton hotbutton=new JButton(new ImageIcon("image/hot.png"));
 		JButton matchbutton=new JButton(new ImageIcon("image/match.png"));
+		JButton helpbutton=new JButton(new ImageIcon("image/help.png"));
 		
 		index.setBounds(10, 30,50,50);
 		playerbutton.setBounds(80, 30, 50, 50);
 		teambutton.setBounds(150, 30, 50, 50);
 		hotbutton.setBounds(220,30,50, 50);
 		matchbutton.setBounds(290, 30, 50, 50);
+		helpbutton.setBounds(360, 30, 50, 50);		
 		
 		index.setBackground(Color.black);
 		playerbutton.setBackground(Color.black);
 		teambutton.setBackground(Color.black);
 		hotbutton.setBackground(Color.black);
 		matchbutton.setBackground(Color.black);
+		helpbutton.setBackground(Color.black);
 		
 		index.addActionListener(e->setIndex());
 		playerbutton.addActionListener(e->setPlayer());
@@ -130,6 +133,7 @@ public class MyFrame extends JFrame {
 		hotbutton.addActionListener(e->setHot());
 		matchbutton.addActionListener(e->setMatch());
 		
+		frame.add(helpbutton);
 		frame.add(index);
 		frame.add(playerbutton);
 		frame.add(teambutton);
