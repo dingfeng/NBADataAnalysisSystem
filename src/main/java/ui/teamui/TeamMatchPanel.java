@@ -35,7 +35,7 @@ public class TeamMatchPanel extends JPanel{
 		this.repaint();
 		
 	} 
-	
+	/**设置界面提示文字*/
 	void setText(){
 		JLabel recent =new JLabel("近期比赛");
 		JLabel past=new JLabel("过往查询");
@@ -63,7 +63,7 @@ public class TeamMatchPanel extends JPanel{
 		this.add(recent);
 
 	}
-	
+	/**近期比赛*/
 	void setRecentTable(){
 		Vector<String> columnsName = new Vector<String>();
 		columnsName.add("日期");
@@ -102,7 +102,7 @@ public class TeamMatchPanel extends JPanel{
 		
 		this.add(jScrollPane);
 	}
-	
+	/**过往查询*/
 	void setPastTable(){
 		Vector<String> columnsName = new Vector<String>();
 		columnsName.add("日期");

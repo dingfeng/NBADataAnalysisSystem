@@ -6,10 +6,10 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,8 +23,6 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.batik.swing.JSVGCanvas;
-
 import po.TeamPO;
 import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
@@ -34,6 +32,7 @@ import ui.mainui.UneditableTextField;
 import vo.SortType;
 import vo.TeamMatchVO;
 import vo.TeamSortBy;
+import bl.playerbl.PlayerController;
 import bl.teambl.TeamController;
 
 public class TeamPanel extends JPanel {
@@ -454,7 +453,7 @@ public class TeamPanel extends JPanel {
 	}
 
 	/** 在findPanel上显示一个球队的信息 */
-	private void showOne(String teamname) {
+	void showOne(String teamname) {
 		if(matchpanel){
 			this.remove(teammatch);
 			matchpanel=false;
@@ -490,7 +489,7 @@ public class TeamPanel extends JPanel {
 		foundYearresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 370, FrameSize.width /8, 3*FrameSize.height/80);
 		
 		match.addActionListener(e->setMatch());
-		teamplayers.addActionListener(e->setTeamPlayers());
+		teamplayers.addActionListener(e->setTeamPlayers(nameresult.getText()));
 		
 		find.add(teamplayers);
 		find.add(match);
@@ -541,9 +540,16 @@ public class TeamPanel extends JPanel {
 		this.add(jScrollPane);
 
 	}
+
 	/**查看该球队队员*/
-	void setTeamPlayers(){
-		
+	void setTeamPlayers(String team){
+		String[] playernames=tc.getPlayers(team);
+		PlayerController pc=new PlayerController();
+		ArrayList players=new ArrayList();
+		for(int i=0;i<playernames.length;i++){
+			players.add(pc.findPlayer(playernames[i]));
+		}
+//		MyFrame.playerpanel
 	}
 	
 	/**点击查看比赛按钮*/
