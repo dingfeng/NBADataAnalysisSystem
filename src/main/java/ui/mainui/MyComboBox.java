@@ -28,4 +28,13 @@ public class MyComboBox extends JComboBox{
 		this.setBackground(new Color(68,68,68));
 		this.setForeground(Color.white);
 	}
+	
+	public MyComboBox(String text,String[] a){
+		this.addItem(text);
+		for(int i=0;i<a.length;i++){
+			this.addItem(a[i]);
+		}
+		this.setBackground(new Color(68,68,68));
+		this.setForeground(Color.white);
+	}
 }

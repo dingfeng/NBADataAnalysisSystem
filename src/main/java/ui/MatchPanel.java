@@ -40,8 +40,8 @@ import vo.TeamMatchVO;
 import vo.TeamSortBy;
 
 public class MatchPanel extends JPanel {
-	
-	public MatchesPO[] matches ;
+
+	public MatchesPO[] matches;
 
 	MatchController matchController = new MatchController();
 	TeamController teamController = new TeamController();
@@ -69,14 +69,14 @@ public class MatchPanel extends JPanel {
 	DefaultTableModel player2Table;
 	MyTable myPlayer2Table;
 	JScrollPane player2ScrollPane;
-	
-	UneditableTextField score1; 
+
+	UneditableTextField score1;
 	UneditableTextField score2;
-	UneditableTextField teamName1; 
+	UneditableTextField teamName1;
 	UneditableTextField teamName2;
 	JLabel teamImage1 = new JLabel();
 	JLabel teamImage2 = new JLabel();
-	
+
 	public MatchPanel() {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
@@ -85,7 +85,6 @@ public class MatchPanel extends JPanel {
 		matches = matchController.getAllMatches();
 		setMatchTable(matches);
 		setHeader();
-		setShowPanel(matches[0].getTeam1(),matches[0].getTeam2());
 		this.add(matchScrollPane);
 		this.add(header);
 		this.add(showPanel);
@@ -96,13 +95,14 @@ public class MatchPanel extends JPanel {
 		header.setLayout(null);
 		header.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		header.setBackground(FrameSize.backColor);
-		
-		TeamMatchVO[] team = teamController.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND);
-		ArrayList <String> teamName = new ArrayList<String>();
-		for(int i=0;i<team.length;i++){
+
+		TeamMatchVO[] team = teamController.getSortedTotalTeams(
+				TeamSortBy.name, SortType.ASEND);
+		ArrayList<String> teamName = new ArrayList<String>();
+		for (int i = 0; i < team.length; i++) {
 			teamName.add(team[i].getName());
 		}
-		
+
 		timeBox = new MyComboBox(new String[] { "比赛时间", "df", "df", "df" });
 		timeBox.setBounds(50, 10, 150, 35);
 		header.add(timeBox);
@@ -110,6 +110,7 @@ public class MatchPanel extends JPanel {
 		teamBox = new MyComboBox("队伍", teamName);
 		teamBox.setBounds(230, 10, 150, 35);
 		header.add(teamBox);
+		teamBox.addActionListener(e -> setPlayerBox());
 
 		playerBox = new MyComboBox(new String[] { "球员", "nn", "nn", "nn" });
 		playerBox.setBounds(590, 10, 150, 35);
@@ -118,12 +119,77 @@ public class MatchPanel extends JPanel {
 		JButton yesButton = new JButton(new ImageIcon("image/yes.png"));
 		yesButton.setBounds(770, 10, 30, 30);
 		yesButton.setBackground(Color.white);
-		// yesButton.addActionListener(e -> screenPlayerConfirmClick());
+		yesButton.addActionListener(e -> findMatchConfirmClick());
 		header.add(yesButton);
 	}
+	
+	/**查找比赛*/
+	private void findMatchConfirmClick() {
+		if(!playerBox.getSelectedItem().equals("球员")){
+			findMatchAccordingPlayer((String) playerBox.getSelectedItem());
+		}
+		else if(!teamBox.getSelectedItem().equals("球队")){
+			findMatchAccordingTeam((String) teamBox.getSelectedItem());
+		}
+	}
+	
+	/**按球队查找比赛*/
+	public void findMatchAccordingTeam(String team) {
+		this.remove(matchScrollPane);
+		showPanel.remove(scoreScrollPane);
+		showPanel.remove(player1ScrollPane);
+		showPanel.remove(player2ScrollPane);
+		this.remove(showPanel);
+		matches = matchController.getTeamMatches(team);
+		matchScrollPane.setVisible(false);
+		setMatchTable(matches);
+		matchScrollPane.setVisible(true);
+		showPanel.add(scoreScrollPane);
+		showPanel.add(player1ScrollPane);
+		showPanel.add(player2ScrollPane);
+		this.add(showPanel);
+		this.add(matchScrollPane);
+		this.repaint();	
+	}
 
-	/**设置每场比赛具体信息显示*/
-	private void setShowPanel(MatchTeamPO team1,MatchTeamPO team2) {
+	/**按球员查找比赛*/
+	public void findMatchAccordingPlayer(String player){
+		this.remove(matchScrollPane);
+		showPanel.remove(scoreScrollPane);
+		showPanel.remove(player1ScrollPane);
+		showPanel.remove(player2ScrollPane);
+		this.remove(showPanel);
+		matches = matchController.getPlayerMatches(player);
+		matchScrollPane.setVisible(false);
+		setMatchTable(matches);
+		matchScrollPane.setVisible(true);
+		showPanel.add(scoreScrollPane);
+		showPanel.add(player1ScrollPane);
+		showPanel.add(player2ScrollPane);
+		this.add(showPanel);
+		this.add(matchScrollPane);
+		this.repaint();	
+	}
+
+	/** 根据球队选择球员 */
+	private void setPlayerBox() {
+		if (!teamBox.getSelectedItem().equals("球队")) {
+			playerBox.setVisible(false);
+			header.remove(playerBox);
+			String team = (String) teamBox.getSelectedItem();
+			String player[] = teamController.getPlayers(team);
+			playerBox = new MyComboBox("球员", player);
+			playerBox.repaint();
+			header.add(playerBox);
+			playerBox.setBounds(590, 10, 150, 35);
+			playerBox.setVisible(true);
+			header.repaint();
+			this.repaint();
+		}
+	}
+
+	/** 设置每场比赛具体信息显示 */
+	private void setShowPanel(MatchTeamPO team1, MatchTeamPO team2) {
 		showPanel.setLayout(null);
 		showPanel.setBounds(FrameSize.width / 4, FrameSize.height / 12,
 				FrameSize.width * 3 / 4, FrameSize.height * 19 / 24);
@@ -132,13 +198,16 @@ public class MatchPanel extends JPanel {
 		int panelWidth = FrameSize.width * 3 / 4;
 		int panelHeight = FrameSize.height * 19 / 24;
 
-	
-		teamImage1.setIcon(scaleImage(new ImageIcon(teamController.getTeamData(team1.getName()).getImage()), panelWidth/8,panelWidth/8));
-		teamImage2.setIcon(scaleImage(new ImageIcon(teamController.getTeamData(team2.getName()).getImage()), panelWidth/8,panelWidth/8));
+		teamImage1.setIcon(scaleImage(
+				new ImageIcon(teamController.getTeamData(team1.getName())
+						.getImage()), panelWidth / 8, panelWidth / 8));
+		teamImage2.setIcon(scaleImage(
+				new ImageIcon(teamController.getTeamData(team2.getName())
+						.getImage()), panelWidth / 8, panelWidth / 8));
 		teamImage1.setBackground(FrameSize.buttonbackColor);
 		teamImage2.setBackground(FrameSize.buttonbackColor);
-		teamImage1.setBounds(panelWidth * 3 / 15, panelHeight / 20, panelWidth / 8,
-				panelWidth / 8);
+		teamImage1.setBounds(panelWidth * 3 / 15, panelHeight / 20,
+				panelWidth / 8, panelWidth / 8);
 		teamImage2.setBounds(panelWidth * 81 / 120, panelHeight / 20,
 				panelWidth / 8, panelWidth / 8);
 		showPanel.add(teamImage1);
@@ -162,19 +231,63 @@ public class MatchPanel extends JPanel {
 		showPanel.add(score2);
 
 		// 设置比分表格
-		setScoreTable(team1,team2);
+		setScoreTable(team1, team2);
 		scoreScrollPane.setBounds(panelWidth * 39 / 120, panelHeight * 2 / 20,
 				panelWidth * 42 / 120, 55);
 		resizeTable(false, scoreScrollPane, myScoreTable);
-		 scoreScrollPane.repaint();
+		scoreScrollPane.repaint();
 		showPanel.add(scoreScrollPane);
 
-
 		// 设置每个球队的球员表现的表格
-		setPlayerTable(team1.getPlayers(),team2.getPlayers());
-		player1ScrollPane.setBounds(5,(panelHeight*19/20-panelWidth/8)/2<((myPlayer1Table.getRowCount()+1)*myPlayer1Table.getRowHeight()+23)?(panelHeight/20+panelWidth/8+5):panelHeight/20+panelWidth/8+((panelHeight*19/20-panelWidth/8)/2-((myPlayer1Table.getRowCount()+1)*myPlayer1Table.getRowHeight()+23))/2,panelWidth-10,(panelHeight*19/20-panelWidth/8)/2<((myPlayer1Table.getRowCount()+1)*myPlayer1Table.getRowHeight()+23)?((panelHeight*19/20-panelWidth/8)/2-10):((myPlayer1Table.getRowCount()+1)*myPlayer1Table.getRowHeight()+23));
+		setPlayerTable(team1.getPlayers(), team2.getPlayers());
+		player1ScrollPane
+				.setBounds(
+						5,
+						(panelHeight * 19 / 20 - panelWidth / 8) / 2 < ((myPlayer1Table
+								.getRowCount() + 1)
+								* myPlayer1Table.getRowHeight() + 23) ? (panelHeight
+								/ 20 + panelWidth / 8 + 5)
+								: panelHeight
+										/ 20
+										+ panelWidth
+										/ 8
+										+ ((panelHeight * 19 / 20 - panelWidth / 8) / 2 - ((myPlayer1Table
+												.getRowCount() + 1)
+												* myPlayer1Table.getRowHeight() + 23))
+										/ 2,
+						panelWidth - 10,
+						(panelHeight * 19 / 20 - panelWidth / 8) / 2 < ((myPlayer1Table
+								.getRowCount() + 1)
+								* myPlayer1Table.getRowHeight() + 23) ? ((panelHeight * 19 / 20 - panelWidth / 8) / 2 - 10)
+								: ((myPlayer1Table.getRowCount() + 1)
+										* myPlayer1Table.getRowHeight() + 23));
 		showPanel.add(player1ScrollPane);
-		player2ScrollPane.setBounds(5,(panelHeight*19/20-panelWidth/8)/2<((myPlayer2Table.getRowCount()+1)*myPlayer2Table.getRowHeight()+23)?(panelHeight/20+panelWidth/8+(panelHeight*19/20-panelWidth/8)/2+5):panelHeight/20+panelWidth/8+(panelHeight*19/20-panelWidth/8)/2+((panelHeight*19/20-panelWidth/8)/2-((myPlayer2Table.getRowCount()+1)*myPlayer2Table.getRowHeight()+23))/2,panelWidth-10,(panelHeight*19/20-panelWidth/8)/2<((myPlayer2Table.getRowCount()+1)*myPlayer2Table.getRowHeight()+23)?((panelHeight*19/20-panelWidth/8)/2-10):((myPlayer2Table.getRowCount()+1)*myPlayer2Table.getRowHeight()+23));
+		player2ScrollPane
+				.setBounds(
+						5,
+						(panelHeight * 19 / 20 - panelWidth / 8) / 2 < ((myPlayer2Table
+								.getRowCount() + 1)
+								* myPlayer2Table.getRowHeight() + 23) ? (panelHeight
+								/ 20
+								+ panelWidth
+								/ 8
+								+ (panelHeight * 19 / 20 - panelWidth / 8) / 2 + 5)
+								: panelHeight
+										/ 20
+										+ panelWidth
+										/ 8
+										+ (panelHeight * 19 / 20 - panelWidth / 8)
+										/ 2
+										+ ((panelHeight * 19 / 20 - panelWidth / 8) / 2 - ((myPlayer2Table
+												.getRowCount() + 1)
+												* myPlayer2Table.getRowHeight() + 23))
+										/ 2,
+						panelWidth - 10,
+						(panelHeight * 19 / 20 - panelWidth / 8) / 2 < ((myPlayer2Table
+								.getRowCount() + 1)
+								* myPlayer2Table.getRowHeight() + 23) ? ((panelHeight * 19 / 20 - panelWidth / 8) / 2 - 10)
+								: ((myPlayer2Table.getRowCount() + 1)
+										* myPlayer2Table.getRowHeight() + 23));
 		showPanel.add(player2ScrollPane);
 		showPanel.repaint();
 		showPanel.validate();
@@ -185,7 +298,7 @@ public class MatchPanel extends JPanel {
 
 	/** 设置比赛表格 */
 	public void setMatchTable(MatchesPO[] matches) {
-//		System.out.print(matches[0].getDate());
+		// System.out.print(matches[0].getDate());
 		Vector columnsName = new Vector();
 		columnsName.add("时间");
 		columnsName.add("球队-球队");
@@ -195,7 +308,8 @@ public class MatchPanel extends JPanel {
 		for (int i = 0; i < matches.length; i++) {
 			Vector rowData = new Vector();
 			rowData.add(matches[i].getDate());
-			rowData.add(matches[i].getTeam1().getName() + "-" + matches[i].getTeam2().getName());
+			rowData.add(matches[i].getTeam1().getName() + "-"
+					+ matches[i].getTeam2().getName());
 			rowData.add(matches[i].getTeam1().getTotalScores() + ":"
 					+ matches[i].getTeam2().getTotalScores());
 			data.add(rowData);
@@ -210,6 +324,8 @@ public class MatchPanel extends JPanel {
 		matchScrollPane.setBounds(0, FrameSize.height / 12,
 				FrameSize.width / 4, FrameSize.height * 19 / 24);
 		resizeTable(false, matchScrollPane, myMatchTable);
+		
+		setShowPanel(matches[0].getTeam1(), matches[0].getTeam2());
 
 		myMatchTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -218,7 +334,9 @@ public class MatchPanel extends JPanel {
 					showPanel.remove(scoreScrollPane);
 					showPanel.remove(player1ScrollPane);
 					showPanel.remove(player2ScrollPane);
-					setShowPanel(matches[myMatchTable.getSelectedRow()].getTeam1(),matches[myMatchTable.getSelectedRow()].getTeam2());
+					setShowPanel(
+							matches[myMatchTable.getSelectedRow()].getTeam1(),
+							matches[myMatchTable.getSelectedRow()].getTeam2());
 					showPanel.add(scoreScrollPane);
 					showPanel.add(player1ScrollPane);
 					showPanel.add(player2ScrollPane);
@@ -271,9 +389,9 @@ public class MatchPanel extends JPanel {
 		// .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 		scoreScrollPane.setBackground(FrameSize.backColor);
 		scoreScrollPane.getViewport().setOpaque(false);
-		resizeTable(false,scoreScrollPane,myScoreTable);
-//		scoreScrollPane.repaint();
-//		scoreScrollPane.validate();
+		resizeTable(false, scoreScrollPane, myScoreTable);
+		// scoreScrollPane.repaint();
+		// scoreScrollPane.validate();
 		scoreScrollPane.setVisible(false);
 		showPanel.add(scoreScrollPane);
 		showPanel.repaint();
@@ -283,8 +401,9 @@ public class MatchPanel extends JPanel {
 		this.repaint();
 	}
 
-	/**设置球员表现的表格*/
-	private void setPlayerTable(MatchPlayerPO[] players1,MatchPlayerPO[] players2) {
+	/** 设置球员表现的表格 */
+	private void setPlayerTable(MatchPlayerPO[] players1,
+			MatchPlayerPO[] players2) {
 
 		Vector columnsName = new Vector();
 		columnsName.add("球员");
@@ -307,7 +426,7 @@ public class MatchPanel extends JPanel {
 		columnsName.add("得分");
 
 		Vector data1 = new Vector();
-		for (int i = 0; i <players1.length; i++) {
+		for (int i = 0; i < players1.length; i++) {
 			Vector rowData = new Vector();
 			rowData.add(players1[i].getName());
 			rowData.add(players1[i].getLocation());
@@ -337,12 +456,12 @@ public class MatchPanel extends JPanel {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		player1ScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		resizeTable(false,player1ScrollPane,myPlayer1Table);
+		resizeTable(false, player1ScrollPane, myPlayer1Table);
 		player1ScrollPane.repaint();
 		player1ScrollPane.validate();
-		
+
 		Vector data2 = new Vector();
-		for (int i = 0; i <players2.length; i++) {
+		for (int i = 0; i < players2.length; i++) {
 			Vector rowData = new Vector();
 			rowData.add(players2[i].getName());
 			rowData.add(players2[i].getLocation());
@@ -371,7 +490,7 @@ public class MatchPanel extends JPanel {
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		player2ScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		resizeTable(false,player2ScrollPane,myPlayer2Table);
+		resizeTable(false, player2ScrollPane, myPlayer2Table);
 		player2ScrollPane.repaint();
 		player2ScrollPane.validate();
 	}
@@ -424,16 +543,17 @@ public class MatchPanel extends JPanel {
 		}
 	}
 
-	private ImageIcon scaleImage(ImageIcon icon, int iconWidth, int iconHeight) { 
-		int width = icon.getIconWidth(); 
-		int height = icon.getIconHeight(); 
+	private ImageIcon scaleImage(ImageIcon icon, int iconWidth, int iconHeight) {
+		int width = icon.getIconWidth();
+		int height = icon.getIconHeight();
 
-		if (width == iconWidth && height == iconHeight) { 
-		return icon; 
-		} 
-		Image image = icon.getImage(); 
-		image = image.getScaledInstance(iconWidth, iconHeight, Image.SCALE_DEFAULT); 
-
-		return new ImageIcon(image); 
+		if (width == iconWidth && height == iconHeight) {
+			return icon;
 		}
+		Image image = icon.getImage();
+		image = image.getScaledInstance(iconWidth, iconHeight,
+				Image.SCALE_DEFAULT);
+
+		return new ImageIcon(image);
+	}
 }
