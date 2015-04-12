@@ -75,10 +75,10 @@ public class MatchPanel extends JPanel {
 	MyTable myPlayer2Table;
 	JScrollPane player2ScrollPane;
 
-	UneditableTextField score1;
-	UneditableTextField score2;
-	UneditableTextField teamName1;
-	UneditableTextField teamName2;
+	UneditableTextField score1 = new UneditableTextField();
+	UneditableTextField score2 = new UneditableTextField();
+	UneditableTextField teamName1 = new UneditableTextField();
+	UneditableTextField teamName2 = new UneditableTextField();
 	JLabel teamImage1 = new JLabel();
 	JLabel teamImage2 = new JLabel();
 	
@@ -91,7 +91,7 @@ public class MatchPanel extends JPanel {
 		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
 		matches = matchController.getAllMatches();
-		setMatchTable(matches);
+		setMatchTable(matches,0);
 		setHeader();
 		this.add(matchScrollPane);
 		this.add(header);
@@ -167,7 +167,7 @@ public class MatchPanel extends JPanel {
 		this.remove(showPanel);
 		matches = matchController.getTimeMatches(date1, date2);
 		matchScrollPane.setVisible(false);
-		setMatchTable(matches);
+		setMatchTable(matches,0);
 		matchScrollPane.setVisible(true);
 		showPanel.add(scoreScrollPane);
 		showPanel.add(player1ScrollPane);
@@ -186,7 +186,7 @@ public class MatchPanel extends JPanel {
 		this.remove(showPanel);
 		matches = matchController.getTeamMatches(team);
 		matchScrollPane.setVisible(false);
-		setMatchTable(matches);
+		setMatchTable(matches,0);
 		matchScrollPane.setVisible(true);
 		showPanel.add(scoreScrollPane);
 		showPanel.add(player1ScrollPane);
@@ -205,7 +205,7 @@ public class MatchPanel extends JPanel {
 		this.remove(showPanel);
 		matches = matchController.getPlayerMatches(player);
 		matchScrollPane.setVisible(false);
-		setMatchTable(matches);
+		setMatchTable(matches,0);
 		matchScrollPane.setVisible(true);
 		showPanel.add(scoreScrollPane);
 		showPanel.add(player1ScrollPane);
@@ -257,8 +257,8 @@ public class MatchPanel extends JPanel {
 		showPanel.add(teamImage1);
 		showPanel.add(teamImage2);
 
-		teamName1 = new UneditableTextField(team1.getName());
-		teamName2 = new UneditableTextField(team2.getName());
+		teamName1.setText(team1.getName());
+		teamName2.setText(team2.getName());
 		teamName1.setBounds(panelWidth * 3 / 15 - 30, panelHeight * 2 / 20, 25,
 				10);
 		teamName2.setBounds(panelWidth * 81 / 120 + panelWidth / 8 + 5,
@@ -266,8 +266,10 @@ public class MatchPanel extends JPanel {
 		showPanel.add(teamName1);
 		showPanel.add(teamName2);
 
-		score1 = new UneditableTextField(team1.getTotalScores());
-		score2 = new UneditableTextField(team2.getTotalScores());
+//		score1 = new UneditableTextField(team1.getTotalScores());
+		score1.setText(String.valueOf(team1.getTotalScores()));
+//		score2 = new UneditableTextField(team2.getTotalScores());
+		score2.setText(String.valueOf(team2.getTotalScores()));
 		score1.setBounds(panelWidth * 3 / 15 - 30, panelHeight * 4 / 20, 25, 10);
 		score2.setBounds(panelWidth * 81 / 120 + panelWidth / 8 + 5,
 				panelHeight * 4 / 20, 25, 10);
@@ -279,7 +281,9 @@ public class MatchPanel extends JPanel {
 		scoreScrollPane.setBounds(panelWidth * 39 / 120, panelHeight * 2 / 20,
 				panelWidth * 42 / 120, 55);
 		resizeTable(false, scoreScrollPane, myScoreTable);
+		scoreScrollPane.setVisible(false);
 		scoreScrollPane.repaint();
+		scoreScrollPane.setVisible(true);
 		showPanel.add(scoreScrollPane);
 
 		// 设置每个球队的球员表现的表格
@@ -341,7 +345,7 @@ public class MatchPanel extends JPanel {
 	}
 
 	/** 设置比赛表格 */
-	public void setMatchTable(MatchesPO[] matches) {
+	public void setMatchTable(MatchesPO[] matches,int num) {
 		// System.out.print(matches[0].getDate());
 		Vector columnsName = new Vector();
 		columnsName.add("时间");
@@ -369,7 +373,7 @@ public class MatchPanel extends JPanel {
 				FrameSize.width / 4, FrameSize.height * 19 / 24);
 		resizeTable(false, matchScrollPane, myMatchTable);
 		
-		setShowPanel(matches[0].getTeam1(), matches[0].getTeam2());
+		setShowPanel(matches[num].getTeam1(), matches[num].getTeam2());
 
 		myMatchTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
