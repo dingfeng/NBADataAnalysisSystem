@@ -159,7 +159,7 @@ public class MatchPanel extends JPanel {
 	}
 	
 	/**按时间查找比赛*/
-	public void findMatchAccordingTeam(Date date1,Date date2) {
+	public void findMatchAccordingDate(Date date1,Date date2) {
 		this.remove(matchScrollPane);
 		showPanel.remove(scoreScrollPane);
 		showPanel.remove(player1ScrollPane);
@@ -204,6 +204,24 @@ public class MatchPanel extends JPanel {
 		showPanel.remove(player2ScrollPane);
 		this.remove(showPanel);
 		matches = matchController.getPlayerMatches(player);
+		matchScrollPane.setVisible(false);
+		setMatchTable(matches,0);
+		matchScrollPane.setVisible(true);
+		showPanel.add(scoreScrollPane);
+		showPanel.add(player1ScrollPane);
+		showPanel.add(player2ScrollPane);
+		this.add(showPanel);
+		this.add(matchScrollPane);
+		this.repaint();	
+	}
+	
+	public void findMatchAccordingMatch(MatchesPO[] match){
+		this.remove(matchScrollPane);
+		showPanel.remove(scoreScrollPane);
+		showPanel.remove(player1ScrollPane);
+		showPanel.remove(player2ScrollPane);
+		this.remove(showPanel);
+		matches = match;
 		matchScrollPane.setVisible(false);
 		setMatchTable(matches,0);
 		matchScrollPane.setVisible(true);
