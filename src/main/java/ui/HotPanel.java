@@ -343,7 +343,7 @@ public class HotPanel extends JPanel {
 		show.repaint();
 		this.repaint();
 	}
-
+	/**跳转到team*/
 	class showTeam implements MouseListener{
 
 		@Override
@@ -386,7 +386,7 @@ public class HotPanel extends JPanel {
 		}
 		
 	}
-	
+	/**跳转到player*/
 	class showPlayer implements MouseListener{
 
 		@Override
