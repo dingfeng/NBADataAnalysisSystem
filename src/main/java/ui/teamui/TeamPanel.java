@@ -27,8 +27,10 @@ import po.TeamPO;
 import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
+import ui.mainui.MyFrame;
 import ui.mainui.MyTable;
 import ui.mainui.UneditableTextField;
+import vo.PlayerMatchVO;
 import vo.SortType;
 import vo.TeamMatchVO;
 import vo.TeamSortBy;
@@ -545,11 +547,12 @@ public class TeamPanel extends JPanel {
 	void setTeamPlayers(String team){
 		String[] playernames=tc.getPlayers(team);
 		PlayerController pc=new PlayerController();
-		ArrayList players=new ArrayList();
+		ArrayList<PlayerMatchVO> players=new ArrayList<PlayerMatchVO>();
 		for(int i=0;i<playernames.length;i++){
 			players.add(pc.findPlayer(playernames[i]));
 		}
-//		MyFrame.playerpanel
+		MyFrame.playerpanel.setTable(players.iterator());
+		MyFrame.card.show(MyFrame.mainpanel, "player");
 	}
 	
 	/**点击查看比赛按钮*/

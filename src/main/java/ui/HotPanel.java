@@ -392,7 +392,10 @@ public class HotPanel extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent arg0) {
 			// TODO Auto-generated method stub
+			String playerInfo=((JLabel) arg0.getSource()).getText();
+			MyFrame.playerpanel.findPlayerClick(playerInfo);
 			MyFrame.card.show(MyFrame.mainpanel, "player");
+			
 		}
 
 		@Override

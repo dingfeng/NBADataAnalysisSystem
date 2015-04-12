@@ -97,7 +97,7 @@ public class PlayerPanel extends JPanel {
 	}
 
 	/** 设置表格 */
-	private void setTable(PlayerMatchVO[] playerMatchVOs) {
+	public void setTable(Iterator<PlayerMatchVO> playerMatchVOs) {
 		Vector columnsName = new Vector();
 		columnsName.add("球员名称");
 		columnsName.add("球衣号码");
@@ -106,7 +106,7 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("生日");
 		columnsName.add("年龄");
 		columnsName.add("球龄");
-		columnsName.dd("毕业学校");
+		columnsName.add("毕业学校");
 		columnsName.add("所属球队");
 		columnsName.add("参赛场数");
 		columnsName.add("先发场数");
@@ -149,8 +149,8 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("使用率(%)");
 
 		Vector data = new Vector();
-		for (int i = 0; i < playerMatchVOs.length; i++) {
-			PlayerMatchVO playerVO = (PlayerMatchVO) playerMatchVOs[i];
+		while(playerMatchVOs.hasNext()){
+			PlayerMatchVO playerVO = playerMatchVOs.next();
 			Vector rowData = new Vector();
 			rowData.add(playerVO.getName());
 			// int playerNum = playerVO.getNumber();
@@ -249,7 +249,7 @@ public class PlayerPanel extends JPanel {
 	}
 
 	/** 在findPanel上显示一个球员的信息 */
-	private void showOne(String playerInfo) {
+	public void showOne(String playerInfo) {
 		this.remove(welcomePanel);
 		this.remove(sortPanel);
 		this.remove(screenPanel);
@@ -612,7 +612,7 @@ public class PlayerPanel extends JPanel {
 		findButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
 		findButton.setBackground(new Color(68, 68, 68));
 		findButton.setToolTipText("查找");
-		findButton.addActionListener(e -> findPlayerClick());
+		findButton.addActionListener(e -> findPlayerClick(searchField.getText()));
 		panel.add(findButton);
 
 		JButton sortButton = new JButton(new ImageIcon("image\\sort.png"));
@@ -782,16 +782,16 @@ public class PlayerPanel extends JPanel {
 	}
 
 	/** 点击查找按钮 */
-	public void findPlayerClick() {
-		if (searchField.getText().equals("")) {
+	public void findPlayerClick(String playerInfo) {
+		if (playerInfo.equals("")) {
 			JOptionPane.showMessageDialog(this, "请输入查找球队的缩写");
 			return;
-		} else if (playerController.findPlayer(searchField.getText()) == null) {
+		} else if (playerController.findPlayer(playerInfo) == null) {
 			JOptionPane.showMessageDialog(this, "未查到球队信息");
 			return;
 		}
 
-		String playerInfo = searchField.getText();
+//		String playerInfo = searchField.getText();
 		showOne(playerInfo);
 
 		jScrollPane.setVisible(false);
