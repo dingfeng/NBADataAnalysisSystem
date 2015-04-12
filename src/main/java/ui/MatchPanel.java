@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -34,6 +35,9 @@ import ui.mainui.MyComboBox;
 import ui.mainui.MyTable;
 import ui.mainui.UneditableTextField;
 import vo.PlayerVO;
+import vo.SortType;
+import vo.TeamMatchVO;
+import vo.TeamSortBy;
 
 public class MatchPanel extends JPanel {
 	
@@ -92,12 +96,18 @@ public class MatchPanel extends JPanel {
 		header.setLayout(null);
 		header.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		header.setBackground(FrameSize.backColor);
-
+		
+		TeamMatchVO[] team = teamController.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND);
+		ArrayList <String> teamName = new ArrayList<String>();
+		for(int i=0;i<team.length;i++){
+			teamName.add(team[i].getName());
+		}
+		
 		timeBox = new MyComboBox(new String[] { "比赛时间", "df", "df", "df" });
 		timeBox.setBounds(50, 10, 150, 35);
 		header.add(timeBox);
 
-		teamBox = new MyComboBox(new String[] { "队伍", "Ning", "Ning", "Ning" });
+		teamBox = new MyComboBox("队伍", teamName);
 		teamBox.setBounds(230, 10, 150, 35);
 		header.add(teamBox);
 
