@@ -97,7 +97,7 @@ public class PlayerPanel extends JPanel {
 	}
 
 	/** 设置表格 */
-	public void setTable(Iterator<PlayerMatchVO> playerMatchVOs) {
+	public void setTable(PlayerMatchVO[] playerMatchVOs) {
 		Vector columnsName = new Vector();
 		columnsName.add("球员名称");
 		columnsName.add("球衣号码");
@@ -149,8 +149,8 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("使用率(%)");
 
 		Vector data = new Vector();
-		while(playerMatchVOs.hasNext()){
-			PlayerMatchVO playerVO = playerMatchVOs.next();
+		for(int i=0;i<playerMatchVOs.length;i++){
+			PlayerMatchVO playerVO = playerMatchVOs[i];
 			Vector rowData = new Vector();
 			rowData.add(playerVO.getName());
 			// int playerNum = playerVO.getNumber();
@@ -402,11 +402,11 @@ public class PlayerPanel extends JPanel {
 		} else if (sortBy.equals("两双")) {
 			playerSortBy = PlayerSortBy.twoPair;
 		}
-
+		PlayerMatchVO[] screenPlayer;
 		if(dataType.getSelectedItem().equals("赛季总数据"))
-			Iterator<PlayerMatchVO> screenPlayer = playerController.screenTotalPlayers(position, area, playerSortBy);
+			screenPlayer = playerController.screenTotalPlayers(position, area, playerSortBy);
 		else
-			Iterator<PlayerMatchVO> screenPlayer = playerController.screenAvePlayers(position, area, playerSortBy);
+			screenPlayer = playerController.screenAvePlayers(position, area, playerSortBy);
 		setTable(screenPlayer);
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
@@ -767,9 +767,14 @@ public class PlayerPanel extends JPanel {
 		} else if (sortBy.equals("使用率")) {
 			playerSortBy = PlayerSortBy.useEfficiency;
 		}
-
-		Iterator<PlayerVO> sortPlayer = playerController.sortAvePlayers(
+		PlayerMatchVO[] sortPlayer ;
+		if(dataType.getSelectedItem().equals("赛季总数据")){
+		sortPlayer = playerController.sortTotalPlayers(
+					playerSortBy, type);
+		}else{
+		sortPlayer = playerController.sortAvePlayers(
 				playerSortBy, type);
+		}
 		setTable(sortPlayer);
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
@@ -792,9 +797,9 @@ public class PlayerPanel extends JPanel {
 		showOne(playerInfo);
 
 		jScrollPane.setVisible(false);
-		ArrayList<PlayerPO> onePlayer = new ArrayList<PlayerPO>();
-		onePlayer.add(playerController.findPlayer(playerInfo));
-		setTable(onePlayer.iterator());
+		PlayerMatchVO[] onePlayer = new PlayerMatchVO[1];
+		onePlayer[0]=playerController.findPlayer(playerInfo);
+		setTable(onePlayer);
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);

@@ -547,12 +547,12 @@ public class TeamPanel extends JPanel {
 	void setTeamPlayers(String team){
 		String[] playernames=tc.getPlayers(team);
 		PlayerController pc=new PlayerController();
-		ArrayList<PlayerMatchVO> players=new ArrayList<PlayerMatchVO>();
+		PlayerMatchVO[] players=new PlayerMatchVO[playernames.length];
 		for(int i=0;i<playernames.length;i++){
-			players.add(pc.findPlayer(playernames[i]));
+			players[i]=pc.findPlayer(playernames[i]);
 		}
-		MyFrame.playerpanel.setTable(players.iterator());
-		MyFrame.playerpanel.showOne(players.get(0).getName());
+		MyFrame.playerpanel.setTable(players);
+		MyFrame.playerpanel.showOne(players[0].getName());
 		MyFrame.card.show(MyFrame.mainpanel, "player");
 	}
 	
