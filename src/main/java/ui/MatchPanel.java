@@ -215,7 +215,7 @@ public class MatchPanel extends JPanel {
 		this.repaint();	
 	}
 	
-	public void findMatchAccordingMatch(MatchesPO[] match){
+	public void findMatchAccordingMatch(MatchesPO[] match,int rowNum){
 		this.remove(matchScrollPane);
 		showPanel.remove(scoreScrollPane);
 		showPanel.remove(player1ScrollPane);
@@ -223,7 +223,7 @@ public class MatchPanel extends JPanel {
 		this.remove(showPanel);
 		matches = match;
 		matchScrollPane.setVisible(false);
-		setMatchTable(matches,0);
+		setMatchTable(matches,rowNum);
 		matchScrollPane.setVisible(true);
 		showPanel.add(scoreScrollPane);
 		showPanel.add(player1ScrollPane);
@@ -363,7 +363,7 @@ public class MatchPanel extends JPanel {
 	}
 
 	/** 设置比赛表格 */
-	public void setMatchTable(MatchesPO[] matches,int num) {
+	public void setMatchTable(MatchesPO[] matches,int rowNum) {
 		// System.out.print(matches[0].getDate());
 		Vector columnsName = new Vector();
 		columnsName.add("时间");
@@ -391,7 +391,7 @@ public class MatchPanel extends JPanel {
 				FrameSize.width / 4, FrameSize.height * 19 / 24);
 		resizeTable(false, matchScrollPane, myMatchTable);
 		
-		setShowPanel(matches[num].getTeam1(), matches[num].getTeam2());
+		setShowPanel(matches[rowNum].getTeam1(), matches[rowNum].getTeam2());
 
 		myMatchTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
