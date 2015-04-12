@@ -478,8 +478,8 @@ public class TeamPanel extends JPanel {
 		
 		image.setOpaque(false);
 		
-		teamplayers.setBounds(FrameSize.width/3-45, 3*FrameSize.height /4, 40,40);
-		match.setBounds(FrameSize.width/3-45, FrameSize.height /40, 40,40);
+		teamplayers.setBounds(FrameSize.width/3-45, 11*FrameSize.height /16, 40,40);
+		match.setBounds(FrameSize.width/3-90, 11*FrameSize.height /16, 40,40);
 		image.setBounds(FrameSize.width /10, FrameSize.height / 8, FrameSize.width / 4, 3*FrameSize.height /20);
 		nameresult.setBounds(FrameSize.width /20, FrameSize.height / 8 - 50, 100, 3*FrameSize.height/80 );
 		nameAbridgeresult.setBounds(9*FrameSize.width /40 ,

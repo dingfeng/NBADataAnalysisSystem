@@ -93,7 +93,8 @@ public class TeamMatchPanel extends JPanel{
 				if (e.getClickCount() == 2) {
 					MatchesPO[] onematch=new MatchesPO[1];
 					onematch[0]=match[recenttable.getSelectedRow()];
-					MyFrame.matchpanel.setMatchTable(onematch);
+					MyFrame.matchpanel.findMatchAccordingTeam(teamName);
+					MyFrame.matchpanel.setShowPanel(onematch[0].getTeam1(),onematch[0].getTeam2());
 					MyFrame.card.show(MyFrame.mainpanel, "match");
 				}
 			}
