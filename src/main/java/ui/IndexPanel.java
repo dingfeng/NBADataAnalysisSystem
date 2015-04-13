@@ -35,7 +35,7 @@ public class IndexPanel extends JPanel{
 		String day=Date.split("-")[1];
 		int year = 2012;
 		
-		if(Integer.parseInt(month)>9){
+		if(Integer.parseInt(month)<9){
 			year++;
 		}
 		
