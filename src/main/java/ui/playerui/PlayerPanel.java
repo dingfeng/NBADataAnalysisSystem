@@ -798,7 +798,7 @@ public class PlayerPanel extends JPanel {
 
 		jScrollPane.setVisible(false);
 		PlayerMatchVO[] onePlayer = new PlayerMatchVO[1];
-		onePlayer[0]=playerController.findPlayer(playerInfo);
+		onePlayer[0]=playerController.findPlayerMatchAve(playerInfo);
 		setTable(onePlayer);
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
