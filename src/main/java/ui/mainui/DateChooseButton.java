@@ -28,6 +28,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import bl.matchbl.MatchController;
+
 public class DateChooseButton extends JButton {
 
 	/**
@@ -41,6 +43,8 @@ public class DateChooseButton extends JButton {
 
 	public DateChooseButton() {
 		this(getNowDate());
+		this.setBackground(FrameSize.buttonbackColor);
+		this.setForeground(Color.white);
 	}
 
 	public DateChooseButton(String dateString) {
@@ -98,7 +102,21 @@ public class DateChooseButton extends JButton {
 	}
 
 	private static Date getNowDate() {
-		return Calendar.getInstance().getTime();
+		MatchController mc=new MatchController();
+		String Date=mc.getTodayMatches()[0].getDate();
+		int month=Integer.parseInt(Date.split("-")[0]);
+		int day=Integer.parseInt(Date.split("-")[1]);
+		int year = 112;
+		
+		if(month<10){
+			year=113;
+		}
+		Date date=new Date();
+		
+		date.setYear(year);
+		date.setMonth(month-1);
+		date.setDate(day);
+		return date;
 	}
 
 	private static SimpleDateFormat getDefaultDateFormat() {
@@ -190,20 +208,20 @@ public class DateChooseButton extends JButton {
 	private class DateChooser extends JPanel implements ActionListener,
 			ChangeListener {
 
-		int startYear = 1980; // 默认【最小】显示年份
-		int lastYear = 2050; // 默认【最大】显示年份
+		int startYear = 2012; // 默认【最小】显示年份
+		int lastYear = 2013; // 默认【最大】显示年份
 		int width = 240; // 界面宽度
 		int height = 150; // 界面高度
 		Color backGroundColor = Color.gray; // 底色
 		// 月历表格配色----------------//
-		Color palletTableColor = Color.white; // 日历表底色
+		Color palletTableColor = FrameSize.buttonbackColor; // 日历表底色
 		Color todayBackColor = Color.orange; // 今天背景色
-		Color weekFontColor = Color.gray; // 星期文字色
-		Color dateFontColor = Color.black; // 日期文字色
+		Color weekFontColor = Color.white; // 星期文字色
+		Color dateFontColor = Color.white; // 日期文字色
 		Color weekendFontColor = Color.red; // 周末文字色
 		// 控制条配色------------------//
 		Color controlLineColor = Color.gray; // 控制条底色
-		Color controlTextColor = Color.white; // 控制条标签文字色
+		Color controlTextColor = Color.black; // 控制条标签文字色
 		Color rbFontColor = Color.white; // RoundBox文字色
 		Color rbBorderColor = Color.red; // RoundBox边框色
 		Color rbButtonColor = Color.gray; // RoundBox按钮色
@@ -257,7 +275,7 @@ public class DateChooseButton extends JButton {
 			JLabel yearLabel = new JLabel("年");
 			yearLabel.setForeground(controlTextColor);
 			result.add(yearLabel);
-
+			
 			monthSpin = new JSpinner(new SpinnerNumberModel(currentMonth, 1,
 					12, 1));
 			monthSpin.setPreferredSize(new Dimension(45, 25));
@@ -325,7 +343,8 @@ public class DateChooseButton extends JButton {
 			// 设置固定字体，以免调用环境改变影响界面美观
 			result.setFont(new Font("宋体", 1, 12));
 			result.setLayout(new GridLayout(7, 7));
-			result.setBackground(Color.white);
+			result.setBackground(Color.black);
+			result.setForeground(Color.white);
 			JLabel cell;
 
 			for (int i = 0; i < 7; i++) {
@@ -486,10 +505,10 @@ public class DateChooseButton extends JButton {
 			int j = actionCommandId % 7;
 			if (isOldDay) {
 				daysButton[i][j].setForeground(dateFontColor);
-				daysButton[i][j].setFont(new java.awt.Font("宋体", 1, 10));// 当前选中字体为粗体
+				daysButton[i][j].setFont(new java.awt.Font("宋体", 1, 18));// 当前选中字体为粗体
 			} else {
 				daysButton[i][j].setForeground(todayBackColor);
-				daysButton[i][j].setFont(new java.awt.Font("宋体", 1, 10));// 当前选中字体为粗体
+				daysButton[i][j].setFont(new java.awt.Font("宋体", 1, 18));// 当前选中字体为粗体
 			}
 		}
 
