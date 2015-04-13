@@ -97,7 +97,7 @@ public class PlayerPanel extends JPanel {
 	}
 
 	/** 设置表格 */
-	public void setTable(PlayerMatchVO[] playerMatchVOs) {
+	private void setTable(PlayerMatchVO[] playerMatchVOs) {
 		Vector columnsName = new Vector();
 		columnsName.add("球员名称");
 		columnsName.add("球衣号码");
@@ -248,8 +248,20 @@ public class PlayerPanel extends JPanel {
 		});
 	}
 
+	public void showTeamPlayers(PlayerMatchVO[] playerMatchVO){
+		this.remove(welcomePanel);
+		this.remove(sortPanel);
+		this.remove(screenPanel);
+		jScrollPane.setVisible(false);
+		setTable(playerMatchVO);
+		jScrollPane.setVisible(true);
+		showOne(playerMatchVO[0].getName());
+		this.add(jScrollPane);
+		this.repaint();
+	}
+
 	/** 在findPanel上显示一个球员的信息 */
-	public void showOne(String playerInfo) {
+	private void showOne(String playerInfo) {
 		this.remove(welcomePanel);
 		this.remove(sortPanel);
 		this.remove(screenPanel);
