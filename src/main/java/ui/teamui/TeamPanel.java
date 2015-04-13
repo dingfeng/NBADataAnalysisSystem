@@ -491,7 +491,7 @@ public class TeamPanel extends JPanel {
 		foundYearresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 370, FrameSize.width /8, 3*FrameSize.height/80);
 		
 		match.addActionListener(e->setMatch());
-		teamplayers.addActionListener(e->setTeamPlayers(nameresult.getText()));
+		teamplayers.addActionListener(e->setTeamPlayers(nameAbridgeresult.getText()));
 		
 		find.add(teamplayers);
 		find.add(match);
@@ -549,10 +549,10 @@ public class TeamPanel extends JPanel {
 		PlayerController pc=new PlayerController();
 		PlayerMatchVO[] players=new PlayerMatchVO[playernames.length];
 		for(int i=0;i<playernames.length;i++){
-			players[i]=pc.findPlayerMatchAve(pc.findPlayer(playernames[i]).getName());
+			players[i]=pc.findPlayerMatchAve(playernames[i]);
 		}
-		MyFrame.playerpanel.setTable(players);
-		MyFrame.playerpanel.showOne(players[0].getName());
+		MyFrame.playerpanel.showTeamPlayers(players);
+		
 		MyFrame.card.show(MyFrame.mainpanel, "player");
 	}
 	
