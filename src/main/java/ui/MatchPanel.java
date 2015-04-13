@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -81,8 +82,8 @@ public class MatchPanel extends JPanel {
 	UneditableTextField teamName2 = new UneditableTextField();
 	JLabel teamImage1 = new JLabel();
 	JLabel teamImage2 = new JLabel();
-	
-	JRadioButton dateRadioButton ;
+
+	JRadioButton dateRadioButton;
 	JRadioButton tpRadioButton;
 
 	public MatchPanel() {
@@ -91,7 +92,7 @@ public class MatchPanel extends JPanel {
 		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
 		matches = matchController.getAllMatches();
-		setMatchTable(matches,0);
+		setMatchTable(matches, 0);
 		setHeader();
 		this.add(matchScrollPane);
 		this.add(header);
@@ -110,11 +111,11 @@ public class MatchPanel extends JPanel {
 		for (int i = 0; i < team.length; i++) {
 			teamName.add(team[i].getName());
 		}
-		
-		PlayerMatchVO[] player = playerController.sortTotalPlayers(PlayerSortBy.name,
-			SortType.ASEND);
+
+		PlayerMatchVO[] player = playerController.sortTotalPlayers(
+				PlayerSortBy.name, SortType.ASEND);
 		ArrayList<String> playerName = new ArrayList<String>();
-		for(int i=0;i<player.length;i++){
+		for (int i = 0; i < player.length; i++) {
 			playerName.add(player[i].getName());
 		}
 
@@ -122,22 +123,22 @@ public class MatchPanel extends JPanel {
 		timeBox.setBounds(50, 10, 150, 35);
 		header.add(timeBox);
 
-		teamBox = new MyComboBox("队伍", teamName);
+		teamBox = new MyComboBox("球队", teamName);
 		teamBox.setBounds(230, 10, 150, 35);
 		header.add(teamBox);
 		teamBox.addActionListener(e -> setPlayerBox());
 
-		playerBox = new MyComboBox("球员",playerName);
+		playerBox = new MyComboBox("球员", playerName);
 		playerBox.setBounds(590, 10, 150, 35);
 		header.add(playerBox);
-		
+
 		dateRadioButton = new JRadioButton();
 		tpRadioButton = new JRadioButton();
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(dateRadioButton);
 		bg.add(tpRadioButton);
-		dateRadioButton.setBounds(30,10,20,20);
-		tpRadioButton.setBounds(210,10,20,20);
+		dateRadioButton.setBounds(30, 10, 20, 20);
+		tpRadioButton.setBounds(210, 10, 20, 20);
 		header.add(dateRadioButton);
 		header.add(tpRadioButton);
 
@@ -147,19 +148,27 @@ public class MatchPanel extends JPanel {
 		yesButton.addActionListener(e -> findMatchConfirmClick());
 		header.add(yesButton);
 	}
-	
-	/**查找比赛*/
+
+	/** 查找比赛 */
 	private void findMatchConfirmClick() {
-		if(!playerBox.getSelectedItem().equals("球员")){
-			findMatchAccordingPlayer((String) playerBox.getSelectedItem());
-		}
-		else if(!teamBox.getSelectedItem().equals("球队")){
-			findMatchAccordingTeam((String) teamBox.getSelectedItem());
+		if (dateRadioButton.isSelected()) {
+			
+		} else if (tpRadioButton.isSelected()) {
+			if (!playerBox.getSelectedItem().equals("球员")) {
+				findMatchAccordingPlayer((String) playerBox.getSelectedItem());
+			} else if (!teamBox.getSelectedItem().equals("球队")) {
+				findMatchAccordingTeam((String) teamBox.getSelectedItem());
+			}
+			else{
+				JOptionPane.showMessageDialog(this, "请选择球队或球员");
+			}
+		}else{
+			JOptionPane.showMessageDialog(this, "请选择查找类型");
 		}
 	}
-	
-	/**按时间查找比赛*/
-	public void findMatchAccordingDate(Date date1,Date date2) {
+
+	/** 按时间查找比赛 */
+	public void findMatchAccordingDate(Date date1, Date date2) {
 		this.remove(matchScrollPane);
 		showPanel.remove(scoreScrollPane);
 		showPanel.remove(player1ScrollPane);
@@ -167,17 +176,17 @@ public class MatchPanel extends JPanel {
 		this.remove(showPanel);
 		matches = matchController.getTimeMatches(date1, date2);
 		matchScrollPane.setVisible(false);
-		setMatchTable(matches,0);
+		setMatchTable(matches, 0);
 		matchScrollPane.setVisible(true);
 		showPanel.add(scoreScrollPane);
 		showPanel.add(player1ScrollPane);
 		showPanel.add(player2ScrollPane);
 		this.add(showPanel);
 		this.add(matchScrollPane);
-		this.repaint();	
+		this.repaint();
 	}
-	
-	/**按球队查找比赛*/
+
+	/** 按球队查找比赛 */
 	public void findMatchAccordingTeam(String team) {
 		this.remove(matchScrollPane);
 		showPanel.remove(scoreScrollPane);
@@ -186,18 +195,18 @@ public class MatchPanel extends JPanel {
 		this.remove(showPanel);
 		matches = matchController.getTeamMatches(team);
 		matchScrollPane.setVisible(false);
-		setMatchTable(matches,0);
+		setMatchTable(matches, 0);
 		matchScrollPane.setVisible(true);
 		showPanel.add(scoreScrollPane);
 		showPanel.add(player1ScrollPane);
 		showPanel.add(player2ScrollPane);
 		this.add(showPanel);
 		this.add(matchScrollPane);
-		this.repaint();	
+		this.repaint();
 	}
 
-	/**按球员查找比赛*/
-	public void findMatchAccordingPlayer(String player){
+	/** 按球员查找比赛 */
+	public void findMatchAccordingPlayer(String player) {
 		this.remove(matchScrollPane);
 		showPanel.remove(scoreScrollPane);
 		showPanel.remove(player1ScrollPane);
@@ -205,17 +214,18 @@ public class MatchPanel extends JPanel {
 		this.remove(showPanel);
 		matches = matchController.getPlayerMatches(player);
 		matchScrollPane.setVisible(false);
-		setMatchTable(matches,0);
+		setMatchTable(matches, 0);
 		matchScrollPane.setVisible(true);
 		showPanel.add(scoreScrollPane);
 		showPanel.add(player1ScrollPane);
 		showPanel.add(player2ScrollPane);
 		this.add(showPanel);
 		this.add(matchScrollPane);
-		this.repaint();	
+		this.repaint();
 	}
-	
-	public void findMatchAccordingMatch(MatchesPO[] match,int rowNum){
+
+	/** 根据比赛设置比赛表格,给teamPanel和playerPanel转换使用 */
+	public void findMatchAccordingMatch(MatchesPO[] match, int rowNum) {
 		this.remove(matchScrollPane);
 		showPanel.remove(scoreScrollPane);
 		showPanel.remove(player1ScrollPane);
@@ -223,14 +233,14 @@ public class MatchPanel extends JPanel {
 		this.remove(showPanel);
 		matches = match;
 		matchScrollPane.setVisible(false);
-		setMatchTable(matches,rowNum);
+		setMatchTable(matches, rowNum);
 		matchScrollPane.setVisible(true);
 		showPanel.add(scoreScrollPane);
 		showPanel.add(player1ScrollPane);
 		showPanel.add(player2ScrollPane);
 		this.add(showPanel);
 		this.add(matchScrollPane);
-		this.repaint();	
+		this.repaint();
 	}
 
 	/** 根据球队选择球员 */
@@ -284,9 +294,9 @@ public class MatchPanel extends JPanel {
 		showPanel.add(teamName1);
 		showPanel.add(teamName2);
 
-//		score1 = new UneditableTextField(team1.getTotalScores());
+		// score1 = new UneditableTextField(team1.getTotalScores());
 		score1.setText(String.valueOf(team1.getTotalScores()));
-//		score2 = new UneditableTextField(team2.getTotalScores());
+		// score2 = new UneditableTextField(team2.getTotalScores());
 		score2.setText(String.valueOf(team2.getTotalScores()));
 		score1.setBounds(panelWidth * 3 / 15 - 30, panelHeight * 4 / 20, 25, 10);
 		score2.setBounds(panelWidth * 81 / 120 + panelWidth / 8 + 5,
@@ -363,7 +373,7 @@ public class MatchPanel extends JPanel {
 	}
 
 	/** 设置比赛表格 */
-	public void setMatchTable(MatchesPO[] matches,int rowNum) {
+	public void setMatchTable(MatchesPO[] matches, int rowNum) {
 		// System.out.print(matches[0].getDate());
 		Vector columnsName = new Vector();
 		columnsName.add("时间");
@@ -390,7 +400,7 @@ public class MatchPanel extends JPanel {
 		matchScrollPane.setBounds(0, FrameSize.height / 12,
 				FrameSize.width / 4, FrameSize.height * 19 / 24);
 		resizeTable(false, matchScrollPane, myMatchTable);
-		
+
 		setShowPanel(matches[rowNum].getTeam1(), matches[rowNum].getTeam2());
 
 		myMatchTable.addMouseListener(new MouseAdapter() {
