@@ -798,10 +798,10 @@ public class PlayerPanel extends JPanel {
 	/** 点击查找按钮 */
 	public void findPlayerClick(String playerInfo) {
 		if (playerInfo.equals("")) {
-			JOptionPane.showMessageDialog(this, "请输入查找球队的缩写");
+			JOptionPane.showMessageDialog(this, "请输入查找球员的名字");
 			return;
 		} else if (playerController.findPlayer(playerInfo) == null) {
-			JOptionPane.showMessageDialog(this, "未查到球队信息");
+			JOptionPane.showMessageDialog(this, "未查到球员信息");
 			return;
 		}
 

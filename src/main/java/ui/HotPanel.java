@@ -120,6 +120,7 @@ public class HotPanel extends JPanel {
 			name[i]=new JLabel();
 			name[i].setBounds(FrameSize.width / 3, (i+1)*FrameSize.height / 7 , FrameSize.width / 6, FrameSize.height/16);
 			name[i].setForeground(Color.white);
+			name[i].addMouseListener(new show());
 			show.add(name[i]);
 		}
 
@@ -164,12 +165,14 @@ public class HotPanel extends JPanel {
 					"投篮命中率", "三分命中率", "罚球命中率", "胜率", "进攻回合", "进攻效率", "防守效率",
 					"进攻篮板效率", "防守篮板效率", "抢断效率", "助攻率" });
 			choose.setSelectedIndex(0);
+			
 			showMessage_team();
 			choose.addActionListener(e -> showMessage_team());
 			break;
 		case 4:
 			choose = new MyComboBox(new String[] { "得分提升率", "篮板提升率", "助攻提升率"});
 			choose.setSelectedIndex(0);
+			
 			showMessage_player();
 			choose.addActionListener(e -> showMessage_player());
 			break;
@@ -178,6 +181,7 @@ public class HotPanel extends JPanel {
 					"得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分",
 					"罚球", "两双" });
 			choose.setSelectedIndex(0);
+			
 			showMessage_player();
 			choose.addActionListener(e -> showMessage_player());
 
@@ -229,7 +233,7 @@ public class HotPanel extends JPanel {
 		
 		for(int i=0;i<5;i++){
 			name[i].setText(players[i].getName());
-			name[i].addMouseListener(new showPlayer());
+//			name[i].addMouseListener(new showPlayer());
 		}		
 		
 		score_1.setText(String.format("%.3f",players[0].getHotData()));
@@ -247,8 +251,8 @@ public class HotPanel extends JPanel {
 		show.repaint();
 		this.repaint();
 	}
+	
 	/**热点球队*/
-	/** 赛季热点球队 */
 	void showMessage_team() {
 		TeamSortBy teamSortBy = null;
 		String sortby = (String) choose.getSelectedItem();
@@ -313,7 +317,7 @@ public class HotPanel extends JPanel {
 		for(int i=0;i<5;i++){
 			name[i].setText(tc.getTeamData(hotteam[i].getName()).getName() + "|"
 				+ hotteam[i].getName());
-			name[i].addMouseListener(new showTeam());
+//			name[i].addMouseListener(new showTeam());
 		}
 
 
@@ -349,15 +353,21 @@ public class HotPanel extends JPanel {
 		show.repaint();
 		this.repaint();
 	}
-	/**跳转到team*/
-	class showTeam implements MouseListener{
+
+	/**跳转*/
+	class show implements MouseListener{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			String teamname=((JLabel) e.getSource()).getText();
-		    MyFrame.teampanel.findClick(teamname.substring(teamname.length()-3));
+			String info=((JLabel) e.getSource()).getText();
+			switch (hottype){
+			case 3:MyFrame.teampanel.findClick(info.substring(info.length()-3));
 			MyFrame.card.show(MyFrame.mainpanel, "team");
+			break;
+			default:MyFrame.playerpanel.findPlayerClick(info);
+			MyFrame.card.show(MyFrame.mainpanel, "player");
+			}
 			
 		}
 
@@ -392,49 +402,9 @@ public class HotPanel extends JPanel {
 		}
 		
 	}
-	/**跳转到player*/
-	class showPlayer implements MouseListener{
+	
 
-		@Override
-		public void mouseClicked(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			String playerInfo=((JLabel) arg0.getSource()).getText();
-			MyFrame.playerpanel.findPlayerClick(playerInfo);
-			MyFrame.card.show(MyFrame.mainpanel, "player");
-			
-		}
 
-		@Override
-		public void mouseEntered(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			((JLabel)arg0.getSource()).setOpaque(true);
-			((JLabel)arg0.getSource()).setBackground(Color.gray);
-			show.repaint();
-			hotpanel.repaint();
-		}
-
-		@Override
-		public void mouseExited(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			((JLabel)arg0.getSource()).setOpaque(false);
-			((JLabel)arg0.getSource()).repaint();
-			show.repaint();
-			hotpanel.repaint();
-		}
-
-		@Override
-		public void mousePressed(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent arg0) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
 
 	private PlayerSortBy sortby(String sortBy) {
 		PlayerSortBy playerSortBy = null;

@@ -2,6 +2,9 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -13,15 +16,19 @@ import javax.swing.table.DefaultTableCellRenderer;
 
 import po.MatchesPO;
 import ui.mainui.FrameSize;
+import ui.mainui.MyFrame;
 import bl.matchbl.MatchController;
 
 public class IndexPanel extends JPanel{
 
 	MatchController mc=new MatchController();
+	IndexPanel ip=this;
+	
 	public IndexPanel(){
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
-		this.setBackground(FrameSize.backColor);
+//		this.setBackground(FrameSize.backColor);
+		this.setOpaque(false);
 		setDate();
 		
 		this.repaint();
@@ -61,6 +68,29 @@ public class IndexPanel extends JPanel{
 			match[i]=new JLabel(matches[i].getDate()+" | "+matches[i].getTeam1().getName()+"-"+matches[i].getTeam2().getName()+"|"+matches[i].getTeam1().getTotalScores()+"-"+matches[i].getTeam2().getTotalScores());
 			match[i].setBounds(FrameSize.width/3,3*FrameSize.height/10+i*FrameSize.height/30,FrameSize.width/5,FrameSize.height/40);
 			match[i].setForeground(Color.white);
+//			System.out.print(i);
+			match[i].addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					MyFrame.matchpanel.findMatchAccordingMatch(matches,1);
+					MyFrame.card.show(MyFrame.mainpanel, "match");
+				}
+				
+				public void mouseEntered(MouseEvent e) {
+					// TODO Auto-generated method stub
+					((JLabel)e.getSource()).setOpaque(true);
+					((JLabel)e.getSource()).setBackground(Color.gray);
+					ip.repaint();
+					
+				}
+				public void mouseExited(MouseEvent e) {
+					// TODO Auto-generated method stub
+					((JLabel)e.getSource()).setOpaque(false);
+					((JLabel)e.getSource()).repaint();
+					ip.repaint();
+					
+				}
+
+			});
 			this.add(match[i]);
 		}
 //		Vector<String> columnsName = new Vector<String>();
@@ -96,4 +126,5 @@ public class IndexPanel extends JPanel{
 		this.add(today);
 		this.add(lantern);
 	}
+	
 }
