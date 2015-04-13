@@ -47,6 +47,27 @@ public class Player  {
 		  player_base_map.put(p.getName().hashCode(), p);
 	  }
 	}
+	
+	public PlayerMatchVO findPlayerMatchAve(String playername)
+	{
+		PlayerQueue player = player_map.get(playername.hashCode());
+		if (player == null)
+		{
+			return null;
+		}
+		else return player.getAvePlayer();
+	}
+	
+	public PlayerMatchVO findPlayerMatchTotal(String playername)
+	{
+		PlayerQueue player = player_map.get(playername.hashCode());
+		if (player == null)
+		{
+			return null;
+		}
+		else return player.getTotalPlayer();
+	}
+	
 	public PlayerMatchVO[] sortAvePlayers(PlayerSortBy playerSortBy,
 			SortType sortType) {
 		PlayerQueue[] matchPlayers = new PlayerQueue[player_map.size()];

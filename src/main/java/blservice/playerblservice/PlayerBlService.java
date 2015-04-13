@@ -30,4 +30,8 @@ public interface PlayerBlService {
 	public Iterator<String> fuzzilyFind(String info);
 	//查找球员 并获得球员基本信息
     public PlayerPO findPlayer(String info);
+    //查找球员场均数据
+    public PlayerMatchVO findPlayerMatchAve(String playername);
+    //查找球员赛季数据
+    public PlayerMatchVO findPlayerTotal(String playername);
 }

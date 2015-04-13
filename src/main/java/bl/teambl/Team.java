@@ -18,7 +18,7 @@ import bl.matchbl.Match;
 import bl.matchbl.TeamQueue;
 import blservice.teamblservice.Teamblservice;
 
-public class Team implements  Teamblservice
+public class Team   
 {
 	private	TIntObjectMap<TeamQueue> team_map;
 	private Match match;

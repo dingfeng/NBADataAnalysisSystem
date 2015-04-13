@@ -2,9 +2,12 @@ package bl.teambl;
 
 import java.util.Iterator;
 
+import po.PlayerPO;
 import po.TeamPO;
+import bl.playerbl.Player;
 import blservice.teamblservice.Teamblservice;
 import vo.Area;
+import vo.PlayerMatchVO;
 import vo.SortType;
 import vo.TeamMatchVO;
 import vo.TeamSortBy;
@@ -12,6 +15,7 @@ import vo.TeamVO;
 
 public class TeamController implements Teamblservice{
     Team team = new Team();
+    Player player = new Player();
     //获得热门对球队
 	public TeamMatchVO[] getHotTeams(TeamSortBy sortby) {
 		return team.getHotTeams(sortby);
@@ -51,6 +55,35 @@ public class TeamController implements Teamblservice{
 		if (team.equals("NOH"))
 			team = "NOP";
 		return this.team.getTeamData(team);
+	}
+
+	@Override
+	public PlayerMatchVO[] getAllPlayerMatchAve(String teamname) {
+		String[] players = team.getPlayers(teamname);
+		if (players == null) return null;
+		PlayerMatchVO[] playerMatches = new PlayerMatchVO[players.length];
+		for (int i = 0; i < players.length; i++)
+		{
+			playerMatches[i] = player.findPlayerMatchAve(players[i]);
+		}
+		return  playerMatches;
+	}
+
+	@Override
+	public PlayerMatchVO[] getAllPlayerMatchTotal(String teamname) {
+		String[] players = team.getPlayers(teamname);
+		if (players == null) return null;
+		PlayerMatchVO[] playerMatches = new PlayerMatchVO[players.length];
+		for (int i = 0; i < players.length; i++)
+		{
+			playerMatches[i] = player.findPlayerMatchTotal(players[i]);
+		}
+		return  playerMatches;
+	}
+
+	@Override
+	public PlayerPO getPlayerBase(String playername) {
+		return player.findPlayer(playername);
 	}
 	
 }
