@@ -2,13 +2,11 @@ package ui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -24,25 +22,22 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
-import org.apache.batik.swing.JSVGCanvas;
-
-import bl.matchbl.MatchController;
-import bl.playerbl.PlayerController;
-import bl.teambl.TeamController;
 import po.MatchPlayerPO;
 import po.MatchTeamPO;
 import po.MatchesPO;
-import ui.mainui.EditableTextField;
+import ui.mainui.DateChooseButton;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyTable;
 import ui.mainui.UneditableTextField;
 import vo.PlayerMatchVO;
 import vo.PlayerSortBy;
-import vo.PlayerVO;
 import vo.SortType;
 import vo.TeamMatchVO;
 import vo.TeamSortBy;
+import bl.matchbl.MatchController;
+import bl.playerbl.PlayerController;
+import bl.teambl.TeamController;
 
 public class MatchPanel extends JPanel {
 
@@ -56,6 +51,7 @@ public class MatchPanel extends JPanel {
 	JPanel header = new JPanel();
 	JPanel showPanel = new JPanel();
 
+	JButton dateButton;
 	JComboBox<String> timeBox;
 	JComboBox<String> teamBox;
 	JComboBox<String> playerBox;
@@ -119,9 +115,10 @@ public class MatchPanel extends JPanel {
 			playerName.add(player[i].getName());
 		}
 
-		timeBox = new MyComboBox(new String[] { "比赛时间", "df", "df", "df" });
-		timeBox.setBounds(50, 10, 150, 35);
-		header.add(timeBox);
+//		timeBox = new MyComboBox(new String[] { "比赛时间", "df", "df", "df" });
+		dateButton=new DateChooseButton();
+		dateButton.setBounds(50, 10, 150, 35);
+		header.add(dateButton);
 
 		teamBox = new MyComboBox("球队", teamName);
 		teamBox.setBounds(230, 10, 150, 35);

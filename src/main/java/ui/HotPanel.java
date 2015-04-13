@@ -167,6 +167,12 @@ public class HotPanel extends JPanel {
 			showMessage_team();
 			choose.addActionListener(e -> showMessage_team());
 			break;
+		case 4:
+			choose = new MyComboBox(new String[] { "得分提升率", "篮板提升率", "助攻提升率"});
+			choose.setSelectedIndex(0);
+			showMessage_player();
+			choose.addActionListener(e -> showMessage_player());
+			break;
 		default:
 			choose = new MyComboBox(new String[] { "得分", "篮板", "助攻",
 					"得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分",
@@ -241,7 +247,7 @@ public class HotPanel extends JPanel {
 		show.repaint();
 		this.repaint();
 	}
-
+	/**热点球队*/
 	/** 赛季热点球队 */
 	void showMessage_team() {
 		TeamSortBy teamSortBy = null;
@@ -401,13 +407,19 @@ public class HotPanel extends JPanel {
 		@Override
 		public void mouseEntered(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+			((JLabel)arg0.getSource()).setOpaque(true);
+			((JLabel)arg0.getSource()).setBackground(Color.gray);
+			show.repaint();
+			hotpanel.repaint();
 		}
 
 		@Override
 		public void mouseExited(MouseEvent arg0) {
 			// TODO Auto-generated method stub
-			
+			((JLabel)arg0.getSource()).setOpaque(false);
+			((JLabel)arg0.getSource()).repaint();
+			show.repaint();
+			hotpanel.repaint();
 		}
 
 		@Override
@@ -455,6 +467,12 @@ public class HotPanel extends JPanel {
 			playerSortBy = PlayerSortBy.freeThrow;
 		} else if (sortBy.equals("两双")) {
 			playerSortBy = PlayerSortBy.twoPair;
+		} else if (sortBy.equals("得分提升率")) {
+			playerSortBy = PlayerSortBy.points_uprate;
+		} else if (sortBy.equals("篮板提升率")) {
+			playerSortBy = PlayerSortBy.rebs_uprate;
+		} else if (sortBy.equals("助攻提升率")) {
+			playerSortBy = PlayerSortBy.help_uprate;
 		}
 		return playerSortBy;
 
