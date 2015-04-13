@@ -549,7 +549,7 @@ public class TeamPanel extends JPanel {
 		PlayerController pc=new PlayerController();
 		PlayerMatchVO[] players=new PlayerMatchVO[playernames.length];
 		for(int i=0;i<playernames.length;i++){
-			players[i]=pc.findPlayer(playernames[i]);
+			players[i]=pc.findPlayerMatchAve(pc.findPlayer(playernames[i]).getName());
 		}
 		MyFrame.playerpanel.setTable(players);
 		MyFrame.playerpanel.showOne(players[0].getName());
