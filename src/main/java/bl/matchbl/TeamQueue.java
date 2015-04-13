@@ -22,10 +22,19 @@ public class TeamQueue extends AbstractQueue{
 	{
 		for (int i = 0; i <= len; i++)
 		{
-			
 			if (players[i].equals(playername)) return;
 		}
-		players[++len] = playername;
+		
+	   if(len == 24)
+	   {
+		   String[] newPlayers = new String[48];
+		   for (int i = 0; i <= len; i++)
+		   {
+			   newPlayers[i] = players[i];
+		   }
+		   players = newPlayers;
+	   }
+	   players[++len] = playername;
 	}
 	
 	public  String[] getAllPlayers()
@@ -97,7 +106,8 @@ public class TeamQueue extends AbstractQueue{
 			++matchNo;
 			team1 = match.getTeam1();
 			team2 = match.getTeam2();
-			if (team2.getName().equals(name))
+			
+			if (Match.transTeamname(team2.getName()).equals(name))
 			{
 				temp = team1;
 				team1 = team2;

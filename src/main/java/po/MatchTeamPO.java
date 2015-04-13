@@ -16,6 +16,10 @@ public class MatchTeamPO {
     	   this.totalScores = totalScores;
     	   this.name = name;
     	   this.time = time;
+    	   if (name.equals("NOP"))
+    	   {
+    		   this.name = "NOH";
+    	   }
     	   if (player != null)
     	   {
     		   for (MatchPlayerPO p : player)

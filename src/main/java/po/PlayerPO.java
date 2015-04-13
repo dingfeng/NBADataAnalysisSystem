@@ -17,7 +17,7 @@ public class PlayerPO implements Comparable<PlayerPO>{
 	private int age;// 年龄
 	private int exp;// 球龄
 	private String school;// 毕业学校
-    private String teamnameAbridge; //球队
+    //private String teamnameAbridge; //球队
 	
 	public PlayerPO(Image action, Image portrait, String name, int number,
 			String position, int heightfeet, int heightinch, int weight,
@@ -37,10 +37,10 @@ public class PlayerPO implements Comparable<PlayerPO>{
 		this.school = school;
 	}
 
-	public String getTeamnameAbridge()
-	{
-		return teamnameAbridge;
-	}
+//	public String getTeamnameAbridge()
+//	{
+//		return teamnameAbridge;
+//	}
 	
 	public Image getAction() {
 		return action;

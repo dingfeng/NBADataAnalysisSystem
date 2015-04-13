@@ -207,6 +207,7 @@ public class HotPanel extends JPanel {
 		case 4:players=pc.getPromotePlayer(playerSortBy);
 		}
 		
+		System.out.println(players[0].getName());
 		portrait_1.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[0].getName()).getPortrait()),115,92));
 		portrait_1.setBounds(FrameSize.width / 3 - 228, FrameSize.height / 10,
 				185, 123);

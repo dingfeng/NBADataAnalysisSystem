@@ -37,7 +37,6 @@ public class Player  {
 	{
 	  match = Match.instance();
 	  player_map  = match.getPlayer_map();
-	  
 	  NBADataFactory factory = DataFactoryImp.instance();
 	  playerData = factory.getPlayerData();
 	  allPlayerpos = playerData.getAllPlayerData();
