@@ -261,7 +261,7 @@ public class MatchPanel extends JPanel {
 			playerBox = new MyComboBox("球员", player);
 			playerBox.repaint();
 			header.add(playerBox);
-			playerBox.setBounds(590, 10, 150, 35);
+			playerBox.setBounds(FrameSize.width-300, 10, 160, 35);
 			playerBox.setVisible(true);
 			header.repaint();
 			this.repaint();
@@ -401,7 +401,7 @@ public class MatchPanel extends JPanel {
 		columnsName.add("比分");
 
 		Vector data = new Vector();
-		for (int i = 0; i < matches.length; i++) {
+		for (int i = matches.length-1; i >= 0; i--) {
 			Vector rowData = new Vector();
 			rowData.add(matches[i].getDate());
 			rowData.add(matches[i].getTeam1().getName() + "-"
