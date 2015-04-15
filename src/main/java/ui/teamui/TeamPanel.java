@@ -485,7 +485,10 @@ public class TeamPanel extends JPanel {
 		foundYearresult.setText(String.valueOf(teamresult.getFoundYear()));// 建立时间
 		
 		match=new JButton(new ImageIcon("image/showMatch.jpg"));
-		teamplayers=new JButton("players");
+		match.setBorder(null);
+		teamplayers=new JButton();
+		teamplayers.setText("员");
+		teamplayers.setBorder(null);
 		
 		image.setOpaque(false);
 		
