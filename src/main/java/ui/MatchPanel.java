@@ -590,6 +590,15 @@ public class MatchPanel extends JPanel {
 		}
 		player2Table = new DefaultTableModel(data2, columnsName);
 		myPlayer2Table = new MyTable(player2Table);
+		myPlayer2Table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					MyFrame.playerpanel.findPlayerClick((String)myPlayer2Table.getModel().getValueAt(myPlayer2Table.getSelectedRow(), 0));
+					MyFrame.card.show(MyFrame.mainpanel, "player");
+				}
+			}
+
+		});	
 		player2ScrollPane = new JScrollPane(myPlayer2Table);
 		player2ScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
