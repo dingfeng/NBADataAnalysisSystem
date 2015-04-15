@@ -52,7 +52,8 @@ public class MatchPanel extends JPanel {
 	JPanel header = new JPanel();
 	JPanel showPanel = new JPanel();
 
-	JButton dateButton;
+	DateChooseButton dateButton1;
+	DateChooseButton dateButton2;
 	JComboBox<String> timeBox;
 	JComboBox<String> teamBox;
 	JComboBox<String> playerBox;
@@ -116,18 +117,21 @@ public class MatchPanel extends JPanel {
 			playerName.add(player[i].getName());
 		}
 
-		// timeBox = new MyComboBox(new String[] { "比赛时间", "df", "df", "df" });
-		dateButton = new DateChooseButton();
-		dateButton.setBounds(50, 10, 150, 35);
-		header.add(dateButton);
+		dateButton1 = new DateChooseButton();
+		dateButton1.setBounds(50, 10, 200, 35);
+		header.add(dateButton1);
+		
+		dateButton2 = new DateChooseButton();
+		dateButton2.setBounds(300, 10, 200, 35);
+		header.add(dateButton2);
 
 		teamBox = new MyComboBox("球队", teamName);
-		teamBox.setBounds(230, 10, 150, 35);
+		teamBox.setBounds(FrameSize.width-450, 10, 100, 35);
 		header.add(teamBox);
 		teamBox.addActionListener(e -> setPlayerBox());
 
 		playerBox = new MyComboBox("球员", playerName);
-		playerBox.setBounds(590, 10, 150, 35);
+		playerBox.setBounds(FrameSize.width-300, 10, 160, 35);
 		header.add(playerBox);
 
 		dateRadioButton = new JRadioButton();
@@ -135,13 +139,13 @@ public class MatchPanel extends JPanel {
 		ButtonGroup bg = new ButtonGroup();
 		bg.add(dateRadioButton);
 		bg.add(tpRadioButton);
-		dateRadioButton.setBounds(30, 10, 20, 20);
-		tpRadioButton.setBounds(210, 10, 20, 20);
+		dateRadioButton.setBounds(20, 10, 20, 20);
+		tpRadioButton.setBounds(FrameSize.width-500, 10, 20, 20);
 		header.add(dateRadioButton);
 		header.add(tpRadioButton);
 
 		JButton yesButton = new JButton(new ImageIcon("image/yes.png"));
-		yesButton.setBounds(770, 10, 30, 30);
+		yesButton.setBounds(FrameSize.width-100, 10, 30, 30);
 		yesButton.setBackground(Color.white);
 		yesButton.addActionListener(e -> findMatchConfirmClick());
 		header.add(yesButton);
@@ -150,7 +154,14 @@ public class MatchPanel extends JPanel {
 	/** 查找比赛 */
 	private void findMatchConfirmClick() {
 		if (dateRadioButton.isSelected()) {
-
+			Date date1 = dateButton1.getDate();
+			Date date2 = dateButton2.getDate();
+			if(date1.compareTo(date2)>0){
+				JOptionPane.showMessageDialog(this,"起始时间应不晚于终止时间");
+			}
+			else{
+				findMatchAccordingDate(date1,date2);
+			}
 		} else if (tpRadioButton.isSelected()) {
 			if (!playerBox.getSelectedItem().equals("球员")) {
 				findMatchAccordingPlayer((String) playerBox.getSelectedItem());
