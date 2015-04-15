@@ -542,6 +542,7 @@ public class MatchPanel extends JPanel {
 		player1ScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		resizeTable(false, player1ScrollPane, myPlayer1Table);
+		resizeTable(true,player1ScrollPane,myPlayer1Table);
 		player1ScrollPane.repaint();
 		player1ScrollPane.validate();
 
@@ -576,6 +577,7 @@ public class MatchPanel extends JPanel {
 		player2ScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		resizeTable(false, player2ScrollPane, myPlayer2Table);
+		resizeTable(true, player2ScrollPane, myPlayer2Table);
 		player2ScrollPane.repaint();
 		player2ScrollPane.validate();
 	}
