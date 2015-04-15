@@ -3,6 +3,7 @@ package ui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -208,25 +209,30 @@ public class HotPanel extends JPanel {
 		break;
 		case 4:players=pc.getPromotePlayer(playerSortBy);
 		}
-		
-		System.out.println(players[0].getName());
+		try{
 		portrait_1.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[0].getName()).getPortrait()),115,92));
+		}catch(Exception e){e.printStackTrace();portrait_1.setIcon(scaleImage(new ImageIcon(Toolkit.getDefaultToolkit().getImage("image/noimage.png")),115,92));}
+		
 		portrait_1.setBounds(FrameSize.width / 3 - 228, FrameSize.height / 10,
 				185, 123);
-
+		try{
 		portrait_2.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[1].getName()).getPortrait()),69, 55));
+		}catch (Exception e){e.printStackTrace();portrait_2.setIcon(scaleImage(new ImageIcon(Toolkit.getDefaultToolkit().getImage("image/noimage.png")),69,55));}
 		portrait_2.setBounds(FrameSize.width / 3 - 100,
 				2*FrameSize.height / 7 , 69, 55);
-
+		try{
 		portrait_3.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[2].getName()).getPortrait()),69, 55));
+		}catch (Exception e){e.printStackTrace();portrait_3.setIcon(scaleImage(new ImageIcon(Toolkit.getDefaultToolkit().getImage("image/noimage.png")),69,55));}
 		portrait_3.setBounds(FrameSize.width / 3 - 100,
 				3*FrameSize.height / 7 , 69, 55);
-
+		try{
 		portrait_4.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[3].getName()).getPortrait()),69, 55));
+		}catch (Exception e){e.printStackTrace();portrait_4.setIcon(scaleImage(new ImageIcon(Toolkit.getDefaultToolkit().getImage("image/noimage.png")),69,55));}
 		portrait_4.setBounds(FrameSize.width / 3 - 100,
 				4*FrameSize.height / 7 , 69, 55);
-
+		try{
 		portrait_5.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[4].getName()).getPortrait()),69, 55));
+		}catch (Exception e){e.printStackTrace();portrait_5.setIcon(scaleImage(new ImageIcon(Toolkit.getDefaultToolkit().getImage("image/noimage.png")),69,55));}
 		portrait_5.setBounds(FrameSize.width / 3 - 100,
 				5*FrameSize.height / 7 , 69, 55);
 		
@@ -411,7 +417,7 @@ public class HotPanel extends JPanel {
 		if (sortBy.equals("得分")) {
 			playerSortBy = PlayerSortBy.points;
 		} else if (sortBy.equals("篮板")) {
-			playerSortBy = PlayerSortBy.rebound;
+			playerSortBy = PlayerSortBy.rebs;
 		} else if (sortBy.equals("助攻")) {
 			playerSortBy = PlayerSortBy.assist;
 		} else if (sortBy.equals("得分/篮板/助攻")) {
