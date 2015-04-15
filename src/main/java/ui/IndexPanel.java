@@ -65,12 +65,12 @@ public class IndexPanel extends JPanel{
 		MatchesPO[] matches=mc.getTodayMatches();
 		JLabel[] match=new JLabel[matches.length];
 		for(int i=0;i<match.length;i++){
-			match[i]=new JLabel(i+"."+matches[i].getDate()+"  |  "+matches[i].getTeam1().getName()+"-"+matches[i].getTeam2().getName()+"  |  "+matches[i].getTeam1().getTotalScores()+"-"+matches[i].getTeam2().getTotalScores());
+			match[i]=new JLabel(i+1+"."+matches[i].getDate()+"  |  "+matches[i].getTeam1().getName()+"-"+matches[i].getTeam2().getName()+"  |  "+matches[i].getTeam1().getTotalScores()+"-"+matches[i].getTeam2().getTotalScores());
 			match[i].setBounds(FrameSize.width/3,3*FrameSize.height/10+i*FrameSize.height/30,FrameSize.width/5,FrameSize.height/40);
 			match[i].setForeground(Color.white);
 			match[i].addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
-					int num=Integer.parseInt(((JLabel)e.getSource()).getText().split("/.")[0]);
+					int num=Integer.parseInt(((JLabel)e.getSource()).getText().split("\\.")[0])-1;
 					MyFrame.matchpanel.findMatchAccordingMatch(matches,num);
 					MyFrame.card.show(MyFrame.mainpanel, "match");
 				}
