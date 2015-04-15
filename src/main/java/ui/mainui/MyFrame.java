@@ -106,12 +106,12 @@ public class MyFrame extends JFrame {
 	}
 	
 	void setHeadButton(){
-		JButton index =new JButton(new ImageIcon("image/index.png"));
-		JButton playerbutton=new JButton(new ImageIcon("image/player.png"));
-		JButton teambutton=new JButton(new ImageIcon("image/team.png"));
-		JButton hotbutton=new JButton(new ImageIcon("image/hot.png"));
-		JButton matchbutton=new JButton(new ImageIcon("image/match.png"));
-		JButton helpbutton=new JButton(new ImageIcon("image/help.png"));
+		JButton index =new MyButton(new ImageIcon("image/index.png"));
+		JButton playerbutton=new MyButton(new ImageIcon("image/player.png"));
+		JButton teambutton=new MyButton(new ImageIcon("image/team.png"));
+		JButton hotbutton=new MyButton(new ImageIcon("image/hot.png"));
+		JButton matchbutton=new MyButton(new ImageIcon("image/match.png"));
+		JButton helpbutton=new MyButton(new ImageIcon("image/help.png"));
 		
 		index.setBounds(10, 30,50,50);
 		playerbutton.setBounds(80, 30, 50, 50);
@@ -120,7 +120,7 @@ public class MyFrame extends JFrame {
 		matchbutton.setBounds(290, 30, 50, 50);
 		helpbutton.setBounds(360, 30, 50, 50);		
 		
-		index.setBackground(Color.black);
+		index.setBackground(Color.red);
 		playerbutton.setBackground(Color.black);
 		teambutton.setBackground(Color.black);
 		hotbutton.setBackground(Color.black);
