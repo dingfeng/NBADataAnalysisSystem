@@ -26,6 +26,8 @@ public class PlayerQueue {
 	private int yourtwoPoints;
 	private int yourOffenseRebs;
 	private int yourDefenceRebs;
+	private int teamDefenceRebs;
+	private int teamOffenseRebs;
 //	private PlayerYourInfo[] yourInfos;
 	private MatchesPO [] matches = new MatchesPO[100];
 	private int matchlen = -1;
@@ -39,12 +41,14 @@ public class PlayerQueue {
 	public void enqueue(MatchesPO match,MatchPlayerPO player , String teamname,int twoPoints,double teamTotalTime
 			,int yourRebs, int totalHit, double yourAttackNO,
 			int teamHand, int teamPenalty, int teamMistakes, int firstServiceNo, int myRebs,String team1, String team2,String date,
-			int yourOffenseRebs,int yourDefenceRebs
+			int yourOffenseRebs,int yourDefenceRebs,int teamDefenceRebs,int teamOffenseRebs
 			)
 			{
+		this.teamDefenceRebs += teamDefenceRebs;
+		this.teamOffenseRebs += teamOffenseRebs;
 		this.yourDefenceRebs += yourDefenceRebs;
 		this.yourOffenseRebs += yourOffenseRebs;
-	
+		
 		   matches[++matchlen] = match;
 		   match_datas[++len] = player;
 		   this.teamname = teamname;
@@ -198,19 +202,19 @@ public class PlayerQueue {
 		 rebEfficiency = rebs * (1.0 * teamTotalTime) / time
 				/ (myRebs + yourRebs); // 篮板率
 		double offenseRebsEfficiency = 0;
-		if (time != 0 && (myRebs + yourRebs) != 0)
+		if (time != 0 && (teamOffenseRebs + yourRebs) != 0)
 		offenseRebsEfficiency = offenseRebs * (1.0 * teamTotalTime )
-				/ time / (offenseRebs + yourOffenseRebs);
+				/ time / (teamOffenseRebs + yourOffenseRebs);
 		; // 进攻篮板率
 		double defenceRebsEfficiency  = 0;
-		if (time != 0 && (myRebs + yourRebs) != 0)
+		if (time != 0 && (teamDefenceRebs + yourRebs) != 0)
 		 defenceRebsEfficiency = defenceRebs * (1.0 * teamTotalTime)
-				/ time / (defenceRebs + yourDefenceRebs);
+				/ time / (teamDefenceRebs + yourDefenceRebs);
 		; // 防守篮板率
 		double assistEfficiency = 0;
 		if ( teamTotalTime != 0 && time / (teamTotalTime) * totalHit - hitNo != 0)
 			assistEfficiency = 1.0 * help
-				/ (time / (teamTotalTime) * totalHit - hitNo); // 助攻率
+				/ (time / teamTotalTime * totalHit - hitNo); // 助攻率
 		double stealsEfficiency = 0;
 		double blockEfficiency = 0;
 		if (time != 0 )

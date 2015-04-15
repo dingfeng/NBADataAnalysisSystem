@@ -152,7 +152,7 @@ public class Match
             	firstServiceNO = 1;
           
             q.enqueue(match,p, team1.getName(),teamHand2-threeHand2, team1.getTime(), rebs2, totalHit1, attackNO2, teamHand1, teamPenalty1, teamMistakes1, firstServiceNO, rebs1, team1.getName(), team2.getName(), match.getDate(),
-            		offenseRebs2,defenceRebs2);
+            		offenseRebs2,defenceRebs2,defenceRebs1,offenseRebs1);
             q.update();
         }
         
@@ -175,12 +175,11 @@ public class Match
             	firstServiceNO = 1;
            
         	q.enqueue(match,p, team2.getName(), teamHand1 - threeHand1,team2.getTime(), rebs1, totalHit2, attackNO1, teamHand2, teamPenalty2, teamMistakes2, firstServiceNO, rebs2, team1.getName(), team2.getName(), match.getDate(),
-        			offenseRebs1,defenceRebs1);
+        			offenseRebs1,defenceRebs1,defenceRebs2,offenseRebs2);
           
         	q.update();
         }
 	}
-	static int mm = 0;
 	
 //	MatchPlayerPO player , String teamname,double teamTotalTime
 //	,int yourRebs, int totalHit, double yourAttackNO,

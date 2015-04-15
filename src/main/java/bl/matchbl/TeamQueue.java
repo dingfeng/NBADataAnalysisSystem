@@ -90,16 +90,6 @@ public class TeamQueue extends AbstractQueue{
 		MatchPlayerPO [] players = null;
 		
 
-		 double hitRate0 =  0; // 投篮命中率
-		 double threeHitRate0 = 0;// 三分命中率
-		 double penaltyHitRate0 = 0;// 罚球命中率
-		 double offenseEfficiency0 = 0 ;// 进攻效率
-		 double defenceEfficiency0 = 0;// 防守效率
-		 double orebsEfficiency0 = 0;// 篮板效率
-		 double drebsEfficiency0 =  0;
-		 double stealsEfficiency0 = 0;// 抢断效率
-		 double assistEfficiency0 = 0;// 助攻率
-		 
 		
 		for (MatchesPO match : getAllMatches())
 		{
@@ -134,8 +124,6 @@ public class TeamQueue extends AbstractQueue{
 			 int stealsNo0 = 0;
 			 int blockNo0 = 0 ;
 			 int foulsNo0 = 0;
-			 int yourPoints0 = team2.getTotalScores();
-			 int point0 = team1.getTotalScores();
 			 int defenceRound0 = 0;
 			 int offenseRound0 = 0;
 			for (MatchPlayerPO player : players)
@@ -199,16 +187,6 @@ public class TeamQueue extends AbstractQueue{
 			        + 1.07 * mistakesNo0;
 			offenseRound += offenseRound0;
 			
-			  hitRate0 +=  1.0* hitNo0 / handNo0; // 投篮命中率
-			  threeHitRate0 += 1.0 * threeHitNo0 / threeHandNo0;// 三分命中率
-			  penaltyHitRate0 += 1.0 * penaltyHitNo0 / penaltyHandNo0;// 罚球命中率
-			  offenseEfficiency0 += 100.0 *  point0 /  offenseRound0 ;// 进攻效率
-			  defenceEfficiency0 += 100.0 * yourPoints0 / defenceRound0;// 防守效率
-			  orebsEfficiency0 += 1.0 * offenseRebs0 / (offenseRebs0 + yourDefenceRebs0);// 篮板效率
-			  drebsEfficiency0 += 1.0 * defenceRebs0 / (defenceRebs0 + yourOffenseRebs0);
-			  stealsEfficiency0 += 100.0 * stealsNo0 / defenceRound0;// 抢断效率
-			  assistEfficiency0 += 100.0 * assistNo0 / offenseRound0;// 助攻率
-			
 		}
 		
 		 double hitRate =  hitNo / handNo; // 投篮命中率
@@ -236,11 +214,11 @@ public class TeamQueue extends AbstractQueue{
 				 threeHitNo/ matchNo,  threeHandNo/ matchNo,  penaltyHitNo/ matchNo,
 				 penaltyHandNo/ matchNo,  offenseRebs/ matchNo,  defenceRebs/ matchNo,  rebs/ matchNo,
 				 assistNo/ matchNo,  stealsNo/ matchNo,  blockNo/ matchNo,  mistakesNo/ matchNo,
-				 foulsNo/ matchNo,  points/ matchNo,  hitRate0/ matchNo,  threeHitRate0/ matchNo,
-				 penaltyHitRate0/ matchNo,  winRate,  offenseRound,
-				 offenseEfficiency0 / matchNo,  defenceEfficiency0 / matchNo,
-				 orebsEfficiency0/ matchNo, drebsEfficiency0/ matchNo , stealsEfficiency0/ matchNo,
-				 assistEfficiency0/ matchNo);
+				 foulsNo/ matchNo,  points/ matchNo,  hitRate,  threeHitRate,
+				 penaltyHitRate,  winRate,  offenseRound,
+				 offenseEfficiency,  defenceEfficiency,
+				 orebsEfficiency, drebsEfficiency , stealsEfficiency,
+				 assistEfficiency);
 	}
 	public MatchesPO[] getRecentMatches(int num )
 	{

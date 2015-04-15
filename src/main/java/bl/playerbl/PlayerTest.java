@@ -27,7 +27,12 @@ public class PlayerTest {
 		PlayerMatchVO[] players = player.sortAvePlayers(PlayerSortBy.defenceRebsEfficiency, SortType.DESEND);
 		for (int i = 0; i < players.length; i++)
 		{
-			System.out.println("name : "+players[i].getName()+ "   efficiency : "+players[i].getDefenceRebsEfficiency());
+			if(players[i].getName().equals("Tim Duncan"))
+			{
+				System.out.println(players[i].getUseEfficiency());
+				System.out.println("points : "+players[i].getPoints());
+				System.out.println(players[i].getHitEfficiency());
+			}
 //			System.out.println(players[i].getRebs_uprate());
 //			if (players[i].getName().equals("James Harden"))
 //				{System.out.println(players[i]);
