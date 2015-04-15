@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -198,6 +200,15 @@ public class TeamPanel extends JPanel {
 		searchField.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
 				35);
 		header.add(searchField);
+		searchField.addKeyListener(new KeyAdapter(){ 
+		      public void keyPressed(KeyEvent e)    
+		      {    
+		        if(e.getKeyChar()==KeyEvent.VK_ENTER )   //按回车键执行相应操作; 
+		        { 
+		        	findClick(searchField.getText());
+		        } 
+		      } 
+		    });
 
 		JButton searchButton = new JButton(new ImageIcon("image\\find.png"));
 		searchButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);

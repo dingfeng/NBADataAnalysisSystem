@@ -177,9 +177,7 @@ public class HotPanel extends JPanel {
 			choose.addActionListener(e -> showMessage_player());
 			break;
 		default:
-			choose = new MyComboBox(new String[] { "得分", "篮板", "助攻",
-					"得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分",
-					"罚球", "两双" });
+			choose = new MyComboBox(new String[] { "得分", "篮板", "助攻", "盖帽", "抢断" });
 			choose.setSelectedIndex(0);
 			
 			showMessage_player();
