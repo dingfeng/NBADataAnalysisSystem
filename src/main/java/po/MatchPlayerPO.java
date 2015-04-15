@@ -72,7 +72,6 @@ public class MatchPlayerPO implements Comparable<MatchPlayerPO>
 		this.foulsNo = foulsNo;
 		this.points = (hitNo-threeHitNo) * 2+threeHitNo * 3 +penaltyHitNo;
 	}
-   static  int mm =0 ;
    public MatchPlayerPO setPoints(int point)
    {
 	   this.points = point;

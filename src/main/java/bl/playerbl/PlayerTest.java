@@ -24,9 +24,10 @@ public class PlayerTest {
     }
 	@Test
 	public void testSortAvePlayers() throws IOException {
-		PlayerMatchVO[] players = player.sortAvePlayers(PlayerSortBy.efficiency, SortType.ASEND);
+		PlayerMatchVO[] players = player.sortAvePlayers(PlayerSortBy.rebs_uprate, SortType.DESEND);
 		for (int i = 0; i < players.length; i++)
 		{
+//			System.out.println(players[i].getRebs_uprate());
 //			if (players[i].getName().equals("James Harden"))
 //				{System.out.println(players[i]);
 //				System.out.println(players[i].getEfficiency());
@@ -44,8 +45,8 @@ public class PlayerTest {
 		{
 //			if (p.getName().equals("Kobe Bryant"))
 			{
-				System.out.println(p);
-				System.out.println("mistakeRate : "+p.getMistakeEfficiency());
+//				System.out.println(p);
+//				System.out.println("mistakeRate : "+p.getMistakeEfficiency());
 			}
 //			if (p.getName().equals("Kevin Durant"))
 //			{
@@ -69,10 +70,10 @@ public class PlayerTest {
 
 	@Test
 	public void testGetDayHotPlayer() throws IOException {
-		MatchPlayerPO[] hotPlayers = player.getDayHotPlayer(PlayerSortBy.block);
+		MatchPlayerPO[] hotPlayers = player.getDayHotPlayer(PlayerSortBy.blockNo);
 		for (MatchPlayerPO po : hotPlayers)
 		{
-//			System.out.println(po);
+			System.out.println(po.getBlockNo());
 		}
 	}
 
@@ -87,9 +88,10 @@ public class PlayerTest {
 
 	@Test
 	public void testGetPromotePlayer() throws IOException {
-	       PlayerMatchVO[] vos =player.getPromotePlayer(PlayerSortBy.defenceNo);
+	       PlayerMatchVO[] vos =player.getPromotePlayer(PlayerSortBy.help_uprate);
 	       for (PlayerMatchVO vo : vos)
 	       {
+//	    	   System.out.println(vo.getHelp_uprate());
 	       }
 	}
 

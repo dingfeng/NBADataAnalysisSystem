@@ -110,6 +110,7 @@ public class Player  {
         	playerMatchvos[i] = playervo;
         	setSortTool(playervo,playerSortBy, sortType);
         }
+        
 		Arrays.sort(playerMatchvos);
 		return playerMatchvos;
 		}

@@ -243,8 +243,11 @@ public class PlayerQueue {
 		double help_uprate = MIN_DOUBLE;
 		if (len > 4)
 		{
-		 points_uprate = (points2 / 5 - points1 / (len -4)) / (points1 / (len - 4));
-		 rebs_uprate = (rebs2 / 5 - rebs1 / (len -4)) / (rebs1 / (len - 4));
+		if (points1  != 0)
+		   points_uprate = (points2 / 5 - points1 / (len -4)) / (points1 / (len - 4));
+	    if (rebs1 != 0)
+		   rebs_uprate = (rebs2 / 5 - rebs1 / (len -4)) / (rebs1 / (len - 4));
+	    if (help1 != 0)
 		 help_uprate = (help2 / 5 - help1 / (len -4)) / (help1 / (len - 4));
 		}
 		playervo_total = new  PlayerMatchVO(  name,  teamname,  len + 1,
