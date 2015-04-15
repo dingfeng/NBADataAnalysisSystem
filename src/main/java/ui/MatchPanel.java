@@ -28,6 +28,7 @@ import po.MatchesPO;
 import ui.mainui.DateChooseButton;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
+import ui.mainui.MyFrame;
 import ui.mainui.MyTable;
 import ui.mainui.UneditableTextField;
 import vo.PlayerMatchVO;
@@ -115,8 +116,8 @@ public class MatchPanel extends JPanel {
 			playerName.add(player[i].getName());
 		}
 
-//		timeBox = new MyComboBox(new String[] { "比赛时间", "df", "df", "df" });
-		dateButton=new DateChooseButton();
+		// timeBox = new MyComboBox(new String[] { "比赛时间", "df", "df", "df" });
+		dateButton = new DateChooseButton();
 		dateButton.setBounds(50, 10, 150, 35);
 		header.add(dateButton);
 
@@ -149,17 +150,16 @@ public class MatchPanel extends JPanel {
 	/** 查找比赛 */
 	private void findMatchConfirmClick() {
 		if (dateRadioButton.isSelected()) {
-			
+
 		} else if (tpRadioButton.isSelected()) {
 			if (!playerBox.getSelectedItem().equals("球员")) {
 				findMatchAccordingPlayer((String) playerBox.getSelectedItem());
 			} else if (!teamBox.getSelectedItem().equals("球队")) {
 				findMatchAccordingTeam((String) teamBox.getSelectedItem());
-			}
-			else{
+			} else {
 				JOptionPane.showMessageDialog(this, "请选择球队或球员");
 			}
-		}else{
+		} else {
 			JOptionPane.showMessageDialog(this, "请选择查找类型");
 		}
 	}
@@ -281,6 +281,18 @@ public class MatchPanel extends JPanel {
 				panelWidth / 8, panelWidth / 8);
 		showPanel.add(teamImage1);
 		showPanel.add(teamImage2);
+		teamImage1.addMouseListener((new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				MyFrame.teampanel.findClick(team1.getName());
+				MyFrame.card.show(MyFrame.mainpanel, "team");
+			}
+		}));
+		teamImage2.addMouseListener((new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				MyFrame.teampanel.findClick(team2.getName());
+				MyFrame.card.show(MyFrame.mainpanel, "team");
+			}
+		}));
 
 		teamName1.setText(team1.getName());
 		teamName2.setText(team2.getName());

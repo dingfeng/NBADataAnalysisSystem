@@ -23,7 +23,7 @@ public class Match
    private	TIntObjectMap<TeamQueue> team_map;
    private	TIntObjectMap<PlayerQueue> player_map;
    private	boolean inited = false;
-   private final static int match_num = 82;
+   private final static int match_num = 90;
    private static  Match match;
    private Match()
    {
@@ -62,12 +62,20 @@ public class Match
 		inited = true;
 	}
 	
+	public  static String transTeamname(String teamname)
+	{
+		if (teamname.equals("NOP"))
+		{
+			teamname = "NOH";
+		}
+		return teamname;
+	}
 	private void dealWithOneMatch(MatchesPO match)
 	{
 		MatchTeamPO team1 = match.getTeam1();
 		MatchTeamPO team2 = match.getTeam2();
-		AbstractQueue team1_q = team_map.get(team1.getName().hashCode());
-		AbstractQueue team2_q = team_map.get(team2.getName().hashCode());
+		AbstractQueue team1_q = team_map.get(transTeamname(team1.getName()).hashCode());
+		AbstractQueue team2_q = team_map.get(transTeamname(team2.getName()).hashCode());
 		team1_q.enQueue(match);
 		team2_q.enQueue(match);
 		team1_q.update();
@@ -102,6 +110,7 @@ public class Match
         
         for (MatchPlayerPO p : player_team2)
         {
+        	
         	threeHand2 += p.getThreeHandNo();
         	rebs2 += p.getRebs();
         	totalHit2 += p.getHitNo();
@@ -128,8 +137,10 @@ public class Match
         	++count;
         	firstServiceNO = 0;
             key = p.getName().hashCode();
+          
             if (!player_map.containsKey(key))
             {
+            	
             	q = new PlayerQueue(match_num,p.getName());
             	player_map.put(key, q);
             }
@@ -139,8 +150,10 @@ public class Match
             }
             if (count <= 5)
             	firstServiceNO = 1;
-            q.enqueue(match,p, team1.getName(),teamHand2-threeHand2, team1.getTime(), rebs2, totalHit1, attackNO1, teamHand1, teamPenalty1, teamMistakes1, firstServiceNO, rebs1, team1.getName(), team2.getName(), match.getDate());
-        	q.update();
+          
+            q.enqueue(match,p, team1.getName(),teamHand2-threeHand2, team1.getTime(), rebs2, totalHit1, attackNO2, teamHand1, teamPenalty1, teamMistakes1, firstServiceNO, rebs1, team1.getName(), team2.getName(), match.getDate(),
+            		offenseRebs2,defenceRebs2);
+            q.update();
         }
         
         count = 0;
@@ -160,11 +173,14 @@ public class Match
             }
             if (count <= 5)
             	firstServiceNO = 1;
-        	q.enqueue(match,p, team2.getName(), teamHand1 - threeHand1,team2.getTime(), rebs1, totalHit2, attackNO2, teamHand2, teamPenalty2, teamMistakes2, firstServiceNO, rebs2, team1.getName(), team2.getName(), match.getDate());
+           
+        	q.enqueue(match,p, team2.getName(), teamHand1 - threeHand1,team2.getTime(), rebs1, totalHit2, attackNO1, teamHand2, teamPenalty2, teamMistakes2, firstServiceNO, rebs2, team1.getName(), team2.getName(), match.getDate(),
+        			offenseRebs1,defenceRebs1);
+          
         	q.update();
         }
 	}
-	
+	static int mm = 0;
 	
 //	MatchPlayerPO player , String teamname,double teamTotalTime
 //	,int yourRebs, int totalHit, double yourAttackNO,

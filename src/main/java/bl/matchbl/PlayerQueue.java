@@ -20,25 +20,31 @@ public class PlayerQueue {
 	private int teamHand;
 	private int teamPenalty;
 	private int teamMistakes;
-    private int low ;	
+    private int low  =0;	
 	private int firstServiceNo;
 	private int myRebs;
 	private int yourtwoPoints;
-	private PlayerYourInfo[] yourInfos;
+	private int yourOffenseRebs;
+	private int yourDefenceRebs;
+//	private PlayerYourInfo[] yourInfos;
 	private MatchesPO [] matches = new MatchesPO[100];
 	private int matchlen = -1;
 	public PlayerQueue(int max, String name) 
 	{
 		match_datas = new MatchPlayerPO[max];
-		yourInfos = new PlayerYourInfo[max];
+//		yourInfos = new PlayerYourInfo[max];
 		this.name = name;
 	}
 	
 	public void enqueue(MatchesPO match,MatchPlayerPO player , String teamname,int twoPoints,double teamTotalTime
 			,int yourRebs, int totalHit, double yourAttackNO,
-			int teamHand, int teamPenalty, int teamMistakes, int firstServiceNo, int myRebs,String team1, String team2,String date
+			int teamHand, int teamPenalty, int teamMistakes, int firstServiceNo, int myRebs,String team1, String team2,String date,
+			int yourOffenseRebs,int yourDefenceRebs
 			)
 			{
+		this.yourDefenceRebs += yourDefenceRebs;
+		this.yourOffenseRebs += yourOffenseRebs;
+	
 		   matches[++matchlen] = match;
 		   match_datas[++len] = player;
 		   this.teamname = teamname;
@@ -52,9 +58,9 @@ public class PlayerQueue {
 		   this.firstServiceNo += firstServiceNo;
 		   this.myRebs += myRebs;
 		   this.yourtwoPoints += twoPoints;
-		   yourInfos[len] = new PlayerYourInfo( twoPoints,teamTotalTime,  yourRebs,  totalHit,
-					   yourAttackNO,  teamHand,
-					 teamPenalty,  teamMistakes,   myRebs, team1, team2, date);
+//		   yourInfos[len] = new PlayerYourInfo( twoPoints,teamTotalTime,  yourRebs,  totalHit,
+//					   yourAttackNO,  teamHand,
+//					 teamPenalty,  teamMistakes,   myRebs, team1, team2, date);
 			}
 	public String getName()
 	{
@@ -84,19 +90,7 @@ public class PlayerQueue {
 			 MatchPlayerPO player = null;
 			 int twoPair = 0;
 			 int time_num=0;
-			 int yourTwoPoints = 0;
 			 
-             double efficiency0 = 0;
-			 double gmScEfficiency0 = 0;
-			 double hitEfficiency0 = 0;
-			 double	 rebEfficiency0 = 0 ;
-			 double offenseRebsEfficiency0 = 0 ;
-			 double defenceRebsEfficiency0 = 0;
-			 double assistEfficiency0 = 0;
-			 double stealsEfficiency0 = 0;
-			 double blockEfficiency0 = 0;
-			 double mistakeEfficiency0 = 0;
-			 double useEfficiency0 = 0;
 			 //points_uprate,  rebs_uprate,  help_uprate
 			 
 			 int mid =  len - 4;
@@ -118,19 +112,9 @@ public class PlayerQueue {
 			 }
 			else ++time_num;
 			
-			PlayerYourInfo player_info = yourInfos[i];
+//			PlayerYourInfo player_info = yourInfos[i];
 			
-			 double teamTotalTime0 = player_info.getTeamTotalTime();
-			 double yourRebs0 = player_info.getYourRebs();
-			 double totalHit0 = player_info.getTotalHit();
-			 double yourAttackNO0 = player_info.getYourAttackNO();
-			 double teamHand0 = player_info.getTeamHand();
-			 double teamPenalty0 = player_info.getTeamPenalty();
-			 double teamMistakes0 = player_info.getTeamMistakes();
-			 double myRebs0 = player_info.getMyRebs();
-			 int yourTwoPoints0 = player_info.getTwoPoints();
-			
-            double time0 = player.getTime();
+//			 int yourTwoPoints0 = player_info.getTwoPoints();
 			double hitNo0 = player.getHitNo();
 			double handNo0 = player.getHandNo();
 			double	threeHitNo0 =  player.getThreeHitNo(); // 三分命中数
@@ -159,7 +143,6 @@ public class PlayerQueue {
 				rebs1 += rebs0;
 				help1 += help0;
 			}
-			yourTwoPoints += yourTwoPoints0;
 			hitNo += hitNo0;
 			handNo += handNo0;
 			threeHitNo +=  threeHitNo0; // 三分命中数
@@ -175,44 +158,8 @@ public class PlayerQueue {
 			mistakesNo += mistakesNo0;// 失误数
 			foulsNo += foulsNo0;// 犯规数
 			points += points0;// 得分
-			time += time0;
 			
 			
-			if (handNo0 != 0)
-			 hitEfficiency0 += (hitNo0 + 0.5 * threeHitNo0) / handNo0; // 投篮效率
-			 
-			if (time0 != 0 && (myRebs0+yourRebs0) != 0)
-			 rebEfficiency0 += rebs0 * (1.0 * teamTotalTime0) / time0
-					/ (myRebs0 + yourRebs0); // 篮板率
-			 
-			if (time0 != 0 && (myRebs0+yourRebs0) != 0)
-			 offenseRebsEfficiency0 += offenseRebs0 * (1.0 * teamTotalTime0 )
-					/ time0 / (myRebs0 + yourRebs0);
-			; // 进攻篮板率
-			if (time0 != 0 && (myRebs0+yourRebs0) != 0)
-			 defenceRebsEfficiency0 += defenceRebs0 * (1.0 * teamTotalTime0)
-					/ time0 / (myRebs0 + yourRebs0);
-			; // 防守篮板率
-			if (teamTotalTime0 != 0 && (time0 / (teamTotalTime0) * totalHit0 - hitNo0) != 0)
-			 assistEfficiency0 += 1.0 * help0
-					/ (time0 / (teamTotalTime0) * totalHit0 - hitNo0); // 助攻率
-			if (time0 != 0 && yourAttackNO0 != 0)
-			 stealsEfficiency0 += 1.0 * stealsNo0 * (1.0 * teamTotalTime0) / time0
-					/ yourAttackNO0; // 抢断率
-			if ( time0 != 0 && yourTwoPoints0 != 0)
-			 blockEfficiency0 += 1.0 * blockNo0 * (1.0 * teamTotalTime0) / time0
-					/ yourTwoPoints0; // 盖帽率
-			if (handNo0 - threeHandNo0 - penaltyHandNo0 + 0.44 * penaltyHandNo0 + mistakesNo0 != 0)
-			 mistakeEfficiency0 += 1.0
-					* mistakesNo0
-					/ (handNo0 - threeHandNo0 - penaltyHandNo0 + 0.44 * penaltyHandNo0 + mistakesNo0);// 失误率
-			 
-			if ( time0 != 0 && teamHand0 + 0.44 * teamPenalty0 + teamMistakes0 != 0)
-			 useEfficiency0 += (rebs0 + help0 + stealsNo0 + handNo0 + blockNo0
-					+ 0.44 * penaltyHandNo0 + mistakesNo0)
-					* (1.0 * teamTotalTime0)
-					/ time0
-					/ (teamHand0 + 0.44 * teamPenalty0 + teamMistakes0);// 使用率
 			 
 			int j = 0;
 			  if (player.getPoints() > 9)
@@ -237,7 +184,7 @@ public class PlayerQueue {
 		double penaltyHitRate = 0;
 		if (penaltyHandNo != 0)
 		penaltyHitRate = 1.0 * penaltyHitNo / penaltyHandNo;// 罚球命中率
-		double efficiency = (points + rebs + help + stealsNo + blockNo)
+		double efficiency = (points + rebs + help + stealsNo + blockNo)-(penaltyHandNo - penaltyHitNo)
 				- (handNo - hitNo) - mistakesNo;// 效率
 		double gmScEfficiency = points + 0.4 * hitNo - 0.7 * handNo - 0.4
 				* (penaltyHandNo - penaltyHitNo) + 0.7 * offenseRebs + 0.3
@@ -253,12 +200,12 @@ public class PlayerQueue {
 		double offenseRebsEfficiency = 0;
 		if (time != 0 && (myRebs + yourRebs) != 0)
 		offenseRebsEfficiency = offenseRebs * (1.0 * teamTotalTime )
-				/ time / (myRebs + yourRebs);
+				/ time / (offenseRebs + yourOffenseRebs);
 		; // 进攻篮板率
 		double defenceRebsEfficiency  = 0;
 		if (time != 0 && (myRebs + yourRebs) != 0)
 		 defenceRebsEfficiency = defenceRebs * (1.0 * teamTotalTime)
-				/ time / (myRebs + yourRebs);
+				/ time / (defenceRebs + yourDefenceRebs);
 		; // 防守篮板率
 		double assistEfficiency = 0;
 		if ( teamTotalTime != 0 && time / (teamTotalTime) * totalHit - hitNo != 0)
@@ -271,18 +218,18 @@ public class PlayerQueue {
 			if (yourAttackNO != 0)
 			stealsEfficiency = 1.0 * stealsNo * (1.0 * teamTotalTime) / time
 				/ yourAttackNO; // 抢断率
-			if (yourTwoPoints != 0)
+			if (yourtwoPoints!= 0)
 		   blockEfficiency = 1.0 * blockNo * (1.0 * teamTotalTime) / time
-				/ yourTwoPoints; // 盖帽率
+				/ yourtwoPoints; // 盖帽率
 		}
 		double mistakeEfficiency = 0;
-		if (handNo - threeHandNo - penaltyHandNo + 0.44 * penaltyHandNo + mistakesNo != 0)
+		if (handNo - threeHandNo  + 0.44 * penaltyHandNo + mistakesNo != 0)
 		 mistakeEfficiency = 1.0
 				* mistakesNo
-				/ (handNo - threeHandNo - penaltyHandNo + 0.44 * penaltyHandNo + mistakesNo);// 失误率
+				/ (handNo - threeHandNo  + 0.44 * penaltyHandNo + mistakesNo);// 失误率
 		double useEfficiency = 0;
 		if (time != 0 &&  teamHand + 0.44 * teamPenalty + teamMistakes != 0)
-		 useEfficiency = (rebs + help + stealsNo + handNo + blockNo
+		 useEfficiency = (handNo 
 				+ 0.44 * penaltyHandNo + mistakesNo)
 				* (1.0 * teamTotalTime)
 				/ time
@@ -305,11 +252,11 @@ public class PlayerQueue {
 				 hitRate,  threeHitRate,  penaltyHitRate,
 				 offenseRebs,  defenceRebs,  stealsNo,  blockNo,
 				 mistakesNo,  foulsNo,  points, points_uprate,  rebs_uprate,  help_uprate,
-				 efficiency,  gmScEfficiency,  trueHitRate,
+				 efficiency / matchNO,  gmScEfficiency / matchNO,  trueHitRate,
 				 hitEfficiency,  rebEfficiency,
-				 offenseRebsEfficiency,  defenceRebsEfficiency,
-				 assistEfficiency,  stealsEfficiency,
-				 blockEfficiency,  mistakeEfficiency,
+				 offenseRebsEfficiency,  defenceRebsEfficiency ,
+				 assistEfficiency ,  stealsEfficiency ,
+				 blockEfficiency,  mistakeEfficiency ,
 				 useEfficiency,   scoring_rebound_assist,
 				   penaltyHandNo,
 				time / 60,  handNo,
@@ -319,14 +266,14 @@ public class PlayerQueue {
 				 hitRate,  threeHitRate,  penaltyHitRate,
 				 offenseRebs/ matchNO,  defenceRebs/ matchNO,  stealsNo/ matchNO,  blockNo/ matchNO,
 				 mistakesNo/ matchNO,  foulsNo/ matchNO,  points/ matchNO, points_uprate,  rebs_uprate,  help_uprate,
-				 efficiency0/ matchNO,  gmScEfficiency0/ matchNO,  trueHitRate,
-				 hitEfficiency0/ matchNO,  rebEfficiency0/ matchNO,
-				 offenseRebsEfficiency0/ matchNO,  defenceRebsEfficiency0/ matchNO,
-				 assistEfficiency0/ matchNO,  stealsEfficiency0/ matchNO,
-				 blockEfficiency0/ matchNO,  mistakeEfficiency0/ matchNO,
-				 useEfficiency0/ matchNO,   scoring_rebound_assist/ matchNO,
-				  penaltyHandNo/ matchNO,
-				time / 60/ matchNO,  handNo/ matchNO,
+				 efficiency/ matchNO,  gmScEfficiency/ matchNO,  trueHitRate,
+				 hitEfficiency,  rebEfficiency,
+				 offenseRebsEfficiency,  defenceRebsEfficiency,
+				 assistEfficiency,  stealsEfficiency,
+				 blockEfficiency,  mistakeEfficiency,
+				 useEfficiency,   scoring_rebound_assist/ matchNO,
+				  penaltyHandNo,
+				time / 60/ (matchNO -time_num),  handNo/ matchNO,
 				threeHandNo/ matchNO,   twoPair/ matchNO);
 		
 	}
@@ -347,6 +294,7 @@ public class PlayerQueue {
 	{
 		return playervo_total;
 	}
+	
 	public PlayerMatchVO getAvePlayer()
 	{
 		return playervo_ave;

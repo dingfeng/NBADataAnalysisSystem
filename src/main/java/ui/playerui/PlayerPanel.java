@@ -28,6 +28,7 @@ import po.PlayerPO;
 import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyComboBox;
+import ui.mainui.MyFrame;
 import ui.mainui.MyTable;
 import ui.mainui.UneditableTextField;
 import vo.Area;
@@ -40,6 +41,8 @@ import bl.playerbl.PlayerController;
 public class PlayerPanel extends JPanel {
 
 	JPanel welcomePanel = new JPanel();
+	PlayerMatchPanel playerMatchPanel;
+	boolean matchpanel=false;
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
 	JTextField searchField = new JTextField();
@@ -59,7 +62,8 @@ public class PlayerPanel extends JPanel {
 	JTextField expText = new UneditableTextField();
 	JTextField schoolText = new UneditableTextField();
 	JTextField heightText = new UneditableTextField();
-
+	JButton matchButton;
+	JButton playerTeamButton;
 	JLabel actionLabel = new JLabel();
 	JLabel portraitLabel = new JLabel();
 
@@ -71,7 +75,7 @@ public class PlayerPanel extends JPanel {
 	boolean sortType = true;
 
 	PlayerController playerController = new PlayerController();
-
+	
 	public PlayerPanel() {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
@@ -248,6 +252,7 @@ public class PlayerPanel extends JPanel {
 		});
 	}
 
+	/**显示一个球队的所有球员*/
 	public void showTeamPlayers(PlayerMatchVO[] playerMatchVO){
 		this.remove(welcomePanel);
 		this.remove(sortPanel);
@@ -262,16 +267,29 @@ public class PlayerPanel extends JPanel {
 
 	/** 在findPanel上显示一个球员的信息 */
 	private void showOne(String playerInfo) {
+		if(matchpanel){
+			this.remove(playerMatchPanel);
+			matchpanel=false;
+		}
 		this.remove(welcomePanel);
 		this.remove(sortPanel);
 		this.remove(screenPanel);
 		findPanel.remove(actionLabel);
 
+		matchButton = new JButton(new ImageIcon("image/showMatch.jpg"));
+		playerTeamButton = new JButton("team");
+		playerTeamButton.setBounds(FrameSize.width/3-45, 11*FrameSize.height /16, 40,40);
+		matchButton.setBounds(FrameSize.width/3-90, 11*FrameSize.height /16, 40,40);
+		matchButton.addActionListener(e->setMatch());
+		playerTeamButton.addActionListener(e->showPlayerTeam(teamText.getText()));
+
+		
 		PlayerPO playerVO = playerController.findPlayer(playerInfo);
+		PlayerMatchVO playerMatchVO=playerController.findPlayerMatchAve(playerInfo);
 		nameText.setText(playerVO.getName());
 		numText.setText(String.valueOf(playerVO.getNumber()));
 		positionText.setText(String.valueOf(playerVO.getPosition()));
-		teamText.setText(playerVO.getTeamnameAbridge());
+		teamText.setText(playerMatchVO.getTeam());
 		birthText.setText(playerVO.getBirth());
 		ageText.setText(String.valueOf(playerVO.getAge()));
 		expText.setText(String.valueOf(playerVO.getExp()));
@@ -285,7 +303,26 @@ public class PlayerPanel extends JPanel {
 				170, 272));
 
 		findPanel.add(actionLabel);
+		findPanel.add(matchButton);
+		findPanel.add(playerTeamButton);
 		this.add(findPanel);
+		this.repaint();
+	}
+
+	private void showPlayerTeam(String teamName) {
+		MyFrame.teampanel.findClick(teamName);
+		MyFrame.card.show(MyFrame.mainpanel,"team");
+	}
+
+	private void setMatch() {
+//		System.out.println(teamText.getText());
+		if(matchpanel){
+			this.remove(playerMatchPanel);
+		}
+		matchpanel=true;
+		playerMatchPanel = new PlayerMatchPanel(nameText.getText(),teamText.getText());
+		this.remove(jScrollPane);
+		this.add(playerMatchPanel);
 		this.repaint();
 	}
 
