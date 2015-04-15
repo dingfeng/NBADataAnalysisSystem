@@ -125,6 +125,7 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		this.mistakesNo = playerpo.getMistakesNo();
 		this.foulsNo = playerpo.getFoulsNo();
 		this.points = playerpo.getPoints();
+		this.hotData = playerpo.getHotData();
 	}
 //	private  name;// 球员名称
 	private String location;//位置

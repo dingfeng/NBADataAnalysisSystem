@@ -24,9 +24,10 @@ public class PlayerTest {
     }
 	@Test
 	public void testSortAvePlayers() throws IOException {
-		PlayerMatchVO[] players = player.sortAvePlayers(PlayerSortBy.rebs_uprate, SortType.DESEND);
+		PlayerMatchVO[] players = player.sortAvePlayers(PlayerSortBy.defenceRebsEfficiency, SortType.DESEND);
 		for (int i = 0; i < players.length; i++)
 		{
+			System.out.println("name : "+players[i].getName()+ "   efficiency : "+players[i].getDefenceRebsEfficiency());
 //			System.out.println(players[i].getRebs_uprate());
 //			if (players[i].getName().equals("James Harden"))
 //				{System.out.println(players[i]);
@@ -70,16 +71,41 @@ public class PlayerTest {
 
 	@Test
 	public void testGetDayHotPlayer() throws IOException {
-		MatchPlayerPO[] hotPlayers = player.getDayHotPlayer(PlayerSortBy.blockNo);
-		for (MatchPlayerPO po : hotPlayers)
-		{
-			System.out.println(po.getBlockNo());
-		}
+		MatchPlayerPO[] hotPlayers = player.getDayHotPlayer(PlayerSortBy.block);
+//		System.out.println("block hot : ");
+//		for (MatchPlayerPO po : hotPlayers)
+//		{
+//			System.out.println(po.getBlockNo());
+//		}
+//		System.out.println("points : ");
+//		hotPlayers = player.getDayHotPlayer(PlayerSortBy.points);
+//		for (MatchPlayerPO po : hotPlayers)
+//		{
+//			System.out.println(po.getPoints());
+//		}
+//		System.out.println("rebs : ");
+//		hotPlayers = player.getDayHotPlayer(PlayerSortBy.rebs);
+//		for (MatchPlayerPO po : hotPlayers)
+//		{
+//			System.out.println(po.getRebs());
+//		}
+//		System.out.println("help : ");
+//		hotPlayers = player.getDayHotPlayer(PlayerSortBy.assist);
+//		for (MatchPlayerPO po : hotPlayers)
+//		{
+//			System.out.println(po.getHelp());
+//		}
+//		System.out.println("steals : ");
+//		hotPlayers = player.getDayHotPlayer(PlayerSortBy.steal);
+//		for (MatchPlayerPO po : hotPlayers)
+//		{
+//			System.out.println(po.getStealsNo());
+//		}
 	}
 
 	@Test
 	public void testGetSeasonHotPlayer() throws IOException {
-		PlayerMatchVO[] playervos = player.getSeasonHotPlayer(PlayerSortBy.blockNo);
+		PlayerMatchVO[] playervos = player.getSeasonHotPlayer(PlayerSortBy.block);
 		for (PlayerMatchVO vo : playervos)
 		{
 //			System.out.println(vo);

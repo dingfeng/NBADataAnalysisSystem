@@ -286,13 +286,13 @@ public class Player  {
 		case rebs:
 			data = player.getRebs();
 			break;
-		case assistNo:
+		case assist:
 			data = player.getHelp();
 			break;
-		case blockNo:
+		case block:
 			data = player.getBlockNo();
 			break;
-		case  stealsNo:
+		case  steal:
 			data = player.getStealsNo();
 			break;
 		}

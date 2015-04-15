@@ -8,12 +8,12 @@ import gnu.trove.map.TIntObjectMap;
 import vo.TeamMatchVO;
 import vo.TeamVO;
 
-public class TeamQueue extends AbstractQueue{  
+public class TeamQueue extends AbstractQueue{
 	private TeamMatchVO   teamvo_total;
 	private TeamMatchVO teamvo_average;
 	private String[] players = new String[25];
 	private int len = -1;
-	public TeamQueue(int max, String name) 
+	public TeamQueue(int max, String name)
 	{
 		super(max, name);
 	}
@@ -244,15 +244,15 @@ public class TeamQueue extends AbstractQueue{
 	}
 	public MatchesPO[] getRecentMatches(int num )
 	{
-		if (len == -1)
+		if (lenth == -1)
 		{
 			return null;
 		}
-		int size = (num<len+1)? num : (len+1);
+		int size = (num<lenth+1)? num : (lenth+1);
 		MatchesPO[] temp_matches = new MatchesPO[size];
 		for (int i = 0 ;i < size; i++)
 		{
-			temp_matches[i] = matches[len - i];
+			temp_matches[i] = matches[lenth - i];
 		}
 		return temp_matches;
 	}
