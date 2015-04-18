@@ -131,8 +131,9 @@ public class PlayerMatchPanel extends JPanel {
 					rowData.add(playerPO[j].getPoints());
 				}
 			}
-			data.add(data);
+			data.add(rowData);
 		}
+
 
 		DefaultTableModel table = new DefaultTableModel(data, columnsName);
 		MyTable recenttable = new MyTable(table);
@@ -150,7 +151,6 @@ public class PlayerMatchPanel extends JPanel {
 		recenttable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-
 					MyFrame.matchpanel.findMatchAccordingMatch(match,
 							recenttable.getSelectedRow());
 					MyFrame.card.show(MyFrame.mainpanel, "match");

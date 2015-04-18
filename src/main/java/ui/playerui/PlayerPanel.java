@@ -703,6 +703,10 @@ public class PlayerPanel extends JPanel {
 
 	/** 显示所有总数据/场均数据 */
 	private void showAllData() {
+		if(matchpanel){
+			this.remove(playerMatchPanel);
+			matchpanel=false;
+		}
 		jScrollPane.setVisible(false);
 		if (dataType.getSelectedItem().equals("赛季总数据"))
 			setTable(playerController.sortTotalPlayers(PlayerSortBy.name,
@@ -713,11 +717,6 @@ public class PlayerPanel extends JPanel {
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
-
-		this.remove(findPanel);
-		this.remove(sortPanel);
-		this.remove(screenPanel);
-		this.add(welcomePanel);
 
 		this.repaint();
 
