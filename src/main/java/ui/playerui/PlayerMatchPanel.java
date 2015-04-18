@@ -77,7 +77,6 @@ public class PlayerMatchPanel extends JPanel {
 		columnsName.add("日期");
 		columnsName.add("对阵队伍");
 		columnsName.add("比分");
-		columnsName.add("位置");
 		columnsName.add("在场时间");
 		columnsName.add("命中");
 		columnsName.add("出手");
@@ -94,7 +93,7 @@ public class PlayerMatchPanel extends JPanel {
 		columnsName.add("失误");
 		columnsName.add("犯规");
 		columnsName.add("得分");
-		MatchesPO[] match = matchController.getPlayerMatches(playerName);
+		MatchesPO[] match = matchController.getRecentPlayerMatches(playerName, 5);
 		Vector data = new Vector();
 		for (int i = 0; i < 5; i++) {
 			Vector rowData = new Vector();
@@ -104,15 +103,14 @@ public class PlayerMatchPanel extends JPanel {
 					+ match[i].getTeam2().getName());
 			rowData.add(match[i].getTeam1().getTotalScores() + "-"
 					+ match[i].getTeam2().getTotalScores());
-			if (match[i].getTeam1().equals(teamName)) {
-				teamPO = match[i].getTeam1();
-			} else {
+			if (match[i].getTeam2().getName().equals(teamName)) {
 				teamPO = match[i].getTeam2();
+			} else {
+				teamPO = match[i].getTeam1();
 			}
 			MatchPlayerPO[] playerPO = teamPO.getPlayers();
 			for (int j = 0; j < playerPO.length; j++) {
 				if (playerPO[j].getName().equals(playerName)) {
-					rowData.add(playerPO[j].getLocation());
 					rowData.add(playerPO[j].getTime());
 					rowData.add(playerPO[j].getHitNo());
 					rowData.add(playerPO[j].getHandNo());
@@ -168,7 +166,6 @@ public class PlayerMatchPanel extends JPanel {
 		columnsName.add("日期");
 		columnsName.add("对阵队伍");
 		columnsName.add("比分");
-		columnsName.add("位置");
 		columnsName.add("在场时间");
 		columnsName.add("命中");
 		columnsName.add("出手");
@@ -186,7 +183,7 @@ public class PlayerMatchPanel extends JPanel {
 		columnsName.add("犯规");
 		columnsName.add("得分");
 
-		MatchesPO[] match = matchController.getTeamMatches(teamName);
+		MatchesPO[] match = matchController.getPlayerMatches(playerName);
 		Vector data = new Vector();
 		for (int i = 0; i < match.length; i++) {
 			Vector rowData = new Vector();
@@ -196,7 +193,7 @@ public class PlayerMatchPanel extends JPanel {
 					+ match[i].getTeam2().getName());
 			rowData.add(match[i].getTeam1().getTotalScores() + "-"
 					+ match[i].getTeam2().getTotalScores());
-			if (match[i].getTeam1().equals(teamName)) {
+			if (match[i].getTeam1().getName().equals(teamName)) {
 				teamPO = match[i].getTeam1();
 			} else {
 				teamPO = match[i].getTeam2();
@@ -204,7 +201,6 @@ public class PlayerMatchPanel extends JPanel {
 			MatchPlayerPO[] playerPO = teamPO.getPlayers();
 			for (int j = 0; j < playerPO.length; j++) {
 				if (playerPO[j].getName().equals(playerName)) {
-					rowData.add(playerPO[j].getLocation());
 					rowData.add(playerPO[j].getTime());
 					rowData.add(playerPO[j].getHitNo());
 					rowData.add(playerPO[j].getHandNo());
