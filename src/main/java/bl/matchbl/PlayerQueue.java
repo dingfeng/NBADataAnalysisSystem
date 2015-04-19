@@ -323,7 +323,7 @@ public class PlayerQueue {
 		MatchesPO[] temp_matches = new MatchesPO[size];
 		for (int i = 0; i < size; i++)
 		{
-			temp_matches[i] = matches[i];
+			temp_matches[i] = matches[matchlen - i];
 		}
 		return temp_matches;
 	}
@@ -338,7 +338,7 @@ public class PlayerQueue {
 		int size = (num < matchlen+1) ? num : (matchlen + 1);
 		MatchPlayerPO[] temp_MatchPlayers = new MatchPlayerPO[size];
 		for(int i = 0; i < size; i ++){
-			temp_MatchPlayers[i] = match_datas[i];
+			temp_MatchPlayers[i] = match_datas[matchlen - i];
 		}
 		return temp_MatchPlayers;
 	}
