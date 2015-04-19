@@ -40,6 +40,10 @@ public class Match
 		{
 			match = new Match();
 		}
+		if (match.changed())
+		{
+			match.update();
+		}
 		return match;
 	}
     
