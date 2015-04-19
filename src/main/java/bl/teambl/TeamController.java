@@ -43,7 +43,7 @@ public class TeamController implements Teamblservice{
 
 	//获得该球队的场均数据
 	public TeamMatchVO getAveTeam(String teamname) {
-		return this.getAveTeam(teamname);
+		return team.getAveTeam(teamname);
 	}
 
 	//模糊查找该球队的场均数据
