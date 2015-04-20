@@ -867,25 +867,31 @@ public class PlayerPanel extends JPanel {
 				}
 			}
 			if(!isPlayer){
-				JOptionPane.showMessageDialog(null, "请输入正确的球员的名字", "查找失败",JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "未查到该球员", "查找失败",JOptionPane.ERROR_MESSAGE);
+				searchField.setText("");
+				return;
 			}
 			else if (playerController.findPlayer(playerInfo) == null) {
 				JOptionPane.showMessageDialog(null, "未找到该球员的个人信息", "查找失败",JOptionPane.ERROR_MESSAGE);
+				MyFrame.playerpanel.remove(findPanel);
+				MyFrame.playerpanel.add(welcomePanel);
+				MyFrame.playerpanel.repaint();
 			}
 			else{
 				showOne(playerInfo);
 			}
+			jScrollPane.setVisible(false);
+			PlayerMatchVO[] onePlayer = new PlayerMatchVO[1];
+			onePlayer[0]=playerController.findPlayerMatchAve(playerInfo);
+			setTable(onePlayer);
+			jScrollPane.repaint();
+			jScrollPane.setVisible(true);
+			this.add(jScrollPane);
+			this.repaint();
+			searchField.setText("");
 		} 
 
-		jScrollPane.setVisible(false);
-		PlayerMatchVO[] onePlayer = new PlayerMatchVO[1];
-		onePlayer[0]=playerController.findPlayerMatchAve(playerInfo);
-		setTable(onePlayer);
-		jScrollPane.repaint();
-		jScrollPane.setVisible(true);
-		this.add(jScrollPane);
 
-		this.repaint();
 	}
 
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
