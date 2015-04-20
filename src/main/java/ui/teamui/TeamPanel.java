@@ -49,7 +49,7 @@ public class TeamPanel extends JPanel {
 	JPanel header = new JPanel();
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
-	
+
 	JTextField searchField;
 	JPanel sort = new JPanel();
 	JPanel find = new JPanel();
@@ -58,7 +58,7 @@ public class TeamPanel extends JPanel {
 	JComboBox<String> box;
 	JComboBox<String> dataType;
 	boolean sorttype;
-	JLabel image=new JLabel();//图片
+	JLabel image = new JLabel();// 图片
 	JTextField nameresult = new UneditableTextField();// 队伍名称
 	JTextField nameAbridgeresult = new UneditableTextField();// 名称缩写
 	JTextField addressresult = new UneditableTextField();// 所在地
@@ -69,7 +69,7 @@ public class TeamPanel extends JPanel {
 	JButton match;
 	JButton teamplayers;
 	TeamMatchPanel teammatch;
-	boolean matchpanel=false;
+	boolean matchpanel = false;
 	TeamController tc = new TeamController();
 
 	public TeamPanel() {
@@ -78,7 +78,8 @@ public class TeamPanel extends JPanel {
 		this.setOpaque(false);
 		new Thread() {
 			public void run() {
-				setTable(tc.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
+				setTable(tc
+						.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
 			}
 		}.start();
 
@@ -125,7 +126,7 @@ public class TeamPanel extends JPanel {
 
 		// allteam = tc.getAllTeams();
 		Vector rowimage = new Vector();
-		for(int i=0;i<team.length;i++) {
+		for (int i = 0; i < team.length; i++) {
 			TeamMatchVO str = team[i];
 			Vector data = new Vector();
 			data.add(str.getName());
@@ -172,7 +173,8 @@ public class TeamPanel extends JPanel {
 		jScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		jScrollPane.setBounds(FrameSize.width / 3, FrameSize.height / 12,
-				2*FrameSize.width / 3, FrameSize.height*7/8- FrameSize.height / 12);
+				2 * FrameSize.width / 3, FrameSize.height * 7 / 8
+						- FrameSize.height / 12);
 		jScrollPane.setBackground(FrameSize.backColor);
 		jScrollPane.getViewport().setOpaque(false);
 		resizeTable(false, jScrollPane, mytable);
@@ -201,23 +203,24 @@ public class TeamPanel extends JPanel {
 		searchField.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
 				35);
 		header.add(searchField);
-		searchField.addKeyListener(new KeyAdapter(){ 
-		      public void keyPressed(KeyEvent e)    
-		      {    
-		        if(e.getKeyChar()==KeyEvent.VK_ENTER )   //按回车键执行相应操作; 
-		        { 
-		        	findClick(searchField.getText());
-		        } 
-		      } 
-		    });
+		searchField.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyChar() == KeyEvent.VK_ENTER) // 按回车键执行相应操作;
+				{
+					findClick(searchField.getText());
+				}
+			}
+		});
 
-		JButton searchButton = new MyButton(new ImageIcon("image\\find.png"),FrameSize.buttonbackColor,Color.gray);
+		JButton searchButton = new MyButton(new ImageIcon("image\\find.png"),
+				FrameSize.buttonbackColor, Color.gray);
 		searchButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
 		searchButton.setToolTipText("查找");
 		searchButton.addActionListener(e -> findClick(searchField.getText()));
 		header.add(searchButton);
 
-		JButton sortButton = new MyButton(new ImageIcon("image\\sort.png"),FrameSize.buttonbackColor,Color.gray);
+		JButton sortButton = new MyButton(new ImageIcon("image\\sort.png"),
+				FrameSize.buttonbackColor, Color.gray);
 		sortButton.setBounds(4 * FrameSize.width / 5 + 40, 10, 35, 35);
 		sortButton.setToolTipText("排序");
 		sortButton.addActionListener(e -> sortClick());
@@ -227,7 +230,8 @@ public class TeamPanel extends JPanel {
 		dataType.setBounds(20, 10, 100, 35);
 		header.add(dataType);
 
-		JButton allButton = new MyButton(new ImageIcon("image\\show.png"),FrameSize.buttonbackColor,Color.gray);
+		JButton allButton = new MyButton(new ImageIcon("image\\show.png"),
+				FrameSize.buttonbackColor, Color.gray);
 		allButton.setBounds(140, 10, 45, 35);
 		allButton.setToolTipText("显示数据");
 		allButton.addActionListener(e -> showAllData());
@@ -236,9 +240,9 @@ public class TeamPanel extends JPanel {
 
 	/** 显示场均数据/总数据 */
 	void showAllData() {
-		if(matchpanel){
+		if (matchpanel) {
 			this.remove(teammatch);
-			matchpanel=false;
+			matchpanel = false;
 		}
 		jScrollPane.setVisible(false);
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
@@ -247,7 +251,6 @@ public class TeamPanel extends JPanel {
 			setTable(tc.getSortedAveTeams(TeamSortBy.name, SortType.ASEND));
 		}
 
-		
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
@@ -261,10 +264,11 @@ public class TeamPanel extends JPanel {
 		sort.setLayout(null);
 		sort.setBackground(FrameSize.backColor);
 		sort.setBounds(0, FrameSize.height / 12, FrameSize.width / 3,
-				FrameSize.height*7/8- FrameSize.height / 12);
+				FrameSize.height * 7 / 8 - FrameSize.height / 12);
 
 		JLabel sortby = new JLabel("排序依据");
-		sortby.setBounds(FrameSize.width / 30, FrameSize.height / 5, FrameSize.width / 12, FrameSize.height /20);
+		sortby.setBounds(FrameSize.width / 30, FrameSize.height / 5,
+				FrameSize.width / 12, FrameSize.height / 20);
 		sortby.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		sortby.setForeground(Color.white);
 		sort.add(sortby);
@@ -272,7 +276,8 @@ public class TeamPanel extends JPanel {
 		box = new MyComboBox(new String[] { "球队名称", "比赛场数", "投篮命中数", "投篮出手次数",
 				"三分命中数", "三分出手数", "罚球命中数", "罚球出手数", "进攻篮板数", "防守篮板数", "篮板数",
 				"助攻数", "抢断数", "盖帽数", "失误数", "犯规数", "比赛得分", "投篮命中率", "三分命中率",
-				"罚球命中率", "胜率", "进攻回合", "进攻效率", "防守效率", "进攻篮板效率","防守篮板效率", "抢断效率", "助攻率" });
+				"罚球命中率", "胜率", "进攻回合", "进攻效率", "防守效率", "进攻篮板效率", "防守篮板效率",
+				"抢断效率", "助攻率" });
 		box.setBounds(FrameSize.width / 8, FrameSize.height / 5, 150, 40);
 		box.setFont(new Font("宋体", Font.PLAIN, 12));
 		sort.add(box);
@@ -331,14 +336,20 @@ public class TeamPanel extends JPanel {
 		manage.setForeground(Color.white);
 		foundYear.setForeground(Color.white);
 
-		name.setBounds(FrameSize.width/40, FrameSize.height / 8 - 50, FrameSize.width/12, 30);
+		name.setBounds(FrameSize.width / 40, FrameSize.height / 8 - 50,
+				FrameSize.width / 12, 30);
 		nameAbridge.setBounds(FrameSize.width / 5, FrameSize.height / 8 - 50,
-				FrameSize.width/24, 30);
-		address.setBounds(FrameSize.width/40, FrameSize.height / 8 + 130, FrameSize.width/12, 30);
-		matchArea.setBounds(FrameSize.width/40, FrameSize.height / 8 + 190, FrameSize.width/12, 30);
-		playerArea.setBounds(FrameSize.width/40, FrameSize.height / 8 + 250, FrameSize.width/12, 30);
-		manage.setBounds(FrameSize.width/40, FrameSize.height / 8 + 310, FrameSize.width/12, 30);
-		foundYear.setBounds(FrameSize.width/40, FrameSize.height / 8 + 370, FrameSize.width/12, 30);
+				FrameSize.width / 24, 30);
+		address.setBounds(FrameSize.width / 40, FrameSize.height / 8 + 130,
+				FrameSize.width / 12, 30);
+		matchArea.setBounds(FrameSize.width / 40, FrameSize.height / 8 + 190,
+				FrameSize.width / 12, 30);
+		playerArea.setBounds(FrameSize.width / 40, FrameSize.height / 8 + 250,
+				FrameSize.width / 12, 30);
+		manage.setBounds(FrameSize.width / 40, FrameSize.height / 8 + 310,
+				FrameSize.width / 12, 30);
+		foundYear.setBounds(FrameSize.width / 40, FrameSize.height / 8 + 370,
+				FrameSize.width / 12, 30);
 
 		find.add(name);
 		find.add(nameAbridge);
@@ -353,7 +364,8 @@ public class TeamPanel extends JPanel {
 	/** 欢迎页面 */
 	void setWelcome() {
 		welcome.setLayout(null);
-		welcome.setBounds(0, FrameSize.height / 12, FrameSize.width / 3, 11 * FrameSize.height / 12);
+		welcome.setBounds(0, FrameSize.height / 12, FrameSize.width / 3,
+				11 * FrameSize.height / 12);
 		welcome.setBackground(FrameSize.backColor);
 		JLabel nba = new JLabel(new ImageIcon("image/nba.png"));
 		nba.setBounds(FrameSize.width / 12, FrameSize.height / 8,
@@ -363,7 +375,7 @@ public class TeamPanel extends JPanel {
 
 	/** 点击排序按钮 */
 	void sortClick() {
-		
+
 		this.remove(welcome);
 		this.remove(find);
 		sort.repaint();
@@ -375,7 +387,6 @@ public class TeamPanel extends JPanel {
 	/** 点击排序确认按钮 */
 	void confirmClick() {
 		SortType type = null;
-		
 
 		jScrollPane.setVisible(false);
 		if (sorttype == true) {
@@ -439,7 +450,7 @@ public class TeamPanel extends JPanel {
 			teamSortBy = TeamSortBy.orebsEfficiency;
 		} else if (sortby.equals("抢断效率")) {
 			teamSortBy = TeamSortBy.stealsEfficiency;
-		}else if (sortby.equals("助攻率")) {
+		} else if (sortby.equals("助攻率")) {
 			teamSortBy = TeamSortBy.assistEfficiency;
 		}
 		TeamMatchVO[] sortteam;
@@ -448,16 +459,15 @@ public class TeamPanel extends JPanel {
 		} else {
 			sortteam = tc.getSortedAveTeams(teamSortBy, type);
 		}
-		
 
 		setTable(sortteam);
 
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 
-		if(matchpanel){
+		if (matchpanel) {
 			this.remove(teammatch);
-			matchpanel=false;
+			matchpanel = false;
 		}
 		this.add(jScrollPane);
 		this.repaint();
@@ -465,15 +475,16 @@ public class TeamPanel extends JPanel {
 
 	/** 在findPanel上显示一个球队的信息 */
 	void showOne(String teamname) {
-		if(matchpanel){
+		if (matchpanel) {
 			this.remove(teammatch);
-			matchpanel=false;
+			matchpanel = false;
 		}
 		this.remove(welcome);
 		this.remove(sort);
-		
+
 		TeamPO teamresult = tc.getTeamData(teamname);
-		image.setIcon(scaleImage(new ImageIcon(teamresult.getImage()), 3*FrameSize.height /20, 3*FrameSize.height /20));
+		image.setIcon(scaleImage(new ImageIcon(teamresult.getImage()),
+				3 * FrameSize.height / 20, 3 * FrameSize.height / 20));
 		nameresult.setText(teamresult.getName());// 队伍名称
 		nameAbridgeresult.setText(teamresult.getNameAbridge());// 名称缩写
 		addressresult.setText(teamresult.getAddress());// 所在地
@@ -481,33 +492,48 @@ public class TeamPanel extends JPanel {
 		playerArearesult.setText(teamresult.getPlayerArea().toString());// 分区
 		manageresult.setText(teamresult.getManage());// 主场
 		foundYearresult.setText(String.valueOf(teamresult.getFoundYear()));// 建立时间
-		
-		match=new MyButton("比赛",Color.black,Color.DARK_GRAY);
-		teamplayers=new MyButton("队员",Color.black,Color.DARK_GRAY);
-		
-		match.setFont(new Font("幼圆",Font.BOLD,12));
-		teamplayers.setFont(new Font("幼圆",Font.BOLD,12));
-		
+
+		match = new MyButton("比赛", Color.black, Color.DARK_GRAY);
+		teamplayers = new MyButton("队员", Color.black, Color.DARK_GRAY);
+
+		match.setFont(new Font("幼圆", Font.BOLD, 12));
+		teamplayers.setFont(new Font("幼圆", Font.BOLD, 12));
+
 		match.setForeground(Color.red);
 		teamplayers.setForeground(Color.red);
-		
+
 		image.setOpaque(false);
-		
-		teamplayers.setBounds(FrameSize.width/3-60, 11*FrameSize.height /16, 55,30);
-		match.setBounds(FrameSize.width/3-130, 11*FrameSize.height /16, 58,30);
-		image.setBounds(FrameSize.width /10, FrameSize.height / 8, FrameSize.width / 4, 3*FrameSize.height /20);
-		nameresult.setBounds(FrameSize.width /20, FrameSize.height / 8 - 50, 100, 3*FrameSize.height/80 );
-		nameAbridgeresult.setBounds(9*FrameSize.width /40 ,
+
+		teamplayers.setBounds(FrameSize.width / 3 - 60,
+				11 * FrameSize.height / 16, 55, 30);
+		match.setBounds(FrameSize.width / 3 - 130, 11 * FrameSize.height / 16,
+				58, 30);
+		image.setBounds(FrameSize.width / 10, FrameSize.height / 8,
+				FrameSize.width / 4, 3 * FrameSize.height / 20);
+		nameresult.setBounds(FrameSize.width / 20, FrameSize.height / 8 - 50,
+				100, 3 * FrameSize.height / 80);
+		nameAbridgeresult.setBounds(9 * FrameSize.width / 40,
 				FrameSize.height / 8 - 50, 50, 30);
-		addressresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 130, FrameSize.width /8, 3*FrameSize.height/80);
-		matchArearesult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 190, FrameSize.width /8, 3*FrameSize.height/80);
-		playerArearesult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 250, FrameSize.width /8, 3*FrameSize.height/80);
-		manageresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 310, FrameSize.width /8, 3*FrameSize.height/80);
-		foundYearresult.setBounds(FrameSize.width /10, FrameSize.height / 8 + 370, FrameSize.width /8, 3*FrameSize.height/80);
-		
-		match.addActionListener(e->setMatch());
-		teamplayers.addActionListener(e->setTeamPlayers(nameAbridgeresult.getText()));
-		
+		addressresult.setBounds(FrameSize.width / 10,
+				FrameSize.height / 8 + 130, FrameSize.width / 8,
+				3 * FrameSize.height / 80);
+		matchArearesult.setBounds(FrameSize.width / 10,
+				FrameSize.height / 8 + 190, FrameSize.width / 8,
+				3 * FrameSize.height / 80);
+		playerArearesult.setBounds(FrameSize.width / 10,
+				FrameSize.height / 8 + 250, FrameSize.width / 8,
+				3 * FrameSize.height / 80);
+		manageresult.setBounds(FrameSize.width / 10,
+				FrameSize.height / 8 + 310, FrameSize.width / 8,
+				3 * FrameSize.height / 80);
+		foundYearresult.setBounds(FrameSize.width / 10,
+				FrameSize.height / 8 + 370, FrameSize.width / 8,
+				3 * FrameSize.height / 80);
+
+		match.addActionListener(e -> setMatch());
+		teamplayers.addActionListener(e -> setTeamPlayers(nameAbridgeresult
+				.getText()));
+
 		find.add(teamplayers);
 		find.add(match);
 		find.add(image);
@@ -530,27 +556,27 @@ public class TeamPanel extends JPanel {
 
 	/** 点击查找按钮 */
 	public void findClick(String teamname) {
-		if (teamname.equals("")) {
-			JOptionPane.showMessageDialog(this, "请输入查找球队的缩写");
-			return;
-		} else if (tc.getTotalTeam(teamname) == null) {
-			JOptionPane.showMessageDialog(this, "未查到球队信息");
+		try {
+			showOne(teamname);
+		} catch (NullPointerException e1) {
+			JOptionPane.showMessageDialog(null, "未找到该球队的个人信息", "查找失败",
+					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		jScrollPane.setVisible(false);
-		
-		TeamMatchVO []teamresult = new TeamMatchVO [1];
-		
+
+		TeamMatchVO[] teamresult = new TeamMatchVO[1];
+
 		find.setVisible(false);
-		
+
 		showOne(teamname);
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
-			teamresult[0]=tc.getTotalTeam(teamname);
+			teamresult[0] = tc.getTotalTeam(teamname);
 		} else {
-			teamresult[0]=tc.getAveTeam(teamname);
+			teamresult[0] = tc.getAveTeam(teamname);
 		}
-		
+
 		setTable(teamresult);
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
@@ -558,32 +584,31 @@ public class TeamPanel extends JPanel {
 
 	}
 
-	/**查看该球队队员*/
-	void setTeamPlayers(String team){
-		String[] playernames=tc.getPlayers(team);
-		PlayerController pc=new PlayerController();
-		PlayerMatchVO[] players=new PlayerMatchVO[playernames.length];
-		for(int i=0;i<playernames.length;i++){
-			players[i]=pc.findPlayerMatchAve(playernames[i]);
+	/** 查看该球队队员 */
+	void setTeamPlayers(String team) {
+		String[] playernames = tc.getPlayers(team);
+		PlayerController pc = new PlayerController();
+		PlayerMatchVO[] players = new PlayerMatchVO[playernames.length];
+		for (int i = 0; i < playernames.length; i++) {
+			players[i] = pc.findPlayerMatchAve(playernames[i]);
 		}
 		MyFrame.playerpanel.showTeamPlayers(players);
-		
+
 		MyFrame.card.show(MyFrame.mainpanel, "player");
 	}
-	
-	/**点击查看比赛按钮*/
-	void setMatch(){
-		if(matchpanel){
+
+	/** 点击查看比赛按钮 */
+	void setMatch() {
+		if (matchpanel) {
 			this.remove(teammatch);
 		}
-		matchpanel=true;
-		teammatch=new TeamMatchPanel(nameAbridgeresult.getText());
+		matchpanel = true;
+		teammatch = new TeamMatchPanel(nameAbridgeresult.getText());
 		this.remove(jScrollPane);
 		this.add(teammatch);
 		this.repaint();
 	}
 
-	
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
 		Dimension containerwidth = null;
 		if (!bool) {
@@ -631,18 +656,19 @@ public class TeamPanel extends JPanel {
 			table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
 		}
 	}
-	
-	private ImageIcon scaleImage(ImageIcon icon, int iconWidth, int iconHeight) { 
-		int width = icon.getIconWidth(); 
-		int height = icon.getIconHeight(); 
 
-		if (width == iconWidth && height == iconHeight) { 
-		return icon; 
-		} 
-		Image image = icon.getImage(); 
-		image = image.getScaledInstance(iconWidth, iconHeight, Image.SCALE_DEFAULT); 
+	private ImageIcon scaleImage(ImageIcon icon, int iconWidth, int iconHeight) {
+		int width = icon.getIconWidth();
+		int height = icon.getIconHeight();
 
-		return new ImageIcon(image); 
+		if (width == iconWidth && height == iconHeight) {
+			return icon;
 		}
+		Image image = icon.getImage();
+		image = image.getScaledInstance(iconWidth, iconHeight,
+				Image.SCALE_DEFAULT);
+
+		return new ImageIcon(image);
+	}
 
 }

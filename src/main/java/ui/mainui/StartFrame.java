@@ -9,6 +9,8 @@ import java.awt.event.MouseMotionAdapter;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import ui.playerui.PlayerPanel;
 import ui.teamui.TeamPanel;
@@ -24,6 +26,7 @@ public class StartFrame extends JFrame{
 	private Point origin = new Point();
 	public StartFrame()
 	{  
+		
 		MyFrame my=new MyFrame();
 		my.addMouseListener(new MouseAdapter()
 		{
