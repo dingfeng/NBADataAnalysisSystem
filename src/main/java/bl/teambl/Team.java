@@ -258,6 +258,7 @@ public class Team   implements SearchItemProvider
 	
 	public TeamMatchVO getTotalTeam(String teamname)
 	{
+		
 		return team_map.get(teamname.hashCode()).getTeamvoTotal();
 	}
 	
@@ -267,9 +268,59 @@ public class Team   implements SearchItemProvider
 	}
 	public TeamPO getTeamData(String team)
 	{
-		return  po_map.get(team.hashCode());
+		TeamPO teampo = null;
+		for (int i = 0; i < teams.length; i++)
+		{
+			teampo = teams[i];
+			if (teampo.getName().equals(team) || teampo.getNameAbridge().equals(team))
+			{
+				return teampo;
+			}
+		}
+		return  null;
 	}
 	
+	public Iterator<String> fuzzilyFind(String info) {
+		LinkedList<String>  team_list = new LinkedList<String>();
+		for (TeamPO team : teams)
+		{
+			if (team.getName().startsWith(info))
+			{
+				team_list.add(team.getName());
+			}
+		}
+		return team_list.iterator();
+	}
+
+	public Area getPlayerArea(String playername)
+	{
+		String teamname = null;
+		for (TeamPO t : teams)
+		{
+			teamname = t.getNameAbridge();
+			if (teamname.equals("NOP"))
+				teamname = "NOH";
+			if (team_map.get(teamname.hashCode()).hasPlayer(playername))
+			{
+			  return t.getPlayerArea();
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public String[] getSearchItems() {
+		String[] teamNames = new String[teamnames.length *2];
+		for (int i = 0;i < teamnames.length; i++)
+		{
+			teamNames[i] = team_total_names[i];
+			teamNames[i+teamnames.length] = teamnames[i];  
+		}
+		
+		return teamNames;
+	}
+	
+
 	public static String[] teamnames = new String[]
 			{
 		"ATL",
@@ -338,46 +389,5 @@ public class Team   implements SearchItemProvider
 		"Wizards"
 			};
 	
-	public Iterator<String> fuzzilyFind(String info) {
-		LinkedList<String>  team_list = new LinkedList<String>();
-		for (TeamPO team : teams)
-		{
-			if (team.getName().startsWith(info))
-			{
-				team_list.add(team.getName());
-			}
-		}
-		return team_list.iterator();
-	}
-
-	public Area getPlayerArea(String playername)
-	{
-		String teamname = null;
-		for (TeamPO t : teams)
-		{
-			teamname = t.getNameAbridge();
-			if (teamname.equals("NOP"))
-				teamname = "NOH";
-			if (team_map.get(teamname.hashCode()).hasPlayer(playername))
-			{
-			  return t.getPlayerArea();
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public String[] getSearchItems() {
-		TeamPO[] teampos = new TeamPO[po_map.size()];
-		po_map.values(teampos);
-		String[] teamNames = new String[teampos.length * 2];
-		for (int i = 0;i < teampos.length; i++)
-		{
-			teamNames[i] = teampos[i].getName();
-			teamNames[i+teampos.length] = teampos[i].getNameAbridge();
-		}
-		
-		return teamNames;
-	}
 	
 }

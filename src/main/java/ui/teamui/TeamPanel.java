@@ -25,6 +25,8 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 import po.TeamPO;
 import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
@@ -49,7 +51,7 @@ public class TeamPanel extends JPanel {
 	JPanel header = new JPanel();
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
-
+    JComboBox searchBox;
 	JTextField searchField;
 	JPanel sort = new JPanel();
 	JPanel find = new JPanel();
@@ -73,6 +75,9 @@ public class TeamPanel extends JPanel {
 	TeamController tc = new TeamController();
 
 	public TeamPanel() {
+		String[] teamNames = tc.getTeamNames();
+		searchBox = new MyComboBox(teamNames);
+		AutoCompleteDecorator.decorate(searchBox);
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
 		this.setOpaque(false);
@@ -200,14 +205,14 @@ public class TeamPanel extends JPanel {
 		header.setBackground(FrameSize.backColor);
 
 		searchField = new EditableTextField();
-		searchField.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
+		searchBox.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
 				35);
-		header.add(searchField);
-		searchField.addKeyListener(new KeyAdapter() {
+		header.add(searchBox);
+		searchBox.addKeyListener(new KeyAdapter() {
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyChar() == KeyEvent.VK_ENTER) // 按回车键执行相应操作;
 				{
-					findClick(searchField.getText());
+					findClick(searchBox.getSelectedItem().toString());
 				}
 			}
 		});
@@ -216,7 +221,7 @@ public class TeamPanel extends JPanel {
 				Color.GRAY, Color.LIGHT_GRAY);
 		searchButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
 		searchButton.setToolTipText("查找");
-		searchButton.addActionListener(e -> findClick(searchField.getText()));
+		searchButton.addActionListener(e -> findClick(searchBox.getSelectedItem().toString()));
 		header.add(searchButton);
 
 		JButton sortButton = new MyButton(new ImageIcon("image\\sort.png"),
@@ -486,7 +491,12 @@ public class TeamPanel extends JPanel {
 		image.setIcon(scaleImage(new ImageIcon(teamresult.getImage()),
 				3 * FrameSize.height / 20, 3 * FrameSize.height / 20));
 		nameresult.setText(teamresult.getName());// 队伍名称
-		nameAbridgeresult.setText(teamresult.getNameAbridge());// 名称缩写
+		String nameAbridge = teamresult.getNameAbridge();
+		if (nameAbridge.equals("NOP"))
+		{
+			nameAbridge = "NOH";
+		}
+		nameAbridgeresult.setText(nameAbridge);// 名称缩写
 		addressresult.setText(teamresult.getAddress());// 所在地
 		matchArearesult.setText(teamresult.getMatchArea());// 赛区
 		playerArearesult.setText(teamresult.getPlayerArea().toString());// 分区
@@ -560,7 +570,7 @@ public class TeamPanel extends JPanel {
 			showOne(teamname);
 			searchField.setText("");
 		} catch (NullPointerException e1) {
-			JOptionPane.showMessageDialog(null, "未找到该球队的个人信息", "查找失败",
+			JOptionPane.showMessageDialog(null, "未找到该球队的基本信息", "查找失败",
 					JOptionPane.ERROR_MESSAGE);
 			searchField.setText("");
 			return;
@@ -573,12 +583,26 @@ public class TeamPanel extends JPanel {
 		find.setVisible(false);
 
 		showOne(teamname);
+		try{
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
 			teamresult[0] = tc.getTotalTeam(teamname);
 		} else {
 			teamresult[0] = tc.getAveTeam(teamname);
 		}
-
+		}catch (Exception e)
+		{
+			TeamPO teamresult1 = tc.getTeamData(teamname);
+			teamname = teamresult1.getNameAbridge();
+			if (teamname.equals("NOP"))
+			{
+				teamname = "NOH";
+			}
+			if (dataType.getSelectedItem().equals("赛季总数据")) {
+				teamresult[0] = tc.getTotalTeam(teamname);
+			} else {
+				teamresult[0] = tc.getAveTeam(teamname);
+			}
+		}
 		setTable(teamresult);
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
