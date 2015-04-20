@@ -26,7 +26,7 @@ import bl.teambl.SortTool;
 import bl.teambl.Team;
 import blservice.playerblservice.PlayerBlService;
 
-public class Player  {
+public class Player  implements SearchItemProvider{
 
 	private	TIntObjectMap<PlayerQueue> player_map;
 	private PlayerDataService playerData;
@@ -168,7 +168,7 @@ public class Player  {
 			Area playerArea, PlayerSortBy sortBy) {
 		Team team = new Team();
 	   ArrayList<PlayerMatchVO> screen_players = new ArrayList<PlayerMatchVO>(500);
-	   
+	   ArrayList<PlayerMatchVO> result_players = new ArrayList<PlayerMatchVO>(300);
 	   for (PlayerPO p : allPlayerpos)
 	   {
 		   if (p.getPosition().contains(playerPosition) && team.getPlayerArea(p.getName()) == playerArea)
@@ -176,8 +176,21 @@ public class Player  {
 			   screen_players.add(player_map.get(p.getName().hashCode()).getAvePlayer());
 		   }
 	   }
-		
-		return screen_players.iterator();
+	   PlayerMatchVO[] sortedPlayers = sortAvePlayers(sortBy,SortType.DESEND);
+	   for (int i = 0; i < sortedPlayers.length; i++)
+	   {
+	    PlayerMatchVO player = sortedPlayers[i];
+	    Iterator<PlayerMatchVO> itr = screen_players.iterator();
+	    while (itr.hasNext())
+	    {
+	    	if (player.getName().equals(itr.next().getName()))
+	    	{
+	    		result_players.add(player);
+	    	}
+	    }
+	   }
+	   
+		return result_players.iterator();
 	}
 
 	public Iterator<PlayerMatchVO> screenTotalPlayers(String playerPosition,
@@ -185,7 +198,7 @@ public class Player  {
 		
 		Team team = new Team();
 		   ArrayList<PlayerMatchVO> screen_players = new ArrayList<PlayerMatchVO>(500);
-		   
+		   ArrayList<PlayerMatchVO> result_players = new ArrayList<PlayerMatchVO>(300);
 		   for (PlayerPO p : allPlayerpos)
 		   {
 			   if (p.getPosition().contains(playerPosition) && team.getPlayerArea(p.getName()) == playerArea)
@@ -193,8 +206,21 @@ public class Player  {
 				   screen_players.add(player_map.get(p.getName().hashCode()).getTotalPlayer());
 			   }
 		   }
-			
-			return screen_players.iterator();
+		   PlayerMatchVO[] sortedPlayers = sortTotalPlayers(sortBy,SortType.DESEND);
+		   for (int i = 0; i < sortedPlayers.length; i++)
+		   {
+		    PlayerMatchVO player = sortedPlayers[i];
+		    Iterator<PlayerMatchVO> itr = screen_players.iterator();
+		    while (itr.hasNext())
+		    {
+		    	if (player.getName().equals(itr.next().getName()))
+		    	{
+		    		result_players.add(player);
+		    	}
+		    }
+		   }
+		   
+			return result_players.iterator();
 	}
 
 	public  MatchPlayerPO[] getDayHotPlayer(PlayerSortBy sortby) {
@@ -430,6 +456,16 @@ public class Player  {
 			break;//两双
 		}
 		playervo.setSortTool(new SortTool(data,sortType));
+	}
+
+	public String[] getSearchItems() 
+	{
+		String[] playerNames = new String[allPlayerpos.length];
+		for (int i = 0; i < playerNames.length; i++)
+		{
+			playerNames[i] = allPlayerpos[i].getName();
+		}
+		return playerNames;
 	}
 	
 }

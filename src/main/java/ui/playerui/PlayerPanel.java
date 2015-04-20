@@ -26,6 +26,8 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
+import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
+
 import po.PlayerPO;
 import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
@@ -80,7 +82,8 @@ public class PlayerPanel extends JPanel {
 	boolean isPlayer=false;
 
 	PlayerController playerController = new PlayerController();
-	
+	String[] allPlayerNames;
+	JComboBox searchBox ;
 	public PlayerPanel() {
 		allPlayers=playerController.sortTotalPlayers(PlayerSortBy.name,
 				SortType.ASEND);
@@ -88,6 +91,12 @@ public class PlayerPanel extends JPanel {
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
 		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
+		allPlayerNames = playerController.getAllPlayerNames();
+		searchBox = new JComboBox(allPlayerNames);
+		searchBox.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
+				35);
+		searchBox.setMaximumRowCount(15);
+		AutoCompleteDecorator.decorate(searchBox);
 		JPanel header = headerPanel();
 		new Thread() {
 			public void run() {
@@ -661,17 +670,18 @@ public class PlayerPanel extends JPanel {
 		panel.setLayout(null);
 		panel.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		panel.setBackground(FrameSize.backColor);
-
 		searchField = new EditableTextField();
 		searchField.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
 				35);
-		panel.add(searchField);
-		searchField.addKeyListener(new KeyAdapter(){ 
+		panel.add(searchBox);
+		searchBox.addKeyListener(new KeyAdapter(){ 
 		      public void keyPressed(KeyEvent e)    
 		      {    
 		        if(e.getKeyChar()==KeyEvent.VK_ENTER )   //按回车键执行相应操作; 
 		        { 
-		        	findPlayerClick(searchField.getText());
+		        	try{
+		        	findPlayerClick(searchBox.getSelectedItem().toString());
+		        	}catch (Exception e1){e1.printStackTrace();}
 		        } 
 		      } 
 		    });
@@ -680,7 +690,7 @@ public class PlayerPanel extends JPanel {
 		findButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
 		findButton.setBackground(new Color(68, 68, 68));
 		findButton.setToolTipText("查找");
-		findButton.addActionListener(e -> findPlayerClick(searchField.getText()));
+		findButton.addActionListener(e -> findPlayerClick(searchBox.getSelectedItem().toString()));
 		panel.add(findButton);
 
 		JButton sortButton = new JButton(new ImageIcon("image\\sort.png"));

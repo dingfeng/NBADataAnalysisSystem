@@ -16,9 +16,10 @@ import DataFactory.DataFactoryImp;
 import DataFactoryService.NBADataFactory;
 import bl.matchbl.Match;
 import bl.matchbl.TeamQueue;
+import bl.playerbl.SearchItemProvider;
 import blservice.teamblservice.Teamblservice;
 
-public class Team   
+public class Team   implements SearchItemProvider
 {
 	private	TIntObjectMap<TeamQueue> team_map;
 	private Match match;
@@ -363,6 +364,20 @@ public class Team
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public String[] getSearchItems() {
+		TeamPO[] teampos = new TeamPO[po_map.size()];
+		po_map.values(teampos);
+		String[] teamNames = new String[teampos.length * 2];
+		for (int i = 0;i < teampos.length; i++)
+		{
+			teamNames[i] = teampos[i].getName();
+			teamNames[i+teampos.length] = teampos[i].getNameAbridge();
+		}
+		
+		return teamNames;
 	}
 	
 }

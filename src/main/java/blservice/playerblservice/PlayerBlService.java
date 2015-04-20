@@ -34,4 +34,6 @@ public interface PlayerBlService {
     public PlayerMatchVO findPlayerMatchAve(String playername);
     //查找球员赛季数据
     public PlayerMatchVO findPlayerTotal(String playername);
+    //获得所有球员姓名
+    public String[] getAllPlayerNames();
 }

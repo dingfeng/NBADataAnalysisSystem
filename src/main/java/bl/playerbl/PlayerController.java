@@ -83,5 +83,9 @@ public class PlayerController implements PlayerBlService{
 	public PlayerMatchVO findPlayerTotal(String playername) {
 		return player.findPlayerMatchTotal(playername);
 	}
+	@Override
+	public String[] getAllPlayerNames() {
+		return player.getSearchItems();
+	}
 
 }
