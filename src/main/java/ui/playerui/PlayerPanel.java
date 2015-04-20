@@ -29,6 +29,7 @@ import javax.swing.table.DefaultTableModel;
 import po.PlayerPO;
 import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
+import ui.mainui.MyButton;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyFrame;
 import ui.mainui.MyTable;
@@ -110,13 +111,13 @@ public class PlayerPanel extends JPanel {
 	private void setTable(PlayerMatchVO[] playerMatchVOs) {
 		Vector columnsName = new Vector();
 		columnsName.add("球员名称");
-		columnsName.add("球衣号码");
-		columnsName.add("位置");
-		columnsName.add("身高");
-		columnsName.add("生日");
-		columnsName.add("年龄");
-		columnsName.add("球龄");
-		columnsName.add("毕业学校");
+//		columnsName.add("球衣号码");
+//		columnsName.add("位置");
+//		columnsName.add("身高");
+//		columnsName.add("生日");
+//		columnsName.add("年龄");
+//		columnsName.add("球龄");
+//		columnsName.add("毕业学校");
 		columnsName.add("所属球队");
 		columnsName.add("参赛场数");
 		columnsName.add("先发场数");
@@ -177,60 +178,60 @@ public class PlayerPanel extends JPanel {
 			rowData.add(playerVO.getTeam());
 			rowData.add(playerVO.getMatchNo());
 			rowData.add(playerVO.getFirstServiceNo());
-			rowData.add(String.format("%.3f", playerVO.getRebs()));
-			rowData.add(String.format("%.3f", playerVO.getAssistNo()));
-			rowData.add(String.format("%.3f", playerVO.getTime()));
+			rowData.add(String.format("%.1f", playerVO.getRebs()));
+			rowData.add(String.format("%.1f", playerVO.getAssistNo()));
+			rowData.add(String.format("%.1f", playerVO.getTime()));
 
-			rowData.add(String.format("%.3f", playerVO.getBlockNo()));
-			rowData.add(String.format("%.3f",
+			rowData.add(String.format("%.1f", playerVO.getBlockNo()));
+			rowData.add(String.format("%.1f",
 					playerVO.getScoring_rebound_assist()));
-			rowData.add(String.format("%.3f", playerVO.getStealsNo()));
-			rowData.add(String.format("%.3f", playerVO.getFoulsNo()));
-			rowData.add(String.format("%.3f", playerVO.getMistakesNo()));
-			rowData.add(String.format("%.3f", playerVO.getMinute()));
-			rowData.add(String.format("%.3f", playerVO.getHandNo()));
-			rowData.add(String.format("%.3f", playerVO.getThree_points()));
-			rowData.add(String.format("%.3f", playerVO.getBlockNo()));
-			rowData.add(String.format("%.3f", playerVO.getTwoPair()));
+			rowData.add(String.format("%.1f", playerVO.getStealsNo()));
+			rowData.add(String.format("%.1f", playerVO.getFoulsNo()));
+			rowData.add(String.format("%.1f", playerVO.getMistakesNo()));
+			rowData.add(String.format("%.1f", playerVO.getMinute()));
+			rowData.add(String.format("%.1f", playerVO.getHandNo()));
+			rowData.add(String.format("%.1f", playerVO.getThree_points()));
+			rowData.add(String.format("%.1f", playerVO.getBlockNo()));
+			rowData.add(String.format("%.1f", playerVO.getTwoPair()));
 			double hitRate = playerVO.getHitRate() * 100;
 			if (hitRate >= 0)
-				rowData.add(String.format("%.3f", hitRate));
+				rowData.add(String.format("%.1f", hitRate));
 			else
 				rowData.add("-");
 			double threeHitRate = playerVO.getThreeHitRate();
 			if (threeHitRate >= 0)
-				rowData.add(String.format("%.3f", threeHitRate * 100));
+				rowData.add(String.format("%.1f", threeHitRate * 100));
 			else
 				rowData.add("-");
 			double penaltyHitRate = playerVO.getPenaltyHitRate();
 			if (penaltyHitRate >= 0)
-				rowData.add(String.format("%.3f", penaltyHitRate * 100));
+				rowData.add(String.format("%.1f", penaltyHitRate * 100));
 			else
 				rowData.add("-");
-			rowData.add(String.format("%.3f", playerVO.getOffendNo()));
-			rowData.add(String.format("%.3f", playerVO.getDefenceNo()));
-			rowData.add(String.format("%.3f", playerVO.getStealsNo()));
-			rowData.add(String.format("%.3f", playerVO.getBlockNo()));
+			rowData.add(String.format("%.1f", playerVO.getOffendNo()));
+			rowData.add(String.format("%.1f", playerVO.getDefenceNo()));
+			rowData.add(String.format("%.1f", playerVO.getStealsNo()));
+			rowData.add(String.format("%.1f", playerVO.getBlockNo()));
 			rowData.add(playerVO.getMistakesNo());
-			rowData.add(String.format("%.3f", playerVO.getFoulsNo()));
-			rowData.add(String.format("%.3f", playerVO.getPoints()));
-			rowData.add(String.format("%.3f", playerVO.getEfficiency()));
-			rowData.add(String.format("%.3f", playerVO.getGmScEfficiency()));
-			rowData.add(String.format("%.3f", playerVO.getTrueHitRate() * 100));
-			rowData.add(String.format("%.3f", playerVO.getHitEfficiency()));
-			rowData.add(String.format("%.3f", playerVO.getRebEfficiency()));
-			rowData.add(String.format("%.3f",
+			rowData.add(String.format("%.1f", playerVO.getFoulsNo()));
+			rowData.add(String.format("%.1f", playerVO.getPoints()));
+			rowData.add(String.format("%.1f", playerVO.getEfficiency()));
+			rowData.add(String.format("%.1f", playerVO.getGmScEfficiency()));
+			rowData.add(String.format("%.1f", playerVO.getTrueHitRate() * 100));
+			rowData.add(String.format("%.1f", playerVO.getHitEfficiency()));
+			rowData.add(String.format("%.1f", playerVO.getRebEfficiency()));
+			rowData.add(String.format("%.1f",
 					playerVO.getOffenseRebsEfficiency()));
-			rowData.add(String.format("%.3f",
+			rowData.add(String.format("%.1f",
 					playerVO.getDefenceRebsEfficiency()));
-			rowData.add(String.format("%.3f",
+			rowData.add(String.format("%.1f",
 					playerVO.getAssistEfficiency() * 100));
-			rowData.add(String.format("%.3f", playerVO.getStealsEfficiency()));
-			rowData.add(String.format("%.3f",
+			rowData.add(String.format("%.1f", playerVO.getStealsEfficiency()));
+			rowData.add(String.format("%.1f",
 					playerVO.getBlockEfficiency() * 100));
-			rowData.add(String.format("%.3f",
+			rowData.add(String.format("%.1f",
 					playerVO.getMistakeEfficiency() * 100));
-			rowData.add(String.format("%.3f", playerVO.getUseEfficiency() * 100));
+			rowData.add(String.format("%.1f", playerVO.getUseEfficiency() * 100));
 
 			data.add(rowData);
 		}
@@ -354,7 +355,7 @@ public class PlayerPanel extends JPanel {
 		positionLabel.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		screenPanel.add(positionLabel);
 
-		positionBox = new JComboBox<String>(new String[] { "F", "C", "G" });
+		positionBox = new MyComboBox(new String[] { "F", "C", "G" });
 		positionBox.setBounds(FrameSize.width / 8, FrameSize.height / 12, 150,
 				40);
 		positionBox.setFont(new Font("宋体", Font.PLAIN, 12));
@@ -367,7 +368,7 @@ public class PlayerPanel extends JPanel {
 		playerZoneLabel.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		screenPanel.add(playerZoneLabel);
 
-		playerZoneBox = new JComboBox<String>(new String[] { "东部", "西部" });
+		playerZoneBox = new MyComboBox(new String[] { "东部", "西部" });
 		playerZoneBox.setBounds(FrameSize.width / 8, FrameSize.height / 3 - 60,
 				150, 40);
 		playerZoneBox.setFont(new Font("宋体", Font.PLAIN, 12));
@@ -381,7 +382,7 @@ public class PlayerPanel extends JPanel {
 		playerAreaLabel.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		screenPanel.add(playerAreaLabel);
 
-		playerAreaBox = new JComboBox<String>(new String[] { "ATLANTIC",
+		playerAreaBox = new MyComboBox(new String[] { "ATLANTIC",
 				"CENTRAL", "SOUTHEAST" });
 		playerAreaBox.setBounds(FrameSize.width / 8, FrameSize.height / 3 + 20,
 				150, 40);
@@ -395,7 +396,7 @@ public class PlayerPanel extends JPanel {
 		screenPlayerLabel.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		screenPanel.add(screenPlayerLabel);
 
-		screenPlayerBox = new JComboBox<String>(new String[] { "得分", "篮板",
+		screenPlayerBox = new MyComboBox(new String[] { "得分", "篮板",
 				"助攻", "得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮",
 				"三分", "罚球", "两双" });
 		screenPlayerBox.setBounds(FrameSize.width / 8,
@@ -403,10 +404,10 @@ public class PlayerPanel extends JPanel {
 		screenPlayerBox.setFont(new Font("宋体", Font.PLAIN, 12));
 		screenPanel.add(screenPlayerBox);
 
-		JButton yesButton = new JButton(new ImageIcon("image/yes.png"));
+		JButton yesButton = new MyButton(new ImageIcon("image/yes.png"),Color.white,Color.gray);
 		yesButton.setBounds(FrameSize.width / 4, 2 * FrameSize.height / 3, 50,
 				50);
-		yesButton.setBackground(Color.white);
+//		yesButton.setBackground(Color.white);
 		yesButton.addActionListener(e -> screenPlayerConfirmClick());
 		screenPanel.add(yesButton);
 
@@ -619,9 +620,9 @@ public class PlayerPanel extends JPanel {
 		sortPlayerBox.setFont(new Font("宋体", Font.PLAIN, 12));
 		sortPanel.add(sortPlayerBox);
 
-		JButton yes = new JButton(new ImageIcon("image/yes.png"));
+		JButton yes = new MyButton(new ImageIcon("image/yes.png"),Color.white,Color.gray);
 		yes.setBounds(FrameSize.width / 4, 3 * FrameSize.height / 5, 50, 50);
-		yes.setBackground(Color.white);
+//		yes.setBackground(Color.white);
 		yes.addActionListener(e -> sortPlayerConfirmClick());
 		sortPanel.add(yes);
 
@@ -676,23 +677,23 @@ public class PlayerPanel extends JPanel {
 		      } 
 		    });
 
-		JButton findButton = new JButton(new ImageIcon("image\\find.png"));
+		JButton findButton = new MyButton(new ImageIcon("image\\find.png"),Color.white, Color.gray);
 		findButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
-		findButton.setBackground(new Color(68, 68, 68));
+//		findButton.setBackground(new Color(68, 68, 68));
 		findButton.setToolTipText("查找");
 		findButton.addActionListener(e -> findPlayerClick(searchField.getText()));
 		panel.add(findButton);
 
-		JButton sortButton = new JButton(new ImageIcon("image\\sort.png"));
+		JButton sortButton = new MyButton(new ImageIcon("image\\sort.png"),Color.white, Color.gray);
 		sortButton.setBounds(4 * FrameSize.width / 5 + 40, 10, 35, 35);
-		sortButton.setBackground(new Color(68, 68, 68));
+//		sortButton.setBackground(new Color(68, 68, 68));
 		sortButton.setToolTipText("排序");
 		sortButton.addActionListener(e -> sortPlayerClick());
 		panel.add(sortButton);
 
-		JButton screenButton = new JButton(new ImageIcon("image\\screen.png"));
+		JButton screenButton = new MyButton(new ImageIcon("image\\screen.png"),Color.white, Color.gray);
 		screenButton.setBounds(4 * FrameSize.width / 5 + 80, 10, 35, 35);
-		screenButton.setBackground(new Color(68, 68, 68));
+//		screenButton.setBackground(new Color(68, 68, 68));
 		screenButton.setToolTipText("筛选");
 		screenButton.addActionListener(e -> screenPlayerClick());
 		panel.add(screenButton);
@@ -701,9 +702,9 @@ public class PlayerPanel extends JPanel {
 		dataType.setBounds(20, 10, 100, 35);
 		panel.add(dataType);
 
-		JButton allButton = new JButton(new ImageIcon("image\\show.png"));
+		JButton allButton = new MyButton(new ImageIcon("image\\show.png"),Color.white, Color.gray);
 		allButton.setBounds(140, 10, 45, 35);
-		allButton.setBackground(new Color(68, 68, 68));
+//		allButton.setBackground(new Color(68, 68, 68));
 		allButton.setToolTipText("显示");
 		allButton.addActionListener(e -> showAllData());
 		panel.add(allButton);

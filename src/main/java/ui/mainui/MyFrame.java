@@ -20,6 +20,7 @@ import ui.IndexPanel;
 import ui.MatchPanel;
 import ui.playerui.PlayerPanel;
 import ui.teamui.TeamPanel;
+import ui.mainui.MyButton;
 
 public class MyFrame extends JFrame {
 	
@@ -170,19 +171,21 @@ public class MyFrame extends JFrame {
 	}
 	
 	void setExit(){
-		JLabel el = new JLabel();
-		ImageIcon image = new ImageIcon("image/close.png");
-		el.setIcon(image);
+		JButton el = new MyButton(new ImageIcon("image/close.png"),Color.black,Color.gray);
+//		JLabel el = new JLabel();
+//		ImageIcon image = new ImageIcon("image/close.png");
+//		el.setIcon(image);
 		el.setBounds(FrameSize.width-50, -8, 40, 40);
 		el.addMouseListener(new ExitButtonAction());
 		frame.add(el);
 		//this.add(el);
 	}
-	
+
 	void setMini(){
-		JLabel el = new JLabel();
-		ImageIcon image = new ImageIcon("image/mini.png");
-		el.setIcon(image);
+		JButton el = new MyButton(new ImageIcon("image/mini.png"),Color.black,Color.gray);
+//		JLabel el = new JLabel();
+//		ImageIcon image = new ImageIcon("image/mini.png");
+//		el.setIcon(image);
 		el.setBounds(FrameSize.width-90, -8, 40, 40);
 		el.addMouseListener(new MiniButtonAction());
 		frame.add(el);
