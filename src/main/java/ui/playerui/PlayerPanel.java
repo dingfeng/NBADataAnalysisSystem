@@ -257,7 +257,7 @@ public class PlayerPanel extends JPanel {
 		jScrollPane.setBounds(FrameSize.width / 3, FrameSize.height / 12,
 				2 * FrameSize.width / 3, FrameSize.height * 7 / 8
 						- FrameSize.height / 12);
-		jScrollPane.setOpaque(false);
+		jScrollPane.setBackground(FrameSize.backColor);
 		jScrollPane.getViewport().setOpaque(false);
 		resizeTable(false, jScrollPane, mytable);
 		this.add(jScrollPane);
@@ -340,6 +340,7 @@ public class PlayerPanel extends JPanel {
 	private void showPlayerTeam(String teamName) {
 		MyFrame.teampanel.findClick(teamName);
 		MyFrame.card.show(MyFrame.mainpanel,"team");
+		MyFrame.locationlable.setText("当前位置：球队");
 	}
 
 	private void setMatch() {

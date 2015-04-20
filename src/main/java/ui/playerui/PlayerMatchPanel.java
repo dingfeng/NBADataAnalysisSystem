@@ -152,6 +152,7 @@ public class PlayerMatchPanel extends JPanel {
 					MyFrame.matchpanel.findMatchAccordingMatch(match,
 							recenttable.getSelectedRow());
 					MyFrame.card.show(MyFrame.mainpanel, "match");
+					MyFrame.locationlable.setText("当前位置：比赛");
 				}
 			}
 
@@ -244,6 +245,7 @@ public class PlayerMatchPanel extends JPanel {
 					MyFrame.matchpanel.findMatchAccordingMatch(match,
 							pasttable.getSelectedRow());
 					MyFrame.card.show(MyFrame.mainpanel, "match");
+					MyFrame.locationlable.setText("当前位置：比赛");
 				}
 			}
 
