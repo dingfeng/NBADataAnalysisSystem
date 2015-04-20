@@ -294,7 +294,7 @@ public class Match
     	else return false;
     }
 
-    public MatchesPO[]   getTime_TeamMatches(Date date1, Date date2, String teamname)
+    public MatchesPO[]   getTime_TeamMatches(Date date1, Date date2, String teamname, String playername)
     {
     	MatchesPO[]  timeMatches = getTimeMatches(date1, date2);
     	MatchesPO  temp = null;
@@ -306,13 +306,39 @@ public class Match
     		teampo = temp.getTeam1();
     	    if (teampo.getName().equals(teamname))
     	    {
+    	    	if (playername == null)
     	    	matches_list.add(temp);
+    	    	else
+    	    	{
+    	    		MatchPlayerPO[] matchPlayers = teampo.getPlayers();
+    	    		for (int j = 0; j < matchPlayers.length; j++)
+    	    		{
+    	    			if (matchPlayers[j].getName().equals(playername))
+    	    			{
+    	    				matches_list.add(temp);
+    	    				break;
+    	    			}
+    	    		}
+    	    	}
     	    	continue;
     	    }
     	    teampo = temp.getTeam2();
     	    if (teampo.getName().equals(teamname))
     	    {
+    	    	if (playername == null)
     	    	matches_list.add(temp);
+    	    	else 
+    	    	{
+    	    	MatchPlayerPO[] matchPlayers = teampo.getPlayers();
+	    		for (int j = 0; j < matchPlayers.length; j++)
+	    		{
+	    			if (matchPlayers[j].getName().equals(playername))
+	    			{
+	    				matches_list.add(temp);
+	    				break;
+	    			}
+	    		}
+    	    	}
     	    }
     	}
     	MatchesPO[] result_matches = new MatchesPO[matches_list.size()];
