@@ -593,8 +593,8 @@ public class MatchPanel extends JPanel {
 		myPlayer2Table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					MyFrame.playerpanel.findPlayerClick((String)myPlayer2Table.getModel().getValueAt(myPlayer2Table.getSelectedRow(), 0));
 					MyFrame.card.show(MyFrame.mainpanel, "player");
+					MyFrame.playerpanel.findPlayerClick((String)myPlayer2Table.getModel().getValueAt(myPlayer2Table.getSelectedRow(), 0));
 				}
 			}
 

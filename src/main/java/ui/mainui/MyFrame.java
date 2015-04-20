@@ -20,6 +20,7 @@ import ui.IndexPanel;
 import ui.MatchPanel;
 import ui.playerui.PlayerPanel;
 import ui.teamui.TeamPanel;
+import ui.mainui.MyButton;
 
 public class MyFrame extends JFrame {
 	
@@ -117,9 +118,9 @@ public class MyFrame extends JFrame {
 
 		
 		index.setBounds(10, 30,50,50);
-		playerbutton.setBounds(80, 30, 50, 50);
-		teambutton.setBounds(150, 30, 50, 50);
-		hotbutton.setBounds(220,30,50, 50);
+		hotbutton.setBounds(80, 30, 50, 50);
+		playerbutton.setBounds(150, 30, 50, 50);
+		teambutton.setBounds(220,30,50, 50);
 		matchbutton.setBounds(290, 30, 50, 50);
 		helpbutton.setBounds(360, 30, 50, 50);		
 		
@@ -170,19 +171,21 @@ public class MyFrame extends JFrame {
 	}
 	
 	void setExit(){
-		JLabel el = new JLabel();
-		ImageIcon image = new ImageIcon("image/close.png");
-		el.setIcon(image);
+		JButton el = new MyButton(new ImageIcon("image/close.png"),Color.black,Color.red);
+//		JLabel el = new JLabel();
+//		ImageIcon image = new ImageIcon("image/close.png");
+//		el.setIcon(image);
 		el.setBounds(FrameSize.width-50, -8, 40, 40);
 		el.addMouseListener(new ExitButtonAction());
 		frame.add(el);
 		//this.add(el);
 	}
-	
+
 	void setMini(){
-		JLabel el = new JLabel();
-		ImageIcon image = new ImageIcon("image/mini.png");
-		el.setIcon(image);
+		JButton el = new MyButton(new ImageIcon("image/mini.png"),Color.black,Color.blue);
+//		JLabel el = new JLabel();
+//		ImageIcon image = new ImageIcon("image/mini.png");
+//		el.setIcon(image);
 		el.setBounds(FrameSize.width-90, -8, 40, 40);
 		el.addMouseListener(new MiniButtonAction());
 		frame.add(el);
