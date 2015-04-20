@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import po.TeamPO;
 import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
+import ui.mainui.MyButton;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyFrame;
 import ui.mainui.MyTable;
@@ -144,17 +145,17 @@ public class TeamPanel extends JPanel {
 			data.add(str.getMistakesNo());
 			data.add(str.getFoulsNo());
 			data.add(str.getPoints());
-			data.add(String.format("%.3f", str.getHitRate() * 100));
-			data.add(String.format("%.3f", str.getThreeHitRate() * 100));
-			data.add(String.format("%.3f", str.getPenaltyHitRate() * 100));
-			data.add(String.format("%.3f", str.getWinRate() * 100));
-			data.add(String.format("%.3f", str.getOffenseRound()));
-			data.add(String.format("%.3f", str.getOffenseEfficiency()));
-			data.add(String.format("%.3f", str.getDefenceEfficiency()));
-			data.add(String.format("%.3f", str.getoRebsEfficiency()));
-			data.add(String.format("%.3f", str.getdRebsEfficiency()));
-			data.add(String.format("%.3f", str.getStealsEfficiency()));
-			data.add(String.format("%.3f", str.getAssistEfficiency()));
+			data.add(String.format("%.1f", str.getHitRate() * 100));
+			data.add(String.format("%.1f", str.getThreeHitRate() * 100));
+			data.add(String.format("%.1f", str.getPenaltyHitRate() * 100));
+			data.add(String.format("%.1f", str.getWinRate() * 100));
+			data.add(String.format("%.1f", str.getOffenseRound()));
+			data.add(String.format("%.1f", str.getOffenseEfficiency()));
+			data.add(String.format("%.1f", str.getDefenceEfficiency()));
+			data.add(String.format("%.1f", str.getoRebsEfficiency()));
+			data.add(String.format("%.1f", str.getdRebsEfficiency()));
+			data.add(String.format("%.1f", str.getStealsEfficiency()));
+			data.add(String.format("%.1f", str.getAssistEfficiency()));
 
 			rowimage.add(data);
 		}
@@ -210,16 +211,14 @@ public class TeamPanel extends JPanel {
 		      } 
 		    });
 
-		JButton searchButton = new JButton(new ImageIcon("image\\find.png"));
+		JButton searchButton = new MyButton(new ImageIcon("image\\find.png"),FrameSize.buttonbackColor,Color.gray);
 		searchButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
-		searchButton.setBackground(FrameSize.buttonbackColor);
 		searchButton.setToolTipText("查找");
 		searchButton.addActionListener(e -> findClick(searchField.getText()));
 		header.add(searchButton);
 
-		JButton sortButton = new JButton(new ImageIcon("image\\sort.png"));
+		JButton sortButton = new MyButton(new ImageIcon("image\\sort.png"),FrameSize.buttonbackColor,Color.gray);
 		sortButton.setBounds(4 * FrameSize.width / 5 + 40, 10, 35, 35);
-		sortButton.setBackground(FrameSize.buttonbackColor);
 		sortButton.setToolTipText("排序");
 		sortButton.addActionListener(e -> sortClick());
 		header.add(sortButton);
@@ -228,9 +227,8 @@ public class TeamPanel extends JPanel {
 		dataType.setBounds(20, 10, 100, 35);
 		header.add(dataType);
 
-		JButton allButton = new JButton(new ImageIcon("image\\show.png"));
+		JButton allButton = new MyButton(new ImageIcon("image\\show.png"),FrameSize.buttonbackColor,Color.gray);
 		allButton.setBounds(140, 10, 45, 35);
-		allButton.setBackground(FrameSize.buttonbackColor);
 		allButton.setToolTipText("显示数据");
 		allButton.addActionListener(e -> showAllData());
 		header.add(allButton);
@@ -484,16 +482,19 @@ public class TeamPanel extends JPanel {
 		manageresult.setText(teamresult.getManage());// 主场
 		foundYearresult.setText(String.valueOf(teamresult.getFoundYear()));// 建立时间
 		
-		match=new JButton(new ImageIcon("image/showMatch.jpg"));
-		match.setBorder(null);
-		teamplayers=new JButton();
-		teamplayers.setText("员");
-		teamplayers.setBorder(null);
+		match=new MyButton("比赛",Color.black,Color.DARK_GRAY);
+		teamplayers=new MyButton("队员",Color.black,Color.DARK_GRAY);
+		
+		match.setFont(new Font("幼圆",Font.BOLD,12));
+		teamplayers.setFont(new Font("幼圆",Font.BOLD,12));
+		
+		match.setForeground(Color.red);
+		teamplayers.setForeground(Color.red);
 		
 		image.setOpaque(false);
 		
-		teamplayers.setBounds(FrameSize.width/3-45, 11*FrameSize.height /16, 40,40);
-		match.setBounds(FrameSize.width/3-90, 11*FrameSize.height /16, 40,40);
+		teamplayers.setBounds(FrameSize.width/3-60, 11*FrameSize.height /16, 55,30);
+		match.setBounds(FrameSize.width/3-130, 11*FrameSize.height /16, 58,30);
 		image.setBounds(FrameSize.width /10, FrameSize.height / 8, FrameSize.width / 4, 3*FrameSize.height /20);
 		nameresult.setBounds(FrameSize.width /20, FrameSize.height / 8 - 50, 100, 3*FrameSize.height/80 );
 		nameAbridgeresult.setBounds(9*FrameSize.width /40 ,
@@ -577,32 +578,11 @@ public class TeamPanel extends JPanel {
 		}
 		matchpanel=true;
 		teammatch=new TeamMatchPanel(nameAbridgeresult.getText());
-		JButton showAllButton=new JButton();
-		JButton showTeamButton=new JButton();
-
-		showAllButton.setBounds(0, 0, 20, 20);
-		showTeamButton.setBounds(40, 0,20 ,20);
-		teammatch.add(showAllButton);
-		teammatch.add(showTeamButton);
-		showAllButton.addActionListener(e->close_showall());
-		showTeamButton.addActionListener(e->close_showteam());
 		this.remove(jScrollPane);
 		this.add(teammatch);
 		this.repaint();
 	}
-	
-	/**关掉比赛panel 显示全部球队*/
-	void close_showall(){
-		this.remove(teammatch);
-		showAllData();
-	}
-	
-	/**关掉比赛panel 显示该球队*/
-	void close_showteam(){
-		this.remove(teammatch);
-		
-		findClick(nameAbridgeresult.getText());
-	}
+
 	
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
 		Dimension containerwidth = null;

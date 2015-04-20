@@ -2,6 +2,7 @@ package ui.mainui;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -52,6 +53,7 @@ public class MyFrame extends JFrame {
 	public static HotPanel hotpanel=new HotPanel();
 	public static MatchPanel matchpanel=new MatchPanel();
 	
+	JLabel locationlable=new JLabel();
 	
 	public MyFrame(){
 		this.setUndecorated(true);
@@ -106,12 +108,13 @@ public class MyFrame extends JFrame {
 	}
 	
 	void setHeadButton(){
-		JButton index =new MyButton(new ImageIcon("image/index.png"));
-		JButton playerbutton=new MyButton(new ImageIcon("image/player.png"));
-		JButton teambutton=new MyButton(new ImageIcon("image/team.png"));
-		JButton hotbutton=new MyButton(new ImageIcon("image/hot.png"));
-		JButton matchbutton=new MyButton(new ImageIcon("image/match.png"));
-		JButton helpbutton=new MyButton(new ImageIcon("image/help.png"));
+		JButton index =new MyButton(new ImageIcon("image/index.png"),Color.black,Color.DARK_GRAY);
+		JButton playerbutton=new MyButton(new ImageIcon("image/player.png"),Color.black,Color.DARK_GRAY);
+		JButton teambutton=new MyButton(new ImageIcon("image/team.png"),Color.black,Color.DARK_GRAY);
+		JButton hotbutton=new MyButton(new ImageIcon("image/hot.png"),Color.black,Color.DARK_GRAY);
+		JButton matchbutton=new MyButton(new ImageIcon("image/match.png"),Color.black,Color.DARK_GRAY);
+		JButton helpbutton=new MyButton(new ImageIcon("image/help.png"),Color.black,Color.DARK_GRAY);
+
 		
 		index.setBounds(10, 30,50,50);
 		playerbutton.setBounds(80, 30, 50, 50);
@@ -120,12 +123,11 @@ public class MyFrame extends JFrame {
 		matchbutton.setBounds(290, 30, 50, 50);
 		helpbutton.setBounds(360, 30, 50, 50);		
 		
-		index.setBackground(Color.red);
-		playerbutton.setBackground(Color.black);
-		teambutton.setBackground(Color.black);
-		hotbutton.setBackground(Color.black);
-		matchbutton.setBackground(Color.black);
-		helpbutton.setBackground(Color.black);
+		locationlable.setText("当前位置：主页");
+		locationlable.setOpaque(false);
+		locationlable.setForeground(Color.white);
+		locationlable.setBounds(FrameSize.width/2,FrameSize.height/25,150,30);
+		locationlable.setFont(new Font("微软雅黑",Font.BOLD,20));
 		
 		index.addActionListener(e->setIndex());
 		playerbutton.addActionListener(e->setPlayer());
@@ -133,6 +135,7 @@ public class MyFrame extends JFrame {
 		hotbutton.addActionListener(e->setHot());
 		matchbutton.addActionListener(e->setMatch());
 		
+		frame.add(locationlable);
 		frame.add(helpbutton);
 		frame.add(index);
 		frame.add(playerbutton);
@@ -143,22 +146,27 @@ public class MyFrame extends JFrame {
 	
 	void setIndex(){
 		card.show(mainpanel, "index");
+		locationlable.setText("当前位置：主页");
 	}
 	
 	void setPlayer(){
 		card.show(mainpanel, "player");
+		locationlable.setText("当前位置：球员");
 	}
 	
 	public void setTeam(){
 		card.show(mainpanel, "team");
+		locationlable.setText("当前位置：球队");
 	}
 	
 	void setHot(){
 		card.show(mainpanel, "hot");
+		locationlable.setText("当前位置：热点");
 	}
 	
 	void setMatch(){
 		card.show(mainpanel, "match");
+		locationlable.setText("当前位置：比赛");
 	}
 	
 	void setExit(){
