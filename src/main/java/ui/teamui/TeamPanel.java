@@ -56,7 +56,6 @@ public class TeamPanel extends JPanel {
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
     JComboBox searchBox;
-	JTextField searchField;
 	JPanel sort = new JPanel();
 	JPanel find = new JPanel();
 	JPanel welcome = new JPanel();
