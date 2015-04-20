@@ -8,6 +8,8 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -20,7 +22,7 @@ import ui.IndexPanel;
 import ui.MatchPanel;
 import ui.playerui.PlayerPanel;
 import ui.teamui.TeamPanel;
-import ui.mainui.MyButton;
+import bl.matchbl.MatchController;
 
 public class MyFrame extends JFrame {
 	
@@ -55,7 +57,7 @@ public class MyFrame extends JFrame {
 	public static MatchPanel matchpanel=new MatchPanel();
 	
 	public static JLabel locationlable=new JLabel();
-	
+	MatchController mc=new MatchController();
 	public MyFrame(){
 		this.setUndecorated(true);
 	    
@@ -64,6 +66,22 @@ public class MyFrame extends JFrame {
 		Image image = Toolkit.getDefaultToolkit().getImage("image/basketball.png");
 		this.setIconImage(image);
 		
+		Timer timer = new Timer();
+	 	   //timer 第一个任务
+	 	   TimerTask task1 = new TimerTask()
+	 	   {
+				public void run() 
+				{
+				 if(mc.changed()){
+					 mc.update();
+				 }
+				}
+	 	   };
+	 	   
+	 	   //代表2ms后开始执行task1，没100ms执行一次
+	 	   //100即为刷新频率，界面设为10秒一次
+	 	   timer.schedule(task1, 2,100); 	 
+	    
 
 		setFrame();
         

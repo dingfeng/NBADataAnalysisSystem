@@ -3,6 +3,7 @@ package ui.teamui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -12,6 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -72,6 +74,10 @@ public class TeamPanel extends JPanel {
 	JButton teamplayers;
 	TeamMatchPanel teammatch;
 	boolean matchpanel = false;
+
+	JTextField[] teamlabel=new UneditableTextField[54];
+	
+	
 	TeamController tc = new TeamController();
 	MatchController mc=new MatchController();
 	public TeamPanel() {
@@ -88,22 +94,7 @@ public class TeamPanel extends JPanel {
 			}
 		}.start();
 
-		Timer timer = new Timer();
- 	   //timer 第一个任务
- 	   TimerTask task1 = new TimerTask()
- 	   {
-			public void run() 
-			{
-			 if(mc.changed()){
-				 mc.update();
-			 }
-			}
- 	   };
- 	   
- 	   //代表2ms后开始执行task1，没100ms执行一次
- 	   //100即为刷新频率，界面设为10秒一次
- 	   timer.schedule(task1, 2,100); 	 
-    
+		
 		
 		setHeader();
 		setFind();
@@ -312,6 +303,10 @@ public class TeamPanel extends JPanel {
 		foundYear.setBounds(FrameSize.width / 40, FrameSize.height / 8 + 370,
 				FrameSize.width / 12, 30);
 
+		for(int i=0;i<54;i++){
+			teamlabel[i]=new UneditableTextField();
+		}
+		
 		find.add(name);
 		find.add(nameAbridge);
 		find.add(address);
@@ -434,16 +429,16 @@ public class TeamPanel extends JPanel {
 
 		jScrollPane.setVisible(false);
 
-		TeamMatchVO[] teamresult = new TeamMatchVO[1];
+		TeamMatchVO teamresult;
 
 		find.setVisible(false);
 
 		showOne(teamname);
 		try{
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
-			teamresult[0] = tc.getTotalTeam(teamname);
+			teamresult = tc.getTotalTeam(teamname);
 		} else {
-			teamresult[0] = tc.getAveTeam(teamname);
+			teamresult = tc.getAveTeam(teamname);
 		}
 		}catch (Exception e)
 		{
@@ -454,18 +449,94 @@ public class TeamPanel extends JPanel {
 				teamname = "NOH";
 			}
 			if (dataType.getSelectedItem().equals("赛季总数据")) {
-				teamresult[0] = tc.getTotalTeam(teamname);
+				teamresult = tc.getTotalTeam(teamname);
 			} else {
-				teamresult[0] = tc.getAveTeam(teamname);
+				teamresult = tc.getAveTeam(teamname);
 			}
 		}
-		setTable(teamresult);
+		TeamMessage(teamresult);
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
 
 	}
 
+	/**一个球队信息（右侧）*/
+	void TeamMessage(TeamMatchVO str){
+		JPanel teammessage=new JPanel();
+		teammessage.setLayout(new GridLayout(9,6,-1,-1));
+//		teammessage.setBorder(BorderFactory.createLineBorder(Color.white));
+		teammessage.setBackground(FrameSize.backColor);
+		teammessage.setBounds(FrameSize.width / 3, FrameSize.height / 12, 2*FrameSize.width / 3,
+				FrameSize.height * 7 / 8
+				- FrameSize.height / 12);
+		JTextField[] teamlabel=new UneditableTextField[54];
+		for(int i=0;i<54;i++){
+			teamlabel[i]=new UneditableTextField();
+			teammessage.add(teamlabel[i]);
+			teamlabel[i].setFont(new Font("",Font.PLAIN,15));
+			teamlabel[i].setBorder(BorderFactory.createLineBorder(Color.white));
+		}
+		teamlabel[0].setText("比赛场数");
+		teamlabel[2].setText("投篮命中数");
+		teamlabel[4].setText("投篮出手次数");
+		teamlabel[6].setText("三分命中数");
+		teamlabel[8].setText("三分出手数");
+		teamlabel[10].setText("罚球命中数");
+		teamlabel[12].setText("罚球出手数");
+		teamlabel[14].setText("进攻篮板数");
+		teamlabel[16].setText("防守篮板数");
+		teamlabel[18].setText("篮板数");
+		teamlabel[20].setText("助攻数");
+		teamlabel[22].setText("抢断数");
+		teamlabel[24].setText("盖帽数");
+		teamlabel[26].setText("失误数");
+		teamlabel[28].setText("犯规数");
+		teamlabel[30].setText("比赛得分");
+		teamlabel[32].setText("投篮命中率(%)");
+		teamlabel[34].setText("三分命中率(%)");
+		teamlabel[36].setText("罚球命中率(%)");
+		teamlabel[38].setText("胜率(%)");
+		teamlabel[40].setText("进攻回合");
+		teamlabel[42].setText("进攻效率");
+		teamlabel[44].setText("防守效率");
+		teamlabel[46].setText("进攻篮板效率");
+		teamlabel[48].setText("防守篮板效率");
+		teamlabel[50].setText("抢断效率");
+		teamlabel[52].setText("助攻率");
+		
+		teamlabel[1].setText(str.getMatchNo()+"");
+		teamlabel[3].setText(str.getHitNo()+"");
+		teamlabel[5].setText(str.getHandNo()+"");
+		teamlabel[7].setText(str.getThreeHitNo()+"");
+		teamlabel[9].setText(str.getThreeHandNo()+"");
+		teamlabel[11].setText(str.getPenaltyHitNo()+"");
+		teamlabel[13].setText(str.getPenaltyHandNo()+"");
+		teamlabel[15].setText(str.getOffenseRebs()+"");
+		teamlabel[17].setText(str.getDefenceRebs()+"");
+		teamlabel[19].setText(str.getRebs()+"");
+		teamlabel[21].setText(str.getAssistNo()+"");
+		teamlabel[23].setText(str.getStealsNo()+"");
+		teamlabel[25].setText(str.getBlockNo()+"");
+		teamlabel[27].setText(str.getMistakesNo()+"");
+		teamlabel[29].setText(str.getFoulsNo()+"");
+		teamlabel[31].setText(str.getPoints()+"");
+		teamlabel[33].setText(String.format("%.1f", str.getHitRate() * 100));
+		teamlabel[35].setText(String.format("%.1f", str.getThreeHitRate() * 100));
+		teamlabel[37].setText(String.format("%.1f", str.getPenaltyHitRate() * 100));
+		teamlabel[39].setText(String.format("%.1f", str.getWinRate() * 100));
+		teamlabel[41].setText(String.format("%.1f", str.getOffenseRound()));
+		teamlabel[43].setText(String.format("%.1f", str.getOffenseEfficiency()));
+		teamlabel[45].setText(String.format("%.1f", str.getDefenceEfficiency()));
+		teamlabel[47].setText(String.format("%.1f", str.getoRebsEfficiency()));
+		teamlabel[49].setText(String.format("%.1f", str.getdRebsEfficiency()));
+		teamlabel[51].setText(String.format("%.1f", str.getStealsEfficiency()));
+		teamlabel[53].setText(String.format("%.1f", str.getAssistEfficiency()));
+		jScrollPane.setVisible(false);
+		this.remove(jScrollPane);
+		this.add(teammessage);
+		this.repaint();
+	}	
 	/** 查看该球队队员 */
 	void setTeamPlayers(String team) {
 		String[] playernames = tc.getPlayers(team);
