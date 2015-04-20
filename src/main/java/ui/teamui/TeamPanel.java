@@ -102,23 +102,7 @@ public class TeamPanel extends JPanel {
  	   
  	   //代表2ms后开始执行task1，没100ms执行一次
  	   //100即为刷新频率，界面设为10秒一次
- 	   timer.schedule(task1, 2,100);
- 	   //5秒钟后结束task1。开始task2
- 	   try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
- 	 timer.cancel();
- 	 timer = new Timer();
- 	 
- 	 //5秒钟后结束task2
- 	 try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
- 	 timer.cancel();
+ 	   timer.schedule(task1, 2,100); 	 
     
 		
 		setHeader();

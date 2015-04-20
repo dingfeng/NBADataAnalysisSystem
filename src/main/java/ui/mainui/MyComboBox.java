@@ -10,6 +10,7 @@ public class MyComboBox extends JComboBox{
 	public MyComboBox(){
 		this.setBackground(new Color(68,68,68));
 		this.setForeground(Color.white);
+		this.setBorder(null);
 	}
 	
 	public MyComboBox(String [] a){

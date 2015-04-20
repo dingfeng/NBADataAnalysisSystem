@@ -102,9 +102,13 @@ public class MyFrame extends JFrame {
 	}
 	
 	public void setTitle(){
-		JLabel title = new JLabel(new ImageIcon("image/basketball.png"));
-//		title.setFont(new Font("微软雅黑", Font.BOLD, 17));
-		title.setBounds(5, -15, 24, 59);
+		JLabel icon = new JLabel(new ImageIcon("image/basketball.png"));
+		JLabel title =new JLabel("NBA Analysis System"); 
+		title.setFont(new Font("Comic Sans MS", Font.PLAIN, 17));
+		icon.setBounds(5, -15, 24, 59);
+		title.setBounds(FrameSize.width/2-100, -15, 200, 59);
+		title.setForeground(Color.white);
+		frame.add(icon);
 		frame.add(title);
 	}
 	
@@ -117,18 +121,18 @@ public class MyFrame extends JFrame {
 		JButton helpbutton=new MyButton(new ImageIcon("image/help.png"),Color.black,Color.DARK_GRAY);
 
 		
-		index.setBounds(10, 30,50,50);
-		hotbutton.setBounds(80, 30, 50, 50);
-		playerbutton.setBounds(150, 30, 50, 50);
-		teambutton.setBounds(220,30,50, 50);
-		matchbutton.setBounds(290, 30, 50, 50);
-		helpbutton.setBounds(360, 30, 50, 50);		
+		index.setBounds(10, 3*FrameSize.height/80,50,50);
+		hotbutton.setBounds(80, 3*FrameSize.height/80, 50, 50);
+		playerbutton.setBounds(150, 3*FrameSize.height/80, 50, 50);
+		teambutton.setBounds(220,3*FrameSize.height/80,50, 50);
+		matchbutton.setBounds(290, 3*FrameSize.height/80, 50, 50);
+		helpbutton.setBounds(360, 3*FrameSize.height/80, 50, 50);		
 		
 		locationlable.setText("当前位置：主页");
 		locationlable.setOpaque(false);
 		locationlable.setForeground(Color.white);
-		locationlable.setBounds(FrameSize.width/2,FrameSize.height/25,150,30);
-		locationlable.setFont(new Font("微软雅黑",Font.BOLD,20));
+		locationlable.setBounds(FrameSize.width/2,FrameSize.height/20,150,30);
+		locationlable.setFont(new Font("微软雅黑",Font.PLAIN,20));
 		
 		index.addActionListener(e->setIndex());
 		playerbutton.addActionListener(e->setPlayer());
