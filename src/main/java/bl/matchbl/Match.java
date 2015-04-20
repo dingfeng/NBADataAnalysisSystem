@@ -3,6 +3,7 @@ package bl.matchbl;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -293,4 +294,29 @@ public class Match
     	else return false;
     }
 
+    public MatchesPO[]   getTime_TeamMatches(Date date1, Date date2, String teamname)
+    {
+    	MatchesPO[]  timeMatches = getTimeMatches(date1, date2);
+    	MatchesPO  temp = null;
+    	ArrayList<MatchesPO>  matches_list = new ArrayList<MatchesPO>();
+    	MatchTeamPO teampo = null;
+    	for (int i = 0; i < timeMatches.length; i++)
+    	{
+    		temp = timeMatches[i];
+    		teampo = temp.getTeam1();
+    	    if (teampo.getName().equals(teamname))
+    	    {
+    	    	matches_list.add(temp);
+    	    	continue;
+    	    }
+    	    teampo = temp.getTeam2();
+    	    if (teampo.getName().equals(teamname))
+    	    {
+    	    	matches_list.add(temp);
+    	    }
+    	}
+    	MatchesPO[] result_matches = new MatchesPO[matches_list.size()];
+    	matches_list.toArray(result_matches);
+		return result_matches;
+    }
 }

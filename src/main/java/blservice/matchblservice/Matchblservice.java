@@ -19,5 +19,6 @@ public interface Matchblservice
 	public MatchesPO[] getPlayerMatches(String playername);
 	public MatchesPO[] getTeamMatches(String teamname);
     public MatchesPO[] getTimeMatches(Date date1, Date date2);
-     
+    public MatchesPO[] getTime_TeamMatches(Date date1, Date date2, String teamname);
+    
 }
