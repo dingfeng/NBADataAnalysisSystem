@@ -75,10 +75,15 @@ public class PlayerPanel extends JPanel {
 	JComboBox<String> screenPlayerBox;
 	JComboBox<String> dataType;
 	boolean sortType = true;
+	
+	PlayerMatchVO[] allPlayers;
+	boolean isPlayer=false;
 
 	PlayerController playerController = new PlayerController();
 	
 	public PlayerPanel() {
+		allPlayers=playerController.sortTotalPlayers(PlayerSortBy.name,
+				SortType.ASEND);
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
 		this.setBackground(FrameSize.backColor);
@@ -86,8 +91,7 @@ public class PlayerPanel extends JPanel {
 		JPanel header = headerPanel();
 		new Thread() {
 			public void run() {
-				setTable(playerController.sortTotalPlayers(PlayerSortBy.name,
-						SortType.ASEND));
+				setTable(allPlayers);
 			}
 		}.start();
 		;
@@ -246,8 +250,15 @@ public class PlayerPanel extends JPanel {
 		mytable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
+					try{
 					showOne((String) mytable.getModel().getValueAt(
 							mytable.getSelectedRow(), 0));
+					}catch(NullPointerException e1){
+						MyFrame.playerpanel.remove(findPanel);
+						MyFrame.playerpanel.add(welcomePanel);
+						MyFrame.playerpanel.repaint();
+						JOptionPane.showMessageDialog(null, "未找到该球员的个人信息", "查找失败",JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 
@@ -844,16 +855,27 @@ public class PlayerPanel extends JPanel {
 
 	/** 点击查找按钮 */
 	public void findPlayerClick(String playerInfo) {
+		isPlayer=false;
 		if (playerInfo.equals("")) {
-			JOptionPane.showMessageDialog(this, "请输入查找球员的名字");
+			JOptionPane.showMessageDialog(null, "请输入查找球员的名字", "查找失败",JOptionPane.ERROR_MESSAGE);
 			return;
-		} else if (playerController.findPlayer(playerInfo) == null) {
-			JOptionPane.showMessageDialog(this, "未查到球员信息");
-			return;
-		}
-
-//		String playerInfo = searchField.getText();
-		showOne(playerInfo);
+		}else{
+			for(int i=0;i<allPlayers.length;i++){
+				if(playerInfo.equals(allPlayers[i].getName())){
+					isPlayer=true;
+					break;
+				}
+			}
+			if(!isPlayer){
+				JOptionPane.showMessageDialog(null, "请输入正确的球员的名字", "查找失败",JOptionPane.ERROR_MESSAGE);
+			}
+			else if (playerController.findPlayer(playerInfo) == null) {
+				JOptionPane.showMessageDialog(null, "未找到该球员的个人信息", "查找失败",JOptionPane.ERROR_MESSAGE);
+			}
+			else{
+				showOne(playerInfo);
+			}
+		} 
 
 		jScrollPane.setVisible(false);
 		PlayerMatchVO[] onePlayer = new PlayerMatchVO[1];
