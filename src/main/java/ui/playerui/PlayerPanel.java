@@ -647,14 +647,14 @@ public class PlayerPanel extends JPanel {
 		      } 
 		    });
 
-		JButton findButton = new MyButton(new ImageIcon("image\\find.png"),Color.white, Color.gray);
+		JButton findButton = new MyButton(new ImageIcon("image\\find.png"),Color.GRAY, Color.LIGHT_GRAY);
 		findButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
 //		findButton.setBackground(new Color(68, 68, 68));
 		findButton.setToolTipText("查找");
 		findButton.addActionListener(e -> findPlayerClick(searchBox.getSelectedItem().toString()));
 		panel.add(findButton);
 
-		JButton screenButton = new MyButton(new ImageIcon("image\\screen.png"),Color.white, Color.gray);
+		JButton screenButton = new MyButton(new ImageIcon("image\\screen.png"),Color.GRAY, Color.LIGHT_GRAY);
 		screenButton.setBounds(4 * FrameSize.width / 5 + 40, 10, 35, 35);
 //		screenButton.setBackground(new Color(68, 68, 68));
 		screenButton.setToolTipText("筛选");
@@ -665,7 +665,7 @@ public class PlayerPanel extends JPanel {
 		dataType.setBounds(20, 10, 100, 35);
 		panel.add(dataType);
 
-		JButton allButton = new MyButton(new ImageIcon("image\\show.png"),Color.white, Color.gray);
+		JButton allButton = new MyButton(new ImageIcon("image\\show.png"),Color.GRAY, Color.LIGHT_GRAY);
 		allButton.setBounds(140, 10, 45, 35);
 //		allButton.setBackground(new Color(68, 68, 68));
 		allButton.setToolTipText("显示");
