@@ -53,7 +53,6 @@ public class PlayerPanel extends JPanel {
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
 	JTextField searchField = new JTextField();
-	JPanel sortPanel = new JPanel();
 	JPanel findPanel = new JPanel();
 	JPanel screenPanel = new JPanel();
 	MyTable mytable;
@@ -79,7 +78,6 @@ public class PlayerPanel extends JPanel {
 	JComboBox<String> playerAreaBox;
 	JComboBox<String> screenPlayerBox;
 	JComboBox<String> dataType;
-	boolean sortType = true;
 	
 	PlayerMatchVO[] allPlayers;
 	boolean isPlayer=false;
@@ -94,8 +92,13 @@ public class PlayerPanel extends JPanel {
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
 		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
-		allPlayerNames = playerController.getAllPlayerNames();
-		searchBox = new MyComboBox(allPlayerNames);
+		PlayerMatchVO[] player = playerController.sortTotalPlayers(
+				PlayerSortBy.name, SortType.ASEND);
+		String playerName [] = new String[player.length];
+		for (int i = 0; i < player.length; i++) {
+			playerName[i]=player[i].getName();
+		}
+		searchBox = new MyComboBox(playerName);
 		searchBox.setBorder(null);
 		searchBox.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
 				35);
@@ -109,7 +112,6 @@ public class PlayerPanel extends JPanel {
 		}.start();
 		;
 
-		setSort();
 		setFind();
 		setScreen();
 		setWelcome();
@@ -283,7 +285,6 @@ public class PlayerPanel extends JPanel {
 	/**显示一个球队的所有球员*/
 	public void showTeamPlayers(PlayerMatchVO[] playerMatchVO){
 		this.remove(welcomePanel);
-		this.remove(sortPanel);
 		this.remove(screenPanel);
 		jScrollPane.setVisible(false);
 		setTable(playerMatchVO);
@@ -300,7 +301,6 @@ public class PlayerPanel extends JPanel {
 			matchpanel=false;
 		}
 		this.remove(welcomePanel);
-		this.remove(sortPanel);
 		this.remove(screenPanel);
 		findPanel.remove(actionLabel);
 
@@ -616,64 +616,6 @@ public class PlayerPanel extends JPanel {
 
 	}
 
-	/** 排序Panel */
-	private void setSort() {
-
-		sortPanel.setLayout(null);
-		sortPanel.setBackground(FrameSize.backColor);
-		sortPanel.setBounds(0, FrameSize.height / 12, FrameSize.width / 3,
-				11 * FrameSize.height / 12);
-
-		JLabel sortPanelby = new JLabel("排序依据");
-		sortPanelby.setForeground(Color.white);
-		sortPanelby.setBounds(FrameSize.width / 30, FrameSize.height / 5, 100,
-				40);
-		sortPanelby.setFont(new Font("微软雅黑", Font.BOLD, 17));
-		sortPanel.add(sortPanelby);
-
-		sortPlayerBox = new MyComboBox(new String[] { "球员名称", "所属球队", "参赛场数",
-				"先发场数", "篮板数", "助攻数", "在场时间", "投篮命中率", "三分命中率", "罚球命中率", "进攻数",
-				"防守数", "抢断数", "盖帽数", "失误数", "犯规数", "得分", "效率", "GmSc效率值",
-				"真实命中率", "投篮效率", "篮板率", "进攻篮板率", "防守篮板率", "助攻率", "抢断率", "盖帽率",
-				"失误率", "使用率" });
-		sortPlayerBox.setBounds(FrameSize.width / 8, FrameSize.height / 5, 150,
-				40);
-		sortPlayerBox.setFont(new Font("宋体", Font.PLAIN, 12));
-		sortPanel.add(sortPlayerBox);
-
-		JButton yes = new MyButton(new ImageIcon("image/yes.png"),Color.white,Color.gray);
-		yes.setBounds(FrameSize.width / 4, 3 * FrameSize.height / 5, 50, 50);
-//		yes.setBackground(Color.white);
-		yes.addActionListener(e -> sortPlayerConfirmClick());
-		sortPanel.add(yes);
-
-		JLabel bigLabel = new JLabel(new ImageIcon("image/升序.png"));
-		JRadioButton upRadioButton = new JRadioButton();
-		upRadioButton.setBackground(FrameSize.backColor);
-		upRadioButton.addActionListener(e -> sortType = true);
-		JLabel smallLabel = new JLabel(new ImageIcon("image/降序.png"));
-		JRadioButton downRadioButton = new JRadioButton();
-		downRadioButton.setBackground(FrameSize.backColor);
-		downRadioButton.addActionListener(e -> sortType = false);
-		bigLabel.setBounds(FrameSize.width / 10, FrameSize.height / 3 + 40, 50,
-				50);
-		upRadioButton.setBounds(FrameSize.width / 10 - 30,
-				FrameSize.height / 3 + 50, 30, 30);
-		smallLabel.setBounds(FrameSize.width / 10 + 120,
-				FrameSize.height / 3 + 40, 50, 50);
-		downRadioButton.setBounds(FrameSize.width / 10 + 80,
-				FrameSize.height / 3 + 50, 30, 30);
-		bigLabel.setBackground(Color.white);
-		smallLabel.setBackground(Color.white);
-		ButtonGroup bg = new ButtonGroup();
-		bg.add(upRadioButton);
-		bg.add(downRadioButton);
-		sortPanel.add(bigLabel);
-		sortPanel.add(smallLabel);
-		sortPanel.add(upRadioButton);
-		sortPanel.add(downRadioButton);
-
-	}
 
 	/** 标题Panel */
 	private JPanel headerPanel() {
@@ -706,15 +648,8 @@ public class PlayerPanel extends JPanel {
 		findButton.addActionListener(e -> findPlayerClick(searchBox.getSelectedItem().toString()));
 		panel.add(findButton);
 
-		JButton sortButton = new MyButton(new ImageIcon("image\\sort.png"),Color.white, Color.gray);
-		sortButton.setBounds(4 * FrameSize.width / 5 + 40, 10, 35, 35);
-//		sortButton.setBackground(new Color(68, 68, 68));
-		sortButton.setToolTipText("排序");
-		sortButton.addActionListener(e -> sortPlayerClick());
-		panel.add(sortButton);
-
 		JButton screenButton = new MyButton(new ImageIcon("image\\screen.png"),Color.white, Color.gray);
-		screenButton.setBounds(4 * FrameSize.width / 5 + 80, 10, 35, 35);
+		screenButton.setBounds(4 * FrameSize.width / 5 + 40, 10, 35, 35);
 //		screenButton.setBackground(new Color(68, 68, 68));
 		screenButton.setToolTipText("筛选");
 		screenButton.addActionListener(e -> screenPlayerClick());
@@ -772,109 +707,12 @@ public class PlayerPanel extends JPanel {
 	private void screenPlayerClick() {
 		this.remove(welcomePanel);
 		this.remove(findPanel);
-		this.remove(sortPanel);
 		this.add(screenPanel);
 		this.repaint();
 	}
 
-	/** 点击排序按钮 */
-	private void sortPlayerClick() {
-		this.remove(welcomePanel);
-		this.remove(findPanel);
-		this.remove(screenPanel);
-		this.add(sortPanel);
-		this.repaint();
-	}
 
-	/** 点击排序确认按钮 */
-	private void sortPlayerConfirmClick() {
 
-		jScrollPane.setVisible(false);
-
-		SortType type = null;
-
-		if (sortType == true) {
-			type = SortType.ASEND;
-		} else {
-			type = SortType.DESEND;
-		}
-
-		PlayerSortBy playerSortBy = null;
-		String sortBy = (String) sortPlayerBox.getSelectedItem();
-		if (sortBy.equals("球员名称")) {
-			playerSortBy = PlayerSortBy.name;
-		} else if (sortBy.equals("所属球队")) {
-			playerSortBy = PlayerSortBy.team;
-		} else if (sortBy.equals("参赛场数")) {
-			playerSortBy = PlayerSortBy.matchNo;
-		} else if (sortBy.equals("先发场数")) {
-			playerSortBy = PlayerSortBy.firstServiceNo;
-		} else if (sortBy.equals("篮板数")) {
-			playerSortBy = PlayerSortBy.rebs;
-		} else if (sortBy.equals("助攻数")) {
-			playerSortBy = PlayerSortBy.assistNo;
-		} else if (sortBy.equals("在场时间")) {
-			playerSortBy = PlayerSortBy.time;
-		} else if (sortBy.equals("投篮命中率")) {
-			playerSortBy = PlayerSortBy.hitRate;
-		} else if (sortBy.equals("三分命中率")) {
-			playerSortBy = PlayerSortBy.threeHitRate;
-		} else if (sortBy.equals("罚球命中率")) {
-			playerSortBy = PlayerSortBy.penaltyHitRate;
-		} else if (sortBy.equals("进攻数")) {
-			playerSortBy = PlayerSortBy.offendNo;
-		} else if (sortBy.equals("防守数")) {
-			playerSortBy = PlayerSortBy.defenceNo;
-		} else if (sortBy.equals("抢断数")) {
-			playerSortBy = PlayerSortBy.stealsNo;
-		} else if (sortBy.equals("盖帽数")) {
-			playerSortBy = PlayerSortBy.blockNo;
-		} else if (sortBy.equals("失误数")) {
-			playerSortBy = PlayerSortBy.mistakesNo;
-		} else if (sortBy.equals("犯规数")) {
-			playerSortBy = PlayerSortBy.foulsNo;
-		} else if (sortBy.equals("得分")) {
-			playerSortBy = PlayerSortBy.points;
-		} else if (sortBy.equals("效率")) {
-			playerSortBy = PlayerSortBy.efficiency;
-		} else if (sortBy.equals("GmSc效率值")) {
-			playerSortBy = PlayerSortBy.gmScEfficiency;
-		} else if (sortBy.equals("真实命中率")) {
-			playerSortBy = PlayerSortBy.trueHitRate;
-		} else if (sortBy.equals("投篮效率")) {
-			playerSortBy = PlayerSortBy.hitEfficiency;
-		} else if (sortBy.equals("篮板率")) {
-			playerSortBy = PlayerSortBy.rebEfficiency;
-		} else if (sortBy.equals("进攻篮板率")) {
-			playerSortBy = PlayerSortBy.offenseRebsEfficiency;
-		} else if (sortBy.equals("防守篮板率")) {
-			playerSortBy = PlayerSortBy.defenceRebsEfficiency;
-		} else if (sortBy.equals("助攻率")) {
-			playerSortBy = PlayerSortBy.assistEfficiency;
-		} else if (sortBy.equals("抢断率")) {
-			playerSortBy = PlayerSortBy.stealsEfficiency;
-		} else if (sortBy.equals("盖帽率")) {
-			playerSortBy = PlayerSortBy.blockEfficiency;
-		} else if (sortBy.equals("失误率")) {
-			playerSortBy = PlayerSortBy.mistakeEfficiency;
-		} else if (sortBy.equals("使用率")) {
-			playerSortBy = PlayerSortBy.useEfficiency;
-		}
-		PlayerMatchVO[] sortPlayer ;
-		if(dataType.getSelectedItem().equals("赛季总数据")){
-		sortPlayer = playerController.sortTotalPlayers(
-					playerSortBy, type);
-		}else{
-		sortPlayer = playerController.sortAvePlayers(
-				playerSortBy, type);
-		}
-		setTable(sortPlayer);
-		jScrollPane.repaint();
-		jScrollPane.setVisible(true);
-
-		this.add(jScrollPane);
-		this.repaint();
-	}
 
 	/** 点击查找按钮 */
 	public void findPlayerClick(String playerInfo) {
