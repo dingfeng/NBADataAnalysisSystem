@@ -81,9 +81,6 @@ public class MatchPanel extends JPanel {
 	JLabel teamImage1 = new JLabel();
 	JLabel teamImage2 = new JLabel();
 
-	JRadioButton dateRadioButton;
-	JRadioButton tpRadioButton;
-
 	public MatchPanel() {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
@@ -119,59 +116,61 @@ public class MatchPanel extends JPanel {
 
 		dateButton1 = new DateChooseButton();
 		dateButton1.setBounds(50, 10, 200, 35);
+		dateButton1.addActionListener(e -> findMatchConfirmClick());
 		header.add(dateButton1);
-		
+
 		dateButton2 = new DateChooseButton();
 		dateButton2.setBounds(300, 10, 200, 35);
+		dateButton2.addActionListener(e -> findMatchConfirmClick());
 		header.add(dateButton2);
 
 		teamBox = new MyComboBox("球队", teamName);
-		teamBox.setBounds(FrameSize.width-450, 10, 100, 35);
+		teamBox.setBounds(FrameSize.width - 450, 10, 100, 35);
 		header.add(teamBox);
 		teamBox.addActionListener(e -> setPlayerBox());
 
 		playerBox = new MyComboBox("球员", playerName);
-		playerBox.setBounds(FrameSize.width-300, 10, 160, 35);
+		playerBox.setBounds(FrameSize.width - 300, 10, 160, 35);
+		playerBox.addActionListener(e -> findMatchConfirmClick());
 		header.add(playerBox);
 
-		dateRadioButton = new JRadioButton();
-		tpRadioButton = new JRadioButton();
-		ButtonGroup bg = new ButtonGroup();
-		bg.add(dateRadioButton);
-		bg.add(tpRadioButton);
-		dateRadioButton.setBounds(20, 10, 20, 20);
-		tpRadioButton.setBounds(FrameSize.width-500, 10, 20, 20);
-		header.add(dateRadioButton);
-		header.add(tpRadioButton);
-
-		JButton yesButton = new JButton(new ImageIcon("image/yes.png"));
-		yesButton.setBounds(FrameSize.width-100, 10, 30, 30);
-		yesButton.setBackground(Color.white);
-		yesButton.addActionListener(e -> findMatchConfirmClick());
-		header.add(yesButton);
 	}
 
 	/** 查找比赛 */
 	private void findMatchConfirmClick() {
-		if (dateRadioButton.isSelected()) {
-			Date date1 = dateButton1.getDate();
-			Date date2 = dateButton2.getDate();
-			if(date1.compareTo(date2)>0){
-				JOptionPane.showMessageDialog(this,"起始时间应不晚于终止时间");
-			}
-			else{
-				findMatchAccordingDate(date1,date2);
-			}
-		} else if (tpRadioButton.isSelected()) {
-			if (!playerBox.getSelectedItem().equals("球员")) {
-				findMatchAccordingPlayer((String) playerBox.getSelectedItem());
-			} else if (!teamBox.getSelectedItem().equals("球队")) {
-				findMatchAccordingTeam((String) teamBox.getSelectedItem());
-			} else {
-				JOptionPane.showMessageDialog(this, "请选择球队或球员");
-			}
+		System.out.println("yeah");
+		Date date1 = dateButton1.getDate();
+		Date date2 = dateButton2.getDate();
+		if (date1.compareTo(date2) > 0) {
+			JOptionPane.showMessageDialog(this, "起始时间应不晚于终止时间");
+		}
+		String team = teamBox.getSelectedItem().toString();
+		if (team.equals("球队")) {
+			team = null;
+		}
+		String player = playerBox.getSelectedItem().toString();
+		if (player.equals("球员")) {
+			player = null;
+		}
+		if (team==null&& player==null) {
+			findMatchAccordingDate(date1, date2);
 		} else {
-			JOptionPane.showMessageDialog(this, "请选择查找类型");
+			this.remove(matchScrollPane);
+			showPanel.remove(scoreScrollPane);
+			showPanel.remove(player1ScrollPane);
+			showPanel.remove(player2ScrollPane);
+			this.remove(showPanel);
+			matches = matchController.getTime_TeamMatches(date1, date2, team,
+					player);
+			matchScrollPane.setVisible(false);
+			setMatchTable(matches, 0);
+			matchScrollPane.setVisible(true);
+			showPanel.add(scoreScrollPane);
+			showPanel.add(player1ScrollPane);
+			showPanel.add(player2ScrollPane);
+			this.add(showPanel);
+			this.add(matchScrollPane);
+			this.repaint();
 		}
 	}
 
@@ -261,10 +260,12 @@ public class MatchPanel extends JPanel {
 			playerBox = new MyComboBox("球员", player);
 			playerBox.repaint();
 			header.add(playerBox);
-			playerBox.setBounds(FrameSize.width-300, 10, 160, 35);
+			playerBox.setBounds(FrameSize.width - 300, 10, 160, 35);
+			playerBox.addActionListener(e -> findMatchConfirmClick());
 			playerBox.setVisible(true);
 			header.repaint();
 			this.repaint();
+			findMatchConfirmClick();
 		}
 	}
 
@@ -328,6 +329,7 @@ public class MatchPanel extends JPanel {
 
 		// 设置比分表格
 		setScoreTable(team1, team2);
+		myScoreTable.setRowHeight(16);
 		scoreScrollPane.setBounds(panelWidth * 39 / 120, panelHeight * 2 / 20,
 				panelWidth * 42 / 120, 55);
 		resizeTable(false, scoreScrollPane, myScoreTable);
@@ -403,7 +405,7 @@ public class MatchPanel extends JPanel {
 		columnsName.add("比分");
 
 		Vector data = new Vector();
-		for (int i = matches.length-1; i >= 0; i--) {
+		for (int i = matches.length - 1; i >= 0; i--) {
 			Vector rowData = new Vector();
 			rowData.add(matches[i].getDate());
 			rowData.add(matches[i].getTeam1().getName() + "-"
@@ -551,20 +553,22 @@ public class MatchPanel extends JPanel {
 		myPlayer1Table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					MyFrame.playerpanel.findPlayerClick((String)myPlayer1Table.getModel().getValueAt(myPlayer1Table.getSelectedRow(), 0));
+					MyFrame.playerpanel.findPlayerClick((String) myPlayer1Table
+							.getModel().getValueAt(
+									myPlayer1Table.getSelectedRow(), 0));
 					MyFrame.card.show(MyFrame.mainpanel, "player");
 					MyFrame.locationlable.setText("当前位置：球员");
 				}
 			}
 
-		});		
+		});
 		player1ScrollPane = new JScrollPane(myPlayer1Table);
 		player1ScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		player1ScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		resizeTable(false, player1ScrollPane, myPlayer1Table);
-		resizeTable(true,player1ScrollPane,myPlayer1Table);
+		resizeTable(true, player1ScrollPane, myPlayer1Table);
 		player1ScrollPane.repaint();
 		player1ScrollPane.validate();
 
@@ -598,11 +602,13 @@ public class MatchPanel extends JPanel {
 				if (e.getClickCount() == 2) {
 					MyFrame.card.show(MyFrame.mainpanel, "player");
 					MyFrame.locationlable.setText("当前位置：球员");
-					MyFrame.playerpanel.findPlayerClick((String)myPlayer2Table.getModel().getValueAt(myPlayer2Table.getSelectedRow(), 0));
+					MyFrame.playerpanel.findPlayerClick((String) myPlayer2Table
+							.getModel().getValueAt(
+									myPlayer2Table.getSelectedRow(), 0));
 				}
 			}
 
-		});	
+		});
 		player2ScrollPane = new JScrollPane(myPlayer2Table);
 		player2ScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
