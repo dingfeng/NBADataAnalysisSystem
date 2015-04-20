@@ -1,7 +1,6 @@
 package ui.teamui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -9,30 +8,27 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
 import po.TeamPO;
-import ui.mainui.EditableTextField;
 import ui.mainui.FrameSize;
 import ui.mainui.MyButton;
 import ui.mainui.MyComboBox;
@@ -43,6 +39,7 @@ import vo.PlayerMatchVO;
 import vo.SortType;
 import vo.TeamMatchVO;
 import vo.TeamSortBy;
+import bl.matchbl.MatchController;
 import bl.playerbl.PlayerController;
 import bl.teambl.TeamController;
 
@@ -76,7 +73,7 @@ public class TeamPanel extends JPanel {
 	TeamMatchPanel teammatch;
 	boolean matchpanel = false;
 	TeamController tc = new TeamController();
-
+	MatchController mc=new MatchController();
 	public TeamPanel() {
 		String[] teamNames = tc.getTeamNames();
 		searchBox = new MyComboBox(teamNames);
@@ -91,7 +88,39 @@ public class TeamPanel extends JPanel {
 			}
 		}.start();
 
-		setSort();
+		Timer timer = new Timer();
+ 	   //timer 第一个任务
+ 	   TimerTask task1 = new TimerTask()
+ 	   {
+			public void run() 
+			{
+			 if(mc.changed()){
+				 mc.update();
+			 }
+			}
+ 	   };
+ 	   
+ 	   //代表2ms后开始执行task1，没100ms执行一次
+ 	   //100即为刷新频率，界面设为10秒一次
+ 	   timer.schedule(task1, 2,100);
+ 	   //5秒钟后结束task1。开始task2
+ 	   try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+ 	 timer.cancel();
+ 	 timer = new Timer();
+ 	 
+ 	 //5秒钟后结束task2
+ 	 try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+ 	 timer.cancel();
+    
+		
 		setHeader();
 		setFind();
 		setWelcome();
@@ -201,7 +230,6 @@ public class TeamPanel extends JPanel {
 	}
 	
 
-
 	/** 设置标题 */
 	void setHeader() {
 		header.setLayout(null);
@@ -227,12 +255,6 @@ public class TeamPanel extends JPanel {
 		searchButton.addActionListener(e -> findClick(searchBox.getSelectedItem().toString()));
 		header.add(searchButton);
 
-		JButton sortButton = new MyButton(new ImageIcon("image\\sort.png"),
-				Color.GRAY, Color.LIGHT_GRAY);
-		sortButton.setBounds(4 * FrameSize.width / 5 + 40, 10, 35, 35);
-		sortButton.setToolTipText("排序");
-		sortButton.addActionListener(e -> sortClick());
-		header.add(sortButton);
 
 		dataType = new MyComboBox(new String[] { "赛季总数据", "场均数据" });
 		dataType.setBounds(20, 10, 100, 35);
@@ -267,59 +289,6 @@ public class TeamPanel extends JPanel {
 
 	}
 
-	/** 排序 */
-	void setSort() {
-		sort.setLayout(null);
-		sort.setBackground(FrameSize.backColor);
-		sort.setBounds(0, FrameSize.height / 12, FrameSize.width / 3,
-				FrameSize.height * 7 / 8 - FrameSize.height / 12);
-
-		JLabel sortby = new JLabel("排序依据");
-		sortby.setBounds(FrameSize.width / 30, FrameSize.height / 5,
-				FrameSize.width / 12, FrameSize.height / 20);
-		sortby.setFont(new Font("微软雅黑", Font.BOLD, 17));
-		sortby.setForeground(Color.white);
-		sort.add(sortby);
-
-		box = new MyComboBox(new String[] { "球队名称", "比赛场数", "投篮命中数", "投篮出手次数",
-				"三分命中数", "三分出手数", "罚球命中数", "罚球出手数", "进攻篮板数", "防守篮板数", "篮板数",
-				"助攻数", "抢断数", "盖帽数", "失误数", "犯规数", "比赛得分", "投篮命中率", "三分命中率",
-				"罚球命中率", "胜率", "进攻回合", "进攻效率", "防守效率", "进攻篮板效率", "防守篮板效率",
-				"抢断效率", "助攻率" });
-		box.setBounds(FrameSize.width / 8, FrameSize.height / 5, 150, 40);
-		box.setFont(new Font("宋体", Font.PLAIN, 12));
-		sort.add(box);
-
-		JButton yes = new JButton(new ImageIcon("image/yes.png"));
-		yes.setBounds(FrameSize.width / 4, 3 * FrameSize.height / 5, 50, 50);
-		yes.setBackground(FrameSize.buttonbackColor);
-
-		sort.add(yes);
-
-		JLabel big = new JLabel(new ImageIcon("image/升序.png"));
-		JRadioButton up = new JRadioButton();
-		up.setBackground(FrameSize.buttonbackColor);
-		JLabel small = new JLabel(new ImageIcon("image/降序.png"));
-		JRadioButton down = new JRadioButton();
-		down.setBackground(FrameSize.buttonbackColor);
-		up.addActionListener(e -> sorttype = true);
-		down.addActionListener(e -> sorttype = false);
-		big.setBounds(FrameSize.width / 10, FrameSize.height / 3 + 40, 50, 50);
-		up.setBounds(FrameSize.width / 10 - 30, FrameSize.height / 3 + 50, 30,
-				30);
-		small.setBounds(FrameSize.width / 10 + 120, FrameSize.height / 3 + 40,
-				50, 50);
-		down.setBounds(FrameSize.width / 10 + 80, FrameSize.height / 3 + 50,
-				30, 30);
-		ButtonGroup bg = new ButtonGroup();
-		yes.addActionListener(e -> confirmClick());
-		bg.add(up);
-		bg.add(down);
-		sort.add(big);
-		sort.add(small);
-		sort.add(up);
-		sort.add(down);
-	}
 
 	/** 搜索 */
 	void setFind() {
@@ -381,105 +350,6 @@ public class TeamPanel extends JPanel {
 		welcome.add(nba);
 	}
 
-	/** 点击排序按钮 */
-	void sortClick() {
-
-		this.remove(welcome);
-		this.remove(find);
-		sort.repaint();
-		this.add(sort);
-		this.repaint();
-
-	}
-
-	/** 点击排序确认按钮 */
-	void confirmClick() {
-		SortType type = null;
-
-		jScrollPane.setVisible(false);
-		if (sorttype == true) {
-			type = SortType.DESEND;
-		} else {
-			type = SortType.ASEND;
-		}
-		TeamSortBy teamSortBy = null;
-		String sortby = (String) box.getSelectedItem();
-		if (sortby.equals("球队名称")) {
-			teamSortBy = TeamSortBy.name;
-		} else if (sortby.equals("比赛场数")) {
-			teamSortBy = TeamSortBy.matchNo;
-		} else if (sortby.equals("投篮命中数")) {
-			teamSortBy = TeamSortBy.hitNo;
-		} else if (sortby.equals("投篮出手次数")) {
-			teamSortBy = TeamSortBy.handNo;
-		} else if (sortby.equals("三分命中数")) {
-			teamSortBy = TeamSortBy.threeHitNo;
-		} else if (sortby.equals("三分出手数")) {
-			teamSortBy = TeamSortBy.threeHandNo;
-		} else if (sortby.equals("罚球命中数")) {
-			teamSortBy = TeamSortBy.penaltyHitNo;
-		} else if (sortby.equals("罚球出手数")) {
-			teamSortBy = TeamSortBy.penaltyHandNo;
-		} else if (sortby.equals("进攻篮板数")) {
-			teamSortBy = TeamSortBy.offenseRebs;
-		} else if (sortby.equals("防守篮板数")) {
-			teamSortBy = TeamSortBy.defenceRebs;
-		} else if (sortby.equals("篮板数")) {
-			teamSortBy = TeamSortBy.rebs;
-		} else if (sortby.equals("助攻数")) {
-			teamSortBy = TeamSortBy.assistNo;
-		} else if (sortby.equals("抢断数")) {
-			teamSortBy = TeamSortBy.stealsNo;
-		} else if (sortby.equals("盖帽数")) {
-			teamSortBy = TeamSortBy.blockNo;
-		} else if (sortby.equals("失误数")) {
-			teamSortBy = TeamSortBy.mistakesNo;
-		} else if (sortby.equals("犯规数")) {
-			teamSortBy = TeamSortBy.foulsNo;
-		} else if (sortby.equals("比赛得分")) {
-			teamSortBy = TeamSortBy.points;
-		} else if (sortby.equals("投篮命中率")) {
-			teamSortBy = TeamSortBy.hitRate;
-		} else if (sortby.equals("三分命中率")) {
-			teamSortBy = TeamSortBy.threeHitRate;
-		} else if (sortby.equals("罚球命中率")) {
-			teamSortBy = TeamSortBy.penaltyHitRate;
-		} else if (sortby.equals("胜率")) {
-			teamSortBy = TeamSortBy.winRate;
-		} else if (sortby.equals("进攻回合")) {
-			teamSortBy = TeamSortBy.offenseRound;
-		} else if (sortby.equals("进攻效率")) {
-			teamSortBy = TeamSortBy.offenseEfficiency;
-		} else if (sortby.equals("防守效率")) {
-			teamSortBy = TeamSortBy.defenceEfficiency;
-		} else if (sortby.equals("进攻篮板效率")) {
-			teamSortBy = TeamSortBy.drebsEfficiency;
-		} else if (sortby.equals("防守篮板效率")) {
-			teamSortBy = TeamSortBy.orebsEfficiency;
-		} else if (sortby.equals("抢断效率")) {
-			teamSortBy = TeamSortBy.stealsEfficiency;
-		} else if (sortby.equals("助攻率")) {
-			teamSortBy = TeamSortBy.assistEfficiency;
-		}
-		TeamMatchVO[] sortteam;
-		if (dataType.getSelectedItem().equals("赛季总数据")) {
-			sortteam = tc.getSortedTotalTeams(teamSortBy, type);
-		} else {
-			sortteam = tc.getSortedAveTeams(teamSortBy, type);
-		}
-
-		setTable(sortteam);
-
-		jScrollPane.repaint();
-		jScrollPane.setVisible(true);
-
-		if (matchpanel) {
-			this.remove(teammatch);
-			matchpanel = false;
-		}
-		this.add(jScrollPane);
-		this.repaint();
-	}
 
 	/** 在findPanel上显示一个球队的信息 */
 	void showOne(String teamname) {
