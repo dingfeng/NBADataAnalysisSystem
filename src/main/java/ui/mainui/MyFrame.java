@@ -171,7 +171,7 @@ public class MyFrame extends JFrame {
 	}
 	
 	void setExit(){
-		JButton el = new MyButton(new ImageIcon("image/close.png"),Color.black,Color.gray);
+		JButton el = new MyButton(new ImageIcon("image/close.png"),Color.black,Color.red);
 //		JLabel el = new JLabel();
 //		ImageIcon image = new ImageIcon("image/close.png");
 //		el.setIcon(image);
@@ -182,7 +182,7 @@ public class MyFrame extends JFrame {
 	}
 
 	void setMini(){
-		JButton el = new MyButton(new ImageIcon("image/mini.png"),Color.black,Color.gray);
+		JButton el = new MyButton(new ImageIcon("image/mini.png"),Color.black,Color.blue);
 //		JLabel el = new JLabel();
 //		ImageIcon image = new ImageIcon("image/mini.png");
 //		el.setIcon(image);
