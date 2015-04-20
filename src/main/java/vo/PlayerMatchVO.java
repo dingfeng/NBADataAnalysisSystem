@@ -102,7 +102,6 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		this.scoring_rebound_assist = scoring_rebound_assist;
 		this.twoPair = twoPair;
 		this.penaltyHandNo = penaltyHandNo;
-	    
 	}
 
 	public PlayerMatchVO ( MatchPlayerPO playerpo )
