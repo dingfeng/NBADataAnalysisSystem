@@ -100,7 +100,7 @@ public class TeamPanel extends JPanel {
 	/** 设置表格 */
 	void setTable(TeamMatchVO[] team) {
 		Vector<String> columnsName = new Vector<String>();
-		columnsName.add("球队全名");
+		columnsName.add("球队名");
 		columnsName.add("比赛场数");
 		columnsName.add("投篮命中数");
 		columnsName.add("投篮出手次数");

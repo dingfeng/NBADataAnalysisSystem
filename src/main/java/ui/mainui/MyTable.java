@@ -18,6 +18,7 @@ public class MyTable extends JTable {						// 实现自己的表格类
 	public MyTable(DefaultTableModel tableModel) {//Vector rowData, Vector columnNames
 		super(tableModel);						// 调用父类的构造方法
 		this.setGridColor(gridColor);
+		this.setRowHeight(30);
 	}
 	// 重写JTable类的getTableHeader()方法
 	public JTableHeader getTableHeader() {					// 定义表格头
