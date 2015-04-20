@@ -30,10 +30,6 @@ public class HotPanel extends JPanel {
 	JPanel show = new JPanel();
 
 	JLabel[] name=new JLabel[5];
-//	JLabel name_2=new JLabel();
-//	JLabel name_3=new JLabel();
-//	JLabel name_4=new JLabel();
-//	JLabel name_5=new JLabel();
 
 	JLabel portrait_1=new JLabel();
 	JLabel portrait_2=new JLabel();
