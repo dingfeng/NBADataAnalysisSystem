@@ -296,12 +296,14 @@ public class MatchPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				MyFrame.teampanel.findClick(team1.getName());
 				MyFrame.card.show(MyFrame.mainpanel, "team");
+				MyFrame.locationlable.setText("当前位置：球队");
 			}
 		}));
 		teamImage2.addMouseListener((new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				MyFrame.teampanel.findClick(team2.getName());
 				MyFrame.card.show(MyFrame.mainpanel, "team");
+				MyFrame.locationlable.setText("当前位置：球队");
 			}
 		}));
 
@@ -551,6 +553,7 @@ public class MatchPanel extends JPanel {
 				if (e.getClickCount() == 2) {
 					MyFrame.playerpanel.findPlayerClick((String)myPlayer1Table.getModel().getValueAt(myPlayer1Table.getSelectedRow(), 0));
 					MyFrame.card.show(MyFrame.mainpanel, "player");
+					MyFrame.locationlable.setText("当前位置：球员");
 				}
 			}
 
@@ -594,6 +597,7 @@ public class MatchPanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
 					MyFrame.card.show(MyFrame.mainpanel, "player");
+					MyFrame.locationlable.setText("当前位置：球员");
 					MyFrame.playerpanel.findPlayerClick((String)myPlayer2Table.getModel().getValueAt(myPlayer2Table.getSelectedRow(), 0));
 				}
 			}

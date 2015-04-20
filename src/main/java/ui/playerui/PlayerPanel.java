@@ -257,6 +257,8 @@ public class PlayerPanel extends JPanel {
 		jScrollPane.setBounds(FrameSize.width / 3, FrameSize.height / 12,
 				2 * FrameSize.width / 3, FrameSize.height * 7 / 8
 						- FrameSize.height / 12);
+		jScrollPane.setBackground(FrameSize.backColor);
+		jScrollPane.getViewport().setOpaque(false);
 		resizeTable(false, jScrollPane, mytable);
 		this.add(jScrollPane);
 
@@ -338,6 +340,7 @@ public class PlayerPanel extends JPanel {
 	private void showPlayerTeam(String teamName) {
 		MyFrame.teampanel.findClick(teamName);
 		MyFrame.card.show(MyFrame.mainpanel,"team");
+		MyFrame.locationlable.setText("当前位置：球队");
 	}
 
 	private void setMatch() {
@@ -371,17 +374,18 @@ public class PlayerPanel extends JPanel {
 		positionBox.setBounds(FrameSize.width / 8, FrameSize.height / 12, 150,
 				40);
 		positionBox.setFont(new Font("宋体", Font.PLAIN, 12));
+		positionBox.addActionListener(e->screenPlayerConfirmClick());
 		screenPanel.add(positionBox);
 
 		JLabel playerZoneLabel = new JLabel("赛区");
 		playerZoneLabel.setForeground(Color.white);
 		playerZoneLabel.setBounds(FrameSize.width / 30,
-				FrameSize.height / 3 - 60, 100, 40);
+				FrameSize.height / 4, 100, 40);
 		playerZoneLabel.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		screenPanel.add(playerZoneLabel);
 
 		playerZoneBox = new MyComboBox(new String[] { "东部", "西部" });
-		playerZoneBox.setBounds(FrameSize.width / 8, FrameSize.height / 3 - 60,
+		playerZoneBox.setBounds(FrameSize.width / 8, FrameSize.height / 4,
 				150, 40);
 		playerZoneBox.setFont(new Font("宋体", Font.PLAIN, 12));
 		screenPanel.add(playerZoneBox);
@@ -390,21 +394,22 @@ public class PlayerPanel extends JPanel {
 		JLabel playerAreaLabel = new JLabel("分区");
 		playerAreaLabel.setForeground(Color.white);
 		playerAreaLabel.setBounds(FrameSize.width / 30,
-				FrameSize.height / 3 + 20, 100, 40);
+				FrameSize.height*5 / 12, 100, 40);
 		playerAreaLabel.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		screenPanel.add(playerAreaLabel);
 
 		playerAreaBox = new MyComboBox(new String[] { "ATLANTIC",
 				"CENTRAL", "SOUTHEAST" });
-		playerAreaBox.setBounds(FrameSize.width / 8, FrameSize.height / 3 + 20,
+		playerAreaBox.setBounds(FrameSize.width / 8, FrameSize.height*5 / 12,
 				150, 40);
 		playerAreaBox.setFont(new Font("宋体", Font.PLAIN, 12));
+		playerAreaBox.addActionListener(e->screenPlayerConfirmClick());
 		screenPanel.add(playerAreaBox);
 
 		JLabel screenPlayerLabel = new JLabel("筛选依据");
 		screenPlayerLabel.setForeground(Color.white);
 		screenPlayerLabel.setBounds(FrameSize.width / 30,
-				FrameSize.height / 2 + 10, 100, 40);
+				FrameSize.height*7 / 12, 100, 40);
 		screenPlayerLabel.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		screenPanel.add(screenPlayerLabel);
 
@@ -412,16 +417,17 @@ public class PlayerPanel extends JPanel {
 				"助攻", "得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮",
 				"三分", "罚球", "两双" });
 		screenPlayerBox.setBounds(FrameSize.width / 8,
-				FrameSize.height / 2 + 10, 150, 40);
+				FrameSize.height*7 / 12, 150, 40);
 		screenPlayerBox.setFont(new Font("宋体", Font.PLAIN, 12));
+		screenPlayerBox.addActionListener(e->screenPlayerConfirmClick());
 		screenPanel.add(screenPlayerBox);
 
-		JButton yesButton = new MyButton(new ImageIcon("image/yes.png"),Color.white,Color.gray);
-		yesButton.setBounds(FrameSize.width / 4, 2 * FrameSize.height / 3, 50,
-				50);
-//		yesButton.setBackground(Color.white);
-		yesButton.addActionListener(e -> screenPlayerConfirmClick());
-		screenPanel.add(yesButton);
+//		JButton yesButton = new MyButton(new ImageIcon("image/yes.png"),Color.white,Color.gray);
+//		yesButton.setBounds(FrameSize.width / 4, 2 * FrameSize.height / 3, 50,
+//				50);
+////		yesButton.setBackground(Color.white);
+//		yesButton.addActionListener(e -> screenPlayerConfirmClick());
+//		screenPanel.add(yesButton);
 
 	}
 
@@ -430,7 +436,7 @@ public class PlayerPanel extends JPanel {
 		jScrollPane.setVisible(false);
 		String position = (positionBox.getSelectedItem().toString());
 
-		Area area = null;
+		Area area = Area.ATLANTIC;
 		String selectArea = playerAreaBox.getSelectedItem().toString();
 		if (selectArea.equals("ATLANTIC")) {
 			area = Area.ATLANTIC;
@@ -494,24 +500,27 @@ public class PlayerPanel extends JPanel {
 	private void setPlayerAreaBox() {
 		screenPanel.remove(playerAreaBox);
 		if (playerZoneBox.getSelectedItem().equals("东部")) {
-			playerAreaBox = new JComboBox<String>(new String[] { "ATLANTIC",
+			playerAreaBox = new MyComboBox(new String[] { "ATLANTIC",
 					"CENTRAL", "SOUTHEAST" });
 			playerAreaBox.setBounds(FrameSize.width / 8,
-					FrameSize.height / 3 + 20, 150, 40);
+					FrameSize.height*5 / 12, 150, 40);
 			playerAreaBox.setFont(new Font("宋体", Font.PLAIN, 12));
+			
 		}
 
 		else {
-			playerAreaBox = new JComboBox<String>(new String[] { "SOUTHWEST",
+			playerAreaBox = new MyComboBox(new String[] { "SOUTHWEST",
 					"NORTHWEST", "PACIFIC" });
 			playerAreaBox.setBounds(FrameSize.width / 8,
-					FrameSize.height / 3 + 20, 150, 40);
+					FrameSize.height*5 / 12, 150, 40);
 			playerAreaBox.setFont(new Font("宋体", Font.PLAIN, 12));
 		}
 		playerAreaBox.repaint();
 		playerAreaBox.setVisible(true);
 		screenPanel.add(playerAreaBox);
 		screenPanel.repaint();
+		screenPlayerConfirmClick();
+		playerAreaBox.addActionListener(e->screenPlayerConfirmClick());
 	}
 
 	/** 查找Panel */
