@@ -574,6 +574,7 @@ public class TeamPanel extends JPanel {
 		} catch (NullPointerException e1) {
 			JOptionPane.showMessageDialog(null, "未找到该球队的基本信息", "查找失败",
 					JOptionPane.ERROR_MESSAGE);
+
 			return;
 		}
 
