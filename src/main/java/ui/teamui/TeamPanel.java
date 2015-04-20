@@ -1,6 +1,7 @@
 package ui.teamui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -8,7 +9,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
+import java.awt.event.MouseListener;
 import java.util.Vector;
 
 import javax.swing.ButtonGroup;
@@ -24,6 +25,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
@@ -168,18 +172,17 @@ public class TeamPanel extends JPanel {
 
 		table = new DefaultTableModel(rowimage, columnsName);
 		mytable = new MyTable(table);
+		mytable.setRowSorter(new TableRowSorter<TableModel>(table));
 		mytable.updateUI();
-		// table.setEnabled(false);
-		// table.setFillsViewportHeight(true);
-		// table.setSize(2*FrameSize.width/3, 9*FrameSize.height/12);
+	
 		jScrollPane = new JScrollPane(mytable);
 		jScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		jScrollPane.setBounds(FrameSize.width / 3, FrameSize.height / 12,
-				2 * FrameSize.width / 3, FrameSize.height * 7 / 8
-						- FrameSize.height / 12);
+				2 * FrameSize.width / 3-5, FrameSize.height * 7 / 8
+						- FrameSize.height / 12-5);
 		jScrollPane.setBackground(FrameSize.backColor);
 		jScrollPane.getViewport().setOpaque(false);
 		resizeTable(false, jScrollPane, mytable);
@@ -197,6 +200,8 @@ public class TeamPanel extends JPanel {
 		this.add(jScrollPane);
 		this.repaint();
 	}
+	
+
 
 	/** 设置标题 */
 	void setHeader() {
@@ -204,7 +209,6 @@ public class TeamPanel extends JPanel {
 		header.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		header.setBackground(FrameSize.backColor);
 
-		searchField = new EditableTextField();
 		searchBox.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
 				35);
 		header.add(searchBox);
