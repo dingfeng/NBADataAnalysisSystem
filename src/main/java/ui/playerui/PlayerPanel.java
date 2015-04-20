@@ -304,10 +304,16 @@ public class PlayerPanel extends JPanel {
 		this.remove(screenPanel);
 		findPanel.remove(actionLabel);
 
-		matchButton = new JButton(new ImageIcon("image/showMatch.jpg"));
-		playerTeamButton = new JButton("team");
-		playerTeamButton.setBounds(FrameSize.width/3-45, 11*FrameSize.height /16, 40,40);
-		matchButton.setBounds(FrameSize.width/3-90, 11*FrameSize.height /16, 40,40);
+		matchButton = new MyButton("比赛", Color.black, Color.DARK_GRAY);
+		playerTeamButton = new MyButton("球队", Color.black, Color.DARK_GRAY);
+		matchButton.setFont(new Font("幼圆", Font.BOLD, 12));
+		playerTeamButton.setFont(new Font("幼圆", Font.BOLD, 12));
+		matchButton.setForeground(Color.red);
+		playerTeamButton.setForeground(Color.red);
+		playerTeamButton.setBounds(FrameSize.width / 3 - 60,
+				11 * FrameSize.height / 16, 55, 30);
+		matchButton.setBounds(FrameSize.width / 3 - 130, 11 * FrameSize.height / 16,
+				58, 30);
 		matchButton.addActionListener(e->setMatch());
 		playerTeamButton.addActionListener(e->showPlayerTeam(teamText.getText()));
 
