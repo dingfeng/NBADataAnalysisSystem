@@ -118,9 +118,9 @@ public class MyFrame extends JFrame {
 
 		
 		index.setBounds(10, 30,50,50);
-		playerbutton.setBounds(80, 30, 50, 50);
-		teambutton.setBounds(150, 30, 50, 50);
-		hotbutton.setBounds(220,30,50, 50);
+		hotbutton.setBounds(80, 30, 50, 50);
+		playerbutton.setBounds(150, 30, 50, 50);
+		teambutton.setBounds(220,30,50, 50);
 		matchbutton.setBounds(290, 30, 50, 50);
 		helpbutton.setBounds(360, 30, 50, 50);		
 		
