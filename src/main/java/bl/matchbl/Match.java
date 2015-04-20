@@ -307,18 +307,18 @@ public class Match
     	    if (teampo.getName().equals(teamname))
     	    {
     	    	if (playername == null)
-    	    	matches_list.add(temp);
-    	    	else
+    	    		matches_list.add(temp);
+    	    	else 
     	    	{
-    	    		MatchPlayerPO[] matchPlayers = teampo.getPlayers();
-    	    		for (int j = 0; j < matchPlayers.length; j++)
-    	    		{
-    	    			if (matchPlayers[j].getName().equals(playername))
-    	    			{
-    	    				matches_list.add(temp);
-    	    				break;
-    	    			}
-    	    		}
+    	    	 MatchPlayerPO[] matchPlayers = teampo.getPlayers();
+    	    	 for (int j = 0; j < matchPlayers.length; j++)
+    	    	 {
+    	    		 if (matchPlayers[j].getName().equals(playername))
+    	    		 {
+    	    			 matches_list.add(temp);
+    	    			 break;
+    	    		 }
+    	    	 }
     	    	}
     	    	continue;
     	    }
@@ -329,15 +329,15 @@ public class Match
     	    	matches_list.add(temp);
     	    	else 
     	    	{
-    	    	MatchPlayerPO[] matchPlayers = teampo.getPlayers();
-	    		for (int j = 0; j < matchPlayers.length; j++)
-	    		{
-	    			if (matchPlayers[j].getName().equals(playername))
-	    			{
-	    				matches_list.add(temp);
-	    				break;
-	    			}
-	    		}
+    	    		 MatchPlayerPO[] matchPlayers = teampo.getPlayers();
+        	    	 for (int j = 0; j < matchPlayers.length; j++)
+        	    	 {
+        	    		 if (matchPlayers[j].getName().equals(playername))
+        	    		 {
+        	    			 matches_list.add(temp);
+        	    			 break;
+        	    		 }
+        	    	 }
     	    	}
     	    }
     	}

@@ -56,7 +56,7 @@ public class MatchController implements Matchblservice
 	}
 	
 	public MatchesPO[] getTime_TeamMatches(Date date1, Date date2,
-			String teamname, String playername) {
+			String teamname , String playername) {
 		return match.getTime_TeamMatches(date1, date2, teamname, playername);
 	}
 
