@@ -24,6 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
@@ -93,7 +95,8 @@ public class PlayerPanel extends JPanel {
 		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
 		allPlayerNames = playerController.getAllPlayerNames();
-		searchBox = new JComboBox(allPlayerNames);
+		searchBox = new MyComboBox(allPlayerNames);
+		searchBox.setBorder(null);
 		searchBox.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
 				35);
 		searchBox.setMaximumRowCount(15);

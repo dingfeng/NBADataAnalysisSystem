@@ -35,4 +35,6 @@ public interface Teamblservice
 	public PlayerMatchVO[] getAllPlayerMatchTotal(String teamname);
 	//获得球员的基本信息
 	public PlayerPO getPlayerBase(String playername);
+	//获得所有球队名
+	public String[] getTeamNames();
 }

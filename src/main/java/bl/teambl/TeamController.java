@@ -85,5 +85,10 @@ public class TeamController implements Teamblservice{
 	public PlayerPO getPlayerBase(String playername) {
 		return player.findPlayer(playername);
 	}
+
+	@Override
+	public String[] getTeamNames() {
+		return team.getSearchItems();
+	}
 	
 }
