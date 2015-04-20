@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import ui.mainui.FrameSize;
+import ui.mainui.MyButton;
 import ui.mainui.MyComboBox;
 import ui.mainui.MyFrame;
 import vo.PlayerMatchVO;
@@ -73,10 +74,10 @@ public class HotPanel extends JPanel {
 		tag.setBounds(0, 0, FrameSize.width / 6, 11 * FrameSize.height / 12);
 		int height = 11 * FrameSize.height / 12;
 		tag.setBackground(FrameSize.backColor);
-		JButton today_player = new JButton("当天热点球员");
-		JButton season_player = new JButton("赛季热点球员");
-		JButton season_team = new JButton("赛季热点球队");
-		JButton fast_player = new JButton("进步最快球员");
+		JButton today_player = new MyButton("当天热点球员",FrameSize.buttonbackColor,Color.GRAY);
+		JButton season_player = new MyButton("赛季热点球员",FrameSize.buttonbackColor,Color.GRAY);
+		JButton season_team = new MyButton("赛季热点球队",FrameSize.buttonbackColor,Color.GRAY);
+		JButton fast_player = new MyButton("进步最快球员",FrameSize.buttonbackColor,Color.GRAY);
 
 		today_player.setBounds(10, 40, 150, 50);
 		season_player.setBounds(10, 40 + height / 4, 150, 50);

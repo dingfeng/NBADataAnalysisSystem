@@ -54,7 +54,7 @@ public class MyFrame extends JFrame {
 	public static HotPanel hotpanel=new HotPanel();
 	public static MatchPanel matchpanel=new MatchPanel();
 	
-	JLabel locationlable=new JLabel();
+	public static JLabel locationlable=new JLabel();
 	
 	public MyFrame(){
 		this.setUndecorated(true);

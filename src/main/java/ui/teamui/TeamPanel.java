@@ -213,14 +213,14 @@ public class TeamPanel extends JPanel {
 		});
 
 		JButton searchButton = new MyButton(new ImageIcon("image\\find.png"),
-				FrameSize.buttonbackColor, Color.gray);
+				Color.GRAY, Color.LIGHT_GRAY);
 		searchButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
 		searchButton.setToolTipText("查找");
 		searchButton.addActionListener(e -> findClick(searchField.getText()));
 		header.add(searchButton);
 
 		JButton sortButton = new MyButton(new ImageIcon("image\\sort.png"),
-				FrameSize.buttonbackColor, Color.gray);
+				Color.GRAY, Color.LIGHT_GRAY);
 		sortButton.setBounds(4 * FrameSize.width / 5 + 40, 10, 35, 35);
 		sortButton.setToolTipText("排序");
 		sortButton.addActionListener(e -> sortClick());
@@ -231,7 +231,7 @@ public class TeamPanel extends JPanel {
 		header.add(dataType);
 
 		JButton allButton = new MyButton(new ImageIcon("image\\show.png"),
-				FrameSize.buttonbackColor, Color.gray);
+				Color.GRAY, Color.LIGHT_GRAY);
 		allButton.setBounds(140, 10, 45, 35);
 		allButton.setToolTipText("显示数据");
 		allButton.addActionListener(e -> showAllData());
@@ -597,6 +597,7 @@ public class TeamPanel extends JPanel {
 		MyFrame.playerpanel.showTeamPlayers(players);
 
 		MyFrame.card.show(MyFrame.mainpanel, "player");
+		MyFrame.locationlable.setText("当前位置：球员");
 	}
 
 	/** 点击查看比赛按钮 */
