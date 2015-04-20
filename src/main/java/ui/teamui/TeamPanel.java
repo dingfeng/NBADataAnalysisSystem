@@ -56,7 +56,6 @@ public class TeamPanel extends JPanel {
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
     JComboBox searchBox;
-	JTextField searchField;
 	JPanel sort = new JPanel();
 	JPanel find = new JPanel();
 	JPanel welcome = new JPanel();
@@ -572,11 +571,9 @@ public class TeamPanel extends JPanel {
 	public void findClick(String teamname) {
 		try {
 			showOne(teamname);
-			searchField.setText("");
 		} catch (NullPointerException e1) {
 			JOptionPane.showMessageDialog(null, "未找到该球队的基本信息", "查找失败",
 					JOptionPane.ERROR_MESSAGE);
-			searchField.setText("");
 			return;
 		}
 
