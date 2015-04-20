@@ -558,9 +558,11 @@ public class TeamPanel extends JPanel {
 	public void findClick(String teamname) {
 		try {
 			showOne(teamname);
+			searchField.setText("");
 		} catch (NullPointerException e1) {
 			JOptionPane.showMessageDialog(null, "未找到该球队的个人信息", "查找失败",
 					JOptionPane.ERROR_MESSAGE);
+			searchField.setText("");
 			return;
 		}
 
