@@ -142,7 +142,7 @@ public class PlayerMatchPanel extends JPanel {
 			jScrollPane.setBounds(10, 150, 2 * FrameSize.width / 3 - 20, 103);
 			jScrollPane.setOpaque(false);
 			jScrollPane.getViewport().setOpaque(false);
-			// resizeTable(false,jScrollPane,recenttable);
+			 resizeTable(false,jScrollPane,recenttable);
 			jScrollPane
 					.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 			jScrollPane
@@ -240,7 +240,7 @@ public class PlayerMatchPanel extends JPanel {
 				FrameSize.height * 7 / 8 - FrameSize.height / 12 - 320);
 		pastjScrollPane.setOpaque(false);
 		pastjScrollPane.getViewport().setOpaque(false);
-		// resizeTable(false,pastjScrollPane,pasttable);
+		 resizeTable(false,pastjScrollPane,pasttable);
 		pastjScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		pastjScrollPane
