@@ -34,7 +34,7 @@ public class IndexPanel extends JPanel{
 		this.repaint();
 	}
 	
-	public void setDate(){
+	void setDate(){
 		
 		
 		String Date=mc.getTodayMatches()[0].getDate();
@@ -100,5 +100,5 @@ public class IndexPanel extends JPanel{
 		this.add(lantern);
 	}
 
-	 
+
 }

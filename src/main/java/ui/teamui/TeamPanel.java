@@ -206,9 +206,9 @@ public class TeamPanel extends JPanel {
 		this.add(jScrollPane);
 		this.repaint();
 	}
-
+	/**实时更新*/
 	public void update(){
-		jScrollPane.setVisible(false);
+
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
 			updateTable(tc.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
 		} else {
@@ -216,11 +216,9 @@ public class TeamPanel extends JPanel {
 		}
 		
 		jScrollPane.repaint();
-		jScrollPane.setVisible(true);
-		this.add(jScrollPane);
 		this.repaint();
 	}
-	
+	/**更新表格*/
 	void updateTable(TeamMatchVO[] team){
 		Vector rowimage = new Vector();
 		for (int i = 0; i < team.length; i++) {
@@ -263,6 +261,7 @@ public class TeamPanel extends JPanel {
 			rowimage.add(data);
 		}
 		table.setDataVector(rowimage, columnsName);
+		
 	}
 
 	/** 设置标题 */
@@ -388,7 +387,6 @@ public class TeamPanel extends JPanel {
 				FrameSize.width / 6, 200);
 		welcome.add(nba);
 	}
-
 
 	/** 在findPanel上显示一个球队的信息 */
 	void showOne(String teamname) {
@@ -518,7 +516,7 @@ public class TeamPanel extends JPanel {
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
-
+		 
 	}
 
 	/**设置单个球队的panel*/
