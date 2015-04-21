@@ -450,6 +450,11 @@ public class PlayerPanel extends JPanel {
 
 	/** 点击筛选确认按钮 */
 	private void screenPlayerConfirmClick() {
+		if(matchpanel){
+			this.remove(playerMatchPanel);
+			matchpanel=false;
+		}		
+		this.remove(playerMessagePanel);
 		jScrollPane.setVisible(false);
 		String position = (positionBox.getSelectedItem().toString());
 
@@ -643,24 +648,19 @@ public class PlayerPanel extends JPanel {
 		panel.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		panel.setBackground(FrameSize.backColor);
 		panel.add(searchBox);
-		searchBox.addKeyListener(new KeyAdapter(){ 
-		      public void keyPressed(KeyEvent e)    
-		      {    
-		        if(e.getKeyChar()==KeyEvent.VK_ENTER )   //按回车键执行相应操作; 
-		        { 
-		        	try{
-		        	findPlayerClick(searchBox.getSelectedItem().toString());
-		        	}catch (Exception e1){e1.printStackTrace();}
-		        } 
-		      } 
-		    });
+		searchBox.addActionListener(e->findPlayerClick(searchBox.getSelectedItem().toString()));
+//		searchBox.addKeyListener(new KeyAdapter(){ 
+//		      public void keyPressed(KeyEvent e)    
+//		      {    
+//		        if(e.getKeyChar()==KeyEvent.VK_ENTER )   //按回车键执行相应操作; 
+//		        { 
+//		        	try{
+//		        	findPlayerClick(searchBox.getSelectedItem().toString());
+//		        	}catch (Exception e1){e1.printStackTrace();}
+//		        } 
+//		      } 
+//		    });
 
-		JButton findButton = new MyButton(new ImageIcon("image\\find.png"),Color.GRAY, Color.LIGHT_GRAY);
-		findButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
-//		findButton.setBackground(new Color(68, 68, 68));
-		findButton.setToolTipText("查找");
-		findButton.addActionListener(e -> findPlayerClick(searchBox.getSelectedItem().toString()));
-		panel.add(findButton);
 
 		JButton screenButton = new MyButton(new ImageIcon("image\\screen.png"),Color.GRAY, Color.LIGHT_GRAY);
 		screenButton.setBounds(4 * FrameSize.width / 5 + 40, 10, 35, 35);
@@ -737,7 +737,7 @@ public class PlayerPanel extends JPanel {
 	private void screenPlayerClick() {
 		this.remove(welcomePanel);
 		this.remove(findPanel);
-		this.remove(playerMessagePanel);
+//		this.remove(playerMessagePanel);
 		this.add(screenPanel);
 		this.repaint();
 	}
