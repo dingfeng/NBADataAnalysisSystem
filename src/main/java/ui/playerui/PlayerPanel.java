@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -49,12 +50,11 @@ import bl.playerbl.PlayerController;
 public class PlayerPanel extends JPanel {
 
 	JPanel welcomePanel = new JPanel();
-	JPanel playerMessage;
+	JPanel playerMessage = new JPanel();
 	PlayerMatchPanel playerMatchPanel;
 	boolean matchpanel=false;
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
-	JTextField searchField = new JTextField();
 	JPanel findPanel = new JPanel();
 	JPanel screenPanel = new JPanel();
 	MyTable mytable;
@@ -87,6 +87,9 @@ public class PlayerPanel extends JPanel {
 	PlayerController playerController = new PlayerController();
 	String[] allPlayerNames;
 	JComboBox searchBox ;
+	
+	JTextField[] playerText = new UneditableTextField[78];
+
 	public PlayerPanel() {
 		allPlayers=playerController.sortTotalPlayers(PlayerSortBy.name,
 				SortType.ASEND);
@@ -117,6 +120,7 @@ public class PlayerPanel extends JPanel {
 		setFind();
 		setScreen();
 		setWelcome();
+		setOnePlayerMessagePanel();
 
 		this.add(welcomePanel);
 		this.add(header);
@@ -633,9 +637,6 @@ public class PlayerPanel extends JPanel {
 		panel.setLayout(null);
 		panel.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		panel.setBackground(FrameSize.backColor);
-		searchField = new EditableTextField();
-		searchField.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
-				35);
 		panel.add(searchBox);
 		searchBox.addKeyListener(new KeyAdapter(){ 
 		      public void keyPressed(KeyEvent e)    
@@ -676,6 +677,15 @@ public class PlayerPanel extends JPanel {
 
 		return panel;
 
+	}
+	
+	private void setOnePlayerMessagePanel(){
+		for(int i=0;i<78;i++){
+			playerText[i]=new UneditableTextField();
+			playerMessage.add(playerText[i]);
+			playerText[i].setFont(new Font("",Font.PLAIN,15));
+			playerText[i].setBorder(BorderFactory.createLineBorder(Color.white));
+		}
 	}
 
 	/** 显示所有总数据/场均数据 */
@@ -737,7 +747,6 @@ public class PlayerPanel extends JPanel {
 			}
 			if(!isPlayer){
 				JOptionPane.showMessageDialog(null, "未查到该球员", "查找失败",JOptionPane.ERROR_MESSAGE);
-				searchField.setText("");
 				return;
 			}
 			else if (playerController.findPlayer(playerInfo) == null) {
@@ -750,26 +759,136 @@ public class PlayerPanel extends JPanel {
 				showOne(playerInfo);
 			}
 			jScrollPane.setVisible(false);
-			PlayerMatchVO[] onePlayer = new PlayerMatchVO[1];
+			PlayerMatchVO onePlayer;
 			if(dataType.getSelectedItem().equals("赛季总数据")){
-				onePlayer[0]=playerController.findPlayerTotal(playerInfo);
+				onePlayer=playerController.findPlayerTotal(playerInfo);
 			}
 			else{
-				onePlayer[0]=playerController.findPlayerMatchAve(playerInfo);
+				onePlayer=playerController.findPlayerMatchAve(playerInfo);
 			}
-			setTable(onePlayer);
-			jScrollPane.repaint();
-			jScrollPane.setVisible(true);
-			this.add(jScrollPane);
+			setPlayerMessage(onePlayer);
+			this.add(playerMessage);
+//			jScrollPane.repaint();
+//			jScrollPane.setVisible(true);
+//			this.add(jScrollPane);
 			this.repaint();
-			searchField.setText("");
 		} 
 	}
 
 	/**一个球员信息（右侧）*/
-	private void PlayerMessage(PlayerMatchVO str){
-		playerMessage = new JPanel();
-		playerMessage.setLayout(new GridLayout(9,6,-1,-1));
+	private void setPlayerMessage(PlayerMatchVO playerVO){
+		playerMessage.setVisible(false);
+		playerMessage.setLayout(new GridLayout(13,6,-1,-1));
+		playerMessage.setBackground(FrameSize.backColor);
+		playerMessage.setBounds(FrameSize.width / 3, FrameSize.height / 12, 2*FrameSize.width / 3,
+				FrameSize.height * 7 / 8
+				- FrameSize.height / 12);
+
+		playerText[0].setText("球员姓名");
+		playerText[2].setText("所属球队");
+		playerText[4].setText("参赛场数");
+		playerText[6].setText("先发场数");
+		playerText[8].setText("篮板");
+		playerText[10].setText("助攻");
+		playerText[12].setText("在场时间");
+		playerText[14].setText("盖帽数");
+		playerText[16].setText("得分/篮板/助攻");
+		playerText[18].setText("抢断");
+		playerText[20].setText("犯规");
+		playerText[22].setText("失误");
+		playerText[24].setText("分钟");
+		playerText[26].setText("投篮");
+		playerText[28].setText("三分");
+		playerText[30].setText("罚球");
+		playerText[32].setText("两双");
+		playerText[34].setText("投篮(%)");
+		playerText[36].setText("三分(%)");
+		playerText[38].setText("罚球(%)");
+		playerText[40].setText("进攻");
+		playerText[42].setText("防守");
+		playerText[44].setText("抢断");
+		playerText[46].setText("盖帽");
+		playerText[48].setText("失误");
+		playerText[50].setText("犯规");
+		playerText[52].setText("得分");
+		playerText[54].setText("效率");
+		playerText[56].setText("GmSc效率");
+		playerText[58].setText("真实命中率(%)");
+		playerText[60].setText("投篮效率");
+		playerText[62].setText("篮板率");
+		playerText[64].setText("进攻篮板率");
+		playerText[66].setText("防守篮板率");
+		playerText[68].setText("助攻率(%)");
+		playerText[70].setText("抢断率");
+		playerText[72].setText("盖帽率(%)");
+		playerText[74].setText("失误率(%)");
+		playerText[76].setText("使用率(%)");
+		
+		playerText[1].setText(playerVO.getName());
+		playerText[3].setText(playerVO.getTeam());
+		playerText[5].setText(String.valueOf(playerVO.getMatchNo()));
+		playerText[7].setText(String.valueOf(playerVO.getFirstServiceNo()));
+		playerText[9].setText(String.format("%.1f", playerVO.getRebs()));
+		playerText[11].setText(String.format("%.1f", playerVO.getAssistNo()));
+		playerText[13].setText(String.format("%.1f", playerVO.getTime()));
+
+		playerText[15].setText(String.format("%.1f", playerVO.getBlockNo()));
+		playerText[17].setText(String.format("%.1f",
+				playerVO.getScoring_rebound_assist()));
+		playerText[19].setText(String.format("%.1f", playerVO.getStealsNo()));
+		playerText[21].setText(String.format("%.1f", playerVO.getFoulsNo()));
+		playerText[23].setText(String.format("%.1f", playerVO.getMistakesNo()));
+		playerText[25].setText(String.format("%.1f", playerVO.getMinute()));
+		playerText[27].setText(String.format("%.1f", playerVO.getHandNo()));
+		playerText[29].setText(String.format("%.1f", playerVO.getThree_points()));
+		playerText[31].setText(String.format("%.1f", playerVO.getBlockNo()));
+		playerText[33].setText(String.format("%.1f", playerVO.getTwoPair()));
+		double hitRate = playerVO.getHitRate() * 100;
+		if (hitRate >= 0)
+			playerText[35].setText(String.format("%.1f", hitRate));
+		else
+			playerText[35].setText("-");
+		double threeHitRate = playerVO.getThreeHitRate();
+		if (threeHitRate >= 0)
+			playerText[37].setText(String.format("%.1f", threeHitRate * 100));
+		else
+			playerText[37].setText("-");
+		double penaltyHitRate = playerVO.getPenaltyHitRate();
+		if (penaltyHitRate >= 0)
+			playerText[39].setText(String.format("%.1f", penaltyHitRate * 100));
+		else
+			playerText[39].setText("-");
+		playerText[41].setText(String.format("%.1f", playerVO.getOffendNo()));
+		playerText[43].setText(String.format("%.1f", playerVO.getDefenceNo()));
+		playerText[45].setText(String.format("%.1f", playerVO.getStealsNo()));
+		playerText[47].setText(String.format("%.1f", playerVO.getBlockNo()));
+		playerText[49].setText(String.format("%.1f", playerVO.getMistakesNo()));
+		playerText[51].setText(String.format("%.1f", playerVO.getFoulsNo()));
+		playerText[53].setText(String.format("%.1f", playerVO.getPoints()));
+		playerText[55].setText(String.format("%.1f", playerVO.getEfficiency()));
+		playerText[57].setText(String.format("%.1f", playerVO.getGmScEfficiency()));
+		playerText[59].setText(String.format("%.1f", playerVO.getTrueHitRate() * 100));
+		playerText[61].setText(String.format("%.1f", playerVO.getHitEfficiency()));
+		playerText[63].setText(String.format("%.1f", playerVO.getRebEfficiency()));
+		playerText[65].setText(String.format("%.1f",
+				playerVO.getOffenseRebsEfficiency()));
+		playerText[67].setText(String.format("%.1f",
+				playerVO.getDefenceRebsEfficiency()));
+		playerText[69].setText(String.format("%.1f",
+				playerVO.getAssistEfficiency() * 100));
+		playerText[71].setText(String.format("%.1f", playerVO.getStealsEfficiency()*100));
+		playerText[73].setText(String.format("%.1f",
+				playerVO.getBlockEfficiency() * 100));
+		playerText[75].setText(String.format("%.1f",
+				playerVO.getMistakeEfficiency() * 100));
+		playerText[77].setText(String.format("%.1f", playerVO.getUseEfficiency() * 100));
+
+		jScrollPane.setVisible(false);
+		this.remove(jScrollPane);
+		this.add(playerMessage);
+		playerMessage.setVisible(true);
+		playerMessage.repaint();
+		this.repaint();
 	}
 	
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
