@@ -143,6 +143,7 @@ public class MatchPanel extends JPanel {
 		Date date2 = dateButton2.getDate();
 		if (date1.compareTo(date2) > 0) {
 			JOptionPane.showMessageDialog(this, "起始时间应不晚于终止时间");
+			return;
 		}
 		String team = teamBox.getSelectedItem().toString();
 		if (team.equals("球队")) {
@@ -165,6 +166,7 @@ public class MatchPanel extends JPanel {
 					player);
 			}catch(NullPointerException e){
 				JOptionPane.showMessageDialog(null, "未查到该段时间内的比赛","查找失败",JOptionPane.ERROR_MESSAGE);
+				return;
 			}
 			matchScrollPane.setVisible(false);
 			setMatchTable(matches, 0);
@@ -189,6 +191,7 @@ public class MatchPanel extends JPanel {
 		matches = matchController.getTimeMatches(date1, date2);
 		}catch(NullPointerException e){
 			JOptionPane.showMessageDialog(null, "未查到该段时间内的比赛","查找失败",JOptionPane.ERROR_MESSAGE);
+			return;
 		}
 		matchScrollPane.setVisible(false);
 		setMatchTable(matches, 0);
