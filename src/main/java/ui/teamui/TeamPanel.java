@@ -54,10 +54,10 @@ public class TeamPanel extends JPanel {
 	JPanel header = new JPanel();
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
-    JComboBox searchBox;
-	JPanel sort = new JPanel();
+    JComboBox searchBox;	
 	JPanel find = new JPanel();
 	JPanel welcome = new JPanel();
+	JPanel teammessage=new JPanel();
 	MyTable mytable;
 	JComboBox<String> box;
 	JComboBox<String> dataType;
@@ -98,6 +98,7 @@ public class TeamPanel extends JPanel {
 		
 		setHeader();
 		setFind();
+		setMessage();
 		showOne("SAS");
 		this.add(find);
 		this.add(header);
@@ -249,6 +250,7 @@ public class TeamPanel extends JPanel {
 			this.remove(teammatch);
 			matchpanel = false;
 		}
+		this.remove(teammessage);
 		jScrollPane.setVisible(false);
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
 			setTable(tc.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
@@ -263,7 +265,6 @@ public class TeamPanel extends JPanel {
 		this.repaint();
 
 	}
-
 
 	/** 搜索 */
 	void setFind() {
@@ -337,7 +338,7 @@ public class TeamPanel extends JPanel {
 			matchpanel = false;
 		}
 		this.remove(welcome);
-		this.remove(sort);
+		this.remove(teammessage);
 
 		TeamPO teamresult = tc.getTeamData(teamname);
 		image.setIcon(scaleImage(new ImageIcon(teamresult.getImage()),
@@ -461,22 +462,27 @@ public class TeamPanel extends JPanel {
 
 	}
 
-	/**一个球队信息（右侧）*/
-	void TeamMessage(TeamMatchVO str){
-		JPanel teammessage=new JPanel();
+	/**设置单个球队的panel*/
+	void setMessage(){
 		teammessage.setLayout(new GridLayout(9,6,-1,-1));
 //		teammessage.setBorder(BorderFactory.createLineBorder(Color.white));
 		teammessage.setBackground(FrameSize.backColor);
 		teammessage.setBounds(FrameSize.width / 3, FrameSize.height / 12, 2*FrameSize.width / 3,
 				FrameSize.height * 7 / 8
 				- FrameSize.height / 12);
-		JTextField[] teamlabel=new UneditableTextField[54];
+//		JTextField[] teamlabel=new UneditableTextField[54];
 		for(int i=0;i<54;i++){
 			teamlabel[i]=new UneditableTextField();
 			teammessage.add(teamlabel[i]);
 			teamlabel[i].setFont(new Font("",Font.PLAIN,15));
 			teamlabel[i].setBorder(BorderFactory.createLineBorder(Color.white));
 		}
+	}
+	
+	/**一个球队信息（右侧）*/
+	void TeamMessage(TeamMatchVO str){
+		
+		
 		teamlabel[0].setText("比赛场数");
 		teamlabel[2].setText("投篮命中数");
 		teamlabel[4].setText("投篮出手次数");
@@ -556,6 +562,7 @@ public class TeamPanel extends JPanel {
 		if (matchpanel) {
 			this.remove(teammatch);
 		}
+		this.remove(teammessage);
 		matchpanel = true;
 		teammatch = new TeamMatchPanel(nameAbridgeresult.getText());
 		this.remove(jScrollPane);
