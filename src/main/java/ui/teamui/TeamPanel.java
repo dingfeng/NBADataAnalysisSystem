@@ -137,28 +137,32 @@ public class TeamPanel extends JPanel {
 		columnsName.add("抢断效率");
 		columnsName.add("助攻率");
 
-		// allteam = tc.getAllTeams();
 		Vector rowimage = new Vector();
 		for (int i = 0; i < team.length; i++) {
-			TeamMatchVO str = team[i];
+			TeamMatchVO str ;
+			try{
+				str = team[i];
+			}catch(NullPointerException e1){
+				break;
+			}
 			Vector data = new Vector();
 			data.add(str.getName());
 			data.add(str.getMatchNo());
-			data.add(str.getHitNo());
-			data.add(str.getHandNo());
-			data.add(str.getThreeHitNo());
-			data.add(str.getThreeHandNo());
-			data.add(str.getPenaltyHitNo());
-			data.add(str.getPenaltyHandNo());
-			data.add(str.getOffenseRebs());
-			data.add(str.getDefenceRebs());
-			data.add(str.getRebs());
-			data.add(str.getAssistNo());
-			data.add(str.getStealsNo());
-			data.add(str.getBlockNo());
-			data.add(str.getMistakesNo());
-			data.add(str.getFoulsNo());
-			data.add(str.getPoints());
+			data.add(String.format("%.1f",str.getHitNo()));
+			data.add(String.format("%.1f",str.getHandNo()));
+			data.add(String.format("%.1f",str.getThreeHitNo()));
+			data.add(String.format("%.1f",str.getThreeHandNo()));
+			data.add(String.format("%.1f",str.getPenaltyHitNo()));
+			data.add(String.format("%.1f",str.getPenaltyHandNo()));
+			data.add(String.format("%.1f",str.getOffenseRebs()));
+			data.add(String.format("%.1f",str.getDefenceRebs()));
+			data.add(String.format("%.1f",str.getRebs()));
+			data.add(String.format("%.1f",str.getAssistNo()));
+			data.add(String.format("%.1f",str.getStealsNo()));
+			data.add(String.format("%.1f",str.getBlockNo()));
+			data.add(String.format("%.1f",str.getMistakesNo()));
+			data.add(String.format("%.1f",str.getFoulsNo()));
+			data.add(String.format("%.1f",str.getPoints()));
 			data.add(String.format("%.1f", str.getHitRate() * 100));
 			data.add(String.format("%.1f", str.getThreeHitRate() * 100));
 			data.add(String.format("%.1f", str.getPenaltyHitRate() * 100));
@@ -245,7 +249,7 @@ public class TeamPanel extends JPanel {
 	}
 
 	/** 显示场均数据/总数据 */
-	void showAllData() {
+	public void showAllData() {
 		if (matchpanel) {
 			this.remove(teammatch);
 			matchpanel = false;
@@ -257,7 +261,7 @@ public class TeamPanel extends JPanel {
 		} else {
 			setTable(tc.getSortedAveTeams(TeamSortBy.name, SortType.ASEND));
 		}
-
+		
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);

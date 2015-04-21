@@ -78,6 +78,7 @@ public class MyFrame extends JFrame {
 			public void run() {
 				if (mc.changed()) {
 					mc.update();
+					teampanel.showAllData();
 				}
 			}
 		};
