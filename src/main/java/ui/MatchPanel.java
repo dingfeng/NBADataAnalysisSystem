@@ -441,6 +441,8 @@ public class MatchPanel extends JPanel {
 		// .setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		matchScrollPane.setBounds(0, FrameSize.height / 12,
 				FrameSize.width / 4, FrameSize.height * 19 / 24);
+		matchScrollPane.setBackground(FrameSize.backColor);
+		matchScrollPane.getViewport().setOpaque(false);
 		resizeTable(false, matchScrollPane, myMatchTable);
 
 		setShowPanel(matches[rowNum].getTeam1(), matches[rowNum].getTeam2());
