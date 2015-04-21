@@ -54,10 +54,10 @@ public class TeamPanel extends JPanel {
 	JPanel header = new JPanel();
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
-    JComboBox searchBox;	
+	JComboBox searchBox;
 	JPanel find = new JPanel();
 	JPanel welcome = new JPanel();
-	JPanel teammessage=new JPanel();
+	JPanel teammessage = new JPanel();
 	MyTable mytable;
 	JComboBox<String> box;
 	JComboBox<String> dataType;
@@ -75,11 +75,11 @@ public class TeamPanel extends JPanel {
 	TeamMatchPanel teammatch;
 	boolean matchpanel = false;
 	Vector<String> columnsName = new Vector<String>();
-	JTextField[] teamlabel=new UneditableTextField[54];
-	
-	
+	JTextField[] teamlabel = new UneditableTextField[54];
+
 	TeamController tc = new TeamController();
-	MatchController mc=new MatchController();
+	MatchController mc = new MatchController();
+
 	public TeamPanel() {
 		String[] teamNames = tc.getTeamNames();
 		searchBox = new MyComboBox(teamNames);
@@ -94,8 +94,6 @@ public class TeamPanel extends JPanel {
 			}
 		}.start();
 
-		
-		
 		setHeader();
 		setFind();
 		setMessage();
@@ -107,7 +105,7 @@ public class TeamPanel extends JPanel {
 
 	/** 设置表格 */
 	void setTable(TeamMatchVO[] team) {
-		
+
 		columnsName.add("球队名");
 		columnsName.add("比赛场数");
 		columnsName.add("投篮命中数");
@@ -139,28 +137,28 @@ public class TeamPanel extends JPanel {
 
 		Vector rowimage = new Vector();
 		for (int i = 0; i < team.length; i++) {
-			TeamMatchVO str  = team[i];
-			if(str==null){
+			TeamMatchVO str = team[i];
+			if (str == null) {
 				continue;
 			}
 			Vector data = new Vector();
 			data.add(str.getName());
 			data.add(str.getMatchNo());
-			data.add(String.format("%.1f",str.getHitNo()));
-			data.add(String.format("%.1f",str.getHandNo()));
-			data.add(String.format("%.1f",str.getThreeHitNo()));
-			data.add(String.format("%.1f",str.getThreeHandNo()));
-			data.add(String.format("%.1f",str.getPenaltyHitNo()));
-			data.add(String.format("%.1f",str.getPenaltyHandNo()));
-			data.add(String.format("%.1f",str.getOffenseRebs()));
-			data.add(String.format("%.1f",str.getDefenceRebs()));
-			data.add(String.format("%.1f",str.getRebs()));
-			data.add(String.format("%.1f",str.getAssistNo()));
-			data.add(String.format("%.1f",str.getStealsNo()));
-			data.add(String.format("%.1f",str.getBlockNo()));
-			data.add(String.format("%.1f",str.getMistakesNo()));
-			data.add(String.format("%.1f",str.getFoulsNo()));
-			data.add(String.format("%.1f",str.getPoints()));
+			data.add(String.format("%.1f", str.getHitNo()));
+			data.add(String.format("%.1f", str.getHandNo()));
+			data.add(String.format("%.1f", str.getThreeHitNo()));
+			data.add(String.format("%.1f", str.getThreeHandNo()));
+			data.add(String.format("%.1f", str.getPenaltyHitNo()));
+			data.add(String.format("%.1f", str.getPenaltyHandNo()));
+			data.add(String.format("%.1f", str.getOffenseRebs()));
+			data.add(String.format("%.1f", str.getDefenceRebs()));
+			data.add(String.format("%.1f", str.getRebs()));
+			data.add(String.format("%.1f", str.getAssistNo()));
+			data.add(String.format("%.1f", str.getStealsNo()));
+			data.add(String.format("%.1f", str.getBlockNo()));
+			data.add(String.format("%.1f", str.getMistakesNo()));
+			data.add(String.format("%.1f", str.getFoulsNo()));
+			data.add(String.format("%.1f", str.getPoints()));
 			data.add(String.format("%.1f", str.getHitRate() * 100));
 			data.add(String.format("%.1f", str.getThreeHitRate() * 100));
 			data.add(String.format("%.1f", str.getPenaltyHitRate() * 100));
@@ -180,15 +178,15 @@ public class TeamPanel extends JPanel {
 		mytable = new MyTable(table);
 		mytable.setRowSorter(new TableRowSorter<TableModel>(table));
 		mytable.updateUI();
-	
+
 		jScrollPane = new JScrollPane(mytable);
 		jScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		jScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		jScrollPane.setBounds(FrameSize.width / 3, FrameSize.height / 12,
-				2 * FrameSize.width / 3-5, FrameSize.height * 7 / 8
-						- FrameSize.height / 12-5);
+				2 * FrameSize.width / 3 - 5, FrameSize.height * 7 / 8
+						- FrameSize.height / 12 - 5);
 		jScrollPane.setBackground(FrameSize.backColor);
 		jScrollPane.getViewport().setOpaque(false);
 		resizeTable(false, jScrollPane, mytable);
@@ -206,46 +204,56 @@ public class TeamPanel extends JPanel {
 		this.add(jScrollPane);
 		this.repaint();
 	}
-	/**实时更新*/
-	public void update(){
 
+	/** 实时更新 */
+	public void update() {
+		TeamMatchVO teamresult;
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
+			teamresult = tc
+					.getTotalTeam(searchBox.getSelectedItem().toString());
 			updateTable(tc.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
 		} else {
+			teamresult = tc
+					.getTotalTeam(searchBox.getSelectedItem().toString());
 			updateTable(tc.getSortedAveTeams(TeamSortBy.name, SortType.ASEND));
 		}
-		
+		TeamMessage(teamresult);
+		if (matchpanel) {
+			teammatch.update();
+		}
+
 		jScrollPane.repaint();
 		this.repaint();
 	}
-	/**更新表格*/
-	void updateTable(TeamMatchVO[] team){
+
+	/** 更新表格 */
+	void updateTable(TeamMatchVO[] team) {
 		Vector rowimage = new Vector();
 		for (int i = 0; i < team.length; i++) {
-			TeamMatchVO str ;
-			try{
+			TeamMatchVO str;
+			try {
 				str = team[i];
-			}catch(NullPointerException e1){
+			} catch (NullPointerException e1) {
 				continue;
 			}
 			Vector data = new Vector();
 			data.add(str.getName());
 			data.add(str.getMatchNo());
-			data.add(String.format("%.1f",str.getHitNo()));
-			data.add(String.format("%.1f",str.getHandNo()));
-			data.add(String.format("%.1f",str.getThreeHitNo()));
-			data.add(String.format("%.1f",str.getThreeHandNo()));
-			data.add(String.format("%.1f",str.getPenaltyHitNo()));
-			data.add(String.format("%.1f",str.getPenaltyHandNo()));
-			data.add(String.format("%.1f",str.getOffenseRebs()));
-			data.add(String.format("%.1f",str.getDefenceRebs()));
-			data.add(String.format("%.1f",str.getRebs()));
-			data.add(String.format("%.1f",str.getAssistNo()));
-			data.add(String.format("%.1f",str.getStealsNo()));
-			data.add(String.format("%.1f",str.getBlockNo()));
-			data.add(String.format("%.1f",str.getMistakesNo()));
-			data.add(String.format("%.1f",str.getFoulsNo()));
-			data.add(String.format("%.1f",str.getPoints()));
+			data.add(String.format("%.1f", str.getHitNo()));
+			data.add(String.format("%.1f", str.getHandNo()));
+			data.add(String.format("%.1f", str.getThreeHitNo()));
+			data.add(String.format("%.1f", str.getThreeHandNo()));
+			data.add(String.format("%.1f", str.getPenaltyHitNo()));
+			data.add(String.format("%.1f", str.getPenaltyHandNo()));
+			data.add(String.format("%.1f", str.getOffenseRebs()));
+			data.add(String.format("%.1f", str.getDefenceRebs()));
+			data.add(String.format("%.1f", str.getRebs()));
+			data.add(String.format("%.1f", str.getAssistNo()));
+			data.add(String.format("%.1f", str.getStealsNo()));
+			data.add(String.format("%.1f", str.getBlockNo()));
+			data.add(String.format("%.1f", str.getMistakesNo()));
+			data.add(String.format("%.1f", str.getFoulsNo()));
+			data.add(String.format("%.1f", str.getPoints()));
 			data.add(String.format("%.1f", str.getHitRate() * 100));
 			data.add(String.format("%.1f", str.getThreeHitRate() * 100));
 			data.add(String.format("%.1f", str.getPenaltyHitRate() * 100));
@@ -261,7 +269,7 @@ public class TeamPanel extends JPanel {
 			rowimage.add(data);
 		}
 		table.setDataVector(rowimage, columnsName);
-		
+
 	}
 
 	/** 设置标题 */
@@ -286,9 +294,9 @@ public class TeamPanel extends JPanel {
 				Color.GRAY, Color.LIGHT_GRAY);
 		searchButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
 		searchButton.setToolTipText("查找");
-		searchButton.addActionListener(e -> findClick(searchBox.getSelectedItem().toString()));
+		searchButton.addActionListener(e -> findClick(searchBox
+				.getSelectedItem().toString()));
 		header.add(searchButton);
-
 
 		dataType = new MyComboBox(new String[] { "赛季总数据", "场均数据" });
 		dataType.setBounds(20, 10, 100, 35);
@@ -315,7 +323,7 @@ public class TeamPanel extends JPanel {
 		} else {
 			setTable(tc.getSortedAveTeams(TeamSortBy.name, SortType.ASEND));
 		}
-		
+
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
@@ -362,10 +370,10 @@ public class TeamPanel extends JPanel {
 		foundYear.setBounds(FrameSize.width / 40, FrameSize.height / 8 + 370,
 				FrameSize.width / 12, 30);
 
-		for(int i=0;i<54;i++){
-			teamlabel[i]=new UneditableTextField();
+		for (int i = 0; i < 54; i++) {
+			teamlabel[i] = new UneditableTextField();
 		}
-		
+
 		find.add(name);
 		find.add(nameAbridge);
 		find.add(address);
@@ -402,8 +410,7 @@ public class TeamPanel extends JPanel {
 				3 * FrameSize.height / 20, 3 * FrameSize.height / 20));
 		nameresult.setText(teamresult.getName());// 队伍名称
 		String nameAbridge = teamresult.getNameAbridge();
-		if (nameAbridge.equals("NOP"))
-		{
+		if (nameAbridge.equals("NOP")) {
 			nameAbridge = "NOH";
 		}
 		nameAbridgeresult.setText(nameAbridge);// 名称缩写
@@ -492,18 +499,16 @@ public class TeamPanel extends JPanel {
 		find.setVisible(false);
 
 		showOne(teamname);
-		try{
-		if (dataType.getSelectedItem().equals("赛季总数据")) {
-			teamresult = tc.getTotalTeam(teamname);
-		} else {
-			teamresult = tc.getAveTeam(teamname);
-		}
-		}catch (Exception e)
-		{
+		try {
+			if (dataType.getSelectedItem().equals("赛季总数据")) {
+				teamresult = tc.getTotalTeam(teamname);
+			} else {
+				teamresult = tc.getAveTeam(teamname);
+			}
+		} catch (Exception e) {
 			TeamPO teamresult1 = tc.getTeamData(teamname);
 			teamname = teamresult1.getNameAbridge();
-			if (teamname.equals("NOP"))
-			{
+			if (teamname.equals("NOP")) {
 				teamname = "NOH";
 			}
 			if (dataType.getSelectedItem().equals("赛季总数据")) {
@@ -516,30 +521,32 @@ public class TeamPanel extends JPanel {
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
-		 
+
 	}
 
-	/**设置单个球队的panel*/
-	void setMessage(){
-		teammessage.setLayout(new GridLayout(9,6,-1,-1));
-//		teammessage.setBorder(BorderFactory.createLineBorder(Color.white));
+	/** 设置单个球队的panel */
+	void setMessage() {
+		teammessage.setLayout(new GridLayout(9, 6, -1, -1));
+		// teammessage.setBorder(BorderFactory.createLineBorder(Color.white));
 		teammessage.setBackground(FrameSize.backColor);
-		teammessage.setBounds(FrameSize.width / 3, FrameSize.height / 12, 2*FrameSize.width / 3,
-				FrameSize.height * 7 / 8
-				- FrameSize.height / 12);
-//		JTextField[] teamlabel=new UneditableTextField[54];
-		for(int i=0;i<54;i++){
-			teamlabel[i]=new UneditableTextField();
+		teammessage.setBounds(FrameSize.width / 3, FrameSize.height / 12,
+				2 * FrameSize.width / 3, FrameSize.height * 7 / 8
+						- FrameSize.height / 12);
+		// JTextField[] teamlabel=new UneditableTextField[54];
+		for (int i = 0; i < 54; i++) {
+			teamlabel[i] = new UneditableTextField();
 			teammessage.add(teamlabel[i]);
-			teamlabel[i].setFont(new Font("",Font.PLAIN,15));
+			teamlabel[i].setFont(new Font("", Font.PLAIN, 15));
 			teamlabel[i].setBorder(BorderFactory.createLineBorder(Color.white));
 		}
+		jScrollPane.setVisible(false);
+		this.remove(jScrollPane);
+		this.add(teammessage);
 	}
-	
-	/**一个球队信息（右侧）*/
-	void TeamMessage(TeamMatchVO str){
-		
-		
+
+	/** 一个球队信息（右侧） */
+	void TeamMessage(TeamMatchVO str) {
+
 		teamlabel[0].setText("比赛场数");
 		teamlabel[2].setText("比赛得分");
 		teamlabel[4].setText("胜率(%)");
@@ -567,40 +574,43 @@ public class TeamPanel extends JPanel {
 		teamlabel[48].setText("防守篮板效率");
 		teamlabel[50].setText("抢断效率");
 		teamlabel[52].setText("助攻率");
-		
-		teamlabel[1].setText(str.getMatchNo()+"");
-		teamlabel[3].setText(String.format("%.1f",str.getPoints()));
+
+		teamlabel[1].setText(str.getMatchNo() + "");
+		teamlabel[3].setText(String.format("%.1f", str.getPoints()));
 		teamlabel[5].setText(String.format("%.1f", str.getWinRate() * 100));
-		teamlabel[7].setText(String.format("%.1f",str.getHitNo()));
-		teamlabel[9].setText(String.format("%.1f",str.getHandNo()));
+		teamlabel[7].setText(String.format("%.1f", str.getHitNo()));
+		teamlabel[9].setText(String.format("%.1f", str.getHandNo()));
 		teamlabel[11].setText(String.format("%.1f", str.getHitRate() * 100));
-		teamlabel[13].setText(String.format("%.1f",str.getThreeHitNo()));
-		teamlabel[15].setText(String.format("%.1f",str.getThreeHandNo()));
-		teamlabel[17].setText(String.format("%.1f", str.getThreeHitRate() * 100));
-		teamlabel[19].setText(String.format("%.1f",str.getPenaltyHitNo()));
-		teamlabel[21].setText(String.format("%.1f",str.getPenaltyHandNo()));
-		teamlabel[23].setText(String.format("%.1f", str.getPenaltyHitRate() * 100));
-		teamlabel[25].setText(String.format("%.1f",str.getOffenseRebs()));
-		teamlabel[27].setText(String.format("%.1f",str.getDefenceRebs()));
-		teamlabel[29].setText(String.format("%.1f",str.getRebs()));
-		teamlabel[31].setText(String.format("%.1f",str.getAssistNo()));
-		teamlabel[33].setText(String.format("%.1f",str.getStealsNo()));
-		teamlabel[35].setText(String.format("%.1f",str.getBlockNo()));
-		teamlabel[37].setText(String.format("%.1f",str.getMistakesNo()));
-		teamlabel[39].setText(String.format("%.1f",str.getFoulsNo()));
+		teamlabel[13].setText(String.format("%.1f", str.getThreeHitNo()));
+		teamlabel[15].setText(String.format("%.1f", str.getThreeHandNo()));
+		teamlabel[17]
+				.setText(String.format("%.1f", str.getThreeHitRate() * 100));
+		teamlabel[19].setText(String.format("%.1f", str.getPenaltyHitNo()));
+		teamlabel[21].setText(String.format("%.1f", str.getPenaltyHandNo()));
+		teamlabel[23].setText(String.format("%.1f",
+				str.getPenaltyHitRate() * 100));
+		teamlabel[25].setText(String.format("%.1f", str.getOffenseRebs()));
+		teamlabel[27].setText(String.format("%.1f", str.getDefenceRebs()));
+		teamlabel[29].setText(String.format("%.1f", str.getRebs()));
+		teamlabel[31].setText(String.format("%.1f", str.getAssistNo()));
+		teamlabel[33].setText(String.format("%.1f", str.getStealsNo()));
+		teamlabel[35].setText(String.format("%.1f", str.getBlockNo()));
+		teamlabel[37].setText(String.format("%.1f", str.getMistakesNo()));
+		teamlabel[39].setText(String.format("%.1f", str.getFoulsNo()));
 		teamlabel[41].setText(String.format("%.1f", str.getOffenseRound()));
-		teamlabel[43].setText(String.format("%.1f", str.getOffenseEfficiency()));
-		teamlabel[45].setText(String.format("%.1f", str.getDefenceEfficiency()));
+		teamlabel[43]
+				.setText(String.format("%.1f", str.getOffenseEfficiency()));
+		teamlabel[45]
+				.setText(String.format("%.1f", str.getDefenceEfficiency()));
 		teamlabel[47].setText(String.format("%.1f", str.getoRebsEfficiency()));
 		teamlabel[49].setText(String.format("%.1f", str.getdRebsEfficiency()));
 		teamlabel[51].setText(String.format("%.1f", str.getStealsEfficiency()));
 		teamlabel[53].setText(String.format("%.1f", str.getAssistEfficiency()));
-		jScrollPane.setVisible(false);
-		this.remove(jScrollPane);
-		this.add(teammessage);
+		teammessage.repaint();
+
 		this.repaint();
-	}	
-	
+	}
+
 	/** 查看该球队队员 */
 	void setTeamPlayers(String team) {
 		String[] playernames = tc.getPlayers(team);

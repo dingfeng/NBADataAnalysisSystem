@@ -17,37 +17,47 @@ import ui.mainui.MyFrame;
 import ui.mainui.MyTable;
 import bl.matchbl.MatchController;
 
-public class TeamMatchPanel extends JPanel{
+public class TeamMatchPanel extends JPanel {
 
-	MatchController mc=new MatchController();
+	MatchController mc = new MatchController();
 	String teamName;
-	
+
+	Vector<String> columnsName = new Vector<String>();
+	Vector rowimage = new Vector();
+	DefaultTableModel table_recent;
+	DefaultTableModel table_past;
+	JScrollPane pastjScrollPane;
+	JScrollPane recentjScrollPane;
+
 	public TeamMatchPanel(String teamname) {
 		this.setLayout(null);
 		this.setBounds(FrameSize.width / 3, FrameSize.height / 12,
-				2 * FrameSize.width / 3, FrameSize.height*7/8- FrameSize.height / 12);
-		this.setBackground(FrameSize.backColor);;
-		this.teamName=teamname;
-		
+				2 * FrameSize.width / 3, FrameSize.height * 7 / 8
+						- FrameSize.height / 12);
+		this.setBackground(FrameSize.backColor);
+		;
+		this.teamName = teamname;
+
 		setText();
 		setRecentTable();
 		setPastTable();
 		this.repaint();
-		
-	} 
-	/**设置界面提示文字*/
-	void setText(){
-		JLabel recent =new JLabel("近期比赛");
-		JLabel past=new JLabel("过往查询");
-		JLabel teamname =new JLabel("队名");
-		JLabel team =new JLabel();
+
+	}
+
+	/** 设置界面提示文字 */
+	void setText() {
+		JLabel recent = new JLabel("近期比赛");
+		JLabel past = new JLabel("过往查询");
+		JLabel teamname = new JLabel("队名");
+		JLabel team = new JLabel();
 		team.setText(teamName);
-		
-		teamname.setBounds(10, 20, 50,50);
-		team.setBounds(80, 20, 50,50);
-		recent.setBounds(10, 100, 2 * FrameSize.width / 3-20, 50);
-		past.setBounds(10, 253, 2 * FrameSize.width / 3-20, 50);
-		
+
+		teamname.setBounds(10, 20, 50, 50);
+		team.setBounds(80, 20, 50, 50);
+		recent.setBounds(10, 100, 2 * FrameSize.width / 3 - 20, 50);
+		past.setBounds(10, 253, 2 * FrameSize.width / 3 - 20, 50);
+
 		recent.setOpaque(true);
 		past.setOpaque(true);
 		recent.setBackground(Color.black);
@@ -56,92 +66,135 @@ public class TeamMatchPanel extends JPanel{
 		past.setForeground(Color.white);
 		teamname.setForeground(Color.white);
 		team.setForeground(Color.white);
-		
+
 		this.add(team);
 		this.add(teamname);
 		this.add(past);
 		this.add(recent);
 
 	}
-	/**近期比赛*/
-	void setRecentTable(){
-		Vector<String> columnsName = new Vector<String>();
+
+	/** 近期比赛 */
+	void setRecentTable() {
+
 		columnsName.add("日期");
 		columnsName.add("对阵队伍");
 		columnsName.add("比分");
-		MatchesPO[] match=mc.getRecentTeamMatches(teamName, 5);
-		Vector rowimage = new Vector();
-		for(int i=0;i<5;i++){
-			Vector data=new Vector();
+		MatchesPO[] match = mc.getRecentTeamMatches(teamName, 5);
+
+		for (int i = 0; i < 5; i++) {
+			Vector data = new Vector();
 			data.add(match[i].getDate());
-			data.add(match[i].getTeam1().getName()+"-"+match[i].getTeam2().getName());
-			data.add(match[i].getTeam1().getTotalScores()+"-"+match[i].getTeam2().getTotalScores());
-			
+			data.add(match[i].getTeam1().getName() + "-"
+					+ match[i].getTeam2().getName());
+			data.add(match[i].getTeam1().getTotalScores() + "-"
+					+ match[i].getTeam2().getTotalScores());
+
 			rowimage.add(data);
 		}
-		
-		DefaultTableModel table = new DefaultTableModel(rowimage, columnsName);
-		MyTable recenttable = new MyTable(table);
-		JScrollPane jScrollPane = new JScrollPane(recenttable);
-		
-		jScrollPane.setBounds(10, 150, 2 * FrameSize.width / 3-20, 103);
-		jScrollPane.setOpaque(false);
-		jScrollPane.getViewport().setOpaque(false);
-		
+
+		table_recent = new DefaultTableModel(rowimage, columnsName);
+		MyTable recenttable = new MyTable(table_recent);
+
+		recentjScrollPane = new JScrollPane(recenttable);
+
+		recentjScrollPane.setBounds(10, 150, 2 * FrameSize.width / 3 - 20, 103);
+		recentjScrollPane.setOpaque(false);
+		recentjScrollPane.getViewport().setOpaque(false);
+
 		recenttable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					
-					MyFrame.matchpanel.findMatchAccordingMatch(match,recenttable.getSelectedRow());
+
+					MyFrame.matchpanel.findMatchAccordingMatch(match,
+							recenttable.getSelectedRow());
 					MyFrame.card.show(MyFrame.mainpanel, "match");
 					MyFrame.locationlable.setText("当前位置：比赛");
 				}
 			}
 
 		});
-		
-		this.add(jScrollPane);
+
+		this.add(recentjScrollPane);
 	}
-	/**过往查询*/
-	void setPastTable(){
+
+	/** 过往查询 */
+	void setPastTable() {
 		Vector<String> columnsName = new Vector<String>();
 		columnsName.add("日期");
 		columnsName.add("对阵队伍");
 		columnsName.add("比分");
-		
-		MatchesPO[] match=mc.getTeamMatches(teamName);
+
+		MatchesPO[] match = mc.getTeamMatches(teamName);
 		Vector rowimage = new Vector();
-		for(int i=match.length-1;i>=0;i--){
-			Vector data=new Vector();
+		for (int i = match.length - 1; i >= 0; i--) {
+			Vector data = new Vector();
 			data.add(match[i].getDate());
-			data.add(match[i].getTeam1().getName()+"-"+match[i].getTeam2().getName());
-			data.add(match[i].getTeam1().getTotalScores()+"-"+match[i].getTeam2().getTotalScores());
-			
+			data.add(match[i].getTeam1().getName() + "-"
+					+ match[i].getTeam2().getName());
+			data.add(match[i].getTeam1().getTotalScores() + "-"
+					+ match[i].getTeam2().getTotalScores());
+
 			rowimage.add(data);
 		}
-		
-		DefaultTableModel table = new DefaultTableModel(rowimage, columnsName);
-		MyTable pasttable = new MyTable(table);
-		JScrollPane pastjScrollPane = new JScrollPane(pasttable);
+
+		table_past = new DefaultTableModel(rowimage, columnsName);
+		MyTable pasttable = new MyTable(table_past);
+		pastjScrollPane = new JScrollPane(pasttable);
 		pastjScrollPane
-		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		pastjScrollPane.setBounds(10, 303, 2 * FrameSize.width / 3-20, FrameSize.height*7/8- FrameSize.height / 12-320);
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		pastjScrollPane.setBounds(10, 303, 2 * FrameSize.width / 3 - 20,
+				FrameSize.height * 7 / 8 - FrameSize.height / 12 - 320);
 		pastjScrollPane.setOpaque(false);
 		pastjScrollPane.getViewport().setOpaque(false);
-		
+
 		pasttable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					
-					MyFrame.matchpanel.findMatchAccordingMatch(match,pasttable.getSelectedRow());
+
+					MyFrame.matchpanel.findMatchAccordingMatch(match,
+							pasttable.getSelectedRow());
 					MyFrame.card.show(MyFrame.mainpanel, "match");
 					MyFrame.locationlable.setText("当前位置：比赛");
 				}
 			}
 
 		});
-		
+
 		this.add(pastjScrollPane);
 	}
-	
+
+	/** 实时更新 */
+	public void update() {
+		MatchesPO[] match = mc.getRecentTeamMatches(teamName, 5);
+
+		for (int i = 0; i < 5; i++) {
+			Vector data = new Vector();
+			data.add(match[i].getDate());
+			data.add(match[i].getTeam1().getName() + "-"
+					+ match[i].getTeam2().getName());
+			data.add(match[i].getTeam1().getTotalScores() + "-"
+					+ match[i].getTeam2().getTotalScores());
+
+			rowimage.add(data);
+		}
+		table_recent.setDataVector(rowimage, columnsName);
+
+		MatchesPO[] matches = mc.getTeamMatches(teamName);
+		Vector rowimage = new Vector();
+		for (int i = match.length - 1; i >= 0; i--) {
+			Vector data = new Vector();
+			data.add(matches[i].getDate());
+			data.add(matches[i].getTeam1().getName() + "-"
+					+ matches[i].getTeam2().getName());
+			data.add(matches[i].getTeam1().getTotalScores() + "-"
+					+ matches[i].getTeam2().getTotalScores());
+
+			rowimage.add(data);
+		}
+		table_past.setDataVector(rowimage, columnsName);
+		pastjScrollPane.repaint();
+		recentjScrollPane.repaint();
+		this.repaint();
+	}
 }

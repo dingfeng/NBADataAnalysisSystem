@@ -29,13 +29,13 @@ public class HotPanel extends JPanel {
 	JPanel tag = new JPanel();
 	JPanel show = new JPanel();
 
-	JLabel[] name=new JLabel[5];
+	JLabel[] name = new JLabel[5];
 
-	JLabel portrait_1=new JLabel();
-	JLabel portrait_2=new JLabel();
-	JLabel portrait_3=new JLabel();
-	JLabel portrait_4=new JLabel();
-	JLabel portrait_5=new JLabel();
+	JLabel portrait_1 = new JLabel();
+	JLabel portrait_2 = new JLabel();
+	JLabel portrait_3 = new JLabel();
+	JLabel portrait_4 = new JLabel();
+	JLabel portrait_5 = new JLabel();
 
 	JLabel score_1 = new JLabel();
 	JLabel score_2 = new JLabel();
@@ -45,15 +45,16 @@ public class HotPanel extends JPanel {
 
 	JComboBox<String> choose;
 	TeamController tc = new TeamController();
-	PlayerController pc=new PlayerController();
+	PlayerController pc = new PlayerController();
 	int hottype = 1;
 
-	HotPanel hotpanel=this;
+	HotPanel hotpanel = this;
+
 	public HotPanel() {
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
 		this.setOpaque(false);
-		
+
 		setTag();
 		setShow();
 		showchoose(1);
@@ -70,10 +71,14 @@ public class HotPanel extends JPanel {
 		tag.setBounds(0, 0, FrameSize.width / 6, 11 * FrameSize.height / 12);
 		int height = 11 * FrameSize.height / 12;
 		tag.setBackground(FrameSize.backColor);
-		JButton today_player = new MyButton("当天热点球员",FrameSize.buttonbackColor,Color.GRAY);
-		JButton season_player = new MyButton("赛季热点球员",FrameSize.buttonbackColor,Color.GRAY);
-		JButton season_team = new MyButton("赛季热点球队",FrameSize.buttonbackColor,Color.GRAY);
-		JButton fast_player = new MyButton("进步最快球员",FrameSize.buttonbackColor,Color.GRAY);
+		JButton today_player = new MyButton("当天热点球员",
+				FrameSize.buttonbackColor, Color.GRAY);
+		JButton season_player = new MyButton("赛季热点球员",
+				FrameSize.buttonbackColor, Color.GRAY);
+		JButton season_team = new MyButton("赛季热点球队", FrameSize.buttonbackColor,
+				Color.GRAY);
+		JButton fast_player = new MyButton("进步最快球员", FrameSize.buttonbackColor,
+				Color.GRAY);
 
 		today_player.setBounds(10, 40, 150, 50);
 		season_player.setBounds(10, 40 + height / 4, 150, 50);
@@ -108,32 +113,32 @@ public class HotPanel extends JPanel {
 		show.setBounds(FrameSize.width / 6, 0, 5 * FrameSize.width / 6,
 				11 * FrameSize.height / 12);
 
-		choose = new MyComboBox(new String[] { "得分", "篮板", "助攻",
-				"得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分",
-				"罚球", "两双" });
-		
-		
-		
-		for(int i=0;i<5;i++){
-			name[i]=new JLabel();
-			name[i].setBounds(FrameSize.width / 3, (i+1)*FrameSize.height / 7 , FrameSize.width / 6, FrameSize.height/16);
+		choose = new MyComboBox(new String[] { "得分", "篮板", "助攻", "得分/篮板/助攻",
+				"盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分", "罚球", "两双" });
+
+		for (int i = 0; i < 5; i++) {
+			name[i] = new JLabel();
+			name[i].setBounds(FrameSize.width / 3, (i + 1) * FrameSize.height
+					/ 7, FrameSize.width / 6, FrameSize.height / 16);
 			name[i].setForeground(Color.white);
 			name[i].addMouseListener(new show());
 			show.add(name[i]);
 		}
 
-		name[0].setBounds(FrameSize.width / 3, FrameSize.height/10, FrameSize.width / 5, FrameSize.height/10);
+		name[0].setBounds(FrameSize.width / 3, FrameSize.height / 10,
+				FrameSize.width / 5, FrameSize.height / 10);
 		name[0].setFont(new Font("Comic Sans MS", Font.BOLD, 24));
-		
-		score_1.setBounds(FrameSize.width / 3 + 250, FrameSize.height/10, 100, 100);
-		score_2.setBounds(FrameSize.width / 3 + 250,
-				2*FrameSize.height / 7 , 80, 80);
-		score_3.setBounds(FrameSize.width / 3 + 250,
-				3 * FrameSize.height / 7 , 80, 80);
-		score_4.setBounds(FrameSize.width / 3 + 250,
-				4 * FrameSize.height / 7 , 80, 80);
-		score_5.setBounds(FrameSize.width / 3 + 250,
-				5 * FrameSize.height / 7 , 80, 80);
+
+		score_1.setBounds(FrameSize.width / 3 + 250, FrameSize.height / 10,
+				100, 100);
+		score_2.setBounds(FrameSize.width / 3 + 250, 2 * FrameSize.height / 7,
+				80, 80);
+		score_3.setBounds(FrameSize.width / 3 + 250, 3 * FrameSize.height / 7,
+				80, 80);
+		score_4.setBounds(FrameSize.width / 3 + 250, 4 * FrameSize.height / 7,
+				80, 80);
+		score_5.setBounds(FrameSize.width / 3 + 250, 5 * FrameSize.height / 7,
+				80, 80);
 
 		score_1.setForeground(Color.white);
 		score_2.setForeground(Color.white);
@@ -141,8 +146,7 @@ public class HotPanel extends JPanel {
 		score_4.setForeground(Color.white);
 		score_5.setForeground(Color.white);
 
-
-//		show.add(choose);
+		// show.add(choose);
 		show.add(score_1);
 		show.add(score_2);
 		show.add(score_3);
@@ -157,31 +161,32 @@ public class HotPanel extends JPanel {
 		choose.setVisible(false);
 		switch (type) {
 		case 3:
-			choose = new MyComboBox(new String[] { "篮板数", "助攻数", "抢断数", "盖帽数","比赛得分",
-					"投篮命中率", "三分命中率", "罚球命中率" });
+			choose = new MyComboBox(new String[] { "篮板数", "助攻数", "抢断数", "盖帽数",
+					"比赛得分", "投篮命中率", "三分命中率", "罚球命中率" });
 			choose.setSelectedIndex(0);
-			
+
 			showMessage_team();
 			choose.addActionListener(e -> showMessage_team());
 			break;
 		case 4:
-			choose = new MyComboBox(new String[] { "得分提升率", "篮板提升率", "助攻提升率"});
+			choose = new MyComboBox(new String[] { "得分提升率", "篮板提升率", "助攻提升率" });
 			choose.setSelectedIndex(0);
-			
+
 			showMessage_player();
 			choose.addActionListener(e -> showMessage_player());
 			break;
 		default:
-			choose = new MyComboBox(new String[] { "得分", "篮板", "助攻", "盖帽", "抢断" });
+			choose = new MyComboBox(
+					new String[] { "得分", "篮板", "助攻", "盖帽", "抢断" });
 			choose.setSelectedIndex(0);
-			
+
 			showMessage_player();
 			choose.addActionListener(e -> showMessage_player());
 
 			break;
-			
+
 		}
-		
+
 		choose.setBounds(10, 50, 150, 30);
 		choose.repaint();
 		choose.setVisible(true);
@@ -196,62 +201,99 @@ public class HotPanel extends JPanel {
 		String sortBy = (String) choose.getSelectedItem();
 		PlayerSortBy playerSortBy = sortby(sortBy);
 		PlayerMatchVO[] players = new PlayerMatchVO[5];
-		switch(hottype){
-		case 1:players=pc.getDayHotPlayer(playerSortBy);
-		break;
-		case 2:players=pc.getSeasonHotPlayer(playerSortBy);
-		break;
-		case 4:players=pc.getPromotePlayer(playerSortBy);
+		switch (hottype) {
+		case 1:
+			players = pc.getDayHotPlayer(playerSortBy);
+			break;
+		case 2:
+			players = pc.getSeasonHotPlayer(playerSortBy);
+			break;
+		case 4:
+			players = pc.getPromotePlayer(playerSortBy);
 		}
-		try{
-		portrait_1.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[0].getName()).getPortrait()),115,92));
-		}catch(Exception e){portrait_1.setIcon(scaleImage(new ImageIcon(Toolkit.getDefaultToolkit().getImage("image/noimage.jpg")),115,92));}
-		
+		try {
+			portrait_1.setIcon(scaleImage(
+					new ImageIcon(pc.findPlayer(players[0].getName())
+							.getPortrait()), 115, 92));
+		} catch (Exception e) {
+			portrait_1.setIcon(scaleImage(new ImageIcon(Toolkit
+					.getDefaultToolkit().getImage("image/noimage.jpg")), 115,
+					92));
+		}
+
 		portrait_1.setBounds(FrameSize.width / 3 - 228, FrameSize.height / 10,
 				185, 123);
-		try{
-		portrait_2.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[1].getName()).getPortrait()),69, 55));
-		}catch (Exception e){portrait_2.setIcon(scaleImage(new ImageIcon(Toolkit.getDefaultToolkit().getImage("image/noimage.jpg")),69,55));}
+		try {
+			portrait_2.setIcon(scaleImage(
+					new ImageIcon(pc.findPlayer(players[1].getName())
+							.getPortrait()), 69, 55));
+		} catch (Exception e) {
+			portrait_2
+					.setIcon(scaleImage(
+							new ImageIcon(Toolkit.getDefaultToolkit().getImage(
+									"image/noimage.jpg")), 69, 55));
+		}
 		portrait_2.setBounds(FrameSize.width / 3 - 100,
-				2*FrameSize.height / 7 , 69, 55);
-		try{
-		portrait_3.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[2].getName()).getPortrait()),69, 55));
-		}catch (Exception e){portrait_3.setIcon(scaleImage(new ImageIcon(Toolkit.getDefaultToolkit().getImage("image/noimage.jpg")),69,55));}
+				2 * FrameSize.height / 7, 69, 55);
+		try {
+			portrait_3.setIcon(scaleImage(
+					new ImageIcon(pc.findPlayer(players[2].getName())
+							.getPortrait()), 69, 55));
+		} catch (Exception e) {
+			portrait_3
+					.setIcon(scaleImage(
+							new ImageIcon(Toolkit.getDefaultToolkit().getImage(
+									"image/noimage.jpg")), 69, 55));
+		}
 		portrait_3.setBounds(FrameSize.width / 3 - 100,
-				3*FrameSize.height / 7 , 69, 55);
-		try{
-		portrait_4.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[3].getName()).getPortrait()),69, 55));
-		}catch (Exception e){portrait_4.setIcon(scaleImage(new ImageIcon(Toolkit.getDefaultToolkit().getImage("image/noimage.jpg")),69,55));}
+				3 * FrameSize.height / 7, 69, 55);
+		try {
+			portrait_4.setIcon(scaleImage(
+					new ImageIcon(pc.findPlayer(players[3].getName())
+							.getPortrait()), 69, 55));
+		} catch (Exception e) {
+			portrait_4
+					.setIcon(scaleImage(
+							new ImageIcon(Toolkit.getDefaultToolkit().getImage(
+									"image/noimage.jpg")), 69, 55));
+		}
 		portrait_4.setBounds(FrameSize.width / 3 - 100,
-				4*FrameSize.height / 7 , 69, 55);
-		try{
-		portrait_5.setIcon(scaleImage(new ImageIcon(pc.findPlayer(players[4].getName()).getPortrait()),69, 55));
-		}catch (Exception e){portrait_5.setIcon(scaleImage(new ImageIcon(Toolkit.getDefaultToolkit().getImage("image/noimage.jpg")),69,55));}
+				4 * FrameSize.height / 7, 69, 55);
+		try {
+			portrait_5.setIcon(scaleImage(
+					new ImageIcon(pc.findPlayer(players[4].getName())
+							.getPortrait()), 69, 55));
+		} catch (Exception e) {
+			portrait_5
+					.setIcon(scaleImage(
+							new ImageIcon(Toolkit.getDefaultToolkit().getImage(
+									"image/noimage.jpg")), 69, 55));
+		}
 		portrait_5.setBounds(FrameSize.width / 3 - 100,
-				5*FrameSize.height / 7 , 69, 55);
-		
-		for(int i=0;i<5;i++){
+				5 * FrameSize.height / 7, 69, 55);
+
+		for (int i = 0; i < 5; i++) {
 			name[i].setText(players[i].getName());
-//			name[i].addMouseListener(new showPlayer());
-		}		
-		
-		score_1.setText(String.format("%.3f",players[0].getHotData()));
-		score_2.setText(String.format("%.3f",players[1].getHotData()));
-		score_3.setText(String.format("%.3f",players[2].getHotData()));
-		score_4.setText(String.format("%.3f",players[3].getHotData()));
-		score_5.setText(String.format("%.3f",players[4].getHotData()));
-		
+			// name[i].addMouseListener(new showPlayer());
+		}
+
+		score_1.setText(String.format("%.3f", players[0].getHotData()));
+		score_2.setText(String.format("%.3f", players[1].getHotData()));
+		score_3.setText(String.format("%.3f", players[2].getHotData()));
+		score_4.setText(String.format("%.3f", players[3].getHotData()));
+		score_5.setText(String.format("%.3f", players[4].getHotData()));
+
 		show.add(portrait_1);
 		show.add(portrait_2);
 		show.add(portrait_3);
 		show.add(portrait_4);
 		show.add(portrait_5);
-		
+
 		show.repaint();
 		this.repaint();
 	}
-	
-	/**热点球队*/
+
+	/** 热点球队 */
 	void showMessage_team() {
 		TeamSortBy teamSortBy = null;
 		String sortby = (String) choose.getSelectedItem();
@@ -313,36 +355,49 @@ public class HotPanel extends JPanel {
 
 		TeamMatchVO[] hotteam = tc.getHotTeams(teamSortBy);
 
-		for(int i=0;i<5;i++){
-			name[i].setText(tc.getTeamData(hotteam[i].getName()).getName() + "|"
-				+ hotteam[i].getName());
-//			name[i].addMouseListener(new showTeam());
+		for (int i = 0; i < 5; i++) {
+			name[i].setText(tc.getTeamData(hotteam[i].getName()).getName()
+					+ "|" + hotteam[i].getName());
+			// name[i].addMouseListener(new showTeam());
 		}
 
+		portrait_1.setIcon(scaleImage(
+				new ImageIcon(tc.getTeamData(hotteam[0].getName()).getImage()),
+				FrameSize.width / 8, FrameSize.width / 8));
+		portrait_2.setIcon(scaleImage(
+				new ImageIcon(tc.getTeamData(hotteam[1].getName()).getImage()),
+				FrameSize.width / 12, FrameSize.width / 12));
+		portrait_3.setIcon(scaleImage(
+				new ImageIcon(tc.getTeamData(hotteam[2].getName()).getImage()),
+				FrameSize.width / 12, FrameSize.width / 12));
+		portrait_4.setIcon(scaleImage(
+				new ImageIcon(tc.getTeamData(hotteam[3].getName()).getImage()),
+				FrameSize.width / 12, FrameSize.width / 12));
+		portrait_5.setIcon(scaleImage(
+				new ImageIcon(tc.getTeamData(hotteam[4].getName()).getImage()),
+				FrameSize.width / 12, FrameSize.width / 12));
 
-		portrait_1.setIcon(scaleImage(new ImageIcon(tc.getTeamData(hotteam[0].getName()).getImage()),FrameSize.width/8,FrameSize.width/8));
-		portrait_2.setIcon(scaleImage(new ImageIcon(tc.getTeamData(hotteam[1].getName()).getImage()),FrameSize.width/12,FrameSize.width/12));
-		portrait_3.setIcon(scaleImage(new ImageIcon(tc.getTeamData(hotteam[2].getName()).getImage()),FrameSize.width/12,FrameSize.width/12));
-		portrait_4.setIcon(scaleImage(new ImageIcon(tc.getTeamData(hotteam[3].getName()).getImage()),FrameSize.width/12,FrameSize.width/12));
-		portrait_5.setIcon(scaleImage(new ImageIcon(tc.getTeamData(hotteam[4].getName()).getImage()),FrameSize.width/12,FrameSize.width/12));
-		
-		portrait_1.setBounds(13*FrameSize.width / 60, FrameSize.height / 10,
-				FrameSize.width/8,FrameSize.width/8);
-		portrait_2.setBounds(7*FrameSize.width / 30,
-				2*FrameSize.height / 7 , FrameSize.width/12,FrameSize.width/12);
-		portrait_3.setBounds(7*FrameSize.width / 30,
-				3*FrameSize.height / 7 , FrameSize.width/12,FrameSize.width/12);
-		portrait_4.setBounds(7*FrameSize.width / 30,
-				4*FrameSize.height / 7 , FrameSize.width/12,FrameSize.width/12);
-		portrait_5.setBounds(7*FrameSize.width / 30,
-				5*FrameSize.height / 7 , FrameSize.width/12,FrameSize.width/12);
+		portrait_1.setBounds(13 * FrameSize.width / 60, FrameSize.height / 10,
+				FrameSize.width / 8, FrameSize.width / 8);
+		portrait_2.setBounds(7 * FrameSize.width / 30,
+				2 * FrameSize.height / 7, FrameSize.width / 12,
+				FrameSize.width / 12);
+		portrait_3.setBounds(7 * FrameSize.width / 30,
+				3 * FrameSize.height / 7, FrameSize.width / 12,
+				FrameSize.width / 12);
+		portrait_4.setBounds(7 * FrameSize.width / 30,
+				4 * FrameSize.height / 7, FrameSize.width / 12,
+				FrameSize.width / 12);
+		portrait_5.setBounds(7 * FrameSize.width / 30,
+				5 * FrameSize.height / 7, FrameSize.width / 12,
+				FrameSize.width / 12);
 
-		score_1.setText(String.format("%.3f",hotteam[0].getHotData()));
-		score_2.setText(String.format("%.3f",hotteam[1].getHotData()));
-		score_3.setText(String.format("%.3f",hotteam[2].getHotData()));
-		score_4.setText(String.format("%.3f",hotteam[3].getHotData()));
-		score_5.setText(String.format("%.3f",hotteam[4].getHotData()));
-		
+		score_1.setText(String.format("%.3f", hotteam[0].getHotData()));
+		score_2.setText(String.format("%.3f", hotteam[1].getHotData()));
+		score_3.setText(String.format("%.3f", hotteam[2].getHotData()));
+		score_4.setText(String.format("%.3f", hotteam[3].getHotData()));
+		score_5.setText(String.format("%.3f", hotteam[4].getHotData()));
+
 		show.add(portrait_1);
 		show.add(portrait_2);
 		show.add(portrait_3);
@@ -353,28 +408,30 @@ public class HotPanel extends JPanel {
 		this.repaint();
 	}
 
-	/**跳转*/
-	class show implements MouseListener{
+	/** 跳转 */
+	class show implements MouseListener {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			// TODO Auto-generated method stub
-			String info=((JLabel) e.getSource()).getText();
-			switch (hottype){
-			case 3:MyFrame.teampanel.findClick(info.substring(info.length()-3));
-			MyFrame.card.show(MyFrame.mainpanel, "team");
-			break;
-			default:MyFrame.playerpanel.findPlayerClick(info);
-			MyFrame.card.show(MyFrame.mainpanel, "player");
+			String info = ((JLabel) e.getSource()).getText();
+			switch (hottype) {
+			case 3:
+				MyFrame.teampanel.findClick(info.substring(info.length() - 3));
+				MyFrame.card.show(MyFrame.mainpanel, "team");
+				break;
+			default:
+				MyFrame.playerpanel.findPlayerClick(info);
+				MyFrame.card.show(MyFrame.mainpanel, "player");
 			}
-			
+
 		}
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			// TODO Auto-generated method stub
-			((JLabel)e.getSource()).setOpaque(true);
-			((JLabel)e.getSource()).setBackground(Color.gray);
+			((JLabel) e.getSource()).setOpaque(true);
+			((JLabel) e.getSource()).setBackground(Color.gray);
 			show.repaint();
 			hotpanel.repaint();
 		}
@@ -382,8 +439,8 @@ public class HotPanel extends JPanel {
 		@Override
 		public void mouseExited(MouseEvent e) {
 			// TODO Auto-generated method stub
-			((JLabel)e.getSource()).setOpaque(false);
-			((JLabel)e.getSource()).repaint();
+			((JLabel) e.getSource()).setOpaque(false);
+			((JLabel) e.getSource()).repaint();
 			show.repaint();
 			hotpanel.repaint();
 		}
@@ -391,19 +448,16 @@ public class HotPanel extends JPanel {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
-		
+
 	}
-	
-
-
 
 	private PlayerSortBy sortby(String sortBy) {
 		PlayerSortBy playerSortBy = null;
@@ -461,5 +515,4 @@ public class HotPanel extends JPanel {
 		return new ImageIcon(image);
 	}
 
-	
 }

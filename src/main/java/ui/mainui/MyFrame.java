@@ -80,7 +80,7 @@ public class MyFrame extends JFrame {
 					mc.update();
 					teampanel.update();
 				}
-				
+
 			}
 		};
 
@@ -173,8 +173,7 @@ public class MyFrame extends JFrame {
 		teambutton.addActionListener(e -> setTeam());
 		hotbutton.addActionListener(e -> setHot());
 		matchbutton.addActionListener(e -> setMatch());
-		helpbutton.addActionListener(e->HelpUtil.startHelp());
-	
+		helpbutton.addActionListener(e -> HelpUtil.startHelp());
 
 		frame.add(locationlable);
 		frame.add(helpbutton);
@@ -211,8 +210,8 @@ public class MyFrame extends JFrame {
 	}
 
 	void setExit() {
-		JButton el = new MyButton(new ImageIcon("image/close.png"),
-				new Color(50,50,50), Color.red);
+		JButton el = new MyButton(new ImageIcon("image/close.png"), new Color(
+				50, 50, 50), Color.red);
 		// JLabel el = new JLabel();
 		// ImageIcon image = new ImageIcon("image/close.png");
 		// el.setIcon(image);
@@ -223,8 +222,8 @@ public class MyFrame extends JFrame {
 	}
 
 	void setMini() {
-		JButton el = new MyButton(new ImageIcon("image/mini.png"), new Color(50,50,50),
-				Color.blue);
+		JButton el = new MyButton(new ImageIcon("image/mini.png"), new Color(
+				50, 50, 50), Color.blue);
 		// JLabel el = new JLabel();
 		// ImageIcon image = new ImageIcon("image/mini.png");
 		// el.setIcon(image);
