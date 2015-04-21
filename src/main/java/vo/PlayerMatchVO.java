@@ -35,11 +35,12 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	private double mistakeEfficiency;// 失误率
 	private double useEfficiency;// 使用率
 	
+	
 	private double scoring_rebound_assist;//得分/篮板/助攻（加权比1：1：1）
 	private double minute;//分钟
-    private double handNo;//投篮
-    private double three_points;//三分
-    private double penaltyHandNo;//罚球
+    private double handNo;//投篮出手数
+    private double three_points;//三分出手数
+    private double penaltyHandNo;//罚球出手数
 	private double twoPair;//两双
 	
 	private double points_uprate; //得分提升率
@@ -47,6 +48,15 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	private double help_uprate; //助攻提升率
 	private double hotData;    //热点数据
 	
+	
+	private String location;//位置
+	private double hitNo; // 投篮命中数
+	private double threeHitNo; // 三分命中数
+	private double threeHandNo; // 三分出手数
+	private double penaltyHitNo; // 罚球命中数
+	private double offenseRebs; // 进攻篮板数
+	private double defenceRebs; // 防守篮板数
+	private double help;//总篮板数
 	private SortTool sortTool; //排序工具
 	private SortType type;
 	public PlayerMatchVO(String name, String team, int matchNo,
@@ -62,8 +72,13 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 			double useEfficiency,  double scoring_rebound_assist,
 			double penaltyHandNo,
 			double minute, double handNo,
-			double three_points,  double twoPair) {
+			double three_points,  double twoPair, double penaltyHitNo, double hitNo,double threeHitNo) {
 		super();
+		
+		this.penaltyHitNo = penaltyHitNo;
+		this.hitNo = hitNo;
+		this.threeHitNo = threeHitNo;
+		
 		this.handNo = handNo;
 		this.minute = minute;
 		this.three_points = three_points;
@@ -88,7 +103,7 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		this.foulsNo = foulsNo;
 		this.points = points;
 		this.efficiency = efficiency;
-		GmScEfficiency = gmScEfficiency;
+		this.GmScEfficiency = gmScEfficiency;
 		this.trueHitRate = trueHitRate;
 		this.hitEfficiency = hitEfficiency;
 		this.rebEfficiency = rebEfficiency;
@@ -102,6 +117,7 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		this.scoring_rebound_assist = scoring_rebound_assist;
 		this.twoPair = twoPair;
 		this.penaltyHandNo = penaltyHandNo;
+		
 	}
 
 	public PlayerMatchVO ( MatchPlayerPO playerpo )
@@ -126,41 +142,23 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		this.points = playerpo.getPoints();
 		this.hotData = playerpo.getHotData();
 	}
-//	private  name;// 球员名称
-	private String location;//位置
-//	private double time;// 在场时间
-	private int hitNo; // 投篮命中数
-//	private int handNo; // 投篮出手次数
-	private int threeHitNo; // 三分命中数
-	private int threeHandNo; // 三分出手数
-	private int penaltyHitNo; // 罚球命中数
-//	private int penaltyHandNo; // 罚球出手数
-	private int offenseRebs; // 进攻篮板数
-	private int defenceRebs; // 防守篮板数
-//	private int rebs; // 篮板数
-	private int help;//总篮板数
-//	private int stealsNo;// 抢断数
-//	private int blockNo;// 盖帽数
-//	private int mistakesNo;// 失误数
-//	private int foulsNo;// 犯规数
-//	private int points;// 得分
-//	private boolean dirty;  //脏数据
+
 	
 	
-	public int getHelp()
+	public double getHelp()
 	{
 		return help;
 	}
-	public int getDefenceRebs()
+	public double getDefenceRebs()
 	{
 		return defenceRebs;
 	}
 	
-	public int getOffenseRebs()
+	public double getOffenseRebs()
 	{
 		return offenseRebs;
 	}
-	public  int getPenaltyHitNo()
+	public  double getPenaltyHitNo()
 	{
 		return penaltyHitNo;
 	}
@@ -169,21 +167,21 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	{
 		return location;
 	}
-	public int getHitNo()
+	public double getHitNo()
 	{
 		return hitNo;
 	}
-	public int getThreeHitNo()
+	public double getThreeHitNo()
 	{
 		return this.threeHitNo;
 	}
-	public int getThreeHandNo()
+	public double getThreeHandNo()
 	{
 		return threeHandNo;
 	}
 	
 	public double getOffendRebsNo() {
-		return offendRebsNo;
+		return  offendRebsNo;
 	}
 
 	public double getDefenceRebsNo() {
