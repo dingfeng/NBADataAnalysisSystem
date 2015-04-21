@@ -199,6 +199,7 @@ public class Match
 	 }
 	 if (match_data.changed())
 	 {
+		 match_data.updateData();
 		 MatchesPO[] matches = match_data.getNewMatches();
 		 for (MatchesPO  m : matches)
 		 {

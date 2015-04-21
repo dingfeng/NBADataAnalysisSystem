@@ -125,7 +125,7 @@ public class MatchData  implements MatchDataService
   }
   
   
-  private void updateData()
+  public void updateData()
   {
 	 
 	if (!inited)

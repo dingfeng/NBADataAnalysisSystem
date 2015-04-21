@@ -11,4 +11,5 @@ public interface MatchDataService {
 	public MatchesPO[] getRecentTeamMatches(String teamName, int num);
 	public boolean changed();
 	public MatchesPO[] getNewMatches();
+	 public void updateData();
 }
