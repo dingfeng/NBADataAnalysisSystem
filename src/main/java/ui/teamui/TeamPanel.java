@@ -74,7 +74,7 @@ public class TeamPanel extends JPanel {
 	JButton teamplayers;
 	TeamMatchPanel teammatch;
 	boolean matchpanel = false;
-
+	Vector<String> columnsName = new Vector<String>();
 	JTextField[] teamlabel=new UneditableTextField[54];
 	
 	
@@ -107,7 +107,7 @@ public class TeamPanel extends JPanel {
 
 	/** 设置表格 */
 	void setTable(TeamMatchVO[] team) {
-		Vector<String> columnsName = new Vector<String>();
+		
 		columnsName.add("球队名");
 		columnsName.add("比赛场数");
 		columnsName.add("投篮命中数");
@@ -139,11 +139,9 @@ public class TeamPanel extends JPanel {
 
 		Vector rowimage = new Vector();
 		for (int i = 0; i < team.length; i++) {
-			TeamMatchVO str ;
-			try{
-				str = team[i];
-			}catch(NullPointerException e1){
-				break;
+			TeamMatchVO str  = team[i];
+			if(str==null){
+				continue;
 			}
 			Vector data = new Vector();
 			data.add(str.getName());
@@ -208,7 +206,64 @@ public class TeamPanel extends JPanel {
 		this.add(jScrollPane);
 		this.repaint();
 	}
+
+	public void update(){
+		jScrollPane.setVisible(false);
+		if (dataType.getSelectedItem().equals("赛季总数据")) {
+			updateTable(tc.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
+		} else {
+			updateTable(tc.getSortedAveTeams(TeamSortBy.name, SortType.ASEND));
+		}
+		
+		jScrollPane.repaint();
+		jScrollPane.setVisible(true);
+		this.add(jScrollPane);
+		this.repaint();
+	}
 	
+	void updateTable(TeamMatchVO[] team){
+		Vector rowimage = new Vector();
+		for (int i = 0; i < team.length; i++) {
+			TeamMatchVO str ;
+			try{
+				str = team[i];
+			}catch(NullPointerException e1){
+				continue;
+			}
+			Vector data = new Vector();
+			data.add(str.getName());
+			data.add(str.getMatchNo());
+			data.add(String.format("%.1f",str.getHitNo()));
+			data.add(String.format("%.1f",str.getHandNo()));
+			data.add(String.format("%.1f",str.getThreeHitNo()));
+			data.add(String.format("%.1f",str.getThreeHandNo()));
+			data.add(String.format("%.1f",str.getPenaltyHitNo()));
+			data.add(String.format("%.1f",str.getPenaltyHandNo()));
+			data.add(String.format("%.1f",str.getOffenseRebs()));
+			data.add(String.format("%.1f",str.getDefenceRebs()));
+			data.add(String.format("%.1f",str.getRebs()));
+			data.add(String.format("%.1f",str.getAssistNo()));
+			data.add(String.format("%.1f",str.getStealsNo()));
+			data.add(String.format("%.1f",str.getBlockNo()));
+			data.add(String.format("%.1f",str.getMistakesNo()));
+			data.add(String.format("%.1f",str.getFoulsNo()));
+			data.add(String.format("%.1f",str.getPoints()));
+			data.add(String.format("%.1f", str.getHitRate() * 100));
+			data.add(String.format("%.1f", str.getThreeHitRate() * 100));
+			data.add(String.format("%.1f", str.getPenaltyHitRate() * 100));
+			data.add(String.format("%.1f", str.getWinRate() * 100));
+			data.add(String.format("%.1f", str.getOffenseRound()));
+			data.add(String.format("%.1f", str.getOffenseEfficiency()));
+			data.add(String.format("%.1f", str.getDefenceEfficiency()));
+			data.add(String.format("%.1f", str.getoRebsEfficiency()));
+			data.add(String.format("%.1f", str.getdRebsEfficiency()));
+			data.add(String.format("%.1f", str.getStealsEfficiency()));
+			data.add(String.format("%.1f", str.getAssistEfficiency()));
+
+			rowimage.add(data);
+		}
+		table.setDataVector(rowimage, columnsName);
+	}
 
 	/** 设置标题 */
 	void setHeader() {

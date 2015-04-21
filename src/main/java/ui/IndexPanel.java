@@ -34,7 +34,7 @@ public class IndexPanel extends JPanel{
 		this.repaint();
 	}
 	
-	void setDate(){
+	public void setDate(){
 		
 		
 		String Date=mc.getTodayMatches()[0].getDate();
@@ -93,38 +93,12 @@ public class IndexPanel extends JPanel{
 			});
 			this.add(match[i]);
 		}
-//		Vector<String> columnsName = new Vector<String>();
-//		columnsName.add("日期");
-//		columnsName.add("对阵队伍");
-//		columnsName.add("比分");
-//		
-//		Vector rowimage = new Vector();
-//		for(int i=0;i<match.length;i++){
-//			Vector data=new Vector();
-//			data.add(match[i].getDate());
-//			data.add(match[i].getTeam1().getName()+"-"+match[i].getTeam2().getName());
-//			data.add(match[i].getTeam1().getTotalScores()+"-"+match[i].getTeam2().getTotalScores());
-//			
-//			rowimage.add(data);
-//		}
-//		JTable table=new JTable(rowimage, columnsName);
-//		table.setOpaque(false);
-//		DefaultTableCellRenderer render = new DefaultTableCellRenderer();   
-//        render.setOpaque(false);
-//        table.setDefaultRenderer(Object.class,render);  
-//		table.isCellEditable(1, 1);
-//        
-//        JScrollPane jScrollPane = new JScrollPane();
-//		
-//		jScrollPane.setBounds(FrameSize.width/3,3*FrameSize.height/10,FrameSize.width/5,FrameSize.height/2);
-//		jScrollPane.setOpaque(false);
-//		jScrollPane.getViewport().setOpaque(false);
-//		jScrollPane.setViewportView(table);
-//		this.add(jScrollPane);
+
 		
 		this.add(note);
 		this.add(today);
 		this.add(lantern);
 	}
-	
+
+	 
 }

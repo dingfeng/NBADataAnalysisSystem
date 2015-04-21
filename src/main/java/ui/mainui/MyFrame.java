@@ -54,7 +54,7 @@ public class MyFrame extends JFrame {
 	public static JPanel mainpanel = new JPanel();
 	public static CardLayout card = new CardLayout();
 
-	IndexPanel indexpanel = new IndexPanel();
+	public static IndexPanel indexpanel = new IndexPanel();
 	public static TeamPanel teampanel = new TeamPanel();
 	public static PlayerPanel playerpanel = new PlayerPanel();
 	public static HotPanel hotpanel = new HotPanel();
@@ -78,8 +78,9 @@ public class MyFrame extends JFrame {
 			public void run() {
 				if (mc.changed()) {
 					mc.update();
-					teampanel.showAllData();
+					teampanel.update();
 				}
+				
 			}
 		};
 
