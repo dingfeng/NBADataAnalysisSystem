@@ -489,11 +489,11 @@ public class PlayerPanel extends JPanel {
 		} else if (sortBy.equals("效率")) {
 			playerSortBy = PlayerSortBy.efficiency;
 		} else if (sortBy.equals("投篮")) {
-			playerSortBy = PlayerSortBy.shot;
+			playerSortBy = PlayerSortBy.hitRate;
 		} else if (sortBy.equals("三分")) {
-			playerSortBy = PlayerSortBy.three_points;
+			playerSortBy = PlayerSortBy.threeHitRate;
 		} else if (sortBy.equals("罚球")) {
-			playerSortBy = PlayerSortBy.freeThrow;
+			playerSortBy = PlayerSortBy.penaltyHitRate;
 		} else if (sortBy.equals("两双")) {
 			playerSortBy = PlayerSortBy.twoPair;
 		}
