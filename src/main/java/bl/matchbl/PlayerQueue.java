@@ -267,7 +267,7 @@ public class PlayerQueue {
 				 useEfficiency,   scoring_rebound_assist,
 				   penaltyHandNo,
 				time / 60,  handNo,
-				threeHandNo,   twoPair);
+				threeHandNo,   twoPair, penaltyHitNo, hitNo, threeHitNo);
 	    playervo_ave = new PlayerMatchVO(name,  teamname,  len + 1,
 				 firstServiceNo,  rebs / matchNO,  help/ matchNO,  time/ (matchNO -time_num),
 				 hitRate,  threeHitRate,  penaltyHitRate,
@@ -281,7 +281,8 @@ public class PlayerQueue {
 				 useEfficiency,   scoring_rebound_assist/ matchNO,
 				  penaltyHandNo,
 				time / 60/ (matchNO -time_num),  handNo/ matchNO,
-				threeHandNo/ matchNO,   twoPair/ matchNO);
+				threeHandNo/ matchNO,   twoPair/ matchNO, penaltyHitNo / matchNO, hitNo / matchNO, threeHitNo / matchNO);
+	   // double penaltyHitNo, double hitNo,double threeHitNo
 		
 	}
 	

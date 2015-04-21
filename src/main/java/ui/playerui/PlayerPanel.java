@@ -50,7 +50,7 @@ import bl.playerbl.PlayerController;
 public class PlayerPanel extends JPanel {
 
 	JPanel welcomePanel = new JPanel();
-	JPanel playerMessage = new JPanel();
+	JPanel playerMessagePanel = new JPanel();
 	PlayerMatchPanel playerMatchPanel;
 	boolean matchpanel=false;
 	DefaultTableModel table;
@@ -292,6 +292,7 @@ public class PlayerPanel extends JPanel {
 	public void showTeamPlayers(PlayerMatchVO[] playerMatchVO){
 		this.remove(welcomePanel);
 		this.remove(screenPanel);
+		this.remove(playerMessagePanel);
 		jScrollPane.setVisible(false);
 		setTable(playerMatchVO);
 		jScrollPane.setVisible(true);
@@ -363,6 +364,7 @@ public class PlayerPanel extends JPanel {
 		matchpanel=true;
 		playerMatchPanel = new PlayerMatchPanel(nameText.getText(),teamText.getText());
 		this.remove(jScrollPane);
+		this.remove(playerMessagePanel);
 		this.add(playerMatchPanel);
 		this.repaint();
 	}
@@ -487,11 +489,11 @@ public class PlayerPanel extends JPanel {
 		} else if (sortBy.equals("效率")) {
 			playerSortBy = PlayerSortBy.efficiency;
 		} else if (sortBy.equals("投篮")) {
-			playerSortBy = PlayerSortBy.shot;
+			playerSortBy = PlayerSortBy.hitRate;
 		} else if (sortBy.equals("三分")) {
-			playerSortBy = PlayerSortBy.three_points;
+			playerSortBy = PlayerSortBy.threeHitRate;
 		} else if (sortBy.equals("罚球")) {
-			playerSortBy = PlayerSortBy.freeThrow;
+			playerSortBy = PlayerSortBy.penaltyHitRate;
 		} else if (sortBy.equals("两双")) {
 			playerSortBy = PlayerSortBy.twoPair;
 		}
@@ -680,9 +682,14 @@ public class PlayerPanel extends JPanel {
 	}
 	
 	private void setOnePlayerMessagePanel(){
+		playerMessagePanel.setLayout(new GridLayout(13,6,-1,-1));
+		playerMessagePanel.setBackground(FrameSize.backColor);
+		playerMessagePanel.setBounds(FrameSize.width / 3, FrameSize.height / 12, 2*FrameSize.width / 3,
+				FrameSize.height * 7 / 8
+				- FrameSize.height / 12);
 		for(int i=0;i<78;i++){
 			playerText[i]=new UneditableTextField();
-			playerMessage.add(playerText[i]);
+			playerMessagePanel.add(playerText[i]);
 			playerText[i].setFont(new Font("",Font.PLAIN,15));
 			playerText[i].setBorder(BorderFactory.createLineBorder(Color.white));
 		}
@@ -694,6 +701,7 @@ public class PlayerPanel extends JPanel {
 			this.remove(playerMatchPanel);
 			matchpanel=false;
 		}
+		this.remove(playerMessagePanel);
 		jScrollPane.setVisible(false);
 		if (dataType.getSelectedItem().equals("赛季总数据"))
 			setTable(playerController.sortTotalPlayers(PlayerSortBy.name,
@@ -701,6 +709,7 @@ public class PlayerPanel extends JPanel {
 		else
 			setTable(playerController.sortAvePlayers(PlayerSortBy.name,
 					SortType.ASEND));
+		this.remove(playerMessagePanel);
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
@@ -725,6 +734,7 @@ public class PlayerPanel extends JPanel {
 	private void screenPlayerClick() {
 		this.remove(welcomePanel);
 		this.remove(findPanel);
+		this.remove(playerMessagePanel);
 		this.add(screenPanel);
 		this.repaint();
 	}
@@ -767,7 +777,7 @@ public class PlayerPanel extends JPanel {
 				onePlayer=playerController.findPlayerMatchAve(playerInfo);
 			}
 			setPlayerMessage(onePlayer);
-			this.add(playerMessage);
+			this.add(playerMessagePanel);
 //			jScrollPane.repaint();
 //			jScrollPane.setVisible(true);
 //			this.add(jScrollPane);
@@ -777,12 +787,8 @@ public class PlayerPanel extends JPanel {
 
 	/**一个球员信息（右侧）*/
 	private void setPlayerMessage(PlayerMatchVO playerVO){
-		playerMessage.setVisible(false);
-		playerMessage.setLayout(new GridLayout(13,6,-1,-1));
-		playerMessage.setBackground(FrameSize.backColor);
-		playerMessage.setBounds(FrameSize.width / 3, FrameSize.height / 12, 2*FrameSize.width / 3,
-				FrameSize.height * 7 / 8
-				- FrameSize.height / 12);
+		playerMessagePanel.setVisible(false);
+
 
 		playerText[0].setText("球员姓名");
 		playerText[2].setText("所属球队");
@@ -885,9 +891,9 @@ public class PlayerPanel extends JPanel {
 
 		jScrollPane.setVisible(false);
 		this.remove(jScrollPane);
-		this.add(playerMessage);
-		playerMessage.setVisible(true);
-		playerMessage.repaint();
+		this.add(playerMessagePanel);
+		playerMessagePanel.setVisible(true);
+		playerMessagePanel.repaint();
 		this.repaint();
 	}
 	
