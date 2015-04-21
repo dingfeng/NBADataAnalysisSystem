@@ -29,6 +29,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
 
@@ -257,6 +259,7 @@ public class PlayerPanel extends JPanel {
 		}
 		table = new DefaultTableModel(data, columnsName);
 		mytable = new MyTable(table);
+		mytable.setRowSorter(new TableRowSorter<TableModel>(table));
 		jScrollPane = new JScrollPane(mytable);
 		jScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);

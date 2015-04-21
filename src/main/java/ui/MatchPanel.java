@@ -358,11 +358,6 @@ public class MatchPanel extends JPanel {
 
 		// 设置每个球队的球员表现的表格
 		setPlayerTable(team1.getPlayers(), team2.getPlayers());
-		myPlayer1Table.setSize(panelWidth - 10,(panelHeight * 19 / 20 - panelWidth / 8) / 2);
-		player1ScrollPane.setSize(panelWidth - 10,(panelHeight * 19 / 20 - panelWidth / 8) / 2);
-		myPlayer2Table.setSize(panelWidth - 10,(panelHeight * 19 / 20 - panelWidth / 8) / 2);
-		player2ScrollPane.setSize(panelWidth - 10,(panelHeight * 19 / 20 - panelWidth / 8) / 2);
-
 		player1ScrollPane
 				.setBounds(
 						5,
