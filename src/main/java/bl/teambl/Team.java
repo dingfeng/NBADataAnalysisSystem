@@ -1,6 +1,13 @@
 package bl.teambl;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -256,9 +263,33 @@ public class Team   implements SearchItemProvider
 		return team_map.get(team.hashCode()).getAllPlayers();
 	}
 	
+//	public static void main(String[] args) throws FileNotFoundException, IOException, ClassNotFoundException
+//	{
+//		Team team = new Team();
+//		HashMap<String, String[]> map = new HashMap<String, String[]>();
+//		for (String t : teamnames)
+//		{
+//			map.put(t, team.getPlayers(t));
+//		}
+//		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("teamPlayerMap/teamplayer"));
+//		oos.writeObject(map);
+//		oos.close();
+//		ObjectInputStream ois  = new ObjectInputStream(new FileInputStream("teamPlayerMap/teamplayer"));
+//		map = (HashMap<String, String[]>) ois.readObject();
+//		ois.close();
+//		for (String t : teamnames)
+//		{
+//			String[] players = map.get(t);
+//			for (int i = 0; i < players.length; i++)
+//			{
+//				System.out.println(players[i]);
+//			}
+//		}
+//	}
+//	
+	
 	public TeamMatchVO getTotalTeam(String teamname)
 	{
-		
 		return team_map.get(teamname.hashCode()).getTeamvoTotal();
 	}
 	

@@ -37,7 +37,9 @@ import vo.SortType;
 import vo.TeamMatchVO;
 import vo.TeamSortBy;
 import bl.matchbl.MatchController;
+import bl.matchbl.TeamPlayer;
 import bl.playerbl.PlayerController;
+import bl.teambl.Team;
 import bl.teambl.TeamController;
 
 public class MatchPanel extends JPanel {
@@ -99,20 +101,19 @@ public class MatchPanel extends JPanel {
 		header.setLayout(null);
 		header.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		header.setBackground(FrameSize.backColor);
-
-		TeamMatchVO[] team = teamController.getSortedTotalTeams(
-				TeamSortBy.name, SortType.ASEND);
+        TeamPlayer teamPlayer = new TeamPlayer();
+		 String[] team = Team.teamnames; 
 		ArrayList<String> teamName = new ArrayList<String>();
 		for (int i = 0; i < team.length; i++) {
-			teamName.add(team[i].getName());
+			teamName.add(team[i]);
 		}
 
-		PlayerMatchVO[] player = playerController.sortTotalPlayers(
-				PlayerSortBy.name, SortType.ASEND);
-		ArrayList<String> playerName = new ArrayList<String>();
-		for (int i = 0; i < player.length; i++) {
-			playerName.add(player[i].getName());
-		}
+//		PlayerMatchVO[] player = playerController.sortTotalPlayers(
+//				PlayerSortBy.name, SortType.ASEND);
+		ArrayList<String> playerName = teamPlayer.getAllPlayer();
+//		for (int i = 0; i < player.length; i++) {
+//			playerName.add(player[i].getName());
+//		}
 
 		dateButton1 = new DateChooseButton();
 		dateButton1.setBounds(50, 10, 200, 35);
