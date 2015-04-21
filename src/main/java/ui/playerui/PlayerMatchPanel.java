@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -93,72 +94,78 @@ public class PlayerMatchPanel extends JPanel {
 		columnsName.add("失误");
 		columnsName.add("犯规");
 		columnsName.add("得分");
-		MatchesPO[] match = matchController.getRecentPlayerMatches(playerName, 5);
-		Vector data = new Vector();
-		for (int i = 0; i < 5; i++) {
-			Vector rowData = new Vector();
-			MatchTeamPO teamPO;
-			rowData.add(match[i].getDate());
-			rowData.add(match[i].getTeam1().getName() + "-"
-					+ match[i].getTeam2().getName());
-			rowData.add(match[i].getTeam1().getTotalScores() + "-"
-					+ match[i].getTeam2().getTotalScores());
-			if (match[i].getTeam2().getName().equals(teamName)) {
-				teamPO = match[i].getTeam2();
-			} else {
-				teamPO = match[i].getTeam1();
-			}
-			MatchPlayerPO[] playerPO = teamPO.getPlayers();
-			for (int j = 0; j < playerPO.length; j++) {
-				if (playerPO[j].getName().equals(playerName)) {
-					rowData.add(playerPO[j].getTime());
-					rowData.add(playerPO[j].getHitNo());
-					rowData.add(playerPO[j].getHandNo());
-					rowData.add(playerPO[j].getThreeHitNo());
-					rowData.add(playerPO[j].getThreeHandNo());
-					rowData.add(playerPO[j].getPenaltyHitNo());
-					rowData.add(playerPO[j].getPenaltyHandNo());
-					rowData.add(playerPO[j].getOffenseRebs());
-					rowData.add(playerPO[j].getDefenceRebs());
-					rowData.add(playerPO[j].getRebs());
-					rowData.add(playerPO[j].getHelp());
-					rowData.add(playerPO[j].getStealsNo());
-					rowData.add(playerPO[j].getBlockNo());
-					rowData.add(playerPO[j].getMistakesNo());
-					rowData.add(playerPO[j].getFoulsNo());
-					rowData.add(playerPO[j].getPoints());
+		try {
+			MatchesPO[] match = matchController.getRecentPlayerMatches(
+					playerName, 5);
+			Vector data = new Vector();
+			for (int i = 0; i < 5; i++) {
+				Vector rowData = new Vector();
+				MatchTeamPO teamPO;
+				rowData.add(match[i].getDate());
+				rowData.add(match[i].getTeam1().getName() + "-"
+						+ match[i].getTeam2().getName());
+				rowData.add(match[i].getTeam1().getTotalScores() + "-"
+						+ match[i].getTeam2().getTotalScores());
+				if (match[i].getTeam2().getName().equals(teamName)) {
+					teamPO = match[i].getTeam2();
+				} else {
+					teamPO = match[i].getTeam1();
 				}
+				MatchPlayerPO[] playerPO = teamPO.getPlayers();
+				for (int j = 0; j < playerPO.length; j++) {
+					if (playerPO[j].getName().equals(playerName)) {
+						rowData.add(playerPO[j].getTime());
+						rowData.add(playerPO[j].getHitNo());
+						rowData.add(playerPO[j].getHandNo());
+						rowData.add(playerPO[j].getThreeHitNo());
+						rowData.add(playerPO[j].getThreeHandNo());
+						rowData.add(playerPO[j].getPenaltyHitNo());
+						rowData.add(playerPO[j].getPenaltyHandNo());
+						rowData.add(playerPO[j].getOffenseRebs());
+						rowData.add(playerPO[j].getDefenceRebs());
+						rowData.add(playerPO[j].getRebs());
+						rowData.add(playerPO[j].getHelp());
+						rowData.add(playerPO[j].getStealsNo());
+						rowData.add(playerPO[j].getBlockNo());
+						rowData.add(playerPO[j].getMistakesNo());
+						rowData.add(playerPO[j].getFoulsNo());
+						rowData.add(playerPO[j].getPoints());
+					}
+				}
+				data.add(rowData);
 			}
-			data.add(rowData);
+
+			DefaultTableModel table = new DefaultTableModel(data, columnsName);
+			MyTable recenttable = new MyTable(table);
+			JScrollPane jScrollPane = new JScrollPane(recenttable);
+
+			jScrollPane.setBounds(10, 150, 2 * FrameSize.width / 3 - 20, 103);
+			jScrollPane.setOpaque(false);
+			jScrollPane.getViewport().setOpaque(false);
+			// resizeTable(false,jScrollPane,recenttable);
+			jScrollPane
+					.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+			jScrollPane
+					.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+			recenttable.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					if (e.getClickCount() == 2) {
+						MyFrame.matchpanel.findMatchAccordingMatch(match,
+								recenttable.getSelectedRow());
+						MyFrame.card.show(MyFrame.mainpanel, "match");
+						MyFrame.locationlable.setText("当前位置：比赛");
+					}
+				}
+
+			});
+
+			this.add(jScrollPane);
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(null, "未查到该球员的比赛", "查找失败",
+					JOptionPane.ERROR_MESSAGE);
+			return;
 		}
-
-
-		DefaultTableModel table = new DefaultTableModel(data, columnsName);
-		MyTable recenttable = new MyTable(table);
-		JScrollPane jScrollPane = new JScrollPane(recenttable);
-
-		jScrollPane.setBounds(10, 150, 2 * FrameSize.width / 3 - 20, 103);
-		jScrollPane.setOpaque(false);
-		jScrollPane.getViewport().setOpaque(false);
-//		resizeTable(false,jScrollPane,recenttable);
-		jScrollPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-		jScrollPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-
-		recenttable.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					MyFrame.matchpanel.findMatchAccordingMatch(match,
-							recenttable.getSelectedRow());
-					MyFrame.card.show(MyFrame.mainpanel, "match");
-					MyFrame.locationlable.setText("当前位置：比赛");
-				}
-			}
-
-		});
-
-		this.add(jScrollPane);
 	}
 
 	/** 过往查询 */
@@ -183,7 +190,8 @@ public class PlayerMatchPanel extends JPanel {
 		columnsName.add("失误");
 		columnsName.add("犯规");
 		columnsName.add("得分");
-
+		
+		try{
 		MatchesPO[] match = matchController.getPlayerMatches(playerName);
 		Vector data = new Vector();
 		for (int i = 0; i < match.length; i++) {
@@ -232,7 +240,7 @@ public class PlayerMatchPanel extends JPanel {
 				FrameSize.height * 7 / 8 - FrameSize.height / 12 - 320);
 		pastjScrollPane.setOpaque(false);
 		pastjScrollPane.getViewport().setOpaque(false);
-//		resizeTable(false,pastjScrollPane,pasttable);
+		// resizeTable(false,pastjScrollPane,pasttable);
 		pastjScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		pastjScrollPane
@@ -252,6 +260,10 @@ public class PlayerMatchPanel extends JPanel {
 		});
 
 		this.add(pastjScrollPane);
+		}catch(NullPointerException e){
+			JOptionPane.showMessageDialog(null, "未查到该球员的比赛","查找失败",JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 	}
 
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
