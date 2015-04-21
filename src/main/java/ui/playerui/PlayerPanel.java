@@ -365,11 +365,17 @@ public class PlayerPanel extends JPanel {
 			this.remove(playerMatchPanel);
 		}
 		matchpanel=true;
+		try{
 		playerMatchPanel = new PlayerMatchPanel(nameText.getText(),teamText.getText());
+		}catch(NullPointerException e){
+			JOptionPane.showMessageDialog(null, "暂无该球员的比赛信息","查找失败",JOptionPane.ERROR_MESSAGE);
+			this.add(jScrollPane);
+		}
 		this.remove(jScrollPane);
 		this.remove(playerMessagePanel);
 		this.add(playerMatchPanel);
 		this.repaint();
+		
 	}
 
 	/** 筛选Panel */
