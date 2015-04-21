@@ -59,5 +59,9 @@ public class MatchController implements Matchblservice
 			String teamname , String playername) {
 		return match.getTime_TeamMatches(date1, date2, teamname, playername);
 	}
+	@Override
+	public void update1() {
+     match.update1();		
+	}
 
 }

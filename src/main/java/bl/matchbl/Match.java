@@ -1,6 +1,5 @@
 package bl.matchbl;
 
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,16 +34,26 @@ public class Match
 		init();
 	}
     
+   
+    public void update1()
+    {
+    	boolean inited = false;
+    	match = null;
+    	team_map.clear();;
+		player_map.clear();;
+		init();
+    }
+   
 	public static Match instance()
 	{
 		if (match == null)
 		{
 			match = new Match();
 		}
-		if (match.changed())
-		{
-			match.update();
-		}
+//		if (match.changed())
+//		{
+//			match.update();
+//		}
 		return match;
 	}
     
@@ -197,15 +206,15 @@ public class Match
 	 {
 		 init();
 	 }
-	 if (match_data.changed())
-	 {
+//	 if (match_data.changed())
+//	 {
 		 match_data.updateData();
 		 MatchesPO[] matches = match_data.getNewMatches();
 		 for (MatchesPO  m : matches)
 		 {
 			 dealWithOneMatch(m);
 		 }
-	 }
+//	 }
 	}
 	
 	public boolean changed()

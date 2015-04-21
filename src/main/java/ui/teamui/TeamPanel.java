@@ -207,17 +207,21 @@ public class TeamPanel extends JPanel {
 
 	/** 实时更新 */
 	public void update() {
-		TeamMatchVO teamresult;
+		TeamMatchVO teamresult= null;
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
+			try{
 			teamresult = tc
-					.getTotalTeam(searchBox.getSelectedItem().toString());
+					.getTotalTeam(searchBox.getSelectedItem().toString());TeamMessage(teamresult);
+			}catch (Exception e ){e.printStackTrace();}
 			updateTable(tc.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
 		} else {
+			try{
 			teamresult = tc
-					.getTotalTeam(searchBox.getSelectedItem().toString());
+					.getTotalTeam(searchBox.getSelectedItem().toString());TeamMessage(teamresult);
+			}catch(Exception e){e.printStackTrace();}
 			updateTable(tc.getSortedAveTeams(TeamSortBy.name, SortType.ASEND));
 		}
-		TeamMessage(teamresult);
+		
 		if (matchpanel) {
 			teammatch.update();
 		}

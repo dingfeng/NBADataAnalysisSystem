@@ -42,9 +42,24 @@ public class MatchData  implements MatchDataService
 	  initData();
   }
   
-  //第一次添加数据
-  private void initData()
+  private void init()
   {
+	    todayMatches = new MatchesPO[MAX_TODAY_MATCH];
+	    newMatches = new MatchesPO[MAX_NEW_MATCH];
+	    newMatchesLength = -1;
+	     todayMatchesLength = -1;
+	    today = null;
+	    latest_index = -1;
+	    inited = false;
+	    first_file_name = null;
+	   lastfilename = null;
+	   first_change = true;
+	   matches = new MatchQueue(); 
+  }
+  //第一次添加数据
+  public  void initData()
+  {
+	  init();
 	  File[] file_children = file.listFiles();
 	  if (file_children.length == 0)
 		  return;
@@ -127,73 +142,78 @@ public class MatchData  implements MatchDataService
   
   public void updateData()
   {
+	  initData();
 	 
-	if (!inited)
-	{
-		initData();
-		return;
-	}
-	File[] file_children = file.listFiles();
-	if (file_children.length == 0||file_num == file_children.length) return;
-	Arrays.sort(file_children);
-	
-	String first_f_name = file_children[0].getName();
-	int n = latest_index;
-	String latest_index_filename = lastfilename;
-	if (isRightOrder(first_file_name, first_f_name))               //未产生跨年数据添加
-	{
-		//搜索新添加的数据，考虑到已经产生过跨年数据添加和未产生过跨年数据添加两种情况
-		while (n+1 < file_num&&isRightOrder(latest_index_filename,file_children[++n].getName()));  
-		int old_latest_index = latest_index;
-		latest_index = n -1;
-		latest_index_filename = file_children[latest_index].getName();
-		int m = latest_index;
-		//搜索最最近添加数据和最近添加的数据的分界
-		while (m - 1 >= 0&&isSameDay(file_children[--m].getName(), latest_index_filename));   
-		MatchesPO match = null;
-		//第一次发生跨年数据添加后的递归调用
-		if (old_latest_index !=  -1)
-		{
-			newMatchesLength = -1;
-		}
-		//添加最近添加数据
-		for (int k = old_latest_index+1; k <= m;k++)
-		{
-			match = getMatchPO(file_children[k]);
-			matches.enQueue(match);
-			newMatches[++newMatchesLength] = match;
-		}
-		 //最近一天的比赛数据，假设为今天的比赛数据
-		todayMatchesLength = -1;
-		for (int k = m+1; k <= latest_index; k++)
-		{
-			 match = getMatchPO(file_children[k]);
-			matches.enQueue(match);
-			todayMatches[++todayMatchesLength] = match;
-			newMatches[++newMatchesLength] = match;
-		}
-		file_num = file_children.length;
-	}
-	else 
-	{
-		//发生跨年添加数据的情况
-		int length = file_num;
-		while (!file_children[--length].getName().equals(lastfilename));
-		MatchesPO match = null;
-		for (int i = length + 1; i < file_num; i++)
-		{
-			match = getMatchPO(file_children[i]);
-			matches.enQueue(match);
-			newMatches[++newMatchesLength] = match;
-		}
-		latest_index = -1;
-		first_file_name = first_f_name;
-		lastfilename = first_f_name;
-		//准备新的参数后，递归更新数据
-		updateData();
-	}
+//	if (!inited)
+//	{
+//		initData();
+//		return;
+//	}
+//	File[] file_children = file.listFiles();
+//	if (file_children.length == 0||file_num == file_children.length) return;
+//	Arrays.sort(file_children);
+//	file_num = file_children.length;
+//	String first_f_name = file_children[0].getName();
+//	int n = latest_index;
+//	String latest_index_filename = lastfilename;
+//	if (isRightOrder(first_file_name, first_f_name))               //未产生跨年数据添加
+//	{
+//		//搜索新添加的数据，考虑到已经产生过跨年数据添加和未产生过跨年数据添加两种情况
+//		while (n+1 < file_num&&isRightOrder(latest_index_filename,file_children[++n].getName()));  
+//		int old_latest_index = latest_index;
+//		latest_index = n -1;
+//		latest_index_filename = file_children[latest_index].getName();
+//		int m = latest_index;
+//		lastfilename =  file_children[m].getName();
+//		//搜索最最近添加数据和最近添加的数据的分界
+//		while (m - 1 >= 0&&isSameDay(file_children[--m].getName(), latest_index_filename));   
+//		MatchesPO match = null;
+//		if (n != -1)
+//		newMatchesLength = -1;
+//		//添加最近添加数据
+//		for (int k = old_latest_index+1; k <= m;k++)
+//		{
+//			match = getMatchPO(file_children[k]);
+//			matches.enQueue(match);
+//			newMatches[++newMatchesLength] = match;
+//		}
+//		 //最近一天的比赛数据，假设为今天的比赛数据
+//		todayMatchesLength = -1;
+//		for (int k = m+1; k <= latest_index; k++)
+//		{
+//			 match = getMatchPO(file_children[k]);
+//			matches.enQueue(match);
+//			todayMatches[++todayMatchesLength] = match;
+//			newMatches[++newMatchesLength] = match;
+//		}
+//		file_num = file_children.length;
+//	}
+//	else 
+//	{
+//		file_num = file_children.length;
+//		//发生跨年添加数据的情况
+//		int length = file_num;
+//		while (!file_children[--length].getName().equals(lastfilename));
+//		MatchesPO match = null;
+//		for (int i = length + 1; i < file_num; i++)
+//		{
+//			match = getMatchPO(file_children[i]);
+//			matches.enQueue(match);
+//			newMatches[++newMatchesLength] = match;
+//		}
+//		latest_index = -1;
+//		first_file_name = first_f_name;
+//		lastfilename = first_f_name;
+//		//准备新的参数后，递归更新数据
+//		updateData();
+//	}
 	
   }
+  
+   private void firstOveryear()
+   {
+	 
+   }
   
   public MatchesPO[] getNewMatches()
   {
