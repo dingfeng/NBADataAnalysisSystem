@@ -160,8 +160,12 @@ public class MatchPanel extends JPanel {
 			showPanel.remove(player1ScrollPane);
 			showPanel.remove(player2ScrollPane);
 			this.remove(showPanel);
+			try{
 			matches = matchController.getTime_TeamMatches(date1, date2, team,
 					player);
+			}catch(NullPointerException e){
+				JOptionPane.showMessageDialog(null, "未查到该段时间内的比赛","查找失败",JOptionPane.ERROR_MESSAGE);
+			}
 			matchScrollPane.setVisible(false);
 			setMatchTable(matches, 0);
 			matchScrollPane.setVisible(true);
@@ -181,7 +185,11 @@ public class MatchPanel extends JPanel {
 		showPanel.remove(player1ScrollPane);
 		showPanel.remove(player2ScrollPane);
 		this.remove(showPanel);
+		try{
 		matches = matchController.getTimeMatches(date1, date2);
+		}catch(NullPointerException e){
+			JOptionPane.showMessageDialog(null, "未查到该段时间内的比赛","查找失败",JOptionPane.ERROR_MESSAGE);
+		}
 		matchScrollPane.setVisible(false);
 		setMatchTable(matches, 0);
 		matchScrollPane.setVisible(true);
