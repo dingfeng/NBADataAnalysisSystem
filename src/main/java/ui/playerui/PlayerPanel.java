@@ -3,6 +3,7 @@ package ui.playerui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -48,6 +49,7 @@ import bl.playerbl.PlayerController;
 public class PlayerPanel extends JPanel {
 
 	JPanel welcomePanel = new JPanel();
+	JPanel playerMessage;
 	PlayerMatchPanel playerMatchPanel;
 	boolean matchpanel=false;
 	DefaultTableModel table;
@@ -226,7 +228,7 @@ public class PlayerPanel extends JPanel {
 			rowData.add(String.format("%.1f", playerVO.getDefenceNo()));
 			rowData.add(String.format("%.1f", playerVO.getStealsNo()));
 			rowData.add(String.format("%.1f", playerVO.getBlockNo()));
-			rowData.add(playerVO.getMistakesNo());
+			rowData.add(String.format("%.1f", playerVO.getMistakesNo()));
 			rowData.add(String.format("%.1f", playerVO.getFoulsNo()));
 			rowData.add(String.format("%.1f", playerVO.getPoints()));
 			rowData.add(String.format("%.1f", playerVO.getEfficiency()));
@@ -240,7 +242,7 @@ public class PlayerPanel extends JPanel {
 					playerVO.getDefenceRebsEfficiency()));
 			rowData.add(String.format("%.1f",
 					playerVO.getAssistEfficiency() * 100));
-			rowData.add(String.format("%.1f", playerVO.getStealsEfficiency()));
+			rowData.add(String.format("%.1f", playerVO.getStealsEfficiency()*100));
 			rowData.add(String.format("%.1f",
 					playerVO.getBlockEfficiency() * 100));
 			rowData.add(String.format("%.1f",
@@ -749,7 +751,12 @@ public class PlayerPanel extends JPanel {
 			}
 			jScrollPane.setVisible(false);
 			PlayerMatchVO[] onePlayer = new PlayerMatchVO[1];
-			onePlayer[0]=playerController.findPlayerMatchAve(playerInfo);
+			if(dataType.getSelectedItem().equals("赛季总数据")){
+				onePlayer[0]=playerController.findPlayerTotal(playerInfo);
+			}
+			else{
+				onePlayer[0]=playerController.findPlayerMatchAve(playerInfo);
+			}
 			setTable(onePlayer);
 			jScrollPane.repaint();
 			jScrollPane.setVisible(true);
@@ -757,10 +764,14 @@ public class PlayerPanel extends JPanel {
 			this.repaint();
 			searchField.setText("");
 		} 
-
-
 	}
 
+	/**一个球员信息（右侧）*/
+	private void PlayerMessage(PlayerMatchVO str){
+		playerMessage = new JPanel();
+		playerMessage.setLayout(new GridLayout(9,6,-1,-1));
+	}
+	
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
 		Dimension containerwidth = null;
 		if (!bool) {
