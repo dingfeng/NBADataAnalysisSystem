@@ -82,6 +82,7 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 		this.handNo = handNo;
 		this.minute = minute;
 		this.three_points = three_points;
+		this.threeHandNo = three_points;
 		this.points_uprate = points_uprate;
 		this.rebs_uprate = rebs_uprate;
 		this.help_uprate = help_uprate;

@@ -154,6 +154,7 @@ public class IndexPanel extends JPanel{
 			}
 		}
 		this.repaint();
+		this.validate();
 	}
 
 }
