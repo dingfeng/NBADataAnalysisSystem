@@ -98,7 +98,7 @@ public class PlayerMatchPanel extends JPanel {
 			MatchesPO[] match = matchController.getRecentPlayerMatches(
 					playerName, 5);
 			Vector data = new Vector();
-			for (int i = 0; i < 5; i++) {
+			for (int i = 0; i < match.length; i++) {
 				Vector rowData = new Vector();
 				MatchTeamPO teamPO;
 				rowData.add(match[i].getDate());

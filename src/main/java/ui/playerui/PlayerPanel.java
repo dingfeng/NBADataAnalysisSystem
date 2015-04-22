@@ -1079,8 +1079,17 @@ public class PlayerPanel extends JPanel {
 				}
 			}
 			if (!isPlayer) {
-				JOptionPane.showMessageDialog(null, "未查到该球员", "查找失败",
-						JOptionPane.ERROR_MESSAGE);
+				PlayerMatchVO onePlayer = new PlayerMatchVO(playerInfo);
+				try {
+				
+					jScrollPane.setVisible(false);
+					setPlayerMessage(onePlayer);
+					this.add(playerMessagePanel);
+					this.repaint();
+					System.out.println("sdfsf");
+				} catch (NullPointerException e) {
+					showAllData();
+				}
 				return;
 			} else if (playerController.findPlayer(playerInfo) == null) {
 				JOptionPane.showMessageDialog(null, "未找到该球员的个人信息", "查找失败",

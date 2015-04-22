@@ -59,6 +59,10 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	private double help;//总篮板数
 	private SortTool sortTool; //排序工具
 	private SortType type;
+	public PlayerMatchVO(String name)
+	{
+		this.name = name;
+	}
 	public PlayerMatchVO(String name, String team, int matchNo,
 			double firstServiceNo, double rebs, double assistNo, double time,
 			double hitRate, double threeHitRate, double penaltyHitRate,
