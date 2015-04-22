@@ -272,7 +272,7 @@ public class TeamPanel extends JPanel {
 		searchBox.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
 				35);
 		header.add(searchBox);
-		searchBox.addKeyListener(new KeyAdapter() {
+		searchBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyChar() == KeyEvent.VK_ENTER) // 按回车键执行相应操作;
 				{
@@ -297,12 +297,12 @@ public class TeamPanel extends JPanel {
 		header.add(searchButton);
 
 		dataType = new MyComboBox(new String[] { "赛季总数据", "场均数据" });
-		dataType.setBounds(20, 10, 100, 35);
+		dataType.setBounds(FrameSize.width/60, 10, FrameSize.width/12, 35);
 		header.add(dataType);
 
 		JButton allButton = new MyButton(new ImageIcon("image\\show.png"),
 				Color.GRAY, Color.LIGHT_GRAY);
-		allButton.setBounds(140, 10, 45, 35);
+		allButton.setBounds(7* FrameSize.width / 60, 10, 45, 35);
 		allButton.setToolTipText("显示数据");
 		allButton.addActionListener(e -> showAllData());
 		header.add(allButton);

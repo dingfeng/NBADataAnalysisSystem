@@ -21,6 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import po.MatchPlayerPO;
 import po.MatchTeamPO;
@@ -117,6 +119,7 @@ public class MatchPanel extends JPanel {
 
 		dateButton1 = new DateChooseButton();
 		dateButton1.setBounds(50, 10, 200, 35);
+		dateButton1.setEnd(this);
 		header.add(dateButton1);
 
 		dateButton2 = new DateChooseButton();
@@ -569,6 +572,7 @@ public class MatchPanel extends JPanel {
 		}
 		player1Table = new DefaultTableModel(data1, columnsName);
 		myPlayer1Table = new MyTable(player1Table);
+		myPlayer1Table.setRowSorter(new TableRowSorter<TableModel>(player1Table));
 		myPlayer1Table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
@@ -616,6 +620,7 @@ public class MatchPanel extends JPanel {
 		}
 		player2Table = new DefaultTableModel(data2, columnsName);
 		myPlayer2Table = new MyTable(player2Table);
+		myPlayer2Table.setRowSorter(new TableRowSorter<TableModel>(player2Table));
 		myPlayer2Table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
