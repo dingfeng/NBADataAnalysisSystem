@@ -654,6 +654,14 @@ public class PlayerPanel extends JPanel {
 		panel.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		panel.setBackground(FrameSize.backColor);
 		panel.add(searchBox);
+		
+		JButton searchButton = new MyButton(new ImageIcon("image\\find.png"),
+				Color.GRAY, Color.LIGHT_GRAY);
+		searchButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
+		searchButton.setToolTipText("查找");
+		searchButton.addActionListener(e -> findPlayerClick(searchBox
+				.getSelectedItem().toString()));
+		panel.add(searchButton);
 
 		searchBox.addKeyListener(new KeyAdapter(){ 
 		      public void keyPressed(KeyEvent e)    
