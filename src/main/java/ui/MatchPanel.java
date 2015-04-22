@@ -92,7 +92,7 @@ public class MatchPanel extends JPanel {
 		this.setOpaque(false);
 		matches = matchController.getAllMatches();
 		setMatchTable(matches, 0);
-		setHeader();
+//		setHeader();
 		this.add(matchScrollPane);
 		this.add(header);
 		this.add(showPanel);

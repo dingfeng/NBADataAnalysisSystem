@@ -92,7 +92,7 @@ public class PlayerPanel extends JPanel {
 	String[] allPlayerNames;
 	JComboBox searchBox ;
 	
-	JTextField[] playerText = new UneditableTextField[78];
+	JTextField[] playerText = new UneditableTextField[84];
 
 	Vector columnsName = new Vector();
 
@@ -745,12 +745,12 @@ public class PlayerPanel extends JPanel {
 	}
 
 	private void setOnePlayerMessagePanel(){
-		playerMessagePanel.setLayout(new GridLayout(13,6,-1,-1));
+		playerMessagePanel.setLayout(new GridLayout(14,6,-1,-1));
 		playerMessagePanel.setBackground(FrameSize.backColor);
 		playerMessagePanel.setBounds(FrameSize.width / 3, FrameSize.height / 12, 2*FrameSize.width / 3,
 				FrameSize.height * 7 / 8
 				- FrameSize.height / 12);
-		for(int i=0;i<78;i++){
+		for(int i=0;i<84;i++){
 			playerText[i]=new UneditableTextField();
 			playerMessagePanel.add(playerText[i]);
 			playerText[i].setFont(new Font("",Font.PLAIN,15));
@@ -852,105 +852,111 @@ public class PlayerPanel extends JPanel {
 	private void setPlayerMessage(PlayerMatchVO playerVO){
 		playerMessagePanel.setVisible(false);
 
-
-		playerText[0].setText("球员姓名");
-		playerText[2].setText("所属球队");
-		playerText[4].setText("参赛场数");
-		playerText[6].setText("先发场数");
-		playerText[8].setText("篮板");
-		playerText[10].setText("助攻");
-		playerText[12].setText("在场时间");
-		playerText[14].setText("盖帽数");
-		playerText[16].setText("得分/篮板/助攻");
-		playerText[18].setText("抢断");
-		playerText[20].setText("犯规");
-		playerText[22].setText("失误");
-		playerText[24].setText("分钟");
-		playerText[26].setText("投篮");
-		playerText[28].setText("三分");
-		playerText[30].setText("罚球");
-		playerText[32].setText("两双");
+		playerText[0].setText("参赛场数");
+		playerText[2].setText("先发场数");
+		playerText[4].setText("篮板");
+		playerText[6].setText("助攻");
+		playerText[8].setText("在场时间");
+		playerText[10].setText("盖帽数");
+		playerText[12].setText("得分/篮板/助攻");
+		playerText[14].setText("抢断");
+		playerText[16].setText("犯规");
+		playerText[18].setText("失误");
+		playerText[20].setText("分钟");
+		playerText[22].setText("投篮");
+		playerText[24].setText("三分");
+		playerText[26].setText("罚球");
+		playerText[28].setText("两双");
+		playerText[30].setText("投篮出手数");
+		playerText[32].setText("投篮命中数");
 		playerText[34].setText("投篮(%)");
-		playerText[36].setText("三分(%)");
-		playerText[38].setText("罚球(%)");
-		playerText[40].setText("进攻");
-		playerText[42].setText("防守");
-		playerText[44].setText("抢断");
-		playerText[46].setText("盖帽");
-		playerText[48].setText("失误");
-		playerText[50].setText("犯规");
-		playerText[52].setText("得分");
-		playerText[54].setText("效率");
-		playerText[56].setText("GmSc效率");
-		playerText[58].setText("真实命中率(%)");
-		playerText[60].setText("投篮效率");
-		playerText[62].setText("篮板率");
-		playerText[64].setText("进攻篮板率");
-		playerText[66].setText("防守篮板率");
-		playerText[68].setText("助攻率(%)");
-		playerText[70].setText("抢断率");
-		playerText[72].setText("盖帽率(%)");
-		playerText[74].setText("失误率(%)");
-		playerText[76].setText("使用率(%)");
+		playerText[36].setText("三分出手数");
+		playerText[38].setText("三分命中数");
+		playerText[40].setText("三分(%)");
+		playerText[42].setText("罚球出手数");
+		playerText[44].setText("罚球命中数");
+		playerText[46].setText("罚球(%)");
+		playerText[48].setText("进攻");
+		playerText[50].setText("防守");
+		playerText[52].setText("盖帽");
+		playerText[54].setText("失误");
+		playerText[56].setText("犯规");
+		playerText[58].setText("得分");
+		playerText[60].setText("效率");
+		playerText[62].setText("GmSc效率");
+		playerText[64].setText("真实命中率(%)");
+		playerText[66].setText("投篮效率");
+		playerText[68].setText("篮板率");
+		playerText[70].setText("进攻篮板率");
+		playerText[72].setText("防守篮板率");
+		playerText[74].setText("助攻率(%)");
+		playerText[76].setText("抢断率");
+		playerText[78].setText("盖帽率(%)");
+		playerText[80].setText("失误率(%)");
+		playerText[82].setText("使用率(%)");
 		
-		playerText[1].setText(playerVO.getName());
-		playerText[3].setText(playerVO.getTeam());
-		playerText[5].setText(String.valueOf(playerVO.getMatchNo()));
-		playerText[7].setText(String.valueOf(playerVO.getFirstServiceNo()));
-		playerText[9].setText(String.format("%.1f", playerVO.getRebs()));
-		playerText[11].setText(String.format("%.1f", playerVO.getAssistNo()));
-		playerText[13].setText(String.format("%.1f", playerVO.getTime()));
 
-		playerText[15].setText(String.format("%.1f", playerVO.getBlockNo()));
-		playerText[17].setText(String.format("%.1f",
+		playerText[1].setText(String.valueOf(playerVO.getMatchNo()));
+		playerText[3].setText(String.valueOf(playerVO.getFirstServiceNo()));
+		playerText[5].setText(String.format("%.1f", playerVO.getRebs()));
+		playerText[7].setText(String.format("%.1f", playerVO.getAssistNo()));
+		playerText[9].setText(String.format("%.1f", playerVO.getTime()));
+
+		playerText[11].setText(String.format("%.1f", playerVO.getBlockNo()));
+		playerText[13].setText(String.format("%.1f",
 				playerVO.getScoring_rebound_assist()));
-		playerText[19].setText(String.format("%.1f", playerVO.getStealsNo()));
-		playerText[21].setText(String.format("%.1f", playerVO.getFoulsNo()));
-		playerText[23].setText(String.format("%.1f", playerVO.getMistakesNo()));
-		playerText[25].setText(String.format("%.1f", playerVO.getMinute()));
-		playerText[27].setText(String.format("%.1f", playerVO.getHandNo()));
-		playerText[29].setText(String.format("%.1f", playerVO.getThree_points()));
-		playerText[31].setText(String.format("%.1f", playerVO.getBlockNo()));
-		playerText[33].setText(String.format("%.1f", playerVO.getTwoPair()));
+		playerText[15].setText(String.format("%.1f", playerVO.getStealsNo()));
+		playerText[17].setText(String.format("%.1f", playerVO.getFoulsNo()));
+		playerText[19].setText(String.format("%.1f", playerVO.getMistakesNo()));
+		playerText[21].setText(String.format("%.1f", playerVO.getMinute()));
+		playerText[23].setText(String.format("%.1f", playerVO.getHandNo()));
+		playerText[25].setText(String.format("%.1f", playerVO.getThree_points()));
+		playerText[27].setText(String.format("%.1f", playerVO.getBlockNo()));
+		playerText[29].setText(String.format("%.1f", playerVO.getTwoPair()));
+		playerText[31].setText(String.format("%.1f", playerVO.getHandNo()));
+		playerText[33].setText(String.format("%.1f", playerVO.getHitNo()));
 		double hitRate = playerVO.getHitRate() * 100;
 		if (hitRate >= 0)
 			playerText[35].setText(String.format("%.1f", hitRate));
 		else
 			playerText[35].setText("-");
+		playerText[37].setText(String.format("%.1f", playerVO.getThreeHandNo()));
+		playerText[39].setText(String.format("%.1f", playerVO.getThreeHitNo()));
 		double threeHitRate = playerVO.getThreeHitRate();
 		if (threeHitRate >= 0)
-			playerText[37].setText(String.format("%.1f", threeHitRate * 100));
+			playerText[41].setText(String.format("%.1f", threeHitRate * 100));
 		else
-			playerText[37].setText("-");
+			playerText[41].setText("-");
+		playerText[43].setText(String.format("%.1f", playerVO.getPenaltyHandNo()));
+		playerText[45].setText(String.format("%.1f", playerVO.getPenaltyHitNo()));
 		double penaltyHitRate = playerVO.getPenaltyHitRate();
 		if (penaltyHitRate >= 0)
-			playerText[39].setText(String.format("%.1f", penaltyHitRate * 100));
+			playerText[47].setText(String.format("%.1f", penaltyHitRate * 100));
 		else
-			playerText[39].setText("-");
-		playerText[41].setText(String.format("%.1f", playerVO.getOffendNo()));
-		playerText[43].setText(String.format("%.1f", playerVO.getDefenceNo()));
-		playerText[45].setText(String.format("%.1f", playerVO.getStealsNo()));
-		playerText[47].setText(String.format("%.1f", playerVO.getBlockNo()));
-		playerText[49].setText(String.format("%.1f", playerVO.getMistakesNo()));
-		playerText[51].setText(String.format("%.1f", playerVO.getFoulsNo()));
-		playerText[53].setText(String.format("%.1f", playerVO.getPoints()));
-		playerText[55].setText(String.format("%.1f", playerVO.getEfficiency()));
-		playerText[57].setText(String.format("%.1f", playerVO.getGmScEfficiency()));
-		playerText[59].setText(String.format("%.1f", playerVO.getTrueHitRate() * 100));
-		playerText[61].setText(String.format("%.1f", playerVO.getHitEfficiency()));
-		playerText[63].setText(String.format("%.1f", playerVO.getRebEfficiency()));
-		playerText[65].setText(String.format("%.1f",
+			playerText[47].setText("-");
+		playerText[49].setText(String.format("%.1f", playerVO.getOffendNo()));
+		playerText[51].setText(String.format("%.1f", playerVO.getDefenceNo()));
+		playerText[53].setText(String.format("%.1f", playerVO.getBlockNo()));
+		playerText[55].setText(String.format("%.1f", playerVO.getMistakesNo()));
+		playerText[57].setText(String.format("%.1f", playerVO.getFoulsNo()));
+		playerText[59].setText(String.format("%.1f", playerVO.getPoints()));
+		playerText[61].setText(String.format("%.1f", playerVO.getEfficiency()));
+		playerText[63].setText(String.format("%.1f", playerVO.getGmScEfficiency()));
+		playerText[65].setText(String.format("%.1f", playerVO.getTrueHitRate() * 100));
+		playerText[67].setText(String.format("%.1f", playerVO.getHitEfficiency()));
+		playerText[69].setText(String.format("%.1f", playerVO.getRebEfficiency()));
+		playerText[71].setText(String.format("%.1f",
 				playerVO.getOffenseRebsEfficiency()));
-		playerText[67].setText(String.format("%.1f",
-				playerVO.getDefenceRebsEfficiency()));
-		playerText[69].setText(String.format("%.1f",
-				playerVO.getAssistEfficiency() * 100));
-		playerText[71].setText(String.format("%.1f", playerVO.getStealsEfficiency()*100));
 		playerText[73].setText(String.format("%.1f",
-				playerVO.getBlockEfficiency() * 100));
+				playerVO.getDefenceRebsEfficiency()));
 		playerText[75].setText(String.format("%.1f",
+				playerVO.getAssistEfficiency() * 100));
+		playerText[77].setText(String.format("%.1f", playerVO.getStealsEfficiency()*100));
+		playerText[79].setText(String.format("%.1f",
+				playerVO.getBlockEfficiency() * 100));
+		playerText[81].setText(String.format("%.1f",
 				playerVO.getMistakeEfficiency() * 100));
-		playerText[77].setText(String.format("%.1f", playerVO.getUseEfficiency() * 100));
+		playerText[83].setText(String.format("%.1f", playerVO.getUseEfficiency() * 100));
 
 		jScrollPane.setVisible(false);
 		this.remove(jScrollPane);
