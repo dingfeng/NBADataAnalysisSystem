@@ -424,8 +424,8 @@ public class TeamPanel extends JPanel {
 		match.setFont(new Font("幼圆", Font.BOLD, 12));
 		teamplayers.setFont(new Font("幼圆", Font.BOLD, 12));
 
-		match.setForeground(Color.red);
-		teamplayers.setForeground(Color.red);
+		match.setForeground(Color.white);
+		teamplayers.setForeground(Color.white);
 
 		image.setOpaque(false);
 

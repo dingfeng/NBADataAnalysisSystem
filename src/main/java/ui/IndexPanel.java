@@ -64,9 +64,16 @@ public class IndexPanel extends JPanel{
 		note.setForeground(Color.white);
 		
 		MatchesPO[] matches=mc.getTodayMatches();
-		match=new JLabel[matches.length];
-		for(int i=0;i<match.length;i++){
-			match[i]=new JLabel(i+1+"."+matches[i].getDate()+"  |  "+matches[i].getTeam1().getName()+"-"+matches[i].getTeam2().getName()+"  |  "+matches[i].getTeam1().getTotalScores()+"-"+matches[i].getTeam2().getTotalScores());
+		match=new JLabel[10];
+		for(int n=0;n<10;n++){
+			match[n]=new JLabel();
+		}
+		int labelnum=10;
+		if(matches.length<10){
+			labelnum=matches.length;
+		}
+		for(int i=0;i<labelnum;i++){
+			match[i].setText(i+1+"."+matches[i].getDate()+"  |  "+matches[i].getTeam1().getName()+"-"+matches[i].getTeam2().getName()+"  |  "+matches[i].getTeam1().getTotalScores()+"-"+matches[i].getTeam2().getTotalScores());
 			match[i].setBounds(FrameSize.width/3,3*FrameSize.height/10+i*FrameSize.height/30,FrameSize.width/5,FrameSize.height/40);
 			match[i].setForeground(Color.white);
 			match[i].addMouseListener(new MouseAdapter() {
@@ -94,6 +101,11 @@ public class IndexPanel extends JPanel{
 			});
 			this.add(match[i]);
 		}
+		if(matches.length<10){
+			for(int j=matches.length;j<10;j++){
+				match[j].setVisible(false);
+			}
+		}
 
 		
 		this.add(note);
@@ -116,8 +128,20 @@ public class IndexPanel extends JPanel{
 		String date = "今天是" + year + "年" + month + "月" + day + "日";
 		today.setText(date);
 		MatchesPO[] matches=mc.getTodayMatches();
-		for(int i=0;i<matches.length;i++){
+		int labelnum=10;
+		if(matches.length<10){
+			labelnum=matches.length;
+		}
+		for(int i=0;i<labelnum;i++){
 			match[i].setText(i+1+"."+matches[i].getDate()+"  |  "+matches[i].getTeam1().getName()+"-"+matches[i].getTeam2().getName()+"  |  "+matches[i].getTeam1().getTotalScores()+"-"+matches[i].getTeam2().getTotalScores());
+			match[i].setVisible(true);
+			this.add(match[i]);
+		}
+		if(matches.length<10){
+			for(int j=matches.length;j<10;j++){
+				match[j].setVisible(false);
+				
+			}
 		}
 		this.repaint();
 	}
