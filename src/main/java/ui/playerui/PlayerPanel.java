@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -210,70 +211,86 @@ public class PlayerPanel extends JPanel {
 			rowData.add(playerVO.getTeam());
 			rowData.add(playerVO.getMatchNo());
 			rowData.add(playerVO.getFirstServiceNo());
-			rowData.add(String.format("%.1f", playerVO.getRebs()));
-			rowData.add(String.format("%.1f", playerVO.getAssistNo()));
-			rowData.add(String.format("%.1f", playerVO.getTime()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getRebs()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getAssistNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getTime()));
 
-			rowData.add(String.format("%.1f", playerVO.getBlockNo()));
-			rowData.add(String.format("%.1f",
-					playerVO.getScoring_rebound_assist()));
-			rowData.add(String.format("%.1f", playerVO.getFoulsNo()));
-			rowData.add(String.format("%.1f", playerVO.getMistakesNo()));
-			rowData.add(String.format("%.1f", playerVO.getMinute()));
-			rowData.add(String.format("%.1f", playerVO.getTwoPair()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getBlockNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getScoring_rebound_assist()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getFoulsNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getMistakesNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getMinute()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getTwoPair()));
 			
 			
-			rowData.add(String.format("%.1f", playerVO.getHandNo()));
-			rowData.add(String.format("%.1f", playerVO.getHitNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getHandNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getHitNo()));
 			double hitRate = playerVO.getHitRate() * 100;
 			if (hitRate >= 0)
-				rowData.add(String.format("%.1f", hitRate));
+				rowData.add(FrameSize.roundForNumber(hitRate));
 			else
 				rowData.add("-");
-			rowData.add(String.format("%.1f", playerVO.getThreeHandNo()));
-			rowData.add(String.format("%.1f", playerVO.getThreeHitNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getThreeHandNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getThreeHitNo()));
 			double threeHitRate = playerVO.getThreeHitRate();
 			if (threeHitRate >= 0)
-				rowData.add(String.format("%.1f", threeHitRate * 100));
+				rowData.add(FrameSize.roundForNumber(threeHitRate * 100));
 			else
 				rowData.add("-");
-			rowData.add(String.format("%.1f", playerVO.getPenaltyHandNo()));
-			rowData.add(String.format("%.1f", playerVO.getPenaltyHitNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getPenaltyHandNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getPenaltyHitNo()));
 			double penaltyHitRate = playerVO.getPenaltyHitRate();
 			if (penaltyHitRate >= 0)
-				rowData.add(String.format("%.1f", penaltyHitRate * 100));
+				rowData.add(FrameSize.roundForNumber(penaltyHitRate * 100));
 			else
 				rowData.add("-");
-			rowData.add(String.format("%.1f", playerVO.getOffendNo()));
-			rowData.add(String.format("%.1f", playerVO.getDefenceNo()));
-			rowData.add(String.format("%.1f", playerVO.getStealsNo()));
-			rowData.add(String.format("%.1f", playerVO.getBlockNo()));
-			rowData.add(String.format("%.1f", playerVO.getMistakesNo()));
-			rowData.add(String.format("%.1f", playerVO.getFoulsNo()));
-			rowData.add(String.format("%.1f", playerVO.getPoints()));
-			rowData.add(String.format("%.1f", playerVO.getEfficiency()));
-			rowData.add(String.format("%.1f", playerVO.getGmScEfficiency()));
-			rowData.add(String.format("%.1f", playerVO.getTrueHitRate() * 100));
-			rowData.add(String.format("%.1f", playerVO.getHitEfficiency()));
-			rowData.add(String.format("%.1f", playerVO.getRebEfficiency()));
-			rowData.add(String.format("%.1f",
-					playerVO.getOffenseRebsEfficiency()));
-			rowData.add(String.format("%.1f",
-					playerVO.getDefenceRebsEfficiency()));
-			rowData.add(String.format("%.1f",
-					playerVO.getAssistEfficiency() * 100));
-			rowData.add(String.format("%.1f", playerVO.getStealsEfficiency()*100));
-			rowData.add(String.format("%.1f",
-					playerVO.getBlockEfficiency() * 100));
-			rowData.add(String.format("%.1f",
-					playerVO.getMistakeEfficiency() * 100));
-			rowData.add(String.format("%.1f", playerVO.getUseEfficiency() * 100));
+			rowData.add(FrameSize.roundForNumber( playerVO.getOffendNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getDefenceNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getStealsNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getBlockNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getMistakesNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getFoulsNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getPoints()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getGmScEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getTrueHitRate() * 100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getHitEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getRebEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getOffenseRebsEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getDefenceRebsEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getAssistEfficiency() * 100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getStealsEfficiency()*100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getBlockEfficiency() * 100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getMistakeEfficiency() * 100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getUseEfficiency() * 100));
 
 			data.add(rowData);
 		}
 		table = new DefaultTableModel(data, columnsName);
 		mytable = new MyTable(table);
 		mytable.setRowSorter(new TableRowSorter<TableModel>(table));
+		TableRowSorter rowSorter = (TableRowSorter) mytable.getRowSorter();  
+		 Comparator<Number> numberComparator = new Comparator<Number>() {  
+	            @Override  
+	            public int compare(Number o1, Number o2) {  
+	                if ( o1 == null ) {  
+	                    return -1;  
+	                }  
+	                if ( o2 == null ) {  
+	                    return 1;  
+	                }  
+	                if ( o1.doubleValue() < o2.doubleValue() ) {  
+	                    return -1;  
+	                }  
+	                if ( o1.doubleValue() > o2.doubleValue() ) {  
+	                    return 1;  
+	                }  
+	                return 0;  
+	            }  
+	        };  
+	        for (int col = 1; col < table.getColumnCount(); col++) {  
+	            rowSorter.setComparator(col, numberComparator);  
+	        }  
 		jScrollPane = new JScrollPane(mytable);
 		jScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -739,13 +756,83 @@ public class PlayerPanel extends JPanel {
 	private void updateTable(PlayerMatchVO[] player) {
 		Vector data = new Vector();
 		for(int i=0;i<player.length;i++){
-			PlayerMatchVO str = player[i];
-			if(str==null){
+			PlayerMatchVO playerVO = player[i];
+			if(playerVO==null){
 				continue;
 			}
-			Vector rowdata = new Vector();
+			Vector rowData = new Vector();
+			rowData.add(playerVO.getName());
+			// int playerNum = playerVO.getNumber();
+			// String number = playerNum != -1 ? String.valueOf(playerNum) :
+			// "-";
+			// rowData.add(number);
+			// rowData.add(playerVO.getPosition());
+			// rowData.add(playerVO.getHeightfeet() + "-"
+			// + playerVO.getHeightinch());
+			// rowData.add(playerVO.getBirth());
+			// rowData.add(playerVO.getAge());
+			// rowData.add(playerVO.getExp());
+			// rowData.add(playerVO.getSchool());
+			rowData.add(playerVO.getTeam());
+			rowData.add(playerVO.getMatchNo());
+			rowData.add(playerVO.getFirstServiceNo());
+			rowData.add(FrameSize.roundForNumber(playerVO.getRebs()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getAssistNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getTime()));
+
+			rowData.add(FrameSize.roundForNumber(playerVO.getBlockNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getScoring_rebound_assist()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getFoulsNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getMistakesNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getMinute()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getTwoPair()));
 			
-		}table.setDataVector(data, columnsName);
+			
+			rowData.add(FrameSize.roundForNumber(playerVO.getHandNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getHitNo()));
+			double hitRate = playerVO.getHitRate() * 100;
+			if (hitRate >= 0)
+				rowData.add(FrameSize.roundForNumber(hitRate));
+			else
+				rowData.add("-");
+			rowData.add(FrameSize.roundForNumber(playerVO.getThreeHandNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getThreeHitNo()));
+			double threeHitRate = playerVO.getThreeHitRate();
+			if (threeHitRate >= 0)
+				rowData.add(FrameSize.roundForNumber(threeHitRate * 100));
+			else
+				rowData.add("-");
+			rowData.add(FrameSize.roundForNumber(playerVO.getPenaltyHandNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getPenaltyHitNo()));
+			double penaltyHitRate = playerVO.getPenaltyHitRate();
+			if (penaltyHitRate >= 0)
+				rowData.add(FrameSize.roundForNumber(penaltyHitRate * 100));
+			else
+				rowData.add("-");
+			rowData.add(FrameSize.roundForNumber( playerVO.getOffendNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getDefenceNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getStealsNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getBlockNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getMistakesNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getFoulsNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getPoints()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getGmScEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getTrueHitRate() * 100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getHitEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getRebEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getOffenseRebsEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getDefenceRebsEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getAssistEfficiency() * 100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getStealsEfficiency()*100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getBlockEfficiency() * 100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getMistakeEfficiency() * 100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getUseEfficiency() * 100));
+
+			data.add(rowData);
+			
+		}
+		table.setDataVector(data, columnsName);
 	}
 
 	private void setOnePlayerMessagePanel(){
