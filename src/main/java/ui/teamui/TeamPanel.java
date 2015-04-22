@@ -105,7 +105,7 @@ public class TeamPanel extends JPanel {
 
 	/** 设置表格 */
 	void setTable(TeamMatchVO[] team) {
-		DecimalFormat df = new DecimalFormat("#.0");
+
 		columnsName.add("球队名");
 		columnsName.add("比赛场数");
 		columnsName.add("投篮命中数");
@@ -144,32 +144,32 @@ public class TeamPanel extends JPanel {
 			Vector data = new Vector();
 			data.add(str.getName());
 			data.add(str.getMatchNo());
-			data.add(str.getHitNo());
-			data.add(df.format(str.getHandNo()));
-			data.add(df.format(str.getThreeHitNo()));
-			data.add(df.format(str.getThreeHandNo()));
-			data.add(df.format(str.getPenaltyHitNo()));
-			data.add(df.format(str.getPenaltyHandNo()));
-			data.add(df.format(str.getOffenseRebs()));
-			data.add(df.format(str.getDefenceRebs()));
-			data.add(df.format(str.getRebs()));
-			data.add(df.format(str.getAssistNo()));
-			data.add(df.format(str.getStealsNo()));
-			data.add(df.format(str.getBlockNo()));
-			data.add(df.format(str.getMistakesNo()));
-			data.add(df.format(str.getFoulsNo()));
-			data.add(df.format(str.getPoints()));
-			data.add(df.format(str.getHitRate() * 100));
-			data.add(df.format(str.getThreeHitRate() * 100));
-			data.add(df.format(str.getPenaltyHitRate() * 100));
-			data.add(df.format(str.getWinRate() * 100));
-			data.add(df.format(str.getOffenseRound()));
-			data.add(df.format(str.getOffenseEfficiency()));
-			data.add(df.format(str.getDefenceEfficiency()));
-			data.add(df.format(str.getoRebsEfficiency()));
-			data.add(df.format(str.getdRebsEfficiency()));
-			data.add(df.format(str.getStealsEfficiency()));
-			data.add(df.format(str.getAssistEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getHitNo()));
+			data.add(FrameSize.roundForNumber(str.getHandNo()));
+			data.add(FrameSize.roundForNumber(str.getThreeHitNo()));
+			data.add(FrameSize.roundForNumber(str.getThreeHandNo()));
+			data.add(FrameSize.roundForNumber(str.getPenaltyHitNo()));
+			data.add(FrameSize.roundForNumber(str.getPenaltyHandNo()));
+			data.add(FrameSize.roundForNumber(str.getOffenseRebs()));
+			data.add(FrameSize.roundForNumber(str.getDefenceRebs()));
+			data.add(FrameSize.roundForNumber(str.getRebs()));
+			data.add(FrameSize.roundForNumber(str.getAssistNo()));
+			data.add(FrameSize.roundForNumber(str.getStealsNo()));
+			data.add(FrameSize.roundForNumber(str.getBlockNo()));
+			data.add(FrameSize.roundForNumber(str.getMistakesNo()));
+			data.add(FrameSize.roundForNumber(str.getFoulsNo()));
+			data.add(FrameSize.roundForNumber(str.getPoints()));
+			data.add(FrameSize.roundForNumber(str.getHitRate()* 100));
+			data.add(FrameSize.roundForNumber(str.getThreeHitRate()* 100 ));
+			data.add(FrameSize.roundForNumber(str.getPenaltyHitRate()* 100 ));
+			data.add(FrameSize.roundForNumber(str.getWinRate()* 100 ));
+			data.add(FrameSize.roundForNumber(str.getOffenseRound()));
+			data.add(FrameSize.roundForNumber(str.getOffenseEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getDefenceEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getoRebsEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getdRebsEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getStealsEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getAssistEfficiency()));
 
 			rowimage.add(data);
 		}
@@ -249,7 +249,6 @@ public class TeamPanel extends JPanel {
 
 	/** 更新表格 */
 	void updateTable(TeamMatchVO[] team) {
-		 DecimalFormat df = new DecimalFormat("#.0");
 		Vector rowimage = new Vector();
 		for (int i = 0; i < team.length; i++) {
 			TeamMatchVO str = team[i];
@@ -259,32 +258,32 @@ public class TeamPanel extends JPanel {
 			Vector data = new Vector();
 			data.add(str.getName());
 			data.add(str.getMatchNo());
-			data.add(df.format(str.getHitNo()));
-			data.add(df.format(str.getHandNo()));
-			data.add(df.format(str.getThreeHitNo()));
-			data.add(df.format(str.getThreeHandNo()));
-			data.add(df.format(str.getPenaltyHitNo()));
-			data.add(df.format(str.getPenaltyHandNo()));
-			data.add(df.format(str.getOffenseRebs()));
-			data.add(df.format(str.getDefenceRebs()));
-			data.add(df.format(str.getRebs()));
-			data.add(df.format(str.getAssistNo()));
-			data.add(df.format(str.getStealsNo()));
-			data.add(df.format(str.getBlockNo()));
-			data.add(df.format(str.getMistakesNo()));
-			data.add(df.format(str.getFoulsNo()));
-			data.add(df.format(str.getPoints()));
-			data.add(df.format(str.getHitRate() * 100));
-			data.add(df.format(str.getThreeHitRate() * 100));
-			data.add(df.format(str.getPenaltyHitRate() * 100));
-			data.add(df.format(str.getWinRate() * 100));
-			data.add(df.format(str.getOffenseRound()));
-			data.add(df.format(str.getOffenseEfficiency()));
-			data.add(df.format(str.getDefenceEfficiency()));
-			data.add(df.format(str.getoRebsEfficiency()));
-			data.add(df.format(str.getdRebsEfficiency()));
-			data.add(df.format(str.getStealsEfficiency()));
-			data.add(df.format(str.getAssistEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getHitNo()));
+			data.add(FrameSize.roundForNumber(str.getHandNo()));
+			data.add(FrameSize.roundForNumber(str.getThreeHitNo()));
+			data.add(FrameSize.roundForNumber(str.getThreeHandNo()));
+			data.add(FrameSize.roundForNumber(str.getPenaltyHitNo()));
+			data.add(FrameSize.roundForNumber(str.getPenaltyHandNo()));
+			data.add(FrameSize.roundForNumber(str.getOffenseRebs()));
+			data.add(FrameSize.roundForNumber(str.getDefenceRebs()));
+			data.add(FrameSize.roundForNumber(str.getRebs()));
+			data.add(FrameSize.roundForNumber(str.getAssistNo()));
+			data.add(FrameSize.roundForNumber(str.getStealsNo()));
+			data.add(FrameSize.roundForNumber(str.getBlockNo()));
+			data.add(FrameSize.roundForNumber(str.getMistakesNo()));
+			data.add(FrameSize.roundForNumber(str.getFoulsNo()));
+			data.add(FrameSize.roundForNumber(str.getPoints()));
+			data.add(FrameSize.roundForNumber(str.getHitRate()* 100 ));
+			data.add(FrameSize.roundForNumber(str.getThreeHitRate()* 100 ));
+			data.add(FrameSize.roundForNumber(str.getPenaltyHitRate() * 100 ));
+			data.add(FrameSize.roundForNumber(str.getWinRate()* 100 ));
+			data.add(FrameSize.roundForNumber(str.getOffenseRound()));
+			data.add(FrameSize.roundForNumber(str.getOffenseEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getDefenceEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getoRebsEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getdRebsEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getStealsEfficiency()));
+			data.add(FrameSize.roundForNumber(str.getAssistEfficiency()));
 
 			rowimage.add(data);
 		}
