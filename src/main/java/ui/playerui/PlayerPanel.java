@@ -104,13 +104,7 @@ public class PlayerPanel extends JPanel {
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
 		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
-		PlayerMatchVO[] player = playerController.sortTotalPlayers(
-				PlayerSortBy.name, SortType.ASEND);
-		String playerName [] = new String[player.length];
-		for (int i = 0; i < player.length; i++) {
-			playerName[i]=player[i].getName();
-		}
-		searchBox = new MyComboBox(playerName);
+		searchBox = new MyComboBox(playerController.getAllPlayerNames());
 		searchBox.setBorder(null);
 		searchBox.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
 				35);
@@ -492,7 +486,6 @@ public class PlayerPanel extends JPanel {
 			matchpanel=false;
 		}		
 		this.remove(playerMessagePanel);
-		jScrollPane.setVisible(false);
 		String position = (positionBox.getSelectedItem().toString());
 
 		Area area = Area.ATLANTIC;
@@ -543,15 +536,20 @@ public class PlayerPanel extends JPanel {
 			playerSortBy = PlayerSortBy.twoPair;
 		}
 		PlayerMatchVO[] screenPlayer;
+		try{
 		if(dataType.getSelectedItem().equals("赛季总数据"))
 			screenPlayer = playerController.screenTotalPlayers(position, area, playerSortBy);
 		else
 			screenPlayer = playerController.screenAvePlayers(position, area, playerSortBy);
+		jScrollPane.setVisible(false);
 		setTable(screenPlayer);
 		jScrollPane.repaint();
 		jScrollPane.setVisible(true);
 		this.add(jScrollPane);
 		this.repaint();
+		}catch(NullPointerException e){
+			JOptionPane.showMessageDialog(null, "无该条件球员","筛选失败",JOptionPane.ERROR_MESSAGE);
+		}
 
 	}
 
