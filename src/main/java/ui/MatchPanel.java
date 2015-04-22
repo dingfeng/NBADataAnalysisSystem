@@ -92,7 +92,7 @@ public class MatchPanel extends JPanel {
 		this.setOpaque(false);
 		matches = matchController.getAllMatches();
 		setMatchTable(matches, 0);
-//		setHeader();
+		setHeader();
 		this.add(matchScrollPane);
 		this.add(header);
 		this.add(showPanel);
@@ -158,16 +158,13 @@ public class MatchPanel extends JPanel {
 		if (team == null && player == null) {
 			findMatchAccordingDate(date1, date2);
 		} else {
-
-			try {
 				matches = matchController.getTime_TeamMatches(date1, date2,
 						team, player);
-
-			} catch (NullPointerException e) {
-				JOptionPane.showMessageDialog(null, "未查到该段时间内的比赛", "查找失败",
-						JOptionPane.ERROR_MESSAGE);
-			}
-			finally{
+				if(matches.length==0){
+					JOptionPane.showMessageDialog(null, "未查到该段时间内的比赛", "查找失败",
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				this.remove(matchScrollPane);
 				showPanel.remove(scoreScrollPane);
 				showPanel.remove(player1ScrollPane);
@@ -182,7 +179,7 @@ public class MatchPanel extends JPanel {
 				this.add(showPanel);
 				this.add(matchScrollPane);
 				this.repaint();
-			}
+			
 		}
 	}
 

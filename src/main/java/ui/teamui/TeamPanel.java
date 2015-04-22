@@ -198,7 +198,7 @@ public class TeamPanel extends JPanel {
 	                return 0;  
 	            }  
 	        };  
-	        for (int col = 1; col < table.getColumnCount(); col++) {  
+	        for (int col = 1; col < mytable.getColumnCount(); col++) {  
 	            rowSorter.setComparator(col, numberComparator);  
 	        }  
 		
