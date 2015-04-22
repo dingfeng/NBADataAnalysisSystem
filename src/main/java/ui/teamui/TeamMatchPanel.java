@@ -23,9 +23,9 @@ public class TeamMatchPanel extends JPanel {
 	String teamName;
 
 	Vector<String> columnsName = new Vector<String>();
-	Vector rowimage = new Vector();
-	DefaultTableModel table_recent;
-	DefaultTableModel table_past;
+	
+	
+	
 	JScrollPane pastjScrollPane;
 	JScrollPane recentjScrollPane;
 
@@ -76,7 +76,7 @@ public class TeamMatchPanel extends JPanel {
 
 	/** 近期比赛 */
 	void setRecentTable() {
-
+		Vector rowimage = new Vector();
 		columnsName.add("日期");
 		columnsName.add("对阵队伍");
 		columnsName.add("比分");
@@ -93,8 +93,8 @@ public class TeamMatchPanel extends JPanel {
 			rowimage.add(data);
 		}
 
-		table_recent = new DefaultTableModel(rowimage, columnsName);
-		MyTable recenttable = new MyTable(table_recent);
+		DefaultTableModel table = new DefaultTableModel(rowimage, columnsName);
+		MyTable recenttable = new MyTable(table);
 
 		recentjScrollPane = new JScrollPane(recenttable);
 
@@ -138,8 +138,8 @@ public class TeamMatchPanel extends JPanel {
 			rowimage.add(data);
 		}
 
-		table_past = new DefaultTableModel(rowimage, columnsName);
-		MyTable pasttable = new MyTable(table_past);
+		DefaultTableModel table = new DefaultTableModel(rowimage, columnsName);
+		MyTable pasttable = new MyTable(table);
 		pastjScrollPane = new JScrollPane(pasttable);
 		pastjScrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -164,37 +164,4 @@ public class TeamMatchPanel extends JPanel {
 		this.add(pastjScrollPane);
 	}
 
-	/** 实时更新 */
-//	public void update() {
-//		MatchesPO[] match = mc.getRecentTeamMatches(teamName, 5);
-//
-//		for (int i = 0; i < 5; i++) {
-//			Vector data = new Vector();
-//			data.add(match[i].getDate());
-//			data.add(match[i].getTeam1().getName() + "-"
-//					+ match[i].getTeam2().getName());
-//			data.add(match[i].getTeam1().getTotalScores() + "-"
-//					+ match[i].getTeam2().getTotalScores());
-//
-//			rowimage.add(data);
-//		}
-//		table_recent.setDataVector(rowimage, columnsName);
-//
-//		MatchesPO[] matches = mc.getTeamMatches(teamName);
-//		Vector rowimage = new Vector();
-//		for (int i = match.length - 1; i >= 0; i--) {
-//			Vector data = new Vector();
-//			data.add(matches[i].getDate());
-//			data.add(matches[i].getTeam1().getName() + "-"
-//					+ matches[i].getTeam2().getName());
-//			data.add(matches[i].getTeam1().getTotalScores() + "-"
-//					+ matches[i].getTeam2().getTotalScores());
-//
-//			rowimage.add(data);
-//		}
-//		table_past.setDataVector(rowimage, columnsName);
-//		pastjScrollPane.repaint();
-//		recentjScrollPane.repaint();
-//		this.repaint();
-//	}
 }
