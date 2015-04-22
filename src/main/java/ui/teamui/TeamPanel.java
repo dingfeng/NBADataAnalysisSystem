@@ -9,8 +9,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.text.DecimalFormat;
+import java.util.Comparator;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
@@ -105,7 +105,7 @@ public class TeamPanel extends JPanel {
 
 	/** 设置表格 */
 	void setTable(TeamMatchVO[] team) {
-
+		DecimalFormat df = new DecimalFormat("#.0");
 		columnsName.add("球队名");
 		columnsName.add("比赛场数");
 		columnsName.add("投篮命中数");
@@ -144,41 +144,69 @@ public class TeamPanel extends JPanel {
 			Vector data = new Vector();
 			data.add(str.getName());
 			data.add(str.getMatchNo());
-			data.add(String.format("%.1f", str.getHitNo()));
-			data.add(String.format("%.1f", str.getHandNo()));
-			data.add(String.format("%.1f", str.getThreeHitNo()));
-			data.add(String.format("%.1f", str.getThreeHandNo()));
-			data.add(String.format("%.1f", str.getPenaltyHitNo()));
-			data.add(String.format("%.1f", str.getPenaltyHandNo()));
-			data.add(String.format("%.1f", str.getOffenseRebs()));
-			data.add(String.format("%.1f", str.getDefenceRebs()));
-			data.add(String.format("%.1f", str.getRebs()));
-			data.add(String.format("%.1f", str.getAssistNo()));
-			data.add(String.format("%.1f", str.getStealsNo()));
-			data.add(String.format("%.1f", str.getBlockNo()));
-			data.add(String.format("%.1f", str.getMistakesNo()));
-			data.add(String.format("%.1f", str.getFoulsNo()));
-			data.add(String.format("%.1f", str.getPoints()));
-			data.add(String.format("%.1f", str.getHitRate() * 100));
-			data.add(String.format("%.1f", str.getThreeHitRate() * 100));
-			data.add(String.format("%.1f", str.getPenaltyHitRate() * 100));
-			data.add(String.format("%.1f", str.getWinRate() * 100));
-			data.add(String.format("%.1f", str.getOffenseRound()));
-			data.add(String.format("%.1f", str.getOffenseEfficiency()));
-			data.add(String.format("%.1f", str.getDefenceEfficiency()));
-			data.add(String.format("%.1f", str.getoRebsEfficiency()));
-			data.add(String.format("%.1f", str.getdRebsEfficiency()));
-			data.add(String.format("%.1f", str.getStealsEfficiency()));
-			data.add(String.format("%.1f", str.getAssistEfficiency()));
+			data.add(str.getHitNo());
+			data.add(df.format(str.getHandNo()));
+			data.add(df.format(str.getThreeHitNo()));
+			data.add(df.format(str.getThreeHandNo()));
+			data.add(df.format(str.getPenaltyHitNo()));
+			data.add(df.format(str.getPenaltyHandNo()));
+			data.add(df.format(str.getOffenseRebs()));
+			data.add(df.format(str.getDefenceRebs()));
+			data.add(df.format(str.getRebs()));
+			data.add(df.format(str.getAssistNo()));
+			data.add(df.format(str.getStealsNo()));
+			data.add(df.format(str.getBlockNo()));
+			data.add(df.format(str.getMistakesNo()));
+			data.add(df.format(str.getFoulsNo()));
+			data.add(df.format(str.getPoints()));
+			data.add(df.format(str.getHitRate() * 100));
+			data.add(df.format(str.getThreeHitRate() * 100));
+			data.add(df.format(str.getPenaltyHitRate() * 100));
+			data.add(df.format(str.getWinRate() * 100));
+			data.add(df.format(str.getOffenseRound()));
+			data.add(df.format(str.getOffenseEfficiency()));
+			data.add(df.format(str.getDefenceEfficiency()));
+			data.add(df.format(str.getoRebsEfficiency()));
+			data.add(df.format(str.getdRebsEfficiency()));
+			data.add(df.format(str.getStealsEfficiency()));
+			data.add(df.format(str.getAssistEfficiency()));
 
 			rowimage.add(data);
 		}
 
-		table = new DefaultTableModel(rowimage, columnsName);
+		table = new DefaultTableModel(rowimage, columnsName){
+		      public Class<?> getColumnClass(int column) {
+		          return getValueAt(0, column).getClass();
+		        }
+		      };
 		mytable = new MyTable(table);
 		mytable.setRowSorter(new TableRowSorter<TableModel>(table));
 		mytable.updateUI();
 
+		TableRowSorter rowSorter = (TableRowSorter) mytable.getRowSorter();  
+		 Comparator<Number> numberComparator = new Comparator<Number>() {  
+	            @Override  
+	            public int compare(Number o1, Number o2) {  
+	                if ( o1 == null ) {  
+	                    return -1;  
+	                }  
+	                if ( o2 == null ) {  
+	                    return 1;  
+	                }  
+	                if ( o1.doubleValue() < o2.doubleValue() ) {  
+	                    return -1;  
+	                }  
+	                if ( o1.doubleValue() > o2.doubleValue() ) {  
+	                    return 1;  
+	                }  
+	                return 0;  
+	            }  
+	        };  
+	        for (int col = 1; col < table.getColumnCount(); col++) {  
+	            rowSorter.setComparator(col, numberComparator);  
+	        }  
+		
+		
 		jScrollPane = new JScrollPane(mytable);
 		jScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -221,6 +249,7 @@ public class TeamPanel extends JPanel {
 
 	/** 更新表格 */
 	void updateTable(TeamMatchVO[] team) {
+		 DecimalFormat df = new DecimalFormat("#.0");
 		Vector rowimage = new Vector();
 		for (int i = 0; i < team.length; i++) {
 			TeamMatchVO str = team[i];
@@ -230,37 +259,37 @@ public class TeamPanel extends JPanel {
 			Vector data = new Vector();
 			data.add(str.getName());
 			data.add(str.getMatchNo());
-			data.add(String.format("%.1f", str.getHitNo()));
-			data.add(String.format("%.1f", str.getHandNo()));
-			data.add(String.format("%.1f", str.getThreeHitNo()));
-			data.add(String.format("%.1f", str.getThreeHandNo()));
-			data.add(String.format("%.1f", str.getPenaltyHitNo()));
-			data.add(String.format("%.1f", str.getPenaltyHandNo()));
-			data.add(String.format("%.1f", str.getOffenseRebs()));
-			data.add(String.format("%.1f", str.getDefenceRebs()));
-			data.add(String.format("%.1f", str.getRebs()));
-			data.add(String.format("%.1f", str.getAssistNo()));
-			data.add(String.format("%.1f", str.getStealsNo()));
-			data.add(String.format("%.1f", str.getBlockNo()));
-			data.add(String.format("%.1f", str.getMistakesNo()));
-			data.add(String.format("%.1f", str.getFoulsNo()));
-			data.add(String.format("%.1f", str.getPoints()));
-			data.add(String.format("%.1f", str.getHitRate() * 100));
-			data.add(String.format("%.1f", str.getThreeHitRate() * 100));
-			data.add(String.format("%.1f", str.getPenaltyHitRate() * 100));
-			data.add(String.format("%.1f", str.getWinRate() * 100));
-			data.add(String.format("%.1f", str.getOffenseRound()));
-			data.add(String.format("%.1f", str.getOffenseEfficiency()));
-			data.add(String.format("%.1f", str.getDefenceEfficiency()));
-			data.add(String.format("%.1f", str.getoRebsEfficiency()));
-			data.add(String.format("%.1f", str.getdRebsEfficiency()));
-			data.add(String.format("%.1f", str.getStealsEfficiency()));
-			data.add(String.format("%.1f", str.getAssistEfficiency()));
+			data.add(df.format(str.getHitNo()));
+			data.add(df.format(str.getHandNo()));
+			data.add(df.format(str.getThreeHitNo()));
+			data.add(df.format(str.getThreeHandNo()));
+			data.add(df.format(str.getPenaltyHitNo()));
+			data.add(df.format(str.getPenaltyHandNo()));
+			data.add(df.format(str.getOffenseRebs()));
+			data.add(df.format(str.getDefenceRebs()));
+			data.add(df.format(str.getRebs()));
+			data.add(df.format(str.getAssistNo()));
+			data.add(df.format(str.getStealsNo()));
+			data.add(df.format(str.getBlockNo()));
+			data.add(df.format(str.getMistakesNo()));
+			data.add(df.format(str.getFoulsNo()));
+			data.add(df.format(str.getPoints()));
+			data.add(df.format(str.getHitRate() * 100));
+			data.add(df.format(str.getThreeHitRate() * 100));
+			data.add(df.format(str.getPenaltyHitRate() * 100));
+			data.add(df.format(str.getWinRate() * 100));
+			data.add(df.format(str.getOffenseRound()));
+			data.add(df.format(str.getOffenseEfficiency()));
+			data.add(df.format(str.getDefenceEfficiency()));
+			data.add(df.format(str.getoRebsEfficiency()));
+			data.add(df.format(str.getdRebsEfficiency()));
+			data.add(df.format(str.getStealsEfficiency()));
+			data.add(df.format(str.getAssistEfficiency()));
 
 			rowimage.add(data);
 		}
 		table.setDataVector(rowimage, columnsName);
-
+		
 	}
 
 	/** 设置标题 */

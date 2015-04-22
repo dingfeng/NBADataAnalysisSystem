@@ -145,7 +145,14 @@ public class MyFrame extends JFrame {
 		teambutton.setBounds(220, 3 * FrameSize.height / 80, 50, 50);
 		matchbutton.setBounds(290, 3 * FrameSize.height / 80, 50, 50);
 		helpbutton.setBounds(360, 3 * FrameSize.height / 80, 50, 50);
-
+		
+		index.setToolTipText("主页");
+		playerbutton.setToolTipText("球员");
+		teambutton.setToolTipText("球队");
+		hotbutton.setToolTipText("热点");
+		matchbutton.setToolTipText("比赛");
+		helpbutton.setToolTipText("帮助");
+		
 		locationlable.setText("当前位置：主页");
 		locationlable.setOpaque(false);
 		locationlable.setForeground(Color.white);
