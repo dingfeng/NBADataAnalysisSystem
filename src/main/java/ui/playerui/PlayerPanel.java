@@ -662,9 +662,10 @@ public class PlayerPanel extends JPanel {
 		searchButton.addActionListener(e -> findPlayerClick(searchBox
 				.getSelectedItem().toString()));
 		panel.add(searchButton);
-
-		searchBox.addKeyListener(new KeyAdapter(){ 
-		      public void keyPressed(KeyEvent e)    
+		
+		searchBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter(){
+			@Override
+			public void keyPressed(KeyEvent e)    
 		      {    
 		        if(e.getKeyChar()==KeyEvent.VK_ENTER )   //按回车键执行相应操作; 
 		        { 
@@ -672,8 +673,8 @@ public class PlayerPanel extends JPanel {
 		        	findPlayerClick(searchBox.getSelectedItem().toString());
 		        	}catch (Exception e1){e1.printStackTrace();}
 		        } 
-		      } 
-		    });
+		     } 
+		});
 
 
 		JButton screenButton = new MyButton(new ImageIcon("image\\screen.png"),Color.GRAY, Color.LIGHT_GRAY);
