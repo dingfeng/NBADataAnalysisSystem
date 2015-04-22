@@ -231,14 +231,29 @@ public class TeamPanel extends JPanel {
 
 	/** 实时更新 */
 	public void update() {
-		mc.update1();
-		TeamMatchVO teamresult= null;
+		TeamMatchVO teamresult;
+		String teamname=searchBox.getSelectedItem().toString();
+		try{
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
 			updateTable(tc.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
+			teamresult=tc.getTotalTeam(teamname);
 		} else {
 			updateTable(tc.getSortedAveTeams(TeamSortBy.name, SortType.ASEND));
+			teamresult=tc.getAveTeam(teamname);
+		}}catch (Exception e) {
+			TeamPO teamresult1 = tc.getTeamData(teamname);
+			teamname = teamresult1.getNameAbridge();
+			if (teamname.equals("NOP")) {
+				teamname = "NOH";
+			}
 		}
-		
+		if (dataType.getSelectedItem().equals("赛季总数据")) {
+			teamresult = tc.getTotalTeam(teamname);
+		} else {
+			teamresult = tc.getAveTeam(teamname);
+		}
+	
+		TeamMessage(teamresult);
 		jScrollPane.repaint();
 		 
 		this.repaint();
@@ -563,10 +578,9 @@ public class TeamPanel extends JPanel {
 			}
 		}
 		TeamMessage(teamresult);
-		jScrollPane.repaint();
-		jScrollPane.setVisible(true);
-		this.add(jScrollPane);
-
+		this.remove(jScrollPane);
+		this.add(teammessage);
+		this.repaint();
 	}
 
 	/** 设置单个球队的panel */
@@ -650,10 +664,8 @@ public class TeamPanel extends JPanel {
 		teamlabel[51].setText(String.format("%.1f", str.getStealsEfficiency()));
 		teamlabel[53].setText(String.format("%.1f", str.getAssistEfficiency()));
 		teammessage.repaint();
-//		jScrollPane.setVisible(false);
-		this.remove(jScrollPane);
-		this.add(teammessage);
-		this.repaint();
+
+		
 	}
 
 	/** 查看该球队队员 */
