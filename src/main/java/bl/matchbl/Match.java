@@ -35,7 +35,7 @@ public class Match
 	}
     
    
-    public void update1()
+    public synchronized void update1()
     {
     	boolean inited = false;
     	match = null;
