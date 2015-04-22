@@ -50,13 +50,10 @@ public class Match
 		{
 			match = new Match();
 		}
-//		if (match.changed())
-//		{
-//			match.update();
-//		}
 		return match;
 	}
     
+	//初始化
 	private void init()
 	{
 		MatchesPO[] allMatches = match_data.getAllMatches();
@@ -76,6 +73,7 @@ public class Match
 		inited = true;
 	}
 	
+	//转变球队缩写名
 	public  static String transTeamname(String teamname)
 	{
 		if (teamname.equals("NOP"))
@@ -84,6 +82,7 @@ public class Match
 		}
 		return teamname;
 	}
+	//处理一个比赛
 	private void dealWithOneMatch(MatchesPO match)
 	{
 		MatchTeamPO team1 = match.getTeam1();
@@ -199,7 +198,7 @@ public class Match
 //	,int yourRebs, int totalHit, double yourAttackNO,
 //	int teamHand, int teamPenalty, int teamMistakes, int firstServiceNo, int myRebs,String team1, String team2,String date
 	
-	
+	//更新
 	public void update()
 	{
 	 if (!inited)
