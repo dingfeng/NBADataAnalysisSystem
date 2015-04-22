@@ -654,18 +654,18 @@ public class PlayerPanel extends JPanel {
 		panel.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		panel.setBackground(FrameSize.backColor);
 		panel.add(searchBox);
-		searchBox.addActionListener(e->findPlayerClick(searchBox.getSelectedItem().toString()));
-//		searchBox.addKeyListener(new KeyAdapter(){ 
-//		      public void keyPressed(KeyEvent e)    
-//		      {    
-//		        if(e.getKeyChar()==KeyEvent.VK_ENTER )   //按回车键执行相应操作; 
-//		        { 
-//		        	try{
-//		        	findPlayerClick(searchBox.getSelectedItem().toString());
-//		        	}catch (Exception e1){e1.printStackTrace();}
-//		        } 
-//		      } 
-//		    });
+
+		searchBox.addKeyListener(new KeyAdapter(){ 
+		      public void keyPressed(KeyEvent e)    
+		      {    
+		        if(e.getKeyChar()==KeyEvent.VK_ENTER )   //按回车键执行相应操作; 
+		        { 
+		        	try{
+		        	findPlayerClick(searchBox.getSelectedItem().toString());
+		        	}catch (Exception e1){e1.printStackTrace();}
+		        } 
+		      } 
+		    });
 
 
 		JButton screenButton = new MyButton(new ImageIcon("image\\screen.png"),Color.GRAY, Color.LIGHT_GRAY);
