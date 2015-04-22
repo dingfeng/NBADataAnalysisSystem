@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.Vector;
 
 import javax.swing.ImageIcon;
@@ -25,13 +27,21 @@ public class IndexPanel extends JPanel{
 	IndexPanel ip=this;
 	JLabel[] match;
 	JLabel today=new JLabel();
+	MatchesPO[] matches;
 	public IndexPanel(){
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
 //		this.setBackground(FrameSize.backColor);
 		this.setOpaque(false);
 		setDate();
-		
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask(){
+
+			public void run() {
+				 update();
+			}
+			
+		}, 0,1000);
 		this.repaint();
 	}
 	
@@ -63,13 +73,13 @@ public class IndexPanel extends JPanel{
 		note.setBounds(FrameSize.width/3,FrameSize.height/4,FrameSize.width/10, FrameSize.height/40);
 		note.setForeground(Color.white);
 		
-		MatchesPO[] matches=mc.getTodayMatches();
-		match=new JLabel[10];
-		for(int n=0;n<10;n++){
+		 matches=mc.getTodayMatches();
+		match=new JLabel[20];
+		for(int n=0;n<20;n++){
 			match[n]=new JLabel();
 		}
 		int labelnum=10;
-		if(matches.length<10){
+		if(matches.length<20){
 			labelnum=matches.length;
 		}
 		for(int i=0;i<labelnum;i++){
@@ -127,9 +137,9 @@ public class IndexPanel extends JPanel{
 		// 获得日期
 		String date = "今天是" + year + "年" + month + "月" + day + "日";
 		today.setText(date);
-		MatchesPO[] matches=mc.getTodayMatches();
-		int labelnum=10;
-		if(matches.length<10){
+		matches=mc.getTodayMatches();
+		int labelnum=20;
+		if(matches.length<20){
 			labelnum=matches.length;
 		}
 		for(int i=0;i<labelnum;i++){
@@ -137,8 +147,8 @@ public class IndexPanel extends JPanel{
 			match[i].setVisible(true);
 			this.add(match[i]);
 		}
-		if(matches.length<10){
-			for(int j=matches.length;j<10;j++){
+		if(matches.length<20){
+			for(int j=matches.length;j<20;j++){
 				match[j].setVisible(false);
 				
 			}
