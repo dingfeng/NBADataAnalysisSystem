@@ -329,9 +329,18 @@ public class PlayerPanel extends JPanel {
 		jScrollPane.setVisible(false);
 		setTable(playerMatchVO);
 		jScrollPane.setVisible(true);
-		showOne(playerMatchVO[0].getName());
-		this.add(jScrollPane);
-		this.repaint();
+		for (int i = 0; i < playerMatchVO.length; i++) {
+			if (playerController.findPlayerMatchAve(playerMatchVO[i].getName()) == null) {
+				i++;
+			}
+			else if (playerController.findPlayerMatchAve(playerMatchVO[i].getName()) != null) {
+				showOne(playerMatchVO[i].getName());
+				this.add(jScrollPane);
+				this.repaint();
+				break;
+			}
+		}
+
 	}
 
 	/** 在findPanel上显示一个球员的信息 */
@@ -755,7 +764,6 @@ public class PlayerPanel extends JPanel {
 
 	/** 实时更新 */
 	private void update() {
-		matchController.update1();
 		PlayerMatchVO playerresult = null;
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
 			updateTable(playerController.sortTotalPlayers(PlayerSortBy.name,
@@ -1081,7 +1089,7 @@ public class PlayerPanel extends JPanel {
 			if (!isPlayer) {
 				PlayerMatchVO onePlayer = new PlayerMatchVO(playerInfo);
 				try {
-				
+
 					jScrollPane.setVisible(false);
 					setPlayerMessage(onePlayer);
 					this.add(playerMessagePanel);
