@@ -28,6 +28,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import ui.MatchPanel;
 import bl.matchbl.MatchController;
 
 public class DateChooseButton extends JButton {
@@ -40,7 +41,6 @@ public class DateChooseButton extends JButton {
 	private String preLabel = "";
 	private String originalText = null;
 	private SimpleDateFormat sdf = null;
-
 	public DateChooseButton() {
 		this(getNowDate());
 		this.setBackground(FrameSize.buttonbackColor);
@@ -199,6 +199,7 @@ public class DateChooseButton extends JButton {
 	 */
 	@Override
 	public void addActionListener(ActionListener listener) {
+		super.addActionListener(listener);
 	}
 
 	/**
@@ -583,8 +584,16 @@ public class DateChooseButton extends JButton {
 			// 把daySpin中的值也变了
 			daySpin.setValue(Integer.valueOf(newDay));
 			dialog.setVisible(false);
-	       
+			if (matchPanel != null)
+			{
+				matchPanel.findMatchConfirmClick();;
+			}
 		}
+		
 	}
-
+       private MatchPanel matchPanel;
+		public void setEnd(MatchPanel matchPanel)
+		{
+			this.matchPanel = matchPanel;
+		}
 }
