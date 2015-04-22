@@ -329,13 +329,13 @@ public class PlayerPanel extends JPanel {
 		jScrollPane.setVisible(false);
 		setTable(playerMatchVO);
 		jScrollPane.setVisible(true);
+		this.add(jScrollPane);
 		for (int i = 0; i < playerMatchVO.length; i++) {
-			if (playerController.findPlayerMatchAve(playerMatchVO[i].getName()) == null) {
+			if (playerController.findPlayer(playerMatchVO[i].getName())==null) {
 				i++;
-			}
-			else if (playerController.findPlayerMatchAve(playerMatchVO[i].getName()) != null) {
+			}else{
+				System.out.println(i);
 				showOne(playerMatchVO[i].getName());
-				this.add(jScrollPane);
 				this.repaint();
 				break;
 			}
