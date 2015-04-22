@@ -105,7 +105,7 @@ public class TeamPanel extends JPanel {
 
 	/** 设置表格 */
 	void setTable(TeamMatchVO[] team) {
-
+		columnsName.removeAllElements();
 		columnsName.add("球队名");
 		columnsName.add("比赛场数");
 		columnsName.add("投篮命中数");
@@ -284,7 +284,7 @@ public class TeamPanel extends JPanel {
 			rowimage.add(data);
 		}
 		table.setDataVector(rowimage, columnsName);
-		
+		resizeTable(false, jScrollPane, mytable);
 	}
 
 	/** 设置标题 */
