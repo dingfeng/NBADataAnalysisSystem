@@ -240,6 +240,7 @@ public class TeamPanel extends JPanel {
 		}
 		
 		jScrollPane.repaint();
+		 
 		this.repaint();
 	}
 
@@ -285,6 +286,28 @@ public class TeamPanel extends JPanel {
 		}
 		table.setDataVector(rowimage, columnsName);
 		resizeTable(false, jScrollPane, mytable);
+		TableRowSorter rowSorter = (TableRowSorter) mytable.getRowSorter();  
+		 Comparator<Number> numberComparator = new Comparator<Number>() {  
+	            @Override  
+	            public int compare(Number o1, Number o2) {  
+	                if ( o1 == null ) {  
+	                    return -1;  
+	                }  
+	                if ( o2 == null ) {  
+	                    return 1;  
+	                }  
+	                if ( o1.doubleValue() < o2.doubleValue() ) {  
+	                    return -1;  
+	                }  
+	                if ( o1.doubleValue() > o2.doubleValue() ) {  
+	                    return 1;  
+	                }  
+	                return 0;  
+	            }  
+	        };  
+	        for (int col = 1; col < mytable.getColumnCount(); col++) {  
+	            rowSorter.setComparator(col, numberComparator);  
+	        }  
 	}
 
 	/** 设置标题 */
