@@ -39,8 +39,8 @@ public class Match
     {
     	boolean inited = false;
     	match = null;
-    	team_map.clear();;
-		player_map.clear();;
+    	team_map.clear();
+		player_map.clear();
 		init();
     }
    

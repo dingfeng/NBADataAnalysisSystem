@@ -17,16 +17,12 @@ public class main {
 
 		public void run() 
 		{
-		 MatchesPO[] pos = match.getTodayMatches();match.update1();
+		 MatchesPO[] pos = match.getAllMatches();match.update1();
 		 System.out.println("today :　");
-		 for (MatchesPO po : pos)
-		 {
-			 
-			 System.out.println(po.getDate());
-		 }
+		 System.out.println("len : "+pos.length);
 		}
 	 };
-	 timer.schedule(task, 2,5000);
+	 timer.schedule(task, 2,1000);
 //	 Match match = Match.instance();
 //	 MatchesPO[] allMatches = match.getAllMatches();
 //	 for (int i = 0 ; i < allMatches.length; i++)
