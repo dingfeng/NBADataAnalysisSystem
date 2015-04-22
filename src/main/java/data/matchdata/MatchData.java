@@ -84,6 +84,12 @@ public class MatchData  implements MatchDataService
 		  }
 		  file_tmp = file_children[--i];
 	  }
+	  
+	  if (i == 0)
+	  {
+		  --i;
+	  }
+	  
 	  for (int j = 0; j <= i ; j++)
 	  {
 		 matches.enQueue(getMatchPO(file_children[j]));
