@@ -272,7 +272,7 @@ public class TeamPanel extends JPanel {
 		searchBox.setBounds(2 * FrameSize.width / 3, 10, FrameSize.width / 9,
 				35);
 		header.add(searchBox);
-		searchBox.addKeyListener(new KeyAdapter() {
+		searchBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter(){
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyChar() == KeyEvent.VK_ENTER) // 按回车键执行相应操作;
 				{
