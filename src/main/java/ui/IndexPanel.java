@@ -41,7 +41,7 @@ public class IndexPanel extends JPanel{
 				 update();
 			}
 			
-		}, 4000,6000);
+		}, 4000,7000);
 		this.repaint();
 	}
 	
