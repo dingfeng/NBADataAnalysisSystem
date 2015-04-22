@@ -855,6 +855,8 @@ public class PlayerPanel extends JPanel {
 	        for (int col = 2; col < table.getColumnCount(); col++) {  
 	            rowSorter.setComparator(col, numberComparator);  
 	        }  
+			resizeTable(false, jScrollPane, mytable);
+
 	}
 
 	private void updateOne(){
