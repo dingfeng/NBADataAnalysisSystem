@@ -47,6 +47,7 @@ import vo.PlayerMatchVO;
 import vo.PlayerSortBy;
 import vo.PlayerVO;
 import vo.SortType;
+import bl.matchbl.MatchController;
 import bl.playerbl.PlayerController;
 
 public class PlayerPanel extends JPanel {
@@ -87,10 +88,13 @@ public class PlayerPanel extends JPanel {
 	boolean isPlayer=false;
 
 	PlayerController playerController = new PlayerController();
+	MatchController matchController = new MatchController();
 	String[] allPlayerNames;
 	JComboBox searchBox ;
 	
 	JTextField[] playerText = new UneditableTextField[78];
+
+	Vector columnsName = new Vector();
 
 	public PlayerPanel() {
 		allPlayers=playerController.sortTotalPlayers(PlayerSortBy.name,
@@ -131,7 +135,6 @@ public class PlayerPanel extends JPanel {
 
 	/** 设置表格 */
 	private void setTable(PlayerMatchVO[] playerMatchVOs) {
-		Vector columnsName = new Vector();
 		columnsName.add("球员名称");
 //		columnsName.add("球衣号码");
 //		columnsName.add("位置");
@@ -149,18 +152,21 @@ public class PlayerPanel extends JPanel {
 
 		columnsName.add("盖帽数");
 		columnsName.add("得分/篮板/助攻");
-		columnsName.add("抢断");
 		columnsName.add("犯规");
 		columnsName.add("失误");
 		columnsName.add("分钟");
-		columnsName.add("投篮");
-		columnsName.add("三分");
-		columnsName.add("罚球");
 		columnsName.add("两双");
 
+		columnsName.add("投篮出手数");
+		columnsName.add("投篮命中数");
 		columnsName.add("投篮(%)");
+		columnsName.add("三分出手数");
+		columnsName.add("三分命中数");
 		columnsName.add("三分(%)");
+		columnsName.add("罚球出手数");
+		columnsName.add("罚球命中数");
 		columnsName.add("罚球(%)");
+		
 		columnsName.add("进攻");
 		columnsName.add("防守");
 		columnsName.add("抢断");
@@ -207,24 +213,28 @@ public class PlayerPanel extends JPanel {
 			rowData.add(String.format("%.1f", playerVO.getBlockNo()));
 			rowData.add(String.format("%.1f",
 					playerVO.getScoring_rebound_assist()));
-			rowData.add(String.format("%.1f", playerVO.getStealsNo()));
 			rowData.add(String.format("%.1f", playerVO.getFoulsNo()));
 			rowData.add(String.format("%.1f", playerVO.getMistakesNo()));
 			rowData.add(String.format("%.1f", playerVO.getMinute()));
-			rowData.add(String.format("%.1f", playerVO.getHandNo()));
-			rowData.add(String.format("%.1f", playerVO.getThree_points()));
-			rowData.add(String.format("%.1f", playerVO.getBlockNo()));
 			rowData.add(String.format("%.1f", playerVO.getTwoPair()));
+			
+			
+			rowData.add(String.format("%.1f", playerVO.getHandNo()));
+			rowData.add(String.format("%.1f", playerVO.getHitNo()));
 			double hitRate = playerVO.getHitRate() * 100;
 			if (hitRate >= 0)
 				rowData.add(String.format("%.1f", hitRate));
 			else
 				rowData.add("-");
+			rowData.add(String.format("%.1f", playerVO.getThreeHandNo()));
+			rowData.add(String.format("%.1f", playerVO.getThreeHitNo()));
 			double threeHitRate = playerVO.getThreeHitRate();
 			if (threeHitRate >= 0)
 				rowData.add(String.format("%.1f", threeHitRate * 100));
 			else
 				rowData.add("-");
+			rowData.add(String.format("%.1f", playerVO.getPenaltyHandNo()));
+			rowData.add(String.format("%.1f", playerVO.getPenaltyHitNo()));
 			double penaltyHitRate = playerVO.getPenaltyHitRate();
 			if (penaltyHitRate >= 0)
 				rowData.add(String.format("%.1f", penaltyHitRate * 100));
@@ -318,8 +328,8 @@ public class PlayerPanel extends JPanel {
 		playerTeamButton = new MyButton("球队", Color.black, Color.DARK_GRAY);
 		matchButton.setFont(new Font("幼圆", Font.BOLD, 12));
 		playerTeamButton.setFont(new Font("幼圆", Font.BOLD, 12));
-		matchButton.setForeground(Color.red);
-		playerTeamButton.setForeground(Color.red);
+		matchButton.setForeground(Color.white);
+		playerTeamButton.setForeground(Color.white);
 		playerTeamButton.setBounds(FrameSize.width / 3 - 60,
 				11 * FrameSize.height / 16, 55, 30);
 		matchButton.setBounds(FrameSize.width / 3 - 130, 11 * FrameSize.height / 16,
@@ -675,6 +685,13 @@ public class PlayerPanel extends JPanel {
 		        } 
 		     } 
 		});
+		
+		JButton refresh=new MyButton(new ImageIcon("image\\refresh.png"),
+				FrameSize.buttonbackColor, Color.LIGHT_GRAY);
+		refresh.setBounds(FrameSize.width / 6, 10, 35, 35);
+		refresh.setToolTipText("刷新");
+		refresh.addActionListener(e -> update());
+		panel.add(refresh);
 
 
 		JButton screenButton = new MyButton(new ImageIcon("image\\screen.png"),Color.GRAY, Color.LIGHT_GRAY);
@@ -685,11 +702,13 @@ public class PlayerPanel extends JPanel {
 		panel.add(screenButton);
 
 		dataType = new MyComboBox(new String[] { "赛季总数据", "场均数据" });
-		dataType.setBounds(20, 10, 100, 35);
+//		dataType.setBounds(20, 10, 100, 35);
+		dataType.setBounds(FrameSize.width/60, 10, FrameSize.width/12, 35);
 		panel.add(dataType);
 
 		JButton allButton = new MyButton(new ImageIcon("image\\show.png"),Color.GRAY, Color.LIGHT_GRAY);
-		allButton.setBounds(140, 10, 45, 35);
+		allButton.setBounds(7* FrameSize.width / 60, 10, 45, 35);
+//		allButton.setBounds(140, 10, 45, 35);
 //		allButton.setBackground(new Color(68, 68, 68));
 		allButton.setToolTipText("显示");
 		allButton.addActionListener(e -> showAllData());
@@ -699,6 +718,32 @@ public class PlayerPanel extends JPanel {
 
 	}
 	
+	/**实时更新*/
+	private void update() {
+		matchController.update1();
+		PlayerMatchVO playerresult = null;
+		if(dataType.getSelectedItem().equals("赛季总数据")){
+			updateTable(playerController.sortTotalPlayers(PlayerSortBy.name, SortType.ASEND));
+		}else{
+			updateTable(playerController.sortAvePlayers(PlayerSortBy.name, SortType.ASEND));
+		}
+		
+		jScrollPane.repaint();
+		this.repaint();
+	}
+
+	private void updateTable(PlayerMatchVO[] player) {
+		Vector data = new Vector();
+		for(int i=0;i<player.length;i++){
+			PlayerMatchVO str = player[i];
+			if(str==null){
+				continue;
+			}
+			Vector rowdata = new Vector();
+			
+		}table.setDataVector(data, columnsName);
+	}
+
 	private void setOnePlayerMessagePanel(){
 		playerMessagePanel.setLayout(new GridLayout(13,6,-1,-1));
 		playerMessagePanel.setBackground(FrameSize.backColor);
