@@ -117,14 +117,13 @@ public class MatchPanel extends JPanel {
 
 		dateButton1 = new DateChooseButton();
 		dateButton1.setBounds(50, 10, 200, 35);
-		dateButton1.addActionListener(e -> findMatchConfirmClick());
 		header.add(dateButton1);
 
 		dateButton2 = new DateChooseButton();
 		dateButton2.setBounds(300, 10, 200, 35);
-		dateButton2.addActionListener(e -> findMatchConfirmClick());
+		dateButton2.setEnd(this);
 		header.add(dateButton2);
-
+        
 		teamBox = new MyComboBox("球队", teamName);
 		teamBox.setBounds(FrameSize.width - 450, 10, 100, 35);
 		header.add(teamBox);
@@ -138,7 +137,8 @@ public class MatchPanel extends JPanel {
 	}
 
 	/** 查找比赛 */
-	private void findMatchConfirmClick() {
+	public void findMatchConfirmClick() {
+		System.out.println("hello world!");
 		Date date1 = dateButton1.getDate();
 		Date date2 = dateButton2.getDate();
 		if (date1.compareTo(date2) > 0) {
@@ -187,14 +187,13 @@ public class MatchPanel extends JPanel {
 	/** 按时间查找比赛 */
 	public void findMatchAccordingDate(Date date1, Date date2) {
 
-		try {
 			matches = matchController.getTimeMatches(date1, date2);
-
-		} catch (NullPointerException e) {
-			JOptionPane.showMessageDialog(null, "未查到该段时间内的比赛", "查找失败",
+             if (matches == null)
+			{
+            	 JOptionPane.showMessageDialog(null, "未查到该段时间内的比赛", "查找失败",
 					JOptionPane.ERROR_MESSAGE);
-		}
-		finally{
+            	 return;
+			}
 			this.remove(matchScrollPane);
 			showPanel.remove(scoreScrollPane);
 			showPanel.remove(player1ScrollPane);
@@ -209,7 +208,7 @@ public class MatchPanel extends JPanel {
 			this.add(showPanel);
 			this.add(matchScrollPane);
 			this.repaint();
-		}
+		
 	}
 
 	/** 按球队查找比赛 */
