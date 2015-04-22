@@ -244,7 +244,7 @@ public class PlayerPanel extends JPanel {
 				rowData.add(FrameSize.roundForNumber(penaltyHitRate * 100));
 			else
 				rowData.add("-");
-			rowData.add(FrameSize.roundForNumber( playerVO.getOffendNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getOffendNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getDefenceNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getStealsNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getBlockNo()));
@@ -774,8 +774,8 @@ public class PlayerPanel extends JPanel {
 			// rowData.add(playerVO.getExp());
 			// rowData.add(playerVO.getSchool());
 			rowData.add(playerVO.getTeam());
-			rowData.add(playerVO.getMatchNo());
-			rowData.add(playerVO.getFirstServiceNo());
+			rowData.add(FrameSize.roundForNumber(playerVO.getMatchNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getFirstServiceNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getRebs()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getAssistNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getTime()));
@@ -833,6 +833,28 @@ public class PlayerPanel extends JPanel {
 			
 		}
 		table.setDataVector(data, columnsName);
+		TableRowSorter rowSorter = (TableRowSorter) mytable.getRowSorter();  
+		 Comparator<Number> numberComparator = new Comparator<Number>() {  
+	            @Override  
+	            public int compare(Number o1, Number o2) {  
+	                if ( o1 == null ) {  
+	                    return -1;  
+	                }  
+	                if ( o2 == null ) {  
+	                    return 1;  
+	                }  
+	                if ( o1.doubleValue() < o2.doubleValue() ) {  
+	                    return -1;  
+	                }  
+	                if ( o1.doubleValue() > o2.doubleValue() ) {  
+	                    return 1;  
+	                }  
+	                return 0;  
+	            }  
+	        };  
+	        for (int col = 2; col < table.getColumnCount(); col++) {  
+	            rowSorter.setComparator(col, numberComparator);  
+	        }  
 	}
 
 //	private void update
@@ -848,6 +870,48 @@ public class PlayerPanel extends JPanel {
 			playerText[i].setFont(new Font("",Font.PLAIN,15));
 			playerText[i].setBorder(BorderFactory.createLineBorder(Color.white));
 		}
+		playerText[0].setText("参赛场数");
+		playerText[2].setText("先发场数");
+		playerText[4].setText("篮板");
+		playerText[6].setText("助攻");
+		playerText[8].setText("在场时间");
+		playerText[10].setText("盖帽数");
+		playerText[12].setText("得分/篮板/助攻");
+		playerText[14].setText("抢断");
+		playerText[16].setText("犯规");
+		playerText[18].setText("失误");
+		playerText[20].setText("分钟");
+		playerText[22].setText("投篮");
+		playerText[24].setText("三分");
+		playerText[26].setText("罚球");
+		playerText[28].setText("两双");
+		playerText[30].setText("投篮出手数");
+		playerText[32].setText("投篮命中数");
+		playerText[34].setText("投篮(%)");
+		playerText[36].setText("三分出手数");
+		playerText[38].setText("三分命中数");
+		playerText[40].setText("三分(%)");
+		playerText[42].setText("罚球出手数");
+		playerText[44].setText("罚球命中数");
+		playerText[46].setText("罚球(%)");
+		playerText[48].setText("进攻");
+		playerText[50].setText("防守");
+		playerText[52].setText("盖帽");
+		playerText[54].setText("失误");
+		playerText[56].setText("犯规");
+		playerText[58].setText("得分");
+		playerText[60].setText("效率");
+		playerText[62].setText("GmSc效率");
+		playerText[64].setText("真实命中率(%)");
+		playerText[66].setText("投篮效率");
+		playerText[68].setText("篮板率");
+		playerText[70].setText("进攻篮板率");
+		playerText[72].setText("防守篮板率");
+		playerText[74].setText("助攻率(%)");
+		playerText[76].setText("抢断率");
+		playerText[78].setText("盖帽率(%)");
+		playerText[80].setText("失误率(%)");
+		playerText[82].setText("使用率(%)");
 	}
 
 	/** 显示所有总数据/场均数据 */
@@ -944,48 +1008,7 @@ public class PlayerPanel extends JPanel {
 	private void setPlayerMessage(PlayerMatchVO playerVO){
 		playerMessagePanel.setVisible(false);
 
-		playerText[0].setText("参赛场数");
-		playerText[2].setText("先发场数");
-		playerText[4].setText("篮板");
-		playerText[6].setText("助攻");
-		playerText[8].setText("在场时间");
-		playerText[10].setText("盖帽数");
-		playerText[12].setText("得分/篮板/助攻");
-		playerText[14].setText("抢断");
-		playerText[16].setText("犯规");
-		playerText[18].setText("失误");
-		playerText[20].setText("分钟");
-		playerText[22].setText("投篮");
-		playerText[24].setText("三分");
-		playerText[26].setText("罚球");
-		playerText[28].setText("两双");
-		playerText[30].setText("投篮出手数");
-		playerText[32].setText("投篮命中数");
-		playerText[34].setText("投篮(%)");
-		playerText[36].setText("三分出手数");
-		playerText[38].setText("三分命中数");
-		playerText[40].setText("三分(%)");
-		playerText[42].setText("罚球出手数");
-		playerText[44].setText("罚球命中数");
-		playerText[46].setText("罚球(%)");
-		playerText[48].setText("进攻");
-		playerText[50].setText("防守");
-		playerText[52].setText("盖帽");
-		playerText[54].setText("失误");
-		playerText[56].setText("犯规");
-		playerText[58].setText("得分");
-		playerText[60].setText("效率");
-		playerText[62].setText("GmSc效率");
-		playerText[64].setText("真实命中率(%)");
-		playerText[66].setText("投篮效率");
-		playerText[68].setText("篮板率");
-		playerText[70].setText("进攻篮板率");
-		playerText[72].setText("防守篮板率");
-		playerText[74].setText("助攻率(%)");
-		playerText[76].setText("抢断率");
-		playerText[78].setText("盖帽率(%)");
-		playerText[80].setText("失误率(%)");
-		playerText[82].setText("使用率(%)");
+
 		
 
 		playerText[1].setText(String.valueOf(playerVO.getMatchNo()));
