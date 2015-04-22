@@ -318,8 +318,8 @@ public class PlayerPanel extends JPanel {
 		playerTeamButton = new MyButton("球队", Color.black, Color.DARK_GRAY);
 		matchButton.setFont(new Font("幼圆", Font.BOLD, 12));
 		playerTeamButton.setFont(new Font("幼圆", Font.BOLD, 12));
-		matchButton.setForeground(Color.red);
-		playerTeamButton.setForeground(Color.red);
+		matchButton.setForeground(Color.white);
+		playerTeamButton.setForeground(Color.white);
 		playerTeamButton.setBounds(FrameSize.width / 3 - 60,
 				11 * FrameSize.height / 16, 55, 30);
 		matchButton.setBounds(FrameSize.width / 3 - 130, 11 * FrameSize.height / 16,
