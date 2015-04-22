@@ -117,6 +117,7 @@ public class MatchPanel extends JPanel {
 
 		dateButton1 = new DateChooseButton();
 		dateButton1.setBounds(50, 10, 200, 35);
+		dateButton1.setEnd(this);
 		header.add(dateButton1);
 
 		dateButton2 = new DateChooseButton();
