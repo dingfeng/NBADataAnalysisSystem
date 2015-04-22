@@ -17,21 +17,13 @@ public class main {
 
 		public void run() 
 		{
-//			MatchesPO[] allMatchpos = match.getAllMatches();
-//			System.out.println("size of matches : "+ allMatchpos.length);
-//			System.out.println("last date : "+allMatchpos[allMatchpos.length-1].getDate());
-//				match.update1();
-//				MatchesPO[] allMatchpos1 = match.getAllMatches();
-//				System.out.println("size of matches : "+ allMatchpos1.length);
-//				System.out.println("last date : "+allMatchpos1[allMatchpos1.length-1].getDate());
-			Team team = new Team();
-			TeamMatchVO[] allTeams = team.getAllAveTeams();
-			match.update1();
-			for (int i = 0; i < allTeams.length; i++)
-			{
-				System.out.println(allTeams[i]);
-			}
-			System.out.println("-------------------------");
+		 MatchesPO[] pos = match.getTodayMatches();match.update1();
+		 System.out.println("today :　");
+		 for (MatchesPO po : pos)
+		 {
+			 
+			 System.out.println(po.getDate());
+		 }
 		}
 	 };
 	 timer.schedule(task, 2,5000);
