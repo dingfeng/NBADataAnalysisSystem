@@ -58,7 +58,7 @@ public class TeamQueue extends AbstractQueue{
     {
     	return teamvo_average;
     }
-	
+	//更新数据
 	public void update()
 	{
 		
@@ -199,7 +199,7 @@ public class TeamQueue extends AbstractQueue{
 		 double drebsEfficiency =  defenceRebs / (defenceRebs + yourOffenseRebs);
 		 double stealsEfficiency = 100 * stealsNo / defenceRound;// 抢断效率
 		 double assistEfficiency = 100 * assistNo / offenseRound;// 助攻率
-	
+	     //生成赛季数据
 		 teamvo_total = new TeamMatchVO( name, (int) matchNo,  hitNo,  handNo,
 					 threeHitNo,  threeHandNo,  penaltyHitNo,
 					 penaltyHandNo,  offenseRebs,  defenceRebs,  rebs,
@@ -209,7 +209,7 @@ public class TeamQueue extends AbstractQueue{
 					 offenseEfficiency,  defenceEfficiency,
 					 orebsEfficiency, drebsEfficiency , stealsEfficiency,
 					 assistEfficiency);
-		 
+		 //生成场均数据
 		 teamvo_average = new TeamMatchVO(name, (int) matchNo,  hitNo / matchNo,  handNo/ matchNo,
 				 threeHitNo/ matchNo,  threeHandNo/ matchNo,  penaltyHitNo/ matchNo,
 				 penaltyHandNo/ matchNo,  offenseRebs/ matchNo,  defenceRebs/ matchNo,  rebs/ matchNo,
@@ -220,6 +220,7 @@ public class TeamQueue extends AbstractQueue{
 				 orebsEfficiency, drebsEfficiency , stealsEfficiency,
 				 assistEfficiency);
 	}
+	//获得近期比赛
 	public MatchesPO[] getRecentMatches(int num )
 	{
 		if (lenth == -1)
@@ -234,7 +235,7 @@ public class TeamQueue extends AbstractQueue{
 		}
 		return temp_matches;
 	}
-	
+	//判断某球员是否在该球队中
 	public boolean hasPlayer(String playername)
 	{
 		boolean result = false;

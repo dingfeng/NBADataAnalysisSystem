@@ -46,7 +46,7 @@ public class Player  implements SearchItemProvider{
 		  player_base_map.put(p.getName().hashCode(), p);
 	  }
 	}
-	
+	//根据球员名查找球员的场均数据
 	public PlayerMatchVO findPlayerMatchAve(String playername)
 	{
 		PlayerQueue player = player_map.get(playername.hashCode());
@@ -56,7 +56,7 @@ public class Player  implements SearchItemProvider{
 		}
 		else return player.getAvePlayer();
 	}
-	
+	//根据球员名查找球员的赛季数据
 	public PlayerMatchVO findPlayerMatchTotal(String playername)
 	{
 		PlayerQueue player = player_map.get(playername.hashCode());
@@ -66,7 +66,7 @@ public class Player  implements SearchItemProvider{
 		}
 		else return player.getTotalPlayer();
 	}
-	
+	//对球员的场均数据进行排序
 	public PlayerMatchVO[] sortAvePlayers(PlayerSortBy playerSortBy,
 			SortType sortType) {
 		PlayerQueue[] matchPlayers = new PlayerQueue[player_map.size()];
@@ -115,7 +115,7 @@ public class Player  implements SearchItemProvider{
 		return playerMatchvos;
 		}
 	}
-
+    //对球员的赛季总数据进行排序
 	public PlayerMatchVO[] sortTotalPlayers(PlayerSortBy playerSortBy,
 			SortType sortType) {
 		PlayerQueue[] matchPlayers = new PlayerQueue[player_map.size()];
@@ -163,7 +163,7 @@ public class Player  implements SearchItemProvider{
 		return playerMatchvos;
 		}
 	}
-
+    //根据球员的场均数据进行筛选并进行排序
 	public Iterator<PlayerMatchVO> screenAvePlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
 		Team team = new Team();
@@ -192,7 +192,7 @@ public class Player  implements SearchItemProvider{
 	   
 		return result_players.iterator();
 	}
-
+    //根据球员赛季总数据进行筛选并排序
 	public Iterator<PlayerMatchVO> screenTotalPlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
 		
@@ -222,7 +222,8 @@ public class Player  implements SearchItemProvider{
 		   
 			return result_players.iterator();
 	}
-
+  
+	//获得当日热点球员
 	public  MatchPlayerPO[] getDayHotPlayer(PlayerSortBy sortby) {
 		MatchesPO[]  todayMatches = match.getTodayMatches();
 		ArrayList<MatchPlayerPO> todayPlayers = new ArrayList<MatchPlayerPO>(500);
@@ -252,7 +253,8 @@ public class Player  implements SearchItemProvider{
 		}
 		return m_players;
 	}
-
+    
+	//获得赛季热点球员
 	public PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby) {
 		PlayerMatchVO[] playerMatchVOs = sortAvePlayers(sortby,SortType.DESEND);
 		int size = 5;
@@ -268,7 +270,8 @@ public class Player  implements SearchItemProvider{
         }
 		return resultMatches;
 	}
-
+ 
+	//获得提升率最快的球员
 	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby) {
 		PlayerMatchVO[] playerMatchVOs = sortAvePlayers(sortby,SortType.DESEND);
 		int size = 5;
@@ -285,6 +288,7 @@ public class Player  implements SearchItemProvider{
 		return resultMatches;
 	}
 
+	//模糊查找球员
 	public Iterator<String> fuzzilyFind(String info) {
 		ArrayList<String> names = new ArrayList<String>(500);
 		for (PlayerPO p : allPlayerpos)
@@ -294,13 +298,14 @@ public class Player  implements SearchItemProvider{
 		}
 		return names.iterator(); 
 	}
-
+ 
+	//查找球员的个人信息
 	public PlayerPO findPlayer(String info) 
 	{
 		return player_base_map.get(info.hashCode());
 	}
 	
-    
+    //热点球员的排序工具
 	private void setHotSortTool(MatchPlayerPO player, PlayerSortBy sortby)
 	{
 		double data = -1;
@@ -325,6 +330,7 @@ public class Player  implements SearchItemProvider{
 		player.setHotData(data);
 	}
 	
+	//对球员进行排序准备
 	private void setSortTool(PlayerMatchVO playervo, PlayerSortBy sortby, SortType sortType)
 	{
 		double data = -1;
@@ -458,6 +464,7 @@ public class Player  implements SearchItemProvider{
 		playervo.setSortTool(new SortTool(data,sortType));
 	}
 
+	//获得查找项目
 	public String[] getSearchItems() 
 	{
 		String[] playerNames = new String[allPlayerpos.length];

@@ -221,6 +221,7 @@ public class MatchData  implements MatchDataService
 	 
    }
   
+   //获得比赛的新产生的比赛数据
   public MatchesPO[] getNewMatches()
   {
 	  if (newMatchesLength == -1)
@@ -246,6 +247,7 @@ public class MatchData  implements MatchDataService
 	  else return true;
   }
   
+  //处理球员中有脏数据
   private void dealWithDirtyTime(MatchPlayerPO[] players, int time)
   {
 	  int count = 0;
@@ -282,6 +284,8 @@ public class MatchData  implements MatchDataService
 		 }
 	  }
   }
+  
+  //解析文件中构成对象
   public MatchesPO getMatchPO(File file) 
   {
 	  MatchesPO matchpo = null;
@@ -378,7 +382,7 @@ public class MatchData  implements MatchDataService
 	return matchpo;
   }
   
-  
+  //获得一行数据，产生一个球员的比赛信息
   public MatchPlayerPO dealWithLine(String line)
   {
 	String[] player_info  = new String[PLAYER_INFO_NUM];
@@ -421,6 +425,7 @@ public class MatchData  implements MatchDataService
 			Integer.parseInt(player_info[15]),Integer.parseInt(player_info[16]));
   }
   
+  //获得今日的比赛数据
   public MatchesPO[] getTodayMatches()
   {
 	  updateData();

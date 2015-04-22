@@ -209,8 +209,8 @@ public class PlayerPanel extends JPanel {
 			// rowData.add(playerVO.getExp());
 			// rowData.add(playerVO.getSchool());
 			rowData.add(playerVO.getTeam());
-			rowData.add(playerVO.getMatchNo());
-			rowData.add(playerVO.getFirstServiceNo());
+			rowData.add(FrameSize.roundForNumber(playerVO.getMatchNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getFirstServiceNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getRebs()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getAssistNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getTime()));
@@ -288,7 +288,7 @@ public class PlayerPanel extends JPanel {
 	                return 0;  
 	            }  
 	        };  
-	        for (int col = 1; col < table.getColumnCount(); col++) {  
+	        for (int col = 2; col < table.getColumnCount(); col++) {  
 	            rowSorter.setComparator(col, numberComparator);  
 	        }  
 		jScrollPane = new JScrollPane(mytable);
@@ -835,6 +835,7 @@ public class PlayerPanel extends JPanel {
 		table.setDataVector(data, columnsName);
 	}
 
+//	private void update
 	private void setOnePlayerMessagePanel(){
 		playerMessagePanel.setLayout(new GridLayout(14,6,-1,-1));
 		playerMessagePanel.setBackground(FrameSize.backColor);

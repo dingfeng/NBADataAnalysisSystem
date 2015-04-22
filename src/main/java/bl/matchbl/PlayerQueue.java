@@ -37,7 +37,7 @@ public class PlayerQueue {
 //		yourInfos = new PlayerYourInfo[max];
 		this.name = name;
 	}
-	
+	//增加赛事
 	public void enqueue(MatchesPO match,MatchPlayerPO player , String teamname,int twoPoints,double teamTotalTime
 			,int yourRebs, int totalHit, double yourAttackNO,
 			int teamHand, int teamPenalty, int teamMistakes, int firstServiceNo, int myRebs,String team1, String team2,String date,
@@ -70,7 +70,7 @@ public class PlayerQueue {
 	{
 		return name;
 	}
-	
+	//更新数据
 	public void update() 
 	{
 		if (len  == -1)
@@ -254,6 +254,7 @@ public class PlayerQueue {
 	    if (help1 != 0)
 		 help_uprate = (help2 / 5 - help1 / (len -4)) / (help1 / (len - 4));
 		}
+		//赛季数据更新
 		playervo_total = new  PlayerMatchVO(  name,  teamname,  len + 1,
 				 firstServiceNo,  rebs,  help,  time,
 				 hitRate,  threeHitRate,  penaltyHitRate,
@@ -268,6 +269,7 @@ public class PlayerQueue {
 				   penaltyHandNo,
 				time / 60,  handNo,
 				threeHandNo,   twoPair, penaltyHitNo, hitNo, threeHitNo);
+		//场均数据更新
 	    playervo_ave = new PlayerMatchVO(name,  teamname,  len + 1,
 				 firstServiceNo,  rebs / matchNO,  help/ matchNO,  time/ (matchNO -time_num),
 				 hitRate,  threeHitRate,  penaltyHitRate,
@@ -285,7 +287,7 @@ public class PlayerQueue {
 	   // double penaltyHitNo, double hitNo,double threeHitNo
 		
 	}
-	
+	//更新
 	public void  update(int num)
 	{
 		low = len - num + 1;
@@ -293,6 +295,7 @@ public class PlayerQueue {
 		low = 0;
 	}
     
+	//获得球队名
 	public String  getTeamName()
 	{
 		return teamname;
