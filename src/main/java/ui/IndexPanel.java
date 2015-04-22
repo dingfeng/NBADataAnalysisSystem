@@ -23,7 +23,8 @@ public class IndexPanel extends JPanel{
 
 	MatchController mc=new MatchController();
 	IndexPanel ip=this;
-	
+	JLabel[] match;
+	JLabel today=new JLabel();
 	public IndexPanel(){
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height * 7 / 8);
@@ -49,7 +50,7 @@ public class IndexPanel extends JPanel{
 		// 获得日期
 		String date = "今天是" + year + "年" + month + "月" + day + "日";
 		
-		JLabel today=new JLabel(date);
+		today.setText(date);
 		today.setBounds(FrameSize.width/3, FrameSize.height/6, FrameSize.width/2, FrameSize.height/20);
 		today.setFont(new Font("幼圆",Font.BOLD,40));
 		today.setForeground(Color.white);
@@ -63,7 +64,7 @@ public class IndexPanel extends JPanel{
 		note.setForeground(Color.white);
 		
 		MatchesPO[] matches=mc.getTodayMatches();
-		JLabel[] match=new JLabel[matches.length];
+		match=new JLabel[matches.length];
 		for(int i=0;i<match.length;i++){
 			match[i]=new JLabel(i+1+"."+matches[i].getDate()+"  |  "+matches[i].getTeam1().getName()+"-"+matches[i].getTeam2().getName()+"  |  "+matches[i].getTeam1().getTotalScores()+"-"+matches[i].getTeam2().getTotalScores());
 			match[i].setBounds(FrameSize.width/3,3*FrameSize.height/10+i*FrameSize.height/30,FrameSize.width/5,FrameSize.height/40);
@@ -100,5 +101,25 @@ public class IndexPanel extends JPanel{
 		this.add(lantern);
 	}
 
+	public void update(){
+		mc.update1();
+		String Date=mc.getTodayMatches()[0].getDate();
+		String month=Date.split("-")[0];
+		String day=Date.split("-")[1];
+		int year = 2012;
+		
+		if(Integer.parseInt(month)<9){
+			year++;
+		}
+		
+		// 获得日期
+		String date = "今天是" + year + "年" + month + "月" + day + "日";
+		today.setText(date);
+		MatchesPO[] matches=mc.getTodayMatches();
+		for(int i=0;i<matches.length;i++){
+			match[i].setText(i+1+"."+matches[i].getDate()+"  |  "+matches[i].getTeam1().getName()+"-"+matches[i].getTeam2().getName()+"  |  "+matches[i].getTeam1().getTotalScores()+"-"+matches[i].getTeam2().getTotalScores());
+		}
+		this.repaint();
+	}
 
 }

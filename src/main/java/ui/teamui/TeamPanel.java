@@ -207,25 +207,14 @@ public class TeamPanel extends JPanel {
 
 	/** 实时更新 */
 	public void update() {
+		mc.update1();
 		TeamMatchVO teamresult= null;
 		if (dataType.getSelectedItem().equals("赛季总数据")) {
-			try{
-			teamresult = tc
-					.getTotalTeam(searchBox.getSelectedItem().toString());TeamMessage(teamresult);
-			}catch (Exception e ){e.printStackTrace();}
 			updateTable(tc.getSortedTotalTeams(TeamSortBy.name, SortType.ASEND));
 		} else {
-			try{
-			teamresult = tc
-					.getTotalTeam(searchBox.getSelectedItem().toString());TeamMessage(teamresult);
-			}catch(Exception e){e.printStackTrace();}
 			updateTable(tc.getSortedAveTeams(TeamSortBy.name, SortType.ASEND));
 		}
 		
-		if (matchpanel) {
-			teammatch.update();
-		}
-
 		jScrollPane.repaint();
 		this.repaint();
 	}
@@ -234,12 +223,10 @@ public class TeamPanel extends JPanel {
 	void updateTable(TeamMatchVO[] team) {
 		Vector rowimage = new Vector();
 		for (int i = 0; i < team.length; i++) {
-			TeamMatchVO str;
-			try {
-				str = team[i];
-			} catch (NullPointerException e1) {
+			TeamMatchVO str = team[i];
+			if(str==null){
 				continue;
-			}
+			} 
 			Vector data = new Vector();
 			data.add(str.getName());
 			data.add(str.getMatchNo());
@@ -294,6 +281,13 @@ public class TeamPanel extends JPanel {
 			}
 		});
 
+		JButton refresh=new MyButton(new ImageIcon("image\\refresh.png"),
+				FrameSize.buttonbackColor, Color.LIGHT_GRAY);
+		refresh.setBounds(FrameSize.width / 6, 10, 35, 35);
+		refresh.setToolTipText("刷新");
+		refresh.addActionListener(e -> update());
+		header.add(refresh);
+		
 		JButton searchButton = new MyButton(new ImageIcon("image\\find.png"),
 				Color.GRAY, Color.LIGHT_GRAY);
 		searchButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
@@ -543,9 +537,7 @@ public class TeamPanel extends JPanel {
 			teamlabel[i].setFont(new Font("", Font.PLAIN, 15));
 			teamlabel[i].setBorder(BorderFactory.createLineBorder(Color.white));
 		}
-		jScrollPane.setVisible(false);
-		this.remove(jScrollPane);
-		this.add(teammessage);
+
 	}
 
 	/** 一个球队信息（右侧） */
@@ -611,7 +603,9 @@ public class TeamPanel extends JPanel {
 		teamlabel[51].setText(String.format("%.1f", str.getStealsEfficiency()));
 		teamlabel[53].setText(String.format("%.1f", str.getAssistEfficiency()));
 		teammessage.repaint();
-
+//		jScrollPane.setVisible(false);
+		this.remove(jScrollPane);
+		this.add(teammessage);
 		this.repaint();
 	}
 

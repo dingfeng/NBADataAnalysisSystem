@@ -165,36 +165,36 @@ public class TeamMatchPanel extends JPanel {
 	}
 
 	/** 实时更新 */
-	public void update() {
-		MatchesPO[] match = mc.getRecentTeamMatches(teamName, 5);
-
-		for (int i = 0; i < 5; i++) {
-			Vector data = new Vector();
-			data.add(match[i].getDate());
-			data.add(match[i].getTeam1().getName() + "-"
-					+ match[i].getTeam2().getName());
-			data.add(match[i].getTeam1().getTotalScores() + "-"
-					+ match[i].getTeam2().getTotalScores());
-
-			rowimage.add(data);
-		}
-		table_recent.setDataVector(rowimage, columnsName);
-
-		MatchesPO[] matches = mc.getTeamMatches(teamName);
-		Vector rowimage = new Vector();
-		for (int i = match.length - 1; i >= 0; i--) {
-			Vector data = new Vector();
-			data.add(matches[i].getDate());
-			data.add(matches[i].getTeam1().getName() + "-"
-					+ matches[i].getTeam2().getName());
-			data.add(matches[i].getTeam1().getTotalScores() + "-"
-					+ matches[i].getTeam2().getTotalScores());
-
-			rowimage.add(data);
-		}
-		table_past.setDataVector(rowimage, columnsName);
-		pastjScrollPane.repaint();
-		recentjScrollPane.repaint();
-		this.repaint();
-	}
+//	public void update() {
+//		MatchesPO[] match = mc.getRecentTeamMatches(teamName, 5);
+//
+//		for (int i = 0; i < 5; i++) {
+//			Vector data = new Vector();
+//			data.add(match[i].getDate());
+//			data.add(match[i].getTeam1().getName() + "-"
+//					+ match[i].getTeam2().getName());
+//			data.add(match[i].getTeam1().getTotalScores() + "-"
+//					+ match[i].getTeam2().getTotalScores());
+//
+//			rowimage.add(data);
+//		}
+//		table_recent.setDataVector(rowimage, columnsName);
+//
+//		MatchesPO[] matches = mc.getTeamMatches(teamName);
+//		Vector rowimage = new Vector();
+//		for (int i = match.length - 1; i >= 0; i--) {
+//			Vector data = new Vector();
+//			data.add(matches[i].getDate());
+//			data.add(matches[i].getTeam1().getName() + "-"
+//					+ matches[i].getTeam2().getName());
+//			data.add(matches[i].getTeam1().getTotalScores() + "-"
+//					+ matches[i].getTeam2().getTotalScores());
+//
+//			rowimage.add(data);
+//		}
+//		table_past.setDataVector(rowimage, columnsName);
+//		pastjScrollPane.repaint();
+//		recentjScrollPane.repaint();
+//		this.repaint();
+//	}
 }

@@ -72,21 +72,6 @@ public class MyFrame extends JFrame {
 				"image/basketball.png");
 		this.setIconImage(image);
 
-		Timer timer = new Timer();
-		// timer 第一个任务
-		TimerTask task1 = new TimerTask() {
-			public void run() {
-				if (mc.changed()) {
-					mc.update();
-					teampanel.update();
-				}
-
-			}
-		};
-
-		// 代表2ms后开始执行task1，没100ms执行一次
-		// 100即为刷新频率，界面设为10秒一次
-		timer.schedule(task1, 2, 100);
 
 		setFrame();
 
@@ -185,8 +170,10 @@ public class MyFrame extends JFrame {
 	}
 
 	void setIndex() {
+		indexpanel.update();
 		card.show(mainpanel, "index");
 		locationlable.setText("当前位置：主页");
+		
 	}
 
 	void setPlayer() {
