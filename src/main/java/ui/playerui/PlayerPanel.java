@@ -123,6 +123,7 @@ public class PlayerPanel extends JPanel {
 		}.start();
 		;
 
+		setColumnsName();
 		setFind();
 		setScreen();
 		setWelcome();
@@ -133,8 +134,7 @@ public class PlayerPanel extends JPanel {
 		this.repaint();
 	}
 
-	/** 设置表格 */
-	private void setTable(PlayerMatchVO[] playerMatchVOs) {
+	private void setColumnsName(){
 		columnsName.add("球员名称");
 //		columnsName.add("球衣号码");
 //		columnsName.add("位置");
@@ -186,6 +186,10 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("盖帽率(%)");
 		columnsName.add("失误率(%)");
 		columnsName.add("使用率(%)");
+
+	}
+	/** 设置表格 */
+	private void setTable(PlayerMatchVO[] playerMatchVOs) {
 
 		Vector data = new Vector();
 		for(int i=0;i<playerMatchVOs.length;i++){
