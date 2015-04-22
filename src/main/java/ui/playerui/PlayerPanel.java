@@ -1103,7 +1103,7 @@ public class PlayerPanel extends JPanel {
 				this.add(playerMessagePanel);
 				this.repaint();
 			} catch (NullPointerException e) {
-				return;
+				showAllData();
 			}
 			// jScrollPane.repaint();
 			// jScrollPane.setVisible(true);
