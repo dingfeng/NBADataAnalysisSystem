@@ -209,8 +209,8 @@ public class PlayerPanel extends JPanel {
 			// rowData.add(playerVO.getExp());
 			// rowData.add(playerVO.getSchool());
 			rowData.add(playerVO.getTeam());
-			rowData.add(playerVO.getMatchNo());
-			rowData.add(playerVO.getFirstServiceNo());
+			rowData.add(FrameSize.roundForNumber(playerVO.getMatchNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getFirstServiceNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getRebs()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getAssistNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getTime()));
