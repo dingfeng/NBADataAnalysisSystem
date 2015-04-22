@@ -138,7 +138,6 @@ public class MatchPanel extends JPanel {
 
 	/** 查找比赛 */
 	public void findMatchConfirmClick() {
-		System.out.println("hello world!");
 		Date date1 = dateButton1.getDate();
 		Date date2 = dateButton2.getDate();
 		if (date1.compareTo(date2) > 0) {
