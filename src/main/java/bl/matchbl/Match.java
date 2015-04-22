@@ -215,48 +215,53 @@ public class Match
 		 }
 //	 }
 	}
-	
+	//数据是否有增加
 	public boolean changed()
 	{
 		return match_data.changed();
 	}
-	
+	//获得今天的比赛信息
     public MatchesPO[] getTodayMatches()
     {
 		return match_data.getTodayMatches();
     }
+    
+    //获得所有的比赛
 	public MatchesPO[] getAllMatches()
 	{
 		return match_data.getAllMatches();
 	}
+	//获得球员近期的比赛信息
 	public MatchesPO[] getRecentPlayerMatches(String playerName, int num) {
 		PlayerQueue player = player_map.get(playerName.hashCode());
 		return  player.getRecentPlayerMatches(num);
 	}
+	//获得球队近期的比赛信息
 	public MatchesPO[] getRecentTeamMatches(String teamName, int num) {
 		TeamQueue team =  team_map.get(teamName.hashCode());
 		return team.getRecentMatches(num);
 	}
-    
+    //获得某个球员的比赛数据
 	public MatchesPO[] getPlayerMatches(String playername)
 	{
 		PlayerQueue player_queue = player_map.get(playername.hashCode());
 		return player_queue.getAllMatches();
 	}
-	
+	//获得某个球队的比赛数据
 	public MatchesPO[] getTeamMatches(String teamname)
 	{
 		TeamQueue team_queue = team_map.get(teamname.hashCode());
 		return team_queue.getAllMatches();
 	}
+	//获得球队的所有比赛
     public TIntObjectMap<TeamQueue> getTeam_map() {
     	return team_map;
     }
-
+    //获得球员的所有比赛
     public TIntObjectMap<PlayerQueue> getPlayer_map() {
     	return player_map;
     }
-    
+    //获得在比赛区间内的比赛数据
     public MatchesPO[] getTimeMatches(Date date1, Date date2)
     {
     	MatchesPO[] allMatches =  match_data.getAllMatches();
@@ -274,7 +279,7 @@ public class Match
     	match_list.toArray(result);
     	 return result;
     }
-       
+    //判断是否在该时间段中
     private boolean  betweenTime(String date0,Date date1, Date date2)
     {
     	String time   = null;
@@ -302,7 +307,7 @@ public class Match
     	}
     	else return false;
     }
-
+   //根据时间区间、球队、球员查找比赛数据
     public MatchesPO[]   getTime_TeamMatches(Date date1, Date date2, String teamname, String playername)
     {
     	MatchesPO[]  timeMatches = getTimeMatches(date1, date2);

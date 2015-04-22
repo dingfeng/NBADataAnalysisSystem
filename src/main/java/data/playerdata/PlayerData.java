@@ -26,7 +26,7 @@ public class PlayerData implements PlayerDataService{
 		portrait_file = filename + "/portrait";
 	}
 	
-	
+	//获得所有的球员数据
 	public PlayerPO[] getAllPlayerData()
 	{
 		PlayerPO[] playerpos = new PlayerPO[PLAYER_NUM];
@@ -55,6 +55,7 @@ public class PlayerData implements PlayerDataService{
 		return playerpos;
 	}
 	
+	//获得一行一行的数据，以字符串形式返回
 	private String[] readInfo(File file)
 	{
 		String[] info = new String[9];

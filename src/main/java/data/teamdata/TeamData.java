@@ -24,6 +24,7 @@ public class TeamData implements TeamDataService
 	  this.filename = filename;
   }
   
+  //获得所有球队的今本信息
   public TeamPO[] getAllTeamData()
   {
 	TeamPO[] teampos  = new TeamPO[TEAM_NUM];
@@ -52,7 +53,7 @@ public class TeamData implements TeamDataService
 	return teampos;
   }
   
-  
+  //处理球队数据一行
   private  String[] dealWithLine(String tempStr)
   {
 	  char [] content_list = tempStr.toCharArray();

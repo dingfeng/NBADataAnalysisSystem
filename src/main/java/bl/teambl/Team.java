@@ -49,6 +49,7 @@ public class Team   implements SearchItemProvider
 	    }
 	}
 	
+	//获得球员的赛季总数居
 	public TeamMatchVO[] getAllTotalTeams()
 	{
 		
@@ -61,7 +62,7 @@ public class Team   implements SearchItemProvider
 		}
 		return allMatchVOs;
 	}
-	
+	//获得场均数据
 	public TeamMatchVO[] getAllAveTeams()
 	{
 		TeamQueue[] team_queues = new TeamQueue[team_map.size()];
@@ -73,12 +74,13 @@ public class Team   implements SearchItemProvider
 		}
 		return allMatchVOs;
 	}
-	
+	//获得热点球队
 	public  TeamMatchVO[] getHotTeams(TeamSortBy sortby)
 	{
 		 return getHotTeams(sortby,5);
 	}
      
+	//获得一定数量的热点球队
 	public TeamMatchVO[] getHotTeams(TeamSortBy sortby, int num)
 	{
 		TeamMatchVO[] teams = getSortedAveTeams(sortby,SortType.DESEND);
@@ -90,6 +92,7 @@ public class Team   implements SearchItemProvider
 		return result;
 	}
 	
+	//对球队的场均的数据进行排序
 	public TeamMatchVO[] getSortedAveTeams(TeamSortBy sortby, SortType type)
 	{
 		TeamQueue[] teams = new TeamQueue[team_map.size()];
@@ -129,6 +132,7 @@ public class Team   implements SearchItemProvider
 		return team_ms;
 	}
 
+	//对球队的赛季数据进行排序
 	public TeamMatchVO[] getSortedTotalTeams(TeamSortBy sortby, SortType type) {
 		TeamQueue[] teams = new TeamQueue[team_map.size()];
 		team_map.values(teams);
@@ -297,6 +301,8 @@ public class Team   implements SearchItemProvider
 	{
 		return team_map.get(teamname.hashCode()).getTeamvoAverage();
 	}
+	
+	//获得某球队的基本信息
 	public TeamPO getTeamData(String team)
 	{
 		TeamPO teampo = null;
@@ -311,6 +317,7 @@ public class Team   implements SearchItemProvider
 		return  null;
 	}
 	
+	//模糊查找球队
 	public Iterator<String> fuzzilyFind(String info) {
 		LinkedList<String>  team_list = new LinkedList<String>();
 		for (TeamPO team : teams)
@@ -323,6 +330,7 @@ public class Team   implements SearchItemProvider
 		return team_list.iterator();
 	}
 
+	//获得球员的赛区
 	public Area getPlayerArea(String playername)
 	{
 		String teamname = null;
@@ -339,7 +347,7 @@ public class Team   implements SearchItemProvider
 		return null;
 	}
 
-	@Override
+	//获得搜索选项
 	public String[] getSearchItems() {
 		String[] teamNames = new String[teamnames.length *2];
 		for (int i = 0;i < teamnames.length; i++)
