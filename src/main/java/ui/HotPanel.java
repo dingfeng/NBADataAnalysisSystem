@@ -217,7 +217,7 @@ public class HotPanel extends JPanel {
 							.getPortrait()), 115, 92));
 		} catch (Exception e) {
 			portrait_1.setIcon(scaleImage(new ImageIcon(Toolkit
-					.getDefaultToolkit().getImage("image/noimage.jpg")), 115,
+					.getDefaultToolkit().getImage("image/noimage.png")), 115,
 					92));
 		}
 
@@ -231,7 +231,7 @@ public class HotPanel extends JPanel {
 			portrait_2
 					.setIcon(scaleImage(
 							new ImageIcon(Toolkit.getDefaultToolkit().getImage(
-									"image/noimage.jpg")), 69, 55));
+									"image/noimage.png")), 69, 55));
 		}
 		portrait_2.setBounds(FrameSize.width / 3 - 100,
 				2 * FrameSize.height / 7, 69, 55);
@@ -243,7 +243,7 @@ public class HotPanel extends JPanel {
 			portrait_3
 					.setIcon(scaleImage(
 							new ImageIcon(Toolkit.getDefaultToolkit().getImage(
-									"image/noimage.jpg")), 69, 55));
+									"image/noimage.png")), 69, 55));
 		}
 		portrait_3.setBounds(FrameSize.width / 3 - 100,
 				3 * FrameSize.height / 7, 69, 55);
@@ -255,7 +255,7 @@ public class HotPanel extends JPanel {
 			portrait_4
 					.setIcon(scaleImage(
 							new ImageIcon(Toolkit.getDefaultToolkit().getImage(
-									"image/noimage.jpg")), 69, 55));
+									"image/noimage.png")), 69, 55));
 		}
 		portrait_4.setBounds(FrameSize.width / 3 - 100,
 				4 * FrameSize.height / 7, 69, 55);
@@ -267,7 +267,7 @@ public class HotPanel extends JPanel {
 			portrait_5
 					.setIcon(scaleImage(
 							new ImageIcon(Toolkit.getDefaultToolkit().getImage(
-									"image/noimage.jpg")), 69, 55));
+									"image/noimage.png")), 69, 55));
 		}
 		portrait_5.setBounds(FrameSize.width / 3 - 100,
 				5 * FrameSize.height / 7, 69, 55);
