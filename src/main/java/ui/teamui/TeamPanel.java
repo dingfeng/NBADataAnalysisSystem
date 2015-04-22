@@ -174,11 +174,7 @@ public class TeamPanel extends JPanel {
 			rowimage.add(data);
 		}
 
-		table = new DefaultTableModel(rowimage, columnsName){
-		      public Class<?> getColumnClass(int column) {
-		          return getValueAt(0, column).getClass();
-		        }
-		      };
+		table = new DefaultTableModel(rowimage, columnsName);
 		mytable = new MyTable(table);
 		mytable.setRowSorter(new TableRowSorter<TableModel>(table));
 		mytable.updateUI();
