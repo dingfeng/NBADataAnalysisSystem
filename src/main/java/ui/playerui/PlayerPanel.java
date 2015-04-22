@@ -748,7 +748,7 @@ public class PlayerPanel extends JPanel {
 		}else{
 			updateTable(playerController.sortAvePlayers(PlayerSortBy.name, SortType.ASEND));
 		}
-		
+		updateOne();
 		jScrollPane.repaint();
 		this.repaint();
 	}
@@ -857,7 +857,80 @@ public class PlayerPanel extends JPanel {
 	        }  
 	}
 
-//	private void update
+	private void updateOne(){
+		
+		PlayerMatchVO playerVO = null;
+		if(dataType.getSelectedItem().equals("赛季总数据")){
+			playerVO=playerController.findPlayerTotal(searchBox.getSelectedItem().toString());
+		}
+		else{
+			playerVO=playerController.findPlayerMatchAve(searchBox.getSelectedItem().toString());
+		}
+		playerText[1].setText(String.valueOf(playerVO.getMatchNo()));
+		playerText[3].setText(String.valueOf(playerVO.getFirstServiceNo()));
+		playerText[5].setText(String.format("%.1f", playerVO.getRebs()));
+		playerText[7].setText(String.format("%.1f", playerVO.getAssistNo()));
+		playerText[9].setText(String.format("%.1f", playerVO.getTime()));
+
+		playerText[11].setText(String.format("%.1f", playerVO.getBlockNo()));
+		playerText[13].setText(String.format("%.1f",
+				playerVO.getScoring_rebound_assist()));
+		playerText[15].setText(String.format("%.1f", playerVO.getStealsNo()));
+		playerText[17].setText(String.format("%.1f", playerVO.getFoulsNo()));
+		playerText[19].setText(String.format("%.1f", playerVO.getMistakesNo()));
+		playerText[21].setText(String.format("%.1f", playerVO.getMinute()));
+		playerText[23].setText(String.format("%.1f", playerVO.getHandNo()));
+		playerText[25].setText(String.format("%.1f", playerVO.getThree_points()));
+		playerText[27].setText(String.format("%.1f", playerVO.getBlockNo()));
+		playerText[29].setText(String.format("%.1f", playerVO.getTwoPair()));
+		playerText[31].setText(String.format("%.1f", playerVO.getHandNo()));
+		playerText[33].setText(String.format("%.1f", playerVO.getHitNo()));
+		double hitRate = playerVO.getHitRate() * 100;
+		if (hitRate >= 0)
+			playerText[35].setText(String.format("%.1f", hitRate));
+		else
+			playerText[35].setText("-");
+		playerText[37].setText(String.format("%.1f", playerVO.getThreeHandNo()));
+		playerText[39].setText(String.format("%.1f", playerVO.getThreeHitNo()));
+		double threeHitRate = playerVO.getThreeHitRate();
+		if (threeHitRate >= 0)
+			playerText[41].setText(String.format("%.1f", threeHitRate * 100));
+		else
+			playerText[41].setText("-");
+		playerText[43].setText(String.format("%.1f", playerVO.getPenaltyHandNo()));
+		playerText[45].setText(String.format("%.1f", playerVO.getPenaltyHitNo()));
+		double penaltyHitRate = playerVO.getPenaltyHitRate();
+		if (penaltyHitRate >= 0)
+			playerText[47].setText(String.format("%.1f", penaltyHitRate * 100));
+		else
+			playerText[47].setText("-");
+		playerText[49].setText(String.format("%.1f", playerVO.getOffendNo()));
+		playerText[51].setText(String.format("%.1f", playerVO.getDefenceNo()));
+		playerText[53].setText(String.format("%.1f", playerVO.getBlockNo()));
+		playerText[55].setText(String.format("%.1f", playerVO.getMistakesNo()));
+		playerText[57].setText(String.format("%.1f", playerVO.getFoulsNo()));
+		playerText[59].setText(String.format("%.1f", playerVO.getPoints()));
+		playerText[61].setText(String.format("%.1f", playerVO.getEfficiency()));
+		playerText[63].setText(String.format("%.1f", playerVO.getGmScEfficiency()));
+		playerText[65].setText(String.format("%.1f", playerVO.getTrueHitRate() * 100));
+		playerText[67].setText(String.format("%.1f", playerVO.getHitEfficiency()));
+		playerText[69].setText(String.format("%.1f", playerVO.getRebEfficiency()));
+		playerText[71].setText(String.format("%.1f",
+				playerVO.getOffenseRebsEfficiency()));
+		playerText[73].setText(String.format("%.1f",
+				playerVO.getDefenceRebsEfficiency()));
+		playerText[75].setText(String.format("%.1f",
+				playerVO.getAssistEfficiency() * 100));
+		playerText[77].setText(String.format("%.1f", playerVO.getStealsEfficiency()*100));
+		playerText[79].setText(String.format("%.1f",
+				playerVO.getBlockEfficiency() * 100));
+		playerText[81].setText(String.format("%.1f",
+				playerVO.getMistakeEfficiency() * 100));
+		playerText[83].setText(String.format("%.1f", playerVO.getUseEfficiency() * 100));
+
+		playerMessagePanel.repaint();
+	}
+	
 	private void setOnePlayerMessagePanel(){
 		playerMessagePanel.setLayout(new GridLayout(14,6,-1,-1));
 		playerMessagePanel.setBackground(FrameSize.backColor);
@@ -1007,9 +1080,6 @@ public class PlayerPanel extends JPanel {
 	/**一个球员信息（右侧）*/
 	private void setPlayerMessage(PlayerMatchVO playerVO){
 		playerMessagePanel.setVisible(false);
-
-
-		
 
 		playerText[1].setText(String.valueOf(playerVO.getMatchNo()));
 		playerText[3].setText(String.valueOf(playerVO.getFirstServiceNo()));
