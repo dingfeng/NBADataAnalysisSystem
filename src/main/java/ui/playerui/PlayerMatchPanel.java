@@ -52,7 +52,7 @@ public class PlayerMatchPanel extends JPanel {
 		player.setText(playerName);
 
 		playername.setBounds(10, 20, 50, 50);
-		player.setBounds(80, 20, 150, 50);
+		player.setBounds(80, 20, 300, 50);
 		recent.setBounds(10, 100, 2 * FrameSize.width / 3 - 20, 50);
 		past.setBounds(10, 253, 2 * FrameSize.width / 3 - 20, 50);
 
