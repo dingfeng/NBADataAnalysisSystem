@@ -552,8 +552,7 @@ public class TeamPanel extends JPanel {
 			return;
 		}
 
-		jScrollPane.setVisible(false);
-
+		
 		TeamMatchVO teamresult;
 
 		find.setVisible(false);
@@ -577,7 +576,14 @@ public class TeamPanel extends JPanel {
 				teamresult = tc.getAveTeam(teamname);
 			}
 		}
+		try{
 		TeamMessage(teamresult);
+		}catch (NullPointerException e1) {
+			JOptionPane.showMessageDialog(null, "未找到该球队的比赛数据", "查找失败",
+					JOptionPane.ERROR_MESSAGE);
+
+			return;
+		}
 		this.remove(jScrollPane);
 		this.add(teammessage);
 		this.repaint();

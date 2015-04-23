@@ -62,14 +62,15 @@ public class IndexPanel extends JPanel{
 		
 		today.setText(date);
 		today.setBounds(FrameSize.width/3, FrameSize.height/6, FrameSize.width/2, FrameSize.height/20);
-		today.setFont(new Font("幼圆",Font.BOLD,40));
+		today.setFont(new Font("微软雅黑",Font.BOLD,40));
 		today.setForeground(Color.white);
-		
+	
 		JLabel lantern=new JLabel();
-		lantern.setIcon(new ImageIcon("image/lantern.png"));
+		lantern.setIcon(new ImageIcon("image/indexpic.png"));
 		lantern.setBounds(FrameSize.width/8, FrameSize.height/8, 128, 128);
 		
 		JLabel note=new JLabel("今日比赛：");
+		note.setFont(new Font("微软雅黑",Font.PLAIN,18));
 		note.setBounds(FrameSize.width/3,FrameSize.height/4,FrameSize.width/10, FrameSize.height/40);
 		note.setForeground(Color.white);
 		

@@ -127,7 +127,7 @@ public class TeamMatchPanel extends JPanel {
 
 		MatchesPO[] match = mc.getTeamMatches(teamName);
 		Vector rowimage = new Vector();
-		for (int i = match.length - 1; i >= 0; i--) {
+		for (int i = match.length - 6; i >= 0; i--) {
 			Vector data = new Vector();
 			data.add(match[i].getDate());
 			data.add(match[i].getTeam1().getName() + "-"

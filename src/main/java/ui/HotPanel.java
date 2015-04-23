@@ -43,6 +43,7 @@ public class HotPanel extends JPanel {
 	JLabel score_4 = new JLabel();
 	JLabel score_5 = new JLabel();
 
+	JLabel crown=new JLabel();
 	JComboBox<String> choose;
 	TeamController tc = new TeamController();
 	PlayerController pc = new PlayerController();
@@ -94,6 +95,11 @@ public class HotPanel extends JPanel {
 		season_player.setForeground(Color.white);
 		season_team.setForeground(Color.white);
 		fast_player.setForeground(Color.white);
+		
+		today_player.setFont(new Font("微软雅黑",Font.PLAIN,18));
+		season_player.setFont(new Font("微软雅黑",Font.PLAIN,18));
+		season_team.setFont(new Font("微软雅黑",Font.PLAIN,18));
+		fast_player.setFont(new Font("微软雅黑",Font.PLAIN,18));
 
 		today_player.addActionListener(e -> showchoose(1));
 		season_player.addActionListener(e -> showchoose(2));
@@ -121,10 +127,10 @@ public class HotPanel extends JPanel {
 			name[i].setBounds(FrameSize.width / 3, (i + 1) * FrameSize.height
 					/ 7, FrameSize.width / 6, FrameSize.height / 16);
 			name[i].setForeground(Color.white);
+			name[i].setFont(new Font("Comic Sans MS", Font.BOLD, 14));
 			name[i].addMouseListener(new show());
 			show.add(name[i]);
 		}
-
 		name[0].setBounds(FrameSize.width / 3, FrameSize.height / 10,
 				FrameSize.width / 5, FrameSize.height / 10);
 		name[0].setFont(new Font("Comic Sans MS", Font.BOLD, 24));
@@ -146,7 +152,10 @@ public class HotPanel extends JPanel {
 		score_4.setForeground(Color.white);
 		score_5.setForeground(Color.white);
 
-		// show.add(choose);
+		
+		crown.setBounds(FrameSize.width / 3 - 185, FrameSize.height / 15, 72, 72);
+		crown.setIcon(new ImageIcon("image/crown.png"));
+		
 		show.add(score_1);
 		show.add(score_2);
 		show.add(score_3);
@@ -288,7 +297,7 @@ public class HotPanel extends JPanel {
 		show.add(portrait_3);
 		show.add(portrait_4);
 		show.add(portrait_5);
-
+		show.add(crown);
 		show.repaint();
 		this.repaint();
 	}
@@ -377,7 +386,7 @@ public class HotPanel extends JPanel {
 				new ImageIcon(tc.getTeamData(hotteam[4].getName()).getImage()),
 				FrameSize.width / 12, FrameSize.width / 12));
 
-		portrait_1.setBounds(13 * FrameSize.width / 60, FrameSize.height / 10,
+		portrait_1.setBounds(11 * FrameSize.width / 60, FrameSize.height / 10,
 				FrameSize.width / 8, FrameSize.width / 8);
 		portrait_2.setBounds(7 * FrameSize.width / 30,
 				2 * FrameSize.height / 7, FrameSize.width / 12,
@@ -403,7 +412,7 @@ public class HotPanel extends JPanel {
 		show.add(portrait_3);
 		show.add(portrait_4);
 		show.add(portrait_5);
-
+		show.remove(crown);
 		show.repaint();
 		this.repaint();
 	}
