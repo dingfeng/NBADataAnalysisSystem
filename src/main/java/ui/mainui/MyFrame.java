@@ -217,7 +217,7 @@ public class MyFrame extends JFrame {
 
 	void setMini() {
 		JButton el = new MyButton(new ImageIcon("image/mini.png"), new Color(
-				50, 50, 50), Color.blue);
+				50, 50, 50), new Color(20,34,160));
 		// JLabel el = new JLabel();
 		// ImageIcon image = new ImageIcon("image/mini.png");
 		// el.setIcon(image);

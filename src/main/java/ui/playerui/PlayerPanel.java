@@ -1065,6 +1065,7 @@ public class PlayerPanel extends JPanel {
 
 	/** 点击筛选按钮 */
 	private void screenPlayerClick() {
+		showAllData();
 		this.remove(welcomePanel);
 		this.remove(findPanel);
 		// this.remove(playerMessagePanel);
