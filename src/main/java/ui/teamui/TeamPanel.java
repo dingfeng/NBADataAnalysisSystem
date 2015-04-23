@@ -97,7 +97,7 @@ public class TeamPanel extends JPanel {
 		setHeader();
 		setFind();
 		setMessage();
-		showOne("SAS");
+		showOne("ATL");
 		this.add(find);
 		this.add(header);
 		this.repaint();
