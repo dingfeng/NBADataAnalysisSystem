@@ -141,7 +141,7 @@ public class MatchData  implements MatchDataService
 		  }
 		  
  	  }
-	  lastfilename = file_children[latest_index].getName();
+//	  lastfilename = file_children[latest_index].getName();
 	  inited = true;
   }
   

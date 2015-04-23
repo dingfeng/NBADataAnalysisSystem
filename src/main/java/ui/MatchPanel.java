@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Vector;
 
@@ -549,22 +550,22 @@ public class MatchPanel extends JPanel {
 			Vector rowData = new Vector();
 			rowData.add(players1[i].getName());
 			rowData.add(players1[i].getLocation());
-			rowData.add(players1[i].getTime());
-			rowData.add(players1[i].getHitNo());
-			rowData.add(players1[i].getHandNo());
-			rowData.add(players1[i].getThreeHitNo());
-			rowData.add(players1[i].getThreeHandNo());
-			rowData.add(players1[i].getPenaltyHitNo());
-			rowData.add(players1[i].getPenaltyHandNo());
-			rowData.add(players1[i].getOffenseRebs());
-			rowData.add(players1[i].getDefenceRebs());
-			rowData.add(players1[i].getRebs());
-			rowData.add(players1[i].getHelp());
-			rowData.add(players1[i].getStealsNo());
-			rowData.add(players1[i].getBlockNo());
-			rowData.add(players1[i].getMistakesNo());
-			rowData.add(players1[i].getFoulsNo());
-			rowData.add(players1[i].getPoints());
+			rowData.add(FrameSize.roundForNumber(players1[i].getTime()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getHitNo()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getHandNo()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getThreeHitNo()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getThreeHandNo()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getPenaltyHitNo()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getPenaltyHandNo()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getOffenseRebs()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getDefenceRebs()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getRebs()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getHelp()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getStealsNo()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getBlockNo()));
+			rowData.add(FrameSize.roundForNumber(players1[i].getMistakesNo()));
+			rowData.add(FrameSize.roundForNumber(FrameSize.roundForNumber(players1[i].getFoulsNo())));
+			rowData.add(FrameSize.roundForNumber(players1[i].getPoints()));
 			data1.add(rowData);
 		}
 		player1Table = new DefaultTableModel(data1, columnsName);
@@ -597,22 +598,22 @@ public class MatchPanel extends JPanel {
 			Vector rowData = new Vector();
 			rowData.add(players2[i].getName());
 			rowData.add(players2[i].getLocation());
-			rowData.add(players2[i].getTime());
-			rowData.add(players2[i].getHitNo());
-			rowData.add(players2[i].getHandNo());
-			rowData.add(players2[i].getThreeHitNo());
-			rowData.add(players2[i].getThreeHandNo());
-			rowData.add(players2[i].getPenaltyHitNo());
-			rowData.add(players2[i].getPenaltyHandNo());
-			rowData.add(players2[i].getOffenseRebs());
-			rowData.add(players2[i].getDefenceRebs());
-			rowData.add(players2[i].getRebs());
-			rowData.add(players2[i].getHelp());
-			rowData.add(players2[i].getStealsNo());
-			rowData.add(players2[i].getBlockNo());
-			rowData.add(players2[i].getMistakesNo());
-			rowData.add(players2[i].getFoulsNo());
-			rowData.add(players2[i].getPoints());
+			rowData.add(FrameSize.roundForNumber(players2[i].getTime()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getHitNo()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getHandNo()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getThreeHitNo()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getThreeHandNo()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getPenaltyHitNo()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getPenaltyHandNo()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getOffenseRebs()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getDefenceRebs()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getRebs()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getHelp()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getStealsNo()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getBlockNo()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getMistakesNo()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getFoulsNo()));
+			rowData.add(FrameSize.roundForNumber(players2[i].getPoints()));
 			data2.add(rowData);
 		}
 		player2Table = new DefaultTableModel(data2, columnsName);
@@ -639,6 +640,52 @@ public class MatchPanel extends JPanel {
 		resizeTable(true, player2ScrollPane, myPlayer2Table);
 		player2ScrollPane.repaint();
 		player2ScrollPane.validate();
+		
+		TableRowSorter rowSorter1 = (TableRowSorter) myPlayer1Table.getRowSorter();
+		Comparator<Number> numberComparator1 = new Comparator<Number>() {
+			@Override
+			public int compare(Number o1, Number o2) {
+				if (o1 == null) {
+					return -1;
+				}
+				if (o2 == null) {
+					return 1;
+				}
+				if (o1.doubleValue() < o2.doubleValue()) {
+					return -1;
+				}
+				if (o1.doubleValue() > o2.doubleValue()) {
+					return 1;
+				}
+				return 0;
+			}
+		};
+		for (int col = 2; col < player1Table.getColumnCount(); col++) {
+			rowSorter1.setComparator(col, numberComparator1);
+		}
+		
+		TableRowSorter rowSorter2 = (TableRowSorter) myPlayer2Table.getRowSorter();
+		Comparator<Number> numberComparator2 = new Comparator<Number>() {
+			@Override
+			public int compare(Number o1, Number o2) {
+				if (o1 == null) {
+					return -1;
+				}
+				if (o2 == null) {
+					return 1;
+				}
+				if (o1.doubleValue() < o2.doubleValue()) {
+					return -1;
+				}
+				if (o1.doubleValue() > o2.doubleValue()) {
+					return 1;
+				}
+				return 0;
+			}
+		};
+		for (int col = 2; col < player1Table.getColumnCount(); col++) {
+			rowSorter2.setComparator(col, numberComparator2);
+		}
 	}
 
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {

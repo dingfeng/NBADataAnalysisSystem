@@ -56,7 +56,7 @@ public class PlayerPanel extends JPanel {
 	JPanel welcomePanel = new JPanel();
 	JPanel playerMessagePanel = new JPanel();
 	PlayerMatchPanel playerMatchPanel;
-	boolean matchpanel=false;
+	boolean matchpanel = false;
 	DefaultTableModel table;
 	JScrollPane jScrollPane;
 	JPanel findPanel = new JPanel();
@@ -84,21 +84,21 @@ public class PlayerPanel extends JPanel {
 	JComboBox<String> playerAreaBox;
 	JComboBox<String> screenPlayerBox;
 	JComboBox<String> dataType;
-	
+
 	PlayerMatchVO[] allPlayers;
-	boolean isPlayer=false;
+	boolean isPlayer = false;
 
 	PlayerController playerController = new PlayerController();
 	MatchController matchController = new MatchController();
 	String[] allPlayerNames;
-	JComboBox searchBox ;
-	
+	JComboBox searchBox;
+
 	JTextField[] playerText = new UneditableTextField[84];
 
 	Vector columnsName = new Vector();
 
 	public PlayerPanel() {
-		allPlayers=playerController.sortTotalPlayers(PlayerSortBy.name,
+		allPlayers = playerController.sortTotalPlayers(PlayerSortBy.name,
 				SortType.ASEND);
 		this.setLayout(null);
 		this.setBounds(0, 0, FrameSize.width, FrameSize.height);
@@ -129,15 +129,15 @@ public class PlayerPanel extends JPanel {
 		this.repaint();
 	}
 
-	private void setColumnsName(){
+	private void setColumnsName() {
 		columnsName.add("球员名称");
-//		columnsName.add("球衣号码");
-//		columnsName.add("位置");
-//		columnsName.add("身高");
-//		columnsName.add("生日");
-//		columnsName.add("年龄");
-//		columnsName.add("球龄");
-//		columnsName.add("毕业学校");
+		// columnsName.add("球衣号码");
+		// columnsName.add("位置");
+		// columnsName.add("身高");
+		// columnsName.add("生日");
+		// columnsName.add("年龄");
+		// columnsName.add("球龄");
+		// columnsName.add("毕业学校");
 		columnsName.add("所属球队");
 		columnsName.add("参赛场数");
 		columnsName.add("先发场数");
@@ -161,7 +161,7 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("罚球出手数");
 		columnsName.add("罚球命中数");
 		columnsName.add("罚球(%)");
-		
+
 		columnsName.add("进攻");
 		columnsName.add("防守");
 		columnsName.add("抢断");
@@ -183,11 +183,12 @@ public class PlayerPanel extends JPanel {
 		columnsName.add("使用率(%)");
 
 	}
+
 	/** 设置表格 */
 	private void setTable(PlayerMatchVO[] playerMatchVOs) {
 
 		Vector data = new Vector();
-		for(int i=0;i<playerMatchVOs.length;i++){
+		for (int i = 0; i < playerMatchVOs.length; i++) {
 			PlayerMatchVO playerVO = playerMatchVOs[i];
 			Vector rowData = new Vector();
 			rowData.add(playerVO.getName());
@@ -210,13 +211,13 @@ public class PlayerPanel extends JPanel {
 			rowData.add(FrameSize.roundForNumber(playerVO.getTime()));
 
 			rowData.add(FrameSize.roundForNumber(playerVO.getBlockNo()));
-			rowData.add(FrameSize.roundForNumber(playerVO.getScoring_rebound_assist()));
+			rowData.add(FrameSize.roundForNumber(playerVO
+					.getScoring_rebound_assist()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getFoulsNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getMistakesNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getMinute()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getTwoPair()));
-			
-			
+
 			rowData.add(FrameSize.roundForNumber(playerVO.getHandNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getHitNo()));
 			double hitRate = playerVO.getHitRate() * 100;
@@ -250,12 +251,15 @@ public class PlayerPanel extends JPanel {
 			rowData.add(FrameSize.roundForNumber(playerVO.getTrueHitRate() * 100));
 			rowData.add(FrameSize.roundForNumber(playerVO.getHitEfficiency()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getRebEfficiency()));
-			rowData.add(FrameSize.roundForNumber(playerVO.getOffenseRebsEfficiency()));
-			rowData.add(FrameSize.roundForNumber(playerVO.getDefenceRebsEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO
+					.getOffenseRebsEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO
+					.getDefenceRebsEfficiency()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getAssistEfficiency() * 100));
-			rowData.add(FrameSize.roundForNumber(playerVO.getStealsEfficiency()*100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getStealsEfficiency() * 100));
 			rowData.add(FrameSize.roundForNumber(playerVO.getBlockEfficiency() * 100));
-			rowData.add(FrameSize.roundForNumber(playerVO.getMistakeEfficiency() * 100));
+			rowData.add(FrameSize.roundForNumber(playerVO
+					.getMistakeEfficiency() * 100));
 			rowData.add(FrameSize.roundForNumber(playerVO.getUseEfficiency() * 100));
 
 			data.add(rowData);
@@ -263,28 +267,28 @@ public class PlayerPanel extends JPanel {
 		table = new DefaultTableModel(data, columnsName);
 		mytable = new MyTable(table);
 		mytable.setRowSorter(new TableRowSorter<TableModel>(table));
-		TableRowSorter rowSorter = (TableRowSorter) mytable.getRowSorter();  
-		 Comparator<Number> numberComparator = new Comparator<Number>() {  
-	            @Override  
-	            public int compare(Number o1, Number o2) {  
-	                if ( o1 == null ) {  
-	                    return -1;  
-	                }  
-	                if ( o2 == null ) {  
-	                    return 1;  
-	                }  
-	                if ( o1.doubleValue() < o2.doubleValue() ) {  
-	                    return -1;  
-	                }  
-	                if ( o1.doubleValue() > o2.doubleValue() ) {  
-	                    return 1;  
-	                }  
-	                return 0;  
-	            }  
-	        };  
-	        for (int col = 2; col < table.getColumnCount(); col++) {  
-	            rowSorter.setComparator(col, numberComparator);  
-	        }  
+		TableRowSorter rowSorter = (TableRowSorter) mytable.getRowSorter();
+		Comparator<Number> numberComparator = new Comparator<Number>() {
+			@Override
+			public int compare(Number o1, Number o2) {
+				if (o1 == null) {
+					return -1;
+				}
+				if (o2 == null) {
+					return 1;
+				}
+				if (o1.doubleValue() < o2.doubleValue()) {
+					return -1;
+				}
+				if (o1.doubleValue() > o2.doubleValue()) {
+					return 1;
+				}
+				return 0;
+			}
+		};
+		for (int col = 2; col < table.getColumnCount(); col++) {
+			rowSorter.setComparator(col, numberComparator);
+		}
 		jScrollPane = new JScrollPane(mytable);
 		jScrollPane
 				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -301,14 +305,15 @@ public class PlayerPanel extends JPanel {
 		mytable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 2) {
-					try{
-					showOne((String) mytable.getModel().getValueAt(
-							mytable.getSelectedRow(), 0));
-					}catch(NullPointerException e1){
+					try {
+						showOne((String) mytable.getModel().getValueAt(
+								mytable.getSelectedRow(), 0));
+					} catch (NullPointerException e1) {
 						MyFrame.playerpanel.remove(findPanel);
 						MyFrame.playerpanel.add(welcomePanel);
 						MyFrame.playerpanel.repaint();
-						JOptionPane.showMessageDialog(null, "未找到该球员的个人信息", "查找失败",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "未找到该球员的个人信息",
+								"查找失败", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 			}
@@ -316,24 +321,33 @@ public class PlayerPanel extends JPanel {
 		});
 	}
 
-	/**显示一个球队的所有球员*/
-	public void showTeamPlayers(PlayerMatchVO[] playerMatchVO){
+	/** 显示一个球队的所有球员 */
+	public void showTeamPlayers(PlayerMatchVO[] playerMatchVO) {
 		this.remove(welcomePanel);
 		this.remove(screenPanel);
 		this.remove(playerMessagePanel);
 		jScrollPane.setVisible(false);
 		setTable(playerMatchVO);
 		jScrollPane.setVisible(true);
-		showOne(playerMatchVO[0].getName());
 		this.add(jScrollPane);
-		this.repaint();
+		for (int i = 0; i < playerMatchVO.length; i++) {
+			if (playerController.findPlayer(playerMatchVO[i].getName())==null) {
+				i++;
+			}else{
+				System.out.println(i);
+				showOne(playerMatchVO[i].getName());
+				this.repaint();
+				break;
+			}
+		}
+
 	}
 
 	/** 在findPanel上显示一个球员的信息 */
 	private void showOne(String playerInfo) {
-		if(matchpanel){
+		if (matchpanel) {
 			this.remove(playerMatchPanel);
-			matchpanel=false;
+			matchpanel = false;
 		}
 		this.remove(welcomePanel);
 		this.remove(screenPanel);
@@ -347,14 +361,15 @@ public class PlayerPanel extends JPanel {
 		playerTeamButton.setForeground(Color.white);
 		playerTeamButton.setBounds(FrameSize.width / 3 - 60,
 				11 * FrameSize.height / 16, 55, 30);
-		matchButton.setBounds(FrameSize.width / 3 - 130, 11 * FrameSize.height / 16,
-				58, 30);
-		matchButton.addActionListener(e->setMatch());
-		playerTeamButton.addActionListener(e->showPlayerTeam(teamText.getText()));
+		matchButton.setBounds(FrameSize.width / 3 - 130,
+				11 * FrameSize.height / 16, 58, 30);
+		matchButton.addActionListener(e -> setMatch());
+		playerTeamButton.addActionListener(e -> showPlayerTeam(teamText
+				.getText()));
 
-		
 		PlayerPO playerVO = playerController.findPlayer(playerInfo);
-		PlayerMatchVO playerMatchVO=playerController.findPlayerMatchAve(playerInfo);
+		PlayerMatchVO playerMatchVO = playerController
+				.findPlayerMatchAve(playerInfo);
 		nameText.setText(playerVO.getName());
 		numText.setText(String.valueOf(playerVO.getNumber()));
 		positionText.setText(String.valueOf(playerVO.getPosition()));
@@ -380,27 +395,29 @@ public class PlayerPanel extends JPanel {
 
 	private void showPlayerTeam(String teamName) {
 		MyFrame.teampanel.findClick(teamName);
-		MyFrame.card.show(MyFrame.mainpanel,"team");
+		MyFrame.card.show(MyFrame.mainpanel, "team");
 		MyFrame.locationlable.setText("当前位置：球队");
 	}
 
 	private void setMatch() {
-//		System.out.println(teamText.getText());
-		if(matchpanel){
+		// System.out.println(teamText.getText());
+		if (matchpanel) {
 			this.remove(playerMatchPanel);
 		}
-		matchpanel=true;
-		try{
-		playerMatchPanel = new PlayerMatchPanel(nameText.getText(),teamText.getText());
-		}catch(NullPointerException e){
-			JOptionPane.showMessageDialog(null, "暂无该球员的比赛信息","查找失败",JOptionPane.ERROR_MESSAGE);
+		matchpanel = true;
+		try {
+			playerMatchPanel = new PlayerMatchPanel(nameText.getText(),
+					teamText.getText());
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(null, "暂无该球员的比赛信息", "查找失败",
+					JOptionPane.ERROR_MESSAGE);
 			this.add(jScrollPane);
 		}
 		this.remove(jScrollPane);
 		this.remove(playerMessagePanel);
 		this.add(playerMatchPanel);
 		this.repaint();
-		
+
 	}
 
 	/** 筛选Panel */
@@ -422,19 +439,19 @@ public class PlayerPanel extends JPanel {
 		positionBox.setBounds(FrameSize.width / 8, FrameSize.height / 12, 150,
 				40);
 		positionBox.setFont(new Font("宋体", Font.PLAIN, 12));
-		positionBox.addActionListener(e->screenPlayerConfirmClick());
+		positionBox.addActionListener(e -> screenPlayerConfirmClick());
 		screenPanel.add(positionBox);
 
 		JLabel playerZoneLabel = new JLabel("赛区");
 		playerZoneLabel.setForeground(Color.white);
-		playerZoneLabel.setBounds(FrameSize.width / 30,
-				FrameSize.height / 4, 100, 40);
+		playerZoneLabel.setBounds(FrameSize.width / 30, FrameSize.height / 4,
+				100, 40);
 		playerZoneLabel.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		screenPanel.add(playerZoneLabel);
 
 		playerZoneBox = new MyComboBox(new String[] { "东部", "西部" });
-		playerZoneBox.setBounds(FrameSize.width / 8, FrameSize.height / 4,
-				150, 40);
+		playerZoneBox.setBounds(FrameSize.width / 8, FrameSize.height / 4, 150,
+				40);
 		playerZoneBox.setFont(new Font("宋体", Font.PLAIN, 12));
 		screenPanel.add(playerZoneBox);
 		playerZoneBox.addActionListener(e -> setPlayerAreaBox());
@@ -442,49 +459,51 @@ public class PlayerPanel extends JPanel {
 		JLabel playerAreaLabel = new JLabel("分区");
 		playerAreaLabel.setForeground(Color.white);
 		playerAreaLabel.setBounds(FrameSize.width / 30,
-				FrameSize.height*5 / 12, 100, 40);
+				FrameSize.height * 5 / 12, 100, 40);
 		playerAreaLabel.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		screenPanel.add(playerAreaLabel);
 
-		playerAreaBox = new MyComboBox(new String[] { "ATLANTIC",
-				"CENTRAL", "SOUTHEAST" });
-		playerAreaBox.setBounds(FrameSize.width / 8, FrameSize.height*5 / 12,
+		playerAreaBox = new MyComboBox(new String[] { "ATLANTIC", "CENTRAL",
+				"SOUTHEAST" });
+		playerAreaBox.setBounds(FrameSize.width / 8, FrameSize.height * 5 / 12,
 				150, 40);
 		playerAreaBox.setFont(new Font("宋体", Font.PLAIN, 12));
-		playerAreaBox.addActionListener(e->screenPlayerConfirmClick());
+		playerAreaBox.addActionListener(e -> screenPlayerConfirmClick());
 		screenPanel.add(playerAreaBox);
 
 		JLabel screenPlayerLabel = new JLabel("筛选依据");
 		screenPlayerLabel.setForeground(Color.white);
 		screenPlayerLabel.setBounds(FrameSize.width / 30,
-				FrameSize.height*7 / 12, 100, 40);
+				FrameSize.height * 7 / 12, 100, 40);
 		screenPlayerLabel.setFont(new Font("微软雅黑", Font.BOLD, 17));
 		screenPanel.add(screenPlayerLabel);
 
-		screenPlayerBox = new MyComboBox(new String[] { "得分", "篮板",
-				"助攻", "得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮",
-				"三分", "罚球", "两双" });
+		screenPlayerBox = new MyComboBox(new String[] { "得分", "篮板", "助攻",
+				"得分/篮板/助攻", "盖帽", "抢断", "犯规", "失误", "分钟", "效率", "投篮", "三分",
+				"罚球", "两双" });
 		screenPlayerBox.setBounds(FrameSize.width / 8,
-				FrameSize.height*7 / 12, 150, 40);
+				FrameSize.height * 7 / 12, 150, 40);
 		screenPlayerBox.setFont(new Font("宋体", Font.PLAIN, 12));
-		screenPlayerBox.addActionListener(e->screenPlayerConfirmClick());
+		screenPlayerBox.addActionListener(e -> screenPlayerConfirmClick());
 		screenPanel.add(screenPlayerBox);
 
-//		JButton yesButton = new MyButton(new ImageIcon("image/yes.png"),Color.white,Color.gray);
-//		yesButton.setBounds(FrameSize.width / 4, 2 * FrameSize.height / 3, 50,
-//				50);
-////		yesButton.setBackground(Color.white);
-//		yesButton.addActionListener(e -> screenPlayerConfirmClick());
-//		screenPanel.add(yesButton);
+		// JButton yesButton = new MyButton(new
+		// ImageIcon("image/yes.png"),Color.white,Color.gray);
+		// yesButton.setBounds(FrameSize.width / 4, 2 * FrameSize.height / 3,
+		// 50,
+		// 50);
+		// // yesButton.setBackground(Color.white);
+		// yesButton.addActionListener(e -> screenPlayerConfirmClick());
+		// screenPanel.add(yesButton);
 
 	}
 
 	/** 点击筛选确认按钮 */
 	private void screenPlayerConfirmClick() {
-		if(matchpanel){
+		if (matchpanel) {
 			this.remove(playerMatchPanel);
-			matchpanel=false;
-		}		
+			matchpanel = false;
+		}
 		this.remove(playerMessagePanel);
 		String position = (positionBox.getSelectedItem().toString());
 
@@ -536,19 +555,22 @@ public class PlayerPanel extends JPanel {
 			playerSortBy = PlayerSortBy.twoPair;
 		}
 		PlayerMatchVO[] screenPlayer;
-		try{
-		if(dataType.getSelectedItem().equals("赛季总数据"))
-			screenPlayer = playerController.screenTotalPlayers(position, area, playerSortBy);
-		else
-			screenPlayer = playerController.screenAvePlayers(position, area, playerSortBy);
-		jScrollPane.setVisible(false);
-		setTable(screenPlayer);
-		jScrollPane.repaint();
-		jScrollPane.setVisible(true);
-		this.add(jScrollPane);
-		this.repaint();
-		}catch(NullPointerException e){
-			JOptionPane.showMessageDialog(null, "无该条件球员","筛选失败",JOptionPane.ERROR_MESSAGE);
+		try {
+			if (dataType.getSelectedItem().equals("赛季总数据"))
+				screenPlayer = playerController.screenTotalPlayers(position,
+						area, playerSortBy);
+			else
+				screenPlayer = playerController.screenAvePlayers(position,
+						area, playerSortBy);
+			jScrollPane.setVisible(false);
+			setTable(screenPlayer);
+			jScrollPane.repaint();
+			jScrollPane.setVisible(true);
+			this.add(jScrollPane);
+			this.repaint();
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(null, "无该条件球员", "筛选失败",
+					JOptionPane.ERROR_MESSAGE);
 		}
 
 	}
@@ -560,16 +582,16 @@ public class PlayerPanel extends JPanel {
 			playerAreaBox = new MyComboBox(new String[] { "ATLANTIC",
 					"CENTRAL", "SOUTHEAST" });
 			playerAreaBox.setBounds(FrameSize.width / 8,
-					FrameSize.height*5 / 12, 150, 40);
+					FrameSize.height * 5 / 12, 150, 40);
 			playerAreaBox.setFont(new Font("宋体", Font.PLAIN, 12));
-			
+
 		}
 
 		else {
 			playerAreaBox = new MyComboBox(new String[] { "SOUTHWEST",
 					"NORTHWEST", "PACIFIC" });
 			playerAreaBox.setBounds(FrameSize.width / 8,
-					FrameSize.height*5 / 12, 150, 40);
+					FrameSize.height * 5 / 12, 150, 40);
 			playerAreaBox.setFont(new Font("宋体", Font.PLAIN, 12));
 		}
 		playerAreaBox.repaint();
@@ -577,7 +599,7 @@ public class PlayerPanel extends JPanel {
 		screenPanel.add(playerAreaBox);
 		screenPanel.repaint();
 		screenPlayerConfirmClick();
-		playerAreaBox.addActionListener(e->screenPlayerConfirmClick());
+		playerAreaBox.addActionListener(e -> screenPlayerConfirmClick());
 	}
 
 	/** 查找Panel */
@@ -673,7 +695,6 @@ public class PlayerPanel extends JPanel {
 
 	}
 
-
 	/** 标题Panel */
 	private JPanel headerPanel() {
 
@@ -683,7 +704,7 @@ public class PlayerPanel extends JPanel {
 		panel.setBounds(0, 0, FrameSize.width, FrameSize.height / 12);
 		panel.setBackground(FrameSize.backColor);
 		panel.add(searchBox);
-		
+
 		JButton searchButton = new MyButton(new ImageIcon("image\\find.png"),
 				Color.GRAY, Color.LIGHT_GRAY);
 		searchButton.setBounds(4 * FrameSize.width / 5, 10, 35, 35);
@@ -691,44 +712,48 @@ public class PlayerPanel extends JPanel {
 		searchButton.addActionListener(e -> findPlayerClick(searchBox
 				.getSelectedItem().toString()));
 		panel.add(searchButton);
-		
-		searchBox.getEditor().getEditorComponent().addKeyListener(new KeyAdapter(){
-			@Override
-			public void keyPressed(KeyEvent e)    
-		      {    
-		        if(e.getKeyChar()==KeyEvent.VK_ENTER )   //按回车键执行相应操作; 
-		        { 
-		        	try{
-		        	findPlayerClick(searchBox.getSelectedItem().toString());
-		        	}catch (Exception e1){e1.printStackTrace();}
-		        } 
-		     } 
-		});
-		
-		JButton refresh=new MyButton(new ImageIcon("image\\refresh.png"),
+
+		searchBox.getEditor().getEditorComponent()
+				.addKeyListener(new KeyAdapter() {
+					@Override
+					public void keyPressed(KeyEvent e) {
+						if (e.getKeyChar() == KeyEvent.VK_ENTER) // 按回车键执行相应操作;
+						{
+							try {
+								findPlayerClick(searchBox.getSelectedItem()
+										.toString());
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
+						}
+					}
+				});
+
+		JButton refresh = new MyButton(new ImageIcon("image\\refresh.png"),
 				FrameSize.buttonbackColor, Color.LIGHT_GRAY);
 		refresh.setBounds(FrameSize.width / 6, 10, 35, 35);
 		refresh.setToolTipText("刷新");
 		refresh.addActionListener(e -> update());
 		panel.add(refresh);
 
-
-		JButton screenButton = new MyButton(new ImageIcon("image\\screen.png"),Color.GRAY, Color.LIGHT_GRAY);
+		JButton screenButton = new MyButton(new ImageIcon("image\\screen.png"),
+				Color.GRAY, Color.LIGHT_GRAY);
 		screenButton.setBounds(4 * FrameSize.width / 5 + 40, 10, 35, 35);
-//		screenButton.setBackground(new Color(68, 68, 68));
+		// screenButton.setBackground(new Color(68, 68, 68));
 		screenButton.setToolTipText("筛选");
 		screenButton.addActionListener(e -> screenPlayerClick());
 		panel.add(screenButton);
 
 		dataType = new MyComboBox(new String[] { "赛季总数据", "场均数据" });
-//		dataType.setBounds(20, 10, 100, 35);
-		dataType.setBounds(FrameSize.width/60, 10, FrameSize.width/12, 35);
+		// dataType.setBounds(20, 10, 100, 35);
+		dataType.setBounds(FrameSize.width / 60, 10, FrameSize.width / 12, 35);
 		panel.add(dataType);
 
-		JButton allButton = new MyButton(new ImageIcon("image\\show.png"),Color.GRAY, Color.LIGHT_GRAY);
-		allButton.setBounds(7* FrameSize.width / 60, 10, 45, 35);
-//		allButton.setBounds(140, 10, 45, 35);
-//		allButton.setBackground(new Color(68, 68, 68));
+		JButton allButton = new MyButton(new ImageIcon("image\\show.png"),
+				Color.GRAY, Color.LIGHT_GRAY);
+		allButton.setBounds(7 * FrameSize.width / 60, 10, 45, 35);
+		// allButton.setBounds(140, 10, 45, 35);
+		// allButton.setBackground(new Color(68, 68, 68));
 		allButton.setToolTipText("显示");
 		allButton.addActionListener(e -> showAllData());
 		panel.add(allButton);
@@ -736,15 +761,16 @@ public class PlayerPanel extends JPanel {
 		return panel;
 
 	}
-	
-	/**实时更新*/
+
+	/** 实时更新 */
 	private void update() {
-		matchController.update1();
 		PlayerMatchVO playerresult = null;
-		if(dataType.getSelectedItem().equals("赛季总数据")){
-			updateTable(playerController.sortTotalPlayers(PlayerSortBy.name, SortType.ASEND));
-		}else{
-			updateTable(playerController.sortAvePlayers(PlayerSortBy.name, SortType.ASEND));
+		if (dataType.getSelectedItem().equals("赛季总数据")) {
+			updateTable(playerController.sortTotalPlayers(PlayerSortBy.name,
+					SortType.ASEND));
+		} else {
+			updateTable(playerController.sortAvePlayers(PlayerSortBy.name,
+					SortType.ASEND));
 		}
 		updateOne();
 		jScrollPane.repaint();
@@ -753,9 +779,9 @@ public class PlayerPanel extends JPanel {
 
 	private void updateTable(PlayerMatchVO[] player) {
 		Vector data = new Vector();
-		for(int i=0;i<player.length;i++){
+		for (int i = 0; i < player.length; i++) {
 			PlayerMatchVO playerVO = player[i];
-			if(playerVO==null){
+			if (playerVO == null) {
 				continue;
 			}
 			Vector rowData = new Vector();
@@ -779,13 +805,13 @@ public class PlayerPanel extends JPanel {
 			rowData.add(FrameSize.roundForNumber(playerVO.getTime()));
 
 			rowData.add(FrameSize.roundForNumber(playerVO.getBlockNo()));
-			rowData.add(FrameSize.roundForNumber(playerVO.getScoring_rebound_assist()));
+			rowData.add(FrameSize.roundForNumber(playerVO
+					.getScoring_rebound_assist()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getFoulsNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getMistakesNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getMinute()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getTwoPair()));
-			
-			
+
 			rowData.add(FrameSize.roundForNumber(playerVO.getHandNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getHitNo()));
 			double hitRate = playerVO.getHitRate() * 100;
@@ -807,7 +833,7 @@ public class PlayerPanel extends JPanel {
 				rowData.add(FrameSize.roundForNumber(penaltyHitRate * 100));
 			else
 				rowData.add("-");
-			rowData.add(FrameSize.roundForNumber( playerVO.getOffendNo()));
+			rowData.add(FrameSize.roundForNumber(playerVO.getOffendNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getDefenceNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getStealsNo()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getBlockNo()));
@@ -819,52 +845,56 @@ public class PlayerPanel extends JPanel {
 			rowData.add(FrameSize.roundForNumber(playerVO.getTrueHitRate() * 100));
 			rowData.add(FrameSize.roundForNumber(playerVO.getHitEfficiency()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getRebEfficiency()));
-			rowData.add(FrameSize.roundForNumber(playerVO.getOffenseRebsEfficiency()));
-			rowData.add(FrameSize.roundForNumber(playerVO.getDefenceRebsEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO
+					.getOffenseRebsEfficiency()));
+			rowData.add(FrameSize.roundForNumber(playerVO
+					.getDefenceRebsEfficiency()));
 			rowData.add(FrameSize.roundForNumber(playerVO.getAssistEfficiency() * 100));
-			rowData.add(FrameSize.roundForNumber(playerVO.getStealsEfficiency()*100));
+			rowData.add(FrameSize.roundForNumber(playerVO.getStealsEfficiency() * 100));
 			rowData.add(FrameSize.roundForNumber(playerVO.getBlockEfficiency() * 100));
-			rowData.add(FrameSize.roundForNumber(playerVO.getMistakeEfficiency() * 100));
+			rowData.add(FrameSize.roundForNumber(playerVO
+					.getMistakeEfficiency() * 100));
 			rowData.add(FrameSize.roundForNumber(playerVO.getUseEfficiency() * 100));
 
 			data.add(rowData);
-			
+
 		}
 		table.setDataVector(data, columnsName);
-		TableRowSorter rowSorter = (TableRowSorter) mytable.getRowSorter();  
-		 Comparator<Number> numberComparator = new Comparator<Number>() {  
-	            @Override  
-	            public int compare(Number o1, Number o2) {  
-	                if ( o1 == null ) {  
-	                    return -1;  
-	                }  
-	                if ( o2 == null ) {  
-	                    return 1;  
-	                }  
-	                if ( o1.doubleValue() < o2.doubleValue() ) {  
-	                    return -1;  
-	                }  
-	                if ( o1.doubleValue() > o2.doubleValue() ) {  
-	                    return 1;  
-	                }  
-	                return 0;  
-	            }  
-	        };  
-	        for (int col = 2; col < table.getColumnCount(); col++) {  
-	            rowSorter.setComparator(col, numberComparator);  
-	        }  
-			resizeTable(false, jScrollPane, mytable);
+		TableRowSorter rowSorter = (TableRowSorter) mytable.getRowSorter();
+		Comparator<Number> numberComparator = new Comparator<Number>() {
+			@Override
+			public int compare(Number o1, Number o2) {
+				if (o1 == null) {
+					return -1;
+				}
+				if (o2 == null) {
+					return 1;
+				}
+				if (o1.doubleValue() < o2.doubleValue()) {
+					return -1;
+				}
+				if (o1.doubleValue() > o2.doubleValue()) {
+					return 1;
+				}
+				return 0;
+			}
+		};
+		for (int col = 2; col < table.getColumnCount(); col++) {
+			rowSorter.setComparator(col, numberComparator);
+		}
+		resizeTable(false, jScrollPane, mytable);
 
 	}
 
-	private void updateOne(){
-		
+	private void updateOne() {
+
 		PlayerMatchVO playerVO = null;
-		if(dataType.getSelectedItem().equals("赛季总数据")){
-			playerVO=playerController.findPlayerTotal(searchBox.getSelectedItem().toString());
-		}
-		else{
-			playerVO=playerController.findPlayerMatchAve(searchBox.getSelectedItem().toString());
+		if (dataType.getSelectedItem().equals("赛季总数据")) {
+			playerVO = playerController.findPlayerTotal(searchBox
+					.getSelectedItem().toString());
+		} else {
+			playerVO = playerController.findPlayerMatchAve(searchBox
+					.getSelectedItem().toString());
 		}
 		playerText[1].setText(String.valueOf(playerVO.getMatchNo()));
 		playerText[3].setText(String.valueOf(playerVO.getFirstServiceNo()));
@@ -880,7 +910,8 @@ public class PlayerPanel extends JPanel {
 		playerText[19].setText(String.format("%.1f", playerVO.getMistakesNo()));
 		playerText[21].setText(String.format("%.1f", playerVO.getMinute()));
 		playerText[23].setText(String.format("%.1f", playerVO.getHandNo()));
-		playerText[25].setText(String.format("%.1f", playerVO.getThree_points()));
+		playerText[25]
+				.setText(String.format("%.1f", playerVO.getThree_points()));
 		playerText[27].setText(String.format("%.1f", playerVO.getBlockNo()));
 		playerText[29].setText(String.format("%.1f", playerVO.getTwoPair()));
 		playerText[31].setText(String.format("%.1f", playerVO.getHandNo()));
@@ -890,15 +921,18 @@ public class PlayerPanel extends JPanel {
 			playerText[35].setText(String.format("%.1f", hitRate));
 		else
 			playerText[35].setText("-");
-		playerText[37].setText(String.format("%.1f", playerVO.getThreeHandNo()));
+		playerText[37]
+				.setText(String.format("%.1f", playerVO.getThreeHandNo()));
 		playerText[39].setText(String.format("%.1f", playerVO.getThreeHitNo()));
 		double threeHitRate = playerVO.getThreeHitRate();
 		if (threeHitRate >= 0)
 			playerText[41].setText(String.format("%.1f", threeHitRate * 100));
 		else
 			playerText[41].setText("-");
-		playerText[43].setText(String.format("%.1f", playerVO.getPenaltyHandNo()));
-		playerText[45].setText(String.format("%.1f", playerVO.getPenaltyHitNo()));
+		playerText[43].setText(String.format("%.1f",
+				playerVO.getPenaltyHandNo()));
+		playerText[45]
+				.setText(String.format("%.1f", playerVO.getPenaltyHitNo()));
 		double penaltyHitRate = playerVO.getPenaltyHitRate();
 		if (penaltyHitRate >= 0)
 			playerText[47].setText(String.format("%.1f", penaltyHitRate * 100));
@@ -911,37 +945,44 @@ public class PlayerPanel extends JPanel {
 		playerText[57].setText(String.format("%.1f", playerVO.getFoulsNo()));
 		playerText[59].setText(String.format("%.1f", playerVO.getPoints()));
 		playerText[61].setText(String.format("%.1f", playerVO.getEfficiency()));
-		playerText[63].setText(String.format("%.1f", playerVO.getGmScEfficiency()));
-		playerText[65].setText(String.format("%.1f", playerVO.getTrueHitRate() * 100));
-		playerText[67].setText(String.format("%.1f", playerVO.getHitEfficiency()));
-		playerText[69].setText(String.format("%.1f", playerVO.getRebEfficiency()));
+		playerText[63].setText(String.format("%.1f",
+				playerVO.getGmScEfficiency()));
+		playerText[65].setText(String.format("%.1f",
+				playerVO.getTrueHitRate() * 100));
+		playerText[67].setText(String.format("%.1f",
+				playerVO.getHitEfficiency()));
+		playerText[69].setText(String.format("%.1f",
+				playerVO.getRebEfficiency()));
 		playerText[71].setText(String.format("%.1f",
 				playerVO.getOffenseRebsEfficiency()));
 		playerText[73].setText(String.format("%.1f",
 				playerVO.getDefenceRebsEfficiency()));
 		playerText[75].setText(String.format("%.1f",
 				playerVO.getAssistEfficiency() * 100));
-		playerText[77].setText(String.format("%.1f", playerVO.getStealsEfficiency()*100));
+		playerText[77].setText(String.format("%.1f",
+				playerVO.getStealsEfficiency() * 100));
 		playerText[79].setText(String.format("%.1f",
 				playerVO.getBlockEfficiency() * 100));
 		playerText[81].setText(String.format("%.1f",
 				playerVO.getMistakeEfficiency() * 100));
-		playerText[83].setText(String.format("%.1f", playerVO.getUseEfficiency() * 100));
+		playerText[83].setText(String.format("%.1f",
+				playerVO.getUseEfficiency() * 100));
 
 		playerMessagePanel.repaint();
 	}
-	
-	private void setOnePlayerMessagePanel(){
-		playerMessagePanel.setLayout(new GridLayout(14,6,-1,-1));
+
+	private void setOnePlayerMessagePanel() {
+		playerMessagePanel.setLayout(new GridLayout(14, 6, -1, -1));
 		playerMessagePanel.setBackground(FrameSize.backColor);
-		playerMessagePanel.setBounds(FrameSize.width / 3, FrameSize.height / 12, 2*FrameSize.width / 3,
-				FrameSize.height * 7 / 8
-				- FrameSize.height / 12);
-		for(int i=0;i<84;i++){
-			playerText[i]=new UneditableTextField();
+		playerMessagePanel.setBounds(FrameSize.width / 3,
+				FrameSize.height / 12, 2 * FrameSize.width / 3,
+				FrameSize.height * 7 / 8 - FrameSize.height / 12);
+		for (int i = 0; i < 84; i++) {
+			playerText[i] = new UneditableTextField();
 			playerMessagePanel.add(playerText[i]);
-			playerText[i].setFont(new Font("",Font.PLAIN,15));
-			playerText[i].setBorder(BorderFactory.createLineBorder(Color.white));
+			playerText[i].setFont(new Font("", Font.PLAIN, 15));
+			playerText[i]
+					.setBorder(BorderFactory.createLineBorder(Color.white));
 		}
 		playerText[0].setText("参赛场数");
 		playerText[2].setText("先发场数");
@@ -989,9 +1030,9 @@ public class PlayerPanel extends JPanel {
 
 	/** 显示所有总数据/场均数据 */
 	private void showAllData() {
-		if(matchpanel){
+		if (matchpanel) {
 			this.remove(playerMatchPanel);
-			matchpanel=false;
+			matchpanel = false;
 		}
 		this.remove(playerMessagePanel);
 		jScrollPane.setVisible(false);
@@ -1024,61 +1065,72 @@ public class PlayerPanel extends JPanel {
 
 	/** 点击筛选按钮 */
 	private void screenPlayerClick() {
+		showAllData();
 		this.remove(welcomePanel);
 		this.remove(findPanel);
-//		this.remove(playerMessagePanel);
+		// this.remove(playerMessagePanel);
 		this.add(screenPanel);
 		this.repaint();
 	}
 
-
-
-
 	/** 点击查找按钮 */
 	public void findPlayerClick(String playerInfo) {
-		isPlayer=false;
+		isPlayer = false;
 		if (playerInfo.equals("")) {
-			JOptionPane.showMessageDialog(null, "请输入查找球员的名字", "查找失败",JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "请输入查找球员的名字", "查找失败",
+					JOptionPane.ERROR_MESSAGE);
 			return;
-		}else{
-			for(int i=0;i<allPlayers.length;i++){
-				if(playerInfo.equals(allPlayers[i].getName())){
-					isPlayer=true;
+		} else {
+			for (int i = 0; i < allPlayers.length; i++) {
+				if (playerInfo.equals(allPlayers[i].getName())) {
+					isPlayer = true;
 					break;
 				}
 			}
-			if(!isPlayer){
-				JOptionPane.showMessageDialog(null, "未查到该球员", "查找失败",JOptionPane.ERROR_MESSAGE);
+			if (!isPlayer) {
+				PlayerMatchVO onePlayer = new PlayerMatchVO(playerInfo);
+				try {
+
+					jScrollPane.setVisible(false);
+					setPlayerMessage(onePlayer);
+					this.add(playerMessagePanel);
+					this.repaint();
+					System.out.println("sdfsf");
+				} catch (NullPointerException e) {
+					showAllData();
+				}
 				return;
-			}
-			else if (playerController.findPlayer(playerInfo) == null) {
-				JOptionPane.showMessageDialog(null, "未找到该球员的个人信息", "查找失败",JOptionPane.ERROR_MESSAGE);
+			} else if (playerController.findPlayer(playerInfo) == null) {
+				JOptionPane.showMessageDialog(null, "未找到该球员的个人信息", "查找失败",
+						JOptionPane.ERROR_MESSAGE);
 				MyFrame.playerpanel.remove(findPanel);
 				MyFrame.playerpanel.add(welcomePanel);
 				MyFrame.playerpanel.repaint();
-			}
-			else{
+			} else {
 				showOne(playerInfo);
 			}
-			jScrollPane.setVisible(false);
 			PlayerMatchVO onePlayer;
-			if(dataType.getSelectedItem().equals("赛季总数据")){
-				onePlayer=playerController.findPlayerTotal(playerInfo);
+			try {
+				if (dataType.getSelectedItem().equals("赛季总数据")) {
+					onePlayer = playerController.findPlayerTotal(playerInfo);
+				} else {
+					onePlayer = playerController.findPlayerMatchAve(playerInfo);
+				}
+				jScrollPane.setVisible(false);
+				setPlayerMessage(onePlayer);
+				this.add(playerMessagePanel);
+				this.repaint();
+			} catch (NullPointerException e) {
+				showAllData();
 			}
-			else{
-				onePlayer=playerController.findPlayerMatchAve(playerInfo);
-			}
-			setPlayerMessage(onePlayer);
-			this.add(playerMessagePanel);
-//			jScrollPane.repaint();
-//			jScrollPane.setVisible(true);
-//			this.add(jScrollPane);
-			this.repaint();
-		} 
+			// jScrollPane.repaint();
+			// jScrollPane.setVisible(true);
+			// this.add(jScrollPane);
+		}
 	}
 
-	/**一个球员信息（右侧）*/
-	private void setPlayerMessage(PlayerMatchVO playerVO){
+	/** 一个球员信息（右侧） */
+	private void setPlayerMessage(PlayerMatchVO playerVO) {
 		playerMessagePanel.setVisible(false);
 
 		playerText[1].setText(String.valueOf(playerVO.getMatchNo()));
@@ -1095,7 +1147,8 @@ public class PlayerPanel extends JPanel {
 		playerText[19].setText(String.format("%.1f", playerVO.getMistakesNo()));
 		playerText[21].setText(String.format("%.1f", playerVO.getMinute()));
 		playerText[23].setText(String.format("%.1f", playerVO.getHandNo()));
-		playerText[25].setText(String.format("%.1f", playerVO.getThree_points()));
+		playerText[25]
+				.setText(String.format("%.1f", playerVO.getThree_points()));
 		playerText[27].setText(String.format("%.1f", playerVO.getBlockNo()));
 		playerText[29].setText(String.format("%.1f", playerVO.getTwoPair()));
 		playerText[31].setText(String.format("%.1f", playerVO.getHandNo()));
@@ -1105,15 +1158,18 @@ public class PlayerPanel extends JPanel {
 			playerText[35].setText(String.format("%.1f", hitRate));
 		else
 			playerText[35].setText("-");
-		playerText[37].setText(String.format("%.1f", playerVO.getThreeHandNo()));
+		playerText[37]
+				.setText(String.format("%.1f", playerVO.getThreeHandNo()));
 		playerText[39].setText(String.format("%.1f", playerVO.getThreeHitNo()));
 		double threeHitRate = playerVO.getThreeHitRate();
 		if (threeHitRate >= 0)
 			playerText[41].setText(String.format("%.1f", threeHitRate * 100));
 		else
 			playerText[41].setText("-");
-		playerText[43].setText(String.format("%.1f", playerVO.getPenaltyHandNo()));
-		playerText[45].setText(String.format("%.1f", playerVO.getPenaltyHitNo()));
+		playerText[43].setText(String.format("%.1f",
+				playerVO.getPenaltyHandNo()));
+		playerText[45]
+				.setText(String.format("%.1f", playerVO.getPenaltyHitNo()));
 		double penaltyHitRate = playerVO.getPenaltyHitRate();
 		if (penaltyHitRate >= 0)
 			playerText[47].setText(String.format("%.1f", penaltyHitRate * 100));
@@ -1126,22 +1182,28 @@ public class PlayerPanel extends JPanel {
 		playerText[57].setText(String.format("%.1f", playerVO.getFoulsNo()));
 		playerText[59].setText(String.format("%.1f", playerVO.getPoints()));
 		playerText[61].setText(String.format("%.1f", playerVO.getEfficiency()));
-		playerText[63].setText(String.format("%.1f", playerVO.getGmScEfficiency()));
-		playerText[65].setText(String.format("%.1f", playerVO.getTrueHitRate() * 100));
-		playerText[67].setText(String.format("%.1f", playerVO.getHitEfficiency()));
-		playerText[69].setText(String.format("%.1f", playerVO.getRebEfficiency()));
+		playerText[63].setText(String.format("%.1f",
+				playerVO.getGmScEfficiency()));
+		playerText[65].setText(String.format("%.1f",
+				playerVO.getTrueHitRate() * 100));
+		playerText[67].setText(String.format("%.1f",
+				playerVO.getHitEfficiency()));
+		playerText[69].setText(String.format("%.1f",
+				playerVO.getRebEfficiency()));
 		playerText[71].setText(String.format("%.1f",
 				playerVO.getOffenseRebsEfficiency()));
 		playerText[73].setText(String.format("%.1f",
 				playerVO.getDefenceRebsEfficiency()));
 		playerText[75].setText(String.format("%.1f",
 				playerVO.getAssistEfficiency() * 100));
-		playerText[77].setText(String.format("%.1f", playerVO.getStealsEfficiency()*100));
+		playerText[77].setText(String.format("%.1f",
+				playerVO.getStealsEfficiency() * 100));
 		playerText[79].setText(String.format("%.1f",
 				playerVO.getBlockEfficiency() * 100));
 		playerText[81].setText(String.format("%.1f",
 				playerVO.getMistakeEfficiency() * 100));
-		playerText[83].setText(String.format("%.1f", playerVO.getUseEfficiency() * 100));
+		playerText[83].setText(String.format("%.1f",
+				playerVO.getUseEfficiency() * 100));
 
 		jScrollPane.setVisible(false);
 		this.remove(jScrollPane);
@@ -1150,7 +1212,7 @@ public class PlayerPanel extends JPanel {
 		playerMessagePanel.repaint();
 		this.repaint();
 	}
-	
+
 	private void resizeTable(boolean bool, JScrollPane jsp, JTable table) {
 		Dimension containerwidth = null;
 		if (!bool) {

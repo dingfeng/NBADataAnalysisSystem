@@ -32,6 +32,7 @@ public class MyComboBox extends JComboBox{
 	
 	public MyComboBox(String text,String[] a){
 		this.addItem(text);
+		if (a != null)
 		for(int i=0;i<a.length;i++){
 			this.addItem(a[i]);
 		}
