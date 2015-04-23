@@ -366,7 +366,7 @@ public class HotPanel extends JPanel {
 
 		for (int i = 0; i < 5; i++) {
 			name[i].setText(tc.getTeamData(hotteam[i].getName()).getName()
-					+ "|" + hotteam[i].getName());
+					+ " / " + hotteam[i].getName());
 			// name[i].addMouseListener(new showTeam());
 		}
 
