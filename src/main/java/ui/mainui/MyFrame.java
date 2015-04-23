@@ -130,7 +130,7 @@ public class MyFrame extends JFrame {
 				Color.black, Color.DARK_GRAY);
 		JButton playerbutton = new MyButton(new ImageIcon("image/player.png"),
 				Color.black, Color.DARK_GRAY);
-		JButton teambutton = new MyButton(new ImageIcon("image/team.png"),
+		JButton teambutton = new MyButton(new ImageIcon("image/图片1.png"),
 				Color.black, Color.DARK_GRAY);
 		JButton hotbutton = new MyButton(new ImageIcon("image/hot.png"),
 				Color.black, Color.DARK_GRAY);
