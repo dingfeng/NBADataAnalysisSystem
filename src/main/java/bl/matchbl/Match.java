@@ -44,7 +44,7 @@ public class Match
 		init();
     }
    
-	public static Match instance()
+	public static synchronized Match instance()
 	{
 		if (match == null)
 		{
@@ -54,7 +54,7 @@ public class Match
 	}
     
 	//初始化
-	private void init()
+	private synchronized void  init()
 	{
 		MatchesPO[] allMatches = match_data.getAllMatches();
 		if (allMatches == null)

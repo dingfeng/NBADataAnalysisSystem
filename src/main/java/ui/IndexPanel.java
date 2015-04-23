@@ -38,7 +38,9 @@ public class IndexPanel extends JPanel{
 		timer.schedule(new TimerTask(){
 
 			public void run() {
+				try{
 				 update();
+				}catch(Exception e){}
 			}
 			
 		}, 10000,7000);
