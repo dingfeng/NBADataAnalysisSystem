@@ -229,7 +229,7 @@ public class Team   implements SearchItemProvider
 			doubleSort = team.getHitRate();
 			break;
 		case threeHitRate:// 三分命中率
-			doubleSort = team.getThreeHitNo();
+			doubleSort = team.getThreeHitRate();
 			break;
 		case penaltyHitRate:// 罚球命中率
 			doubleSort = team.getPenaltyHitRate();

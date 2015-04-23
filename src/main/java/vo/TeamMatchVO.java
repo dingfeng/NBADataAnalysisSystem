@@ -33,6 +33,10 @@ public class TeamMatchVO implements Comparable<TeamMatchVO>{
 	private double assistEfficiency;// 助攻率
 	private double hotdata;//热点数据
 	private SortTool tool;
+	public TeamMatchVO(String name)
+	{
+		this.name = name;
+	}
 	
 	public String toString()
 	{

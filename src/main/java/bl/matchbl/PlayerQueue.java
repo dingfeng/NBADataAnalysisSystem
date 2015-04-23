@@ -36,6 +36,8 @@ public class PlayerQueue {
 		match_datas = new MatchPlayerPO[max];
 //		yourInfos = new PlayerYourInfo[max];
 		this.name = name;
+		playervo_total = new PlayerMatchVO(name);
+		playervo_ave = new PlayerMatchVO(name);
 	}
 	//增加赛事
 	public void enqueue(MatchesPO match,MatchPlayerPO player , String teamname,int twoPoints,double teamTotalTime

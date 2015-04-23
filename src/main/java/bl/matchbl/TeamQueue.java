@@ -16,6 +16,8 @@ public class TeamQueue extends AbstractQueue{
 	public TeamQueue(int max, String name)
 	{
 		super(max, name);
+		teamvo_total = new TeamMatchVO(name);
+		teamvo_average = new TeamMatchVO(name);
 	}
 	
 	private void addPlayer(String playername)
