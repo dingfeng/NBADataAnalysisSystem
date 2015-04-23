@@ -371,7 +371,9 @@ public class PlayerPanel extends JPanel {
 		nameText.setText(playerVO.getName());
 		numText.setText(String.valueOf(playerVO.getNumber()));
 		positionText.setText(String.valueOf(playerVO.getPosition()));
+		try{
 		teamText.setText(playerMatchVO.getTeam());
+		}catch (Exception e){teamText.setText("");}
 		birthText.setText(playerVO.getBirth());
 		ageText.setText(String.valueOf(playerVO.getAge()));
 		expText.setText(String.valueOf(playerVO.getExp()));
@@ -399,7 +401,7 @@ public class PlayerPanel extends JPanel {
 
 	private void setMatch() {
 		// System.out.println(teamText.getText());
-		if (matchpanel) {
+		if (matchpanel && playerMatchPanel != null) {
 			this.remove(playerMatchPanel);
 		}
 		matchpanel = true;
@@ -498,8 +500,12 @@ public class PlayerPanel extends JPanel {
 
 	/** 点击筛选确认按钮 */
 	private void screenPlayerConfirmClick() {
-		if (matchpanel) {
+		if (matchpanel && playerMatchPanel != null) {
 			this.remove(playerMatchPanel);
+			matchpanel = false;
+		}
+		if (matchpanel)
+		{
 			matchpanel = false;
 		}
 		this.remove(playerMessagePanel);
@@ -1028,8 +1034,12 @@ public class PlayerPanel extends JPanel {
 
 	/** 显示所有总数据/场均数据 */
 	private void showAllData() {
-		if (matchpanel) {
+		if (matchpanel && playerMatchPanel != null) {
 			this.remove(playerMatchPanel);
+			matchpanel = false;
+		}
+		if (matchpanel)
+		{
 			matchpanel = false;
 		}
 		this.remove(playerMessagePanel);
