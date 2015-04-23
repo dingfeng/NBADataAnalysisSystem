@@ -17,48 +17,48 @@ public class TeamController implements Teamblservice{
     Team team = new Team();
     Player player = new Player();
     //获得热门对球队
-	public TeamMatchVO[] getHotTeams(TeamSortBy sortby) {
+	public synchronized  TeamMatchVO[] getHotTeams(TeamSortBy sortby) {
 		return team.getHotTeams(sortby);
 	}
 
 	//获得场均排序后的球队
-	public TeamMatchVO[] getSortedAveTeams(TeamSortBy sortby, SortType type) {
+	public synchronized TeamMatchVO[] getSortedAveTeams(TeamSortBy sortby, SortType type) {
 		return team.getSortedAveTeams(sortby, type);
 	}
     
 	//获得赛季数据排序后的球队
-	public TeamMatchVO[] getSortedTotalTeams(TeamSortBy sortby , SortType type)
+	public synchronized TeamMatchVO[] getSortedTotalTeams(TeamSortBy sortby , SortType type)
 	{
 		return team.getSortedTotalTeams(sortby, type);
 	}
 	//获得该球队的所有球员名
-	public String[] getPlayers(String team) {
+	public synchronized String[] getPlayers(String team) {
 		return  this.team.getPlayers(team);
 	}
 
 	//获得该球队的赛季数据
-	public TeamMatchVO getTotalTeam(String teamname) {
+	public synchronized TeamMatchVO getTotalTeam(String teamname) {
 		return this.team.getTotalTeam(teamname);
 	}
 
 	//获得该球队的场均数据
-	public TeamMatchVO getAveTeam(String teamname) {
+	public synchronized TeamMatchVO getAveTeam(String teamname) {
 		return team.getAveTeam(teamname);
 	}
 
 	//模糊查找该球队的场均数据
-	public Iterator<String> fuzzilyFind(String info) {
+	public synchronized Iterator<String> fuzzilyFind(String info) {
 		return this.team.fuzzilyFind(info);
 	}
 	//获得球队的基本信息
-	public TeamPO getTeamData(String team) {
+	public synchronized TeamPO getTeamData(String team) {
 		if (team.equals("NOH"))
 			team = "NOP";
 		return this.team.getTeamData(team);
 	}
 
 	@Override
-	public PlayerMatchVO[] getAllPlayerMatchAve(String teamname) {
+	public synchronized PlayerMatchVO[] getAllPlayerMatchAve(String teamname) {
 		String[] players = team.getPlayers(teamname);
 		if (players == null) return null;
 		PlayerMatchVO[] playerMatches = new PlayerMatchVO[players.length];
@@ -70,7 +70,7 @@ public class TeamController implements Teamblservice{
 	}
 
 	@Override
-	public PlayerMatchVO[] getAllPlayerMatchTotal(String teamname) {
+	public synchronized PlayerMatchVO[] getAllPlayerMatchTotal(String teamname) {
 		String[] players = team.getPlayers(teamname);
 		if (players == null) return null;
 		PlayerMatchVO[] playerMatches = new PlayerMatchVO[players.length];
@@ -82,12 +82,12 @@ public class TeamController implements Teamblservice{
 	}
 
 	@Override
-	public PlayerPO getPlayerBase(String playername) {
+	public synchronized PlayerPO getPlayerBase(String playername) {
 		return player.findPlayer(playername);
 	}
 
 	@Override
-	public String[] getTeamNames() {
+	public synchronized  String[] getTeamNames() {
 		return team.getSearchItems();
 	}
 	

@@ -14,17 +14,17 @@ import blservice.playerblservice.PlayerBlService;
 public class PlayerController implements PlayerBlService{
     Player player = new Player();
     //排序球员数据 场均
-	public PlayerMatchVO[] sortAvePlayers(PlayerSortBy playerSortBy,
+	public synchronized PlayerMatchVO[] sortAvePlayers(PlayerSortBy playerSortBy,
 			SortType sortType) {
 		return player.sortAvePlayers(playerSortBy, sortType);
 	}
 	//排序球员数据  赛季数据
-	public PlayerMatchVO[] sortTotalPlayers(PlayerSortBy playerSortBy,
+	public  synchronized PlayerMatchVO[] sortTotalPlayers(PlayerSortBy playerSortBy,
 			SortType sortType) {
 		return player.sortTotalPlayers(playerSortBy, sortType);
 	}
 	//筛选球员数据  场均  
-	public PlayerMatchVO[] screenAvePlayers(String playerPosition,
+	public  synchronized PlayerMatchVO[] screenAvePlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
 		Iterator<PlayerMatchVO> itr = player.screenAvePlayers(playerPosition, playerArea, sortBy);
 		ArrayList<PlayerMatchVO> list = new ArrayList<PlayerMatchVO>();
@@ -37,7 +37,7 @@ public class PlayerController implements PlayerBlService{
 		return players;
 	}
 	//筛选球员数据  赛季
-	public PlayerMatchVO[] screenTotalPlayers(String playerPosition,
+	public synchronized PlayerMatchVO[] screenTotalPlayers(String playerPosition,
 			Area playerArea, PlayerSortBy sortBy) {
 		Iterator<PlayerMatchVO> itr =  player.screenTotalPlayers(playerPosition, playerArea, sortBy);
 		ArrayList<PlayerMatchVO> list = new ArrayList<PlayerMatchVO>();
@@ -50,7 +50,7 @@ public class PlayerController implements PlayerBlService{
 		return players;
 	}
 	//获得当天热点球员   
-	public  PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby) {
+	public  synchronized PlayerMatchVO[] getDayHotPlayer(PlayerSortBy sortby) {
 	    MatchPlayerPO[] pos = player.getDayHotPlayer(sortby);
 	    PlayerMatchVO[] vos = new PlayerMatchVO[pos.length];
 	    for (int i = 0; i < vos.length; i++)
@@ -60,31 +60,31 @@ public class PlayerController implements PlayerBlService{
 		return vos;
 	}
 	//获得赛季热点球员
-	public PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby) {
+	public synchronized PlayerMatchVO[] getSeasonHotPlayer(PlayerSortBy sortby) {
 		return player.getSeasonHotPlayer(sortby);
 	}
 	//获得进步最快球员
-	public PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby) {
+	public synchronized PlayerMatchVO[] getPromotePlayer(PlayerSortBy sortby) {
 		return player.getPromotePlayer(sortby);
 	}
 	//模糊查找球员
-	public Iterator<String> fuzzilyFind(String info) {
+	public synchronized  Iterator<String> fuzzilyFind(String info) {
 		return player.fuzzilyFind(info);
 	}
 	//根据球员名字查找球员
-	public PlayerPO findPlayer(String info) {
+	public synchronized PlayerPO findPlayer(String info) {
 		return player.findPlayer(info);
 	}
 	@Override
-	public PlayerMatchVO findPlayerMatchAve(String playername) {
+	public synchronized PlayerMatchVO findPlayerMatchAve(String playername) {
 		return player.findPlayerMatchAve(playername);
 	}
 	@Override
-	public PlayerMatchVO findPlayerTotal(String playername) {
+	public synchronized PlayerMatchVO findPlayerTotal(String playername) {
 		return player.findPlayerMatchTotal(playername);
 	}
 	@Override
-	public String[] getAllPlayerNames() {
+	public synchronized String[] getAllPlayerNames() {
 		return player.getSearchItems();
 	}
 

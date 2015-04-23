@@ -20,8 +20,8 @@ import po.MatchesPO;
 public class Match 
 {
    private	MatchDataService match_data;
-   private	TIntObjectMap<TeamQueue> team_map;
-   private	TIntObjectMap<PlayerQueue> player_map;
+   private	static TIntObjectMap<TeamQueue> team_map;
+   private	static TIntObjectMap<PlayerQueue> player_map;
    private	boolean inited = false;
    private final static int match_num = 90;
    private static  Match match;
@@ -34,7 +34,7 @@ public class Match
 		init();
 	}
     
-   
+    
     public synchronized void update1()
     {
     	boolean inited = false;
