@@ -372,8 +372,12 @@ public class TeamPanel extends JPanel {
 
 	/** 显示场均数据/总数据 */
 	public void showAllData() {
-		if (matchpanel) {
+		if (matchpanel && teammatch != null) {
 			this.remove(teammatch);
+			matchpanel = false;
+		}
+		if (matchpanel)
+		{
 			matchpanel = false;
 		}
 		this.remove(teammessage);
@@ -458,8 +462,12 @@ public class TeamPanel extends JPanel {
 
 	/** 在findPanel上显示一个球队的信息 */
 	void showOne(String teamname) {
-		if (matchpanel) {
+		if (matchpanel && teammatch != null) {
 			this.remove(teammatch);
+			matchpanel = false;
+		}
+		if (matchpanel)
+		{
 			matchpanel = false;
 		}
 		this.remove(welcome);
@@ -690,7 +698,7 @@ public class TeamPanel extends JPanel {
 
 	/** 点击查看比赛按钮 */
 	void setMatch() {
-		if (matchpanel) {
+		if (matchpanel && teammatch != null) {
 			this.remove(teammatch);
 		}
 		this.remove(teammessage);

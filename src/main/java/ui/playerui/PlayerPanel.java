@@ -344,8 +344,12 @@ public class PlayerPanel extends JPanel {
 
 	/** 在findPanel上显示一个球员的信息 */
 	private void showOne(String playerInfo) {
-		if (matchpanel) {
+		if (matchpanel && playerMatchPanel != null) {
 			this.remove(playerMatchPanel);
+			matchpanel = false;
+		}
+		if (matchpanel)
+		{
 			matchpanel = false;
 		}
 		this.remove(welcomePanel);
@@ -400,7 +404,7 @@ public class PlayerPanel extends JPanel {
 
 	private void setMatch() {
 		// System.out.println(teamText.getText());
-		if (matchpanel) {
+		if (matchpanel && playerMatchPanel != null) {
 			this.remove(playerMatchPanel);
 		}
 		matchpanel = true;
@@ -499,10 +503,14 @@ public class PlayerPanel extends JPanel {
 
 	/** 点击筛选确认按钮 */
 	private void screenPlayerConfirmClick() {
-		if (matchpanel) {
+		if (matchpanel && playerMatchPanel != null) {
 			this.remove(playerMatchPanel);
 			matchpanel = false;
 		}
+	    if (matchpanel)
+	    {
+	    	matchpanel = false;
+	    }
 		this.remove(playerMessagePanel);
 		String position = (positionBox.getSelectedItem().toString());
 
@@ -1029,8 +1037,12 @@ public class PlayerPanel extends JPanel {
 
 	/** 显示所有总数据/场均数据 */
 	private void showAllData() {
-		if (matchpanel) {
+		if (matchpanel && playerMatchPanel != null) {
 			this.remove(playerMatchPanel);
+			matchpanel = false;
+		}
+		if (matchpanel)
+		{
 			matchpanel = false;
 		}
 		this.remove(playerMessagePanel);
