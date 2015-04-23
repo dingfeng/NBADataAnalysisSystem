@@ -334,7 +334,6 @@ public class PlayerPanel extends JPanel {
 			if (playerController.findPlayer(playerMatchVO[i].getName())==null) {
 				i++;
 			}else{
-				System.out.println(i);
 				showOne(playerMatchVO[i].getName());
 				this.repaint();
 				break;
