@@ -123,8 +123,7 @@ public class PlayerPanel extends JPanel {
 		setScreen();
 		setWelcome();
 		setOnePlayerMessagePanel();
-
-		this.add(welcomePanel);
+		showOne(playerController.getAllPlayerNames()[0]);
 		this.add(header);
 		this.repaint();
 	}
