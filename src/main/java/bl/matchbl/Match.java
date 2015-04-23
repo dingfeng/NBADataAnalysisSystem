@@ -38,7 +38,6 @@ public class Match
     public synchronized void update1()
     {
     	boolean inited = false;
-    	match = null;
     	team_map.clear();
 		player_map.clear();
 		init();
