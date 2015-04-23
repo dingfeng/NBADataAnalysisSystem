@@ -489,7 +489,7 @@ public class TeamPanel extends JPanel {
 		foundYearresult.setText(String.valueOf(teamresult.getFoundYear()));// 建立时间
 
 		match = new MyButton("比赛", Color.black, Color.DARK_GRAY);
-		teamplayers = new MyButton("队员", Color.black, Color.DARK_GRAY);
+		teamplayers = new MyButton("球员", Color.black, Color.DARK_GRAY);
 
 		match.setFont(new Font("幼圆", Font.BOLD, 12));
 		teamplayers.setFont(new Font("幼圆", Font.BOLD, 12));
