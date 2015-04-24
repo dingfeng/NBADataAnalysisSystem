@@ -37,10 +37,24 @@ public class PlayerController
 		{
 			
 		}
-		//处理所有球员的数据
-		else 
+		//获得高阶数据
+		else if (low_high == 1)
 		{
 			
+		}
+		//处理所有球员的数据，基本数据
+		else 
+		{
+			//场均数据
+			if (avg_total == 0)
+			{
+				
+			}
+			//赛季总数据
+			else 
+			{
+				
+			}
 		}
 		
 	}

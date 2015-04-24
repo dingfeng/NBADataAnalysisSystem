@@ -2,11 +2,14 @@ package test;
 
 import java.io.PrintStream;
 
+import test.data.TeamHighInfo;
+import test.data.TeamHotInfo;
+import test.data.TeamNormalInfo;
 import vo.SortType;
 import vo.TeamSortBy;
 import bl.teambl.Team;
 
-public class TestController
+public class TeamController
 {
 //	 private int ave_total = 0;   //默认为0为ave,1代表total
 //	  private int all_hot = -1;   //默认小于零代表所有球队的信息，当大于零时代表获得热门球队，数值为命令数组的下标
@@ -15,7 +18,8 @@ public class TestController
 //	  private int sort = -1;     //-1代表没有，当它大于1时代表命令数组的下标
 	public void  execute(PrintStream out,String[] command)
 	{
-		Team team = new Team();
+		try{
+		TeamCore teamCore = new TeamCore();
 		TeamCommand team_command = new TeamCommand();
 		team_command.readCommand(command);
 		int ave_total = team_command.getAve_total();   //默认为0为ave,1代表total
@@ -23,19 +27,51 @@ public class TestController
 		int num = team_command.getNum();      //默认值为-1，代表无此命令，值为30.当num为正数时，代表命令数组的下标
 		int base_high = team_command.getBase_high(); //默认值为0代表基本数据类型，1代表高阶数据
 		int sort = team_command.getSort();     //-1代表没有，当它大于1时代表命令数组的下标
+		
+		if (base_high == 1)
+		{
+			TeamSortBy  sortby = TeamSortBy.winRate;
+			SortType sortType = null;
+			if (sort!=-1)
+			{
+				String sortStr = command[sort+1];
+				 String[] sort_array = sortStr.split("\\.");
+				 sortby = getSortBy(sort_array[0]);
+				 if (sort_array[1].equals("asc"))
+				 {
+					 sortType = SortType.ASEND;
+				 }
+				 else sortType = SortType.DESEND;
+			}
+			 int n = 30;
+			 if (num != -1)
+			 {
+				 n = Integer.parseInt(command[num+1]);
+			 }
+			 if (n > 30)  n =30;
+			TeamHighInfo[] teamHighInfos = teamCore.getTeamHighInfo(sortby, sortType, n);
+			for (TeamHighInfo info : teamHighInfos)
+			{
+				out.append(info.toString());
+			}
+		}
 		//处理热门球队
-		if (all_hot > 0)
+		else if (all_hot > 0)
 		{
 			String field = command[all_hot+1];
-			TeamSortBy sortby = getHotSortBy(field);
-			int n = 30;
+			
+			int n = 5;
 			if (num != -1)
 			{
 				n = Integer.parseInt(command[num+1]);
 			}
 			if (n > 30) n = 30;
 			//获得热门球队 
-			
+			TeamHotInfo[] hotInfos = teamCore.getTeamHotInfo(field, n);
+			for (TeamHotInfo info : hotInfos)
+			{
+				out.append(info.toString());
+			}
 			
 		}
 		else if (ave_total == 0)  //场均数据
@@ -59,11 +95,12 @@ public class TestController
 		    {
 			 sortby = TeamSortBy.winRate;
 		    }
+		   
 		 }
 		 else
 		 {
 			 String sortStr = command[sort+1];
-			 String[] sort_array = sortStr.split(".");
+			 String[] sort_array = sortStr.split("\\.");
 			 sortby = getSortBy(sort_array[0]);
 			 if (sort_array[1].equals("asc"))
 			 {
@@ -71,15 +108,11 @@ public class TestController
 			 }
 			 else sortType = SortType.DESEND;
 		 }
-		 if (base_high == 0)
-		 {
-			 //返回基础场均数据
-		 }
-		 else 
-		 {
-			 //返回高阶场均数据
-		 }
-		 
+		 TeamNormalInfo[]  teams = teamCore.getTeamNormalAve(sortby, sortType, n);
+		    for (TeamNormalInfo info : teams)
+		    {
+		    	out.append(teams.toString());
+		    }
 		}
 		else       //赛季数据
 		{
@@ -114,18 +147,19 @@ public class TestController
 				 }
 				 else sortType = SortType.DESEND;
 			 }
-			 if (base_high == 0)
-			 {
-				 //返回基础赛季数据
-			 }
-			 else 
-			 {
-				 //返回高阶赛季数据
-			 }
-			 
 			
+			 TeamNormalInfo[]  teams = teamCore.getTeamNormalTotal(sortby, sortType, n);
+			    for (TeamNormalInfo info : teams)
+			    {
+			    	out.append(teams.toString());
+			    }
+		}
+		}catch (Exception e)
+		{
+			e.printStackTrace();
 		}
 	}
+	
 	
 	private TeamSortBy getSortBy(String field)
 	{
@@ -193,51 +227,6 @@ public class TestController
 			break;
 		case  "assistEfficient":           //助攻效率
 			sortBy = TeamSortBy.assistEfficiency;
-			break;
-		}
-		return sortBy;
-	}
-	
-	private TeamSortBy getHotSortBy(String field)
-	{
-		TeamSortBy sortBy = null;
-		switch (field)
-		{
-		case "score":
-			sortBy = TeamSortBy.points;
-			break;
-		case "rebound":
-			sortBy = TeamSortBy.rebs;
-			break;
-		case  "assist":
-			sortBy = TeamSortBy.assistNo;
-			break;
-		case  "blockShot":
-			sortBy = TeamSortBy.blockNo;
-			break;
-		case  "steal":
-			sortBy = TeamSortBy.stealsNo;
-			break;
-		case  "foul":
-			sortBy = TeamSortBy.foulsNo;
-			break;
-		case  "fault":
-			sortBy = TeamSortBy.mistakesNo;
-			break;
-		case  "shot":
-			sortBy = TeamSortBy.hitRate;
-			break;
-		case  "three":
-			sortBy = TeamSortBy.threeHitRate;
-			break;
-		case  "penalty":
-			sortBy = TeamSortBy.penaltyHitRate;
-			break;
-		case   "defendRebound" :
-			sortBy = TeamSortBy.defenceRebs;
-			break;
-		case   "offendRebound":
-			sortBy = TeamSortBy.offenseRebs;
 			break;
 		}
 		return sortBy;

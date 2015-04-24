@@ -41,7 +41,7 @@ public class TeamData implements TeamDataService
 	items = dealWithLine(tempStr);
     image = tool.getImage(filename +"/"+items[1]+".png");
 	teampos[i] = new TeamPO(image,items[0],items[1],items[2],
-	items[3],convToPlayerArea(items[4]),items[5],Integer.parseInt(items[6]));
+	items[3],items[4],items[5],Integer.parseInt(items[6]));
 	}
 	reader.close();
 	}
@@ -99,31 +99,4 @@ public class TeamData implements TeamDataService
 	  return items;
   }
   
-  private Area convToPlayerArea(String area)
-  {
-
-	  Area playerArea = null;
-	  switch (area)
-	  {
-	  case "Atlantic" :
-		  playerArea = Area.ATLANTIC;
-		  break;
-	  case "Central":
-		  playerArea = Area.CENTRAL;
-		  break;
-	  case "Southeast":
-		  playerArea = Area.SOUTHEAST;
-		  break;
-	  case "Southwest":
-		  playerArea = Area.SOUTHWEST;
-		  break;
-	  case "Northwest":
-		  playerArea = Area.NORTHWEST;
-		  break;
-	  case "Pacific" : 
-		  playerArea = Area.PACIFIC;
-		  break;
-	  }
-	  return playerArea;
-  }
 }

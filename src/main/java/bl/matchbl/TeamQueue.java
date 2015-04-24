@@ -99,7 +99,7 @@ public class TeamQueue extends AbstractQueue{
 			team1 = match.getTeam1();
 			team2 = match.getTeam2();
 			
-			if (Match.transTeamname(team2.getName()).equals(name))
+			if (team2.getName().equals(name))
 			{
 				temp = team1;
 				team1 = team2;

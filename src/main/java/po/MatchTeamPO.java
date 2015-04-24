@@ -16,9 +16,9 @@ public class MatchTeamPO {
     	   this.totalScores = totalScores;
     	   this.name = name;
     	   this.time = time;
-    	   if (name.equals("NOP"))
+    	   if (name.equals("NOH"))
     	   {
-    		   this.name = "NOH";
+    		   this.name = "NOP";
     	   }
     	   if (player != null)
     	   {

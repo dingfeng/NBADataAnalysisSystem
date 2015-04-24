@@ -1,13 +1,6 @@
 package bl.matchbl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
 
-import bl.teambl.Team;
-import blservice.matchblservice.Matchblservice;
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import DataFactory.DataFactoryImp;
@@ -22,7 +15,6 @@ public class Match
    private	MatchDataService match_data;
    private	static TIntObjectMap<TeamQueue> team_map;
    private	static TIntObjectMap<PlayerQueue> player_map;
-   private	boolean inited = false;
    private final static int match_num = 90;
    private static  Match match;
    private Match()
@@ -31,19 +23,14 @@ public class Match
 		match_data = factory.getMatchData();
 		team_map = new TIntObjectHashMap<TeamQueue>();
 		player_map = new TIntObjectHashMap<PlayerQueue>();
-		init();
+		for (String s : teamnames)
+		{
+			team_map.put(s.hashCode(), new TeamQueue(match_num,s));
+		}
+		update();
 	}
     
-    
-    public synchronized void update1()
-    {
-    	boolean inited = false;
-    	team_map.clear();
-		player_map.clear();
-		init();
-    }
-   
-	public static synchronized Match instance()
+	public static  Match instance()
 	{
 		if (match == null)
 		{
@@ -52,42 +39,13 @@ public class Match
 		return match;
 	}
     
-	//初始化
-	private synchronized void  init()
-	{
-		MatchesPO[] allMatches = match_data.getAllMatches();
-		if (allMatches == null)
-		{
-          return;			
-		}
-		
-		for (String s : Team.teamnames)
-		{
-			team_map.put(s.hashCode(), new TeamQueue(match_num,s));
-		}
-		for (MatchesPO m : allMatches)
-		{
-			dealWithOneMatch(m);
-		}
-		inited = true;
-	}
-	
-	//转变球队缩写名
-	public  static String transTeamname(String teamname)
-	{
-		if (teamname.equals("NOP"))
-		{
-			teamname = "NOH";
-		}
-		return teamname;
-	}
 	//处理一个比赛
 	private void dealWithOneMatch(MatchesPO match)
 	{
 		MatchTeamPO team1 = match.getTeam1();
 		MatchTeamPO team2 = match.getTeam2();
-		AbstractQueue team1_q = team_map.get(transTeamname(team1.getName()).hashCode());
-		AbstractQueue team2_q = team_map.get(transTeamname(team2.getName()).hashCode());
+		AbstractQueue team1_q = team_map.get(team1.getName().hashCode());
+		AbstractQueue team2_q = team_map.get(team2.getName().hashCode());
 		team1_q.enQueue(match);
 		team2_q.enQueue(match);
 		team1_q.update();
@@ -200,58 +158,24 @@ public class Match
 	//更新
 	public void update()
 	{
-	 if (!inited)
-	 {
-		 init();
-	 }
-//	 if (match_data.changed())
-//	 {
 		 match_data.updateData();
 		 MatchesPO[] matches = match_data.getNewMatches();
-		 for (MatchesPO  m : matches)
+		 if (matches != null)
 		 {
+		    for (MatchesPO  m : matches)
+		     {
 			 dealWithOneMatch(m);
+		     }
 		 }
 //	 }
 	}
-	//数据是否有增加
-	public boolean changed()
-	{
-		return match_data.changed();
-	}
+	
 	//获得今天的比赛信息
     public MatchesPO[] getTodayMatches()
     {
 		return match_data.getTodayMatches();
     }
     
-    //获得所有的比赛
-	public MatchesPO[] getAllMatches()
-	{
-		return match_data.getAllMatches();
-	}
-	//获得球员近期的比赛信息
-	public MatchesPO[] getRecentPlayerMatches(String playerName, int num) {
-		PlayerQueue player = player_map.get(playerName.hashCode());
-		return  player.getRecentPlayerMatches(num);
-	}
-	//获得球队近期的比赛信息
-	public MatchesPO[] getRecentTeamMatches(String teamName, int num) {
-		TeamQueue team =  team_map.get(teamName.hashCode());
-		return team.getRecentMatches(num);
-	}
-    //获得某个球员的比赛数据
-	public MatchesPO[] getPlayerMatches(String playername)
-	{
-		PlayerQueue player_queue = player_map.get(playername.hashCode());
-		return player_queue.getAllMatches();
-	}
-	//获得某个球队的比赛数据
-	public MatchesPO[] getTeamMatches(String teamname)
-	{
-		TeamQueue team_queue = team_map.get(teamname.hashCode());
-		return team_queue.getAllMatches();
-	}
 	//获得球队的所有比赛
     public TIntObjectMap<TeamQueue> getTeam_map() {
     	return team_map;
@@ -260,102 +184,51 @@ public class Match
     public TIntObjectMap<PlayerQueue> getPlayer_map() {
     	return player_map;
     }
-    //获得在比赛区间内的比赛数据
-    public MatchesPO[] getTimeMatches(Date date1, Date date2)
+    public int matchNum()
     {
-    	MatchesPO[] allMatches =  match_data.getAllMatches();
-    	String date;
-    	LinkedList<MatchesPO>  match_list = new LinkedList<MatchesPO>();
-    	for(MatchesPO p : allMatches)
+    	TeamQueue[] teams = new TeamQueue[team_map.size()];
+    	team_map.values(teams);
+    	int result = 0;
+    	for (int i = 0; i < teams.length; i++)
     	{
-    	 date = p.getDate(); 
-    	 if (betweenTime(date,date1,date2))
-    		 match_list.add(p);
+    		if (teams[i].getAllMatches() != null)
+    		result += teams[i].getAllMatches().length;
     	}
-    	if (match_list.size() == 0)
-    		return null;
-    	MatchesPO[] result = new MatchesPO[match_list.size()];
-    	match_list.toArray(result);
-    	 return result;
+		return result /2;
     }
-    //判断是否在该时间段中
-    private boolean  betweenTime(String date0,Date date1, Date date2)
-    {
-    	String time   = null;
-    	if (date0.charAt(0) == '0')
-    	{
-    		time = "2013-"+date0;
-    	}
-    	else 
-    	{
-    		time = "2012-"+date0;
-    	}
-    	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-    	Date  date= null;
-    	try {
-			 date = format.parse(time);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-    	long  time1 = date1.getTime();
-    	long time3 = date2.getTime();
-    	long time2 = date.getTime();  
-    	if (time2 <= time3 && time2 >= time1)
-    	{
-    		return true;
-    	}
-    	else return false;
-    }
-   //根据时间区间、球队、球员查找比赛数据
-    public MatchesPO[]   getTime_TeamMatches(Date date1, Date date2, String teamname, String playername)
-    {
-    	MatchesPO[]  timeMatches = getTimeMatches(date1, date2);
-    	MatchesPO  temp = null;
-    	ArrayList<MatchesPO>  matches_list = new ArrayList<MatchesPO>();
-    	MatchTeamPO teampo = null;
-    	for (int i = 0; i < timeMatches.length; i++)
-    	{
-    		temp = timeMatches[i];
-    		teampo = temp.getTeam1();
-    	    if (teampo.getName().equals(teamname))
-    	    {
-    	    	if (playername == null)
-    	    		matches_list.add(temp);
-    	    	else 
-    	    	{
-    	    	 MatchPlayerPO[] matchPlayers = teampo.getPlayers();
-    	    	 for (int j = 0; j < matchPlayers.length; j++)
-    	    	 {
-    	    		 if (matchPlayers[j].getName().equals(playername))
-    	    		 {
-    	    			 matches_list.add(temp);
-    	    			 break;
-    	    		 }
-    	    	 }
-    	    	}
-    	    	continue;
-    	    }
-    	    teampo = temp.getTeam2();
-    	    if (teampo.getName().equals(teamname))
-    	    {
-    	    	if (playername == null)
-    	    	matches_list.add(temp);
-    	    	else 
-    	    	{
-    	    		 MatchPlayerPO[] matchPlayers = teampo.getPlayers();
-        	    	 for (int j = 0; j < matchPlayers.length; j++)
-        	    	 {
-        	    		 if (matchPlayers[j].getName().equals(playername))
-        	    		 {
-        	    			 matches_list.add(temp);
-        	    			 break;
-        	    		 }
-        	    	 }
-    	    	}
-    	    }
-    	}
-    	MatchesPO[] result_matches = new MatchesPO[matches_list.size()];
-    	matches_list.toArray(result_matches);
-		return result_matches;
-    }
+    
+
+	public static String[] teamnames = new String[]
+			{
+		"ATL",
+    	"BKN",
+    	"BOS",
+    	"CHA",
+    	"CHI",
+    	"CLE",
+    	"DAL",
+    	"DEN",
+    	"DET",
+    	"GSW",
+    	"HOU",
+    	"IND",
+    	"LAC",
+    	"LAL",
+    	"MEM",
+    	"MIA",
+    	"MIL",
+    	"MIN",
+    	"NOP",
+    	"NYK",
+    	"OKC",
+    	"ORL",
+    	"PHI",
+    	"PHX",
+    	"POR",
+    	"SAC",
+    	"SAS",
+    	"TOR",
+    	"UTA",
+    	"WAS"
+			};
 }

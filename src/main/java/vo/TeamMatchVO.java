@@ -198,7 +198,11 @@ public class TeamMatchVO implements Comparable<TeamMatchVO>{
 	}
 	public void setTeamSortTool(double data, SortType type)
 	{
-		tool = new SortTool(data,type);
+		double[] datas = new double[1];
+		SortType[] sortTypes = new SortType[1];
+		datas[0] = data;
+		sortTypes[0] = type;
+		tool = new SortTool(datas, sortTypes);
 		this.hotdata = data;
 	}
 	

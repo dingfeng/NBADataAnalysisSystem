@@ -376,7 +376,12 @@ public class PlayerMatchVO implements Comparable<PlayerMatchVO>{
 	}
 	
 	@Override
-	public int compareTo(PlayerMatchVO arg0) {
-		return sortTool.compareTo(arg0.getSortTool());
+	public int compareTo(PlayerMatchVO e) {
+		int cpr = sortTool.compareTo(e.getSortTool());
+		if (cpr == 0)
+		{
+			cpr = name.compareTo(e.getName());
+		}
+		return cpr;
 	}
 }

@@ -14,15 +14,18 @@ public class main {
 	 Timer timer = new Timer();
 	 TimerTask task = new TimerTask()
 	 {
-
+        int matchNum = match.matchNum() ;
 		public void run() 
 		{
-		 MatchesPO[] pos = match.getAllMatches();match.update1();
-		 System.out.println("today :　");
-		 System.out.println("len : "+pos.length);
+			match.update();
+			if (matchNum != match.matchNum())
+			{
+				matchNum = match.matchNum();
+				System.out.println("matchNum : "+matchNum);
+			}
 		}
 	 };
-	 timer.schedule(task, 2,1000);
+	 timer.schedule(task, 1000,4000);
 //	 Match match = Match.instance();
 //	 MatchesPO[] allMatches = match.getAllMatches();
 //	 for (int i = 0 ; i < allMatches.length; i++)

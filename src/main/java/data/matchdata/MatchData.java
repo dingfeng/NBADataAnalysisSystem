@@ -20,50 +20,34 @@ public class MatchData  implements MatchDataService
   private final static int FIRST_LINE_SIZE = 3;
   private final static int MAX_MATCH_PLAYERS = 20;
   private final static int MAX_TEAM_ABB = 8;
-  private final static int MAX_NEW_MATCH = 100;
   private MatchesPO[] todayMatches = new MatchesPO[MAX_TODAY_MATCH];
-  private MatchesPO[] newMatches = new MatchesPO[MAX_NEW_MATCH];
-  private int newMatchesLength = -1;
   private  int todayMatchesLength = -1;
   private String today;
   private int latest_index = -1;
-  private boolean inited = false;
   private String first_file_name;
   File file ;
   String lastfilename;
   int file_num;
-  boolean first_change = true;
+  int fileNum = 0;
   public MatchData(){}
   public  MatchData(String path)
   {
 	  matchesPath = path  ;
 	  file = new File(matchesPath);
 	  matches = new MatchQueue();
-	  initData();
+	  File[] files = file.listFiles();
+	  fileNum = files.length;
+	  Arrays.sort(files);
+	  initData(files);
   }
   
-  private void init()
-  {
-	    todayMatches = new MatchesPO[MAX_TODAY_MATCH];
-	    newMatches = new MatchesPO[MAX_NEW_MATCH];
-	    newMatchesLength = -1;
-	     todayMatchesLength = -1;
-	    today = null;
-	    latest_index = -1;
-	    inited = false;
-	    first_file_name = null;
-	   lastfilename = null;
-	   first_change = true;
-	   matches = new MatchQueue(); 
-  }
   //第一次添加数据
-  public  void initData()
+  public  void initData(File[] file_children)
   {
-	  init();
-	  File[] file_children = file.listFiles();
+	 
 	  if (file_children.length == 0)
 		  return;
-	  Arrays.sort(file_children);
+	  todayMatchesLength = -1;
 	  file_num = file_children.length;
 	  File file_tmp = file_children[file_num-1];
 	  File first_file = file_children[0];
@@ -141,100 +125,62 @@ public class MatchData  implements MatchDataService
 		  }
 		  
  	  }
-//	  lastfilename = file_children[latest_index].getName();
-	  inited = true;
   }
   
   
   public void updateData()
   {
-	  initData();
-	 
-//	if (!inited)
-//	{
-//		initData();
-//		return;
-//	}
-//	File[] file_children = file.listFiles();
-//	if (file_children.length == 0||file_num == file_children.length) return;
-//	Arrays.sort(file_children);
-//	file_num = file_children.length;
-//	String first_f_name = file_children[0].getName();
-//	int n = latest_index;
-//	String latest_index_filename = lastfilename;
-//	if (isRightOrder(first_file_name, first_f_name))               //未产生跨年数据添加
-//	{
-//		//搜索新添加的数据，考虑到已经产生过跨年数据添加和未产生过跨年数据添加两种情况
-//		while (n+1 < file_num&&isRightOrder(latest_index_filename,file_children[++n].getName()));  
-//		int old_latest_index = latest_index;
-//		latest_index = n -1;
-//		latest_index_filename = file_children[latest_index].getName();
-//		int m = latest_index;
-//		lastfilename =  file_children[m].getName();
-//		//搜索最最近添加数据和最近添加的数据的分界
-//		while (m - 1 >= 0&&isSameDay(file_children[--m].getName(), latest_index_filename));   
-//		MatchesPO match = null;
-//		if (n != -1)
-//		newMatchesLength = -1;
-//		//添加最近添加数据
-//		for (int k = old_latest_index+1; k <= m;k++)
-//		{
-//			match = getMatchPO(file_children[k]);
-//			matches.enQueue(match);
-//			newMatches[++newMatchesLength] = match;
-//		}
-//		 //最近一天的比赛数据，假设为今天的比赛数据
-//		todayMatchesLength = -1;
-//		for (int k = m+1; k <= latest_index; k++)
-//		{
-//			 match = getMatchPO(file_children[k]);
-//			matches.enQueue(match);
-//			todayMatches[++todayMatchesLength] = match;
-//			newMatches[++newMatchesLength] = match;
-//		}
-//		file_num = file_children.length;
-//	}
-//	else 
-//	{
-//		file_num = file_children.length;
-//		//发生跨年添加数据的情况
-//		int length = file_num;
-//		while (!file_children[--length].getName().equals(lastfilename));
-//		MatchesPO match = null;
-//		for (int i = length + 1; i < file_num; i++)
-//		{
-//			match = getMatchPO(file_children[i]);
-//			matches.enQueue(match);
-//			newMatches[++newMatchesLength] = match;
-//		}
-//		latest_index = -1;
-//		first_file_name = first_f_name;
-//		lastfilename = first_f_name;
-//		//准备新的参数后，递归更新数据
-//		updateData();
-//	}
-	
+	  File[] allFiles = file.listFiles();
+	  Arrays.sort(allFiles);
+	  int newFileNum = allFiles.length;
+	  if (newFileNum == fileNum)
+	  {
+		  return;
+	  }
+	  int firstFileIndex = -1;
+	  String filename = null;
+	  for (int i = 0; i < allFiles.length; i++)
+	  {
+		  filename = allFiles[i].getName();
+		  if (filename.charAt(i) == '1')
+		  {
+			  firstFileIndex = i;
+			  break;
+		  }
+	  }
+	  //没有比赛
+	  if (firstFileIndex == -1)
+	  {
+		  return;
+	  }
+	  int margin = newFileNum  - fileNum;
+	  File[] files =  new File[margin];
+	  int file_start = newFileNum - firstFileIndex - fileNum;
+	  if (file_start > 0)
+	  {
+		  for (int i = 0; i < files.length; i++)
+		  {
+			  if (fileNum + i < newFileNum)
+			  files[i] = allFiles[fileNum+i];
+			  else 
+			  {
+				  files[i] = allFiles[fileNum + i - newFileNum];
+			  }
+		  }
+	  }
+	  else 
+	  {
+		  int index = file_start * (-1) - 1;
+		  for (int i = 0; i < files.length; i++)
+		  {
+			  files[i] = allFiles[index+i];
+		  }
+	  }
+	  initData(files);
+	  fileNum = newFileNum;
   }
   
-   private void firstOveryear()
-   {
-	 
-   }
   
-   //获得比赛的新产生的比赛数据
-  public MatchesPO[] getNewMatches()
-  {
-	  if (newMatchesLength == -1)
-	  {
-		  return null;
-	  }
-	  MatchesPO[] ma = new MatchesPO[newMatchesLength+1];
-	  for (int i = 0; i <= newMatchesLength; i++)
-	  {
-		  ma[i] = newMatches[i];
-	  }
-	  return ma;
-  }
   
   public boolean changed()
   {
@@ -428,7 +374,6 @@ public class MatchData  implements MatchDataService
   //获得今日的比赛数据
   public MatchesPO[] getTodayMatches()
   {
-	  updateData();
 	  MatchesPO[] today_matchpos = new MatchesPO[todayMatchesLength+1];
 	  for (int i = 0;i <= todayMatchesLength; i++)
 	  {
@@ -439,21 +384,20 @@ public class MatchData  implements MatchDataService
   
   public MatchesPO[] getAllMatches()
   {
-	  updateData();
-	return  matches.getAllMatches();
+	return  matches.getNewMatches();
   }
   
   
   
-  public MatchesPO[] getRecentPlayerMatches(String playername, int num)
-  {
-	  return matches.getRecentPlayerMatches(playername, num);
-  }
-  
-  public MatchesPO[] getRecentTeamMatches(String teamname, int num)
-  {
-	  return matches.getRecentTeamMatches(teamname, num);
-  }
+//  public MatchesPO[] getRecentPlayerMatches(String playername, int num)
+//  {
+//	  return matches.getRecentPlayerMatches(playername, num);
+//  }
+//  
+//  public MatchesPO[] getRecentTeamMatches(String teamname, int num)
+//  {
+//	  return matches.getRecentTeamMatches(teamname, num);
+//  }
   
   private boolean isRightOrder(String start_file, String end_file)
   {
@@ -463,5 +407,9 @@ public class MatchData  implements MatchDataService
   {
 	return filename1.substring(6, 11).equals(filename2.substring(6, 11));
   }
+  
+public MatchesPO[] getNewMatches() {
+	return matches.getNewMatches();
+}
   
 }

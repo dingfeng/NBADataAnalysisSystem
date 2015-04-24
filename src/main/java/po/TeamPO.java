@@ -14,7 +14,7 @@ public class TeamPO implements Comparable<TeamPO>{
 	private String nameAbridge; // 名称缩写
 	private String address; // 所在地
 	private String matchArea; // 赛区
-	private Area playerArea;// 分区
+	private String playerArea;// 分区
 	private String manage; // 主场
 	private int foundYear; // 建立时间
 
@@ -23,7 +23,7 @@ public class TeamPO implements Comparable<TeamPO>{
 	   return name+" "+nameAbridge+" "+address+" "+matchArea+" "+manage+" "+foundYear;
 	}
 	public TeamPO(Image image, String name, String nameAbridge, String address,
-			String matchArea, Area playerArea, String manage, int foundYear) {
+			String matchArea, String playerArea, String manage, int foundYear) {
 		super();
 		this.image = image;
 		this.name = name;
@@ -55,7 +55,7 @@ public class TeamPO implements Comparable<TeamPO>{
 		return matchArea;
 	}
 
-	public Area getPlayerArea() {
+	public String getPlayerArea() {
 		return playerArea;
 	}
 
