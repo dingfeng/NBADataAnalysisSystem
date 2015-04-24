@@ -81,8 +81,12 @@ public class TeamMatchPanel extends JPanel {
 		columnsName.add("对阵队伍");
 		columnsName.add("比分");
 		MatchesPO[] match = mc.getRecentTeamMatches(teamName, 5);
-
-		for (int i = 0; i < 5; i++) {
+        int len = 5;
+        if (len > match.length)
+        {
+        	len = match.length;
+        }
+		for (int i = 0; i < len; i++) {
 			Vector data = new Vector();
 			data.add(match[i].getDate());
 			data.add(match[i].getTeam1().getName() + "-"

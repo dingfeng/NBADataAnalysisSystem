@@ -343,8 +343,12 @@ public class PlayerPanel extends JPanel {
 
 	/** 在findPanel上显示一个球员的信息 */
 	private void showOne(String playerInfo) {
-		if (matchpanel) {
+		if (matchpanel && playerMatchPanel != null) {
 			this.remove(playerMatchPanel);
+			matchpanel = false;
+		}
+		if (matchpanel)
+		{
 			matchpanel = false;
 		}
 		this.remove(welcomePanel);
@@ -1096,20 +1100,9 @@ public class PlayerPanel extends JPanel {
 					break;
 				}
 			}
-			if (!isPlayer) {
-				PlayerMatchVO onePlayer = new PlayerMatchVO(playerInfo);
-				try {
-
-					jScrollPane.setVisible(false);
-					setPlayerMessage(onePlayer);
-					this.add(playerMessagePanel);
-					this.repaint();
-					System.out.println("sdfsf");
-				} catch (NullPointerException e) {
-					showAllData();
-				}
-				return;
-			} else if (playerController.findPlayer(playerInfo) == null) {
+			
+		
+			if (playerController.findPlayer(playerInfo) == null) {
 				JOptionPane.showMessageDialog(null, "未找到该球员的个人信息", "查找失败",
 						JOptionPane.ERROR_MESSAGE);
 				MyFrame.playerpanel.remove(findPanel);
@@ -1118,6 +1111,22 @@ public class PlayerPanel extends JPanel {
 			} else {
 				showOne(playerInfo);
 			}
+			
+			if (!isPlayer) {
+				PlayerMatchVO onePlayer = new PlayerMatchVO(playerInfo);
+				try {
+
+					jScrollPane.setVisible(false);
+					setPlayerMessage(onePlayer);
+					this.add(playerMessagePanel);
+					this.repaint();
+				} catch (NullPointerException e) {
+					showAllData();
+				}
+			   return;
+			} 
+			
+			
 			PlayerMatchVO onePlayer;
 			try {
 				if (dataType.getSelectedItem().equals("赛季总数据")) {
