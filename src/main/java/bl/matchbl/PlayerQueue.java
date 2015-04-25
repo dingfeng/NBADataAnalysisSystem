@@ -31,6 +31,7 @@ public class PlayerQueue {
 //	private PlayerYourInfo[] yourInfos;
 	private MatchesPO [] matches = new MatchesPO[100];
 	private int matchlen = -1;
+	private String position = null;
 	public PlayerQueue(int max, String name) 
 	{
 		match_datas = new MatchPlayerPO[max];
@@ -51,6 +52,12 @@ public class PlayerQueue {
 		this.yourDefenceRebs += yourDefenceRebs;
 		this.yourOffenseRebs += yourOffenseRebs;
 		
+		   String position_temp =  player.getLocation();
+		   if (position_temp != null)
+		   {
+			   position = position_temp;
+		   }
+		   
 		   matches[++matchlen] = match;
 		   match_datas[++len] = player;
 		   this.teamname = teamname;
@@ -347,5 +354,10 @@ public class PlayerQueue {
 			temp_MatchPlayers[i] = match_datas[matchlen - i];
 		}
 		return temp_MatchPlayers;
+	}
+	
+	public String getPosition()
+	{
+		return position;
 	}
 }

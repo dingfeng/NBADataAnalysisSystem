@@ -111,7 +111,7 @@ public class TeamController
 		 TeamNormalInfo[]  teams = teamCore.getTeamNormalAve(sortby, sortType, n);
 		    for (TeamNormalInfo info : teams)
 		    {
-		    	out.append(teams.toString());
+		    	out.append(info.toString());
 		    }
 		}
 		else       //赛季数据
@@ -151,7 +151,7 @@ public class TeamController
 			 TeamNormalInfo[]  teams = teamCore.getTeamNormalTotal(sortby, sortType, n);
 			    for (TeamNormalInfo info : teams)
 			    {
-			    	out.append(teams.toString());
+			    	out.append(info.toString());
 			    }
 		}
 		}catch (Exception e)

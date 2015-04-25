@@ -3,6 +3,7 @@ package test;
 import java.util.LinkedList;
 
 import gnu.trove.map.TIntObjectMap;
+import gnu.trove.map.hash.TIntObjectHashMap;
 import bl.matchbl.Match;
 import bl.matchbl.TeamQueue;
 import po.TeamPO;
@@ -19,25 +20,34 @@ import vo.TeamSortBy;
 
 public class TeamCore  implements TeamCoreService
 {
-  TeamDataService teamData;
-   TeamPO[] teampos;
+  static TeamDataService teamData;
+   
   TIntObjectMap<TeamQueue> team_map;
   TeamQueue[] queues;
   Match match;
+  static TeamPO[] teampos;
   static TIntObjectMap<TeamPO> po_map;
-  public TeamCore()
+  static
   {
+	  po_map = new TIntObjectHashMap<TeamPO>(30);
 	  NBADataFactory factory = DataFactoryImp.instance();
 	  teamData = factory.getTeamData();
 	  teampos = teamData.getAllTeamData();
-	  match = Match.instance();
-	  team_map = match.getTeam_map();
-	  queues = new TeamQueue[team_map.size()];
-	  team_map.values(queues);
 	  for (TeamPO po : teampos)
 	    {
 	    	po_map.put(po.getNameAbridge().hashCode(), po);
 	    }
+  }
+  public TeamCore()
+  {
+	  
+	  
+	  match = Match.instance();
+	  team_map = match.getTeam_map();
+	  queues = new TeamQueue[team_map.size()];
+	  team_map.values(queues);
+	  
+	 
   }
   
 @Override
@@ -228,7 +238,6 @@ public TeamHotInfo[] getTeamHotInfo(String field, int n) {
 
 public  static TeamPO findTeam(String teamName)
 {
-	
 	return po_map.get(teamName.hashCode());
 }
 

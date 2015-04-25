@@ -1,5 +1,7 @@
 package test;
 
+import java.util.ArrayList;
+
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import po.MatchPlayerPO;
@@ -67,9 +69,11 @@ public class PlayerCore implements PlayerCoreService
 	    String playerName = null;
 	    PlayerPO playerpo;
 	    TeamPO teampo = null;
+	    String position = null;
 		for (int i = 0; i < n; i++)
 		{
 			playerMatchVO =  heap.deleteMin();
+			System.out.println("hot : "+playerMatchVO.getHotData());
 			highinfo = new PlayerHighInfo();
 			highinfo.setAssistEfficient(playerMatchVO.getAssistEfficiency());
 			highinfo.setBlockShotEfficient(playerMatchVO.getBlockEfficiency());
@@ -89,9 +93,22 @@ public class PlayerCore implements PlayerCoreService
 			highinfo.setTeamName(teamName);
 			
 			teampo = TeamCore.findTeam(teamName);
-			playerpo = player_base_map.get(playerName.hashCode());
+			
 			highinfo.setLeague(teampo.getMatchArea().equals("W") ? "West":"East");
-			highinfo.setPosition(playerpo.getPosition());
+			playerpo = player_base_map.get(playerName.hashCode());
+			if (playerpo != null)
+			{
+				position = playerpo.getPosition();
+			}
+			else 
+			{
+				position = playerMatchVO.getLocation();
+			}
+			if (position == null || position.contains("-"))
+			{
+				position = "All";
+			}
+			highinfo.setPosition(position);
 			playerHighInfos[i] = highinfo;
 		}
 		
@@ -121,6 +138,7 @@ public class PlayerCore implements PlayerCoreService
         PlayerHotInfo hotinfo = null;
         PlayerPO playerpo = null;
         String playername = null;
+        String position = null;
 		for (int i = 0; i < n; i++)
 		{
 			playerMatchvo = heap.deleteMin();
@@ -129,8 +147,21 @@ public class PlayerCore implements PlayerCoreService
 			playername = playerMatchvo.getName();
 			hotinfo.setName(playername);
 			hotinfo.setTeamName(playerMatchvo.getTeam());
+			
 			playerpo = player_base_map.get(playername.hashCode());
-			hotinfo.setPosition(playerpo.getPosition());
+			if (playerpo != null)
+			{
+				position = playerpo.getPosition();
+			}
+			else 
+			{
+				position = playerMatchvo.getLocation();
+			}
+			if (position == null || position.contains("-"))
+			{
+				position = "All";
+			}
+			hotinfo.setPosition(position);
 			hotinfo.setUpgradeRate(playerMatchvo.getHotData());
 			hotinfo.setValue(getHotValue(playerMatchvo,field));
 			infos[i] = hotinfo;
@@ -162,6 +193,7 @@ public class PlayerCore implements PlayerCoreService
 		PlayerKingInfo playerInfo = null;
 		PlayerPO playerpo = null;
 		String playername = null;
+		String position = null;
 		for (int i = 0; i < n; i++)
 		{
 			playerMatchvo = heap.deleteMin();
@@ -170,7 +202,20 @@ public class PlayerCore implements PlayerCoreService
 			playerInfo = new PlayerKingInfo();
 			playerInfo.setField(field);
 			playerInfo.setName(playername);
-			playerInfo.setPosition(playerpo.getPosition());
+			playerpo = player_base_map.get(playername.hashCode());
+			if (playerpo != null)
+			{
+				position = playerpo.getPosition();
+			}
+			else 
+			{
+				position = playerMatchvo.getLocation();
+			}
+			if (position == null || position.contains("-"))
+			{
+				position = "All";
+			}
+			playerInfo.setPosition(position);
 			playerInfo.setTeamName(playerMatchvo.getTeam());
 			playerInfo.setValue(playerMatchvo.getHotData());
 			infos[i] = playerInfo;
@@ -211,18 +256,34 @@ public class PlayerCore implements PlayerCoreService
 		PlayerKingInfo  temp = null;
 		PlayerPO playerpo = null;
 		String playername = null;
+		String position = null;
 		for (int j = 0; j < n; j++)
 		{
 			matchPlayerpo = heap.deleteMin();
 			temp = new PlayerKingInfo();
 			playername =  matchPlayerpo.getName();
-			playerpo = player_base_map.get(playername.hashCode());
+			
 			temp.setField(field);
 			temp.setName(playername);
-			temp.setPosition(playerpo.getPosition());
+			
+			playerpo = player_base_map.get(playername.hashCode());
+			if (playerpo != null)
+			{
+				position = playerpo.getPosition();
+			}
+			else 
+			{
+				position = matchPlayerpo.getLocation();
+			}
+			if (position == null || position.contains("-"))
+			{
+				position = "All";
+			}
+			
+			temp.setPosition(position);
 			temp.setTeamName(matchPlayerpo.getTeamnameAbridge());
 			temp.setValue(matchPlayerpo.getHotData());
-			playerInfos[i] = temp;
+			playerInfos[j] = temp;
 		}
 		return playerInfos;
 	}
@@ -232,12 +293,294 @@ public class PlayerCore implements PlayerCoreService
 	@Override
 	public PlayerNormalInfo[] getPlayerAveNormalInfos(PlayerSortBy[] sortbys,
 			SortType[] sortTypes, int n, String position, String league, int age) {
-		return null;
+		MinBinaryHeap<PlayerMatchVO> heap = new MinBinaryHeap<PlayerMatchVO>(500);
+		PlayerMatchVO playerMatchvo = null;
+		String position1 = null;
+		String playername = null;
+		String teamName = null;
+		TeamPO teampo = null;
+		PlayerPO playerpo = null;
+		
+		boolean position_judge = false;
+		boolean league_judge = false;
+		boolean age_judge = false;
+		
+		int count = 0;
+		for (int i = 0; i < playerQueues.length; i++)
+		{
+		  playerMatchvo = playerQueues[i].getAvePlayer();
+		  playername = playerMatchvo.getName();
+		  playerpo = player_base_map.get(playername.hashCode());
+		  teamName = playerMatchvo.getTeam();
+		  position_judge = false;
+		  league_judge = false;
+		  age_judge =false;
+		  if (position.equals("All"))
+		  {
+			  position_judge = true;
+		  }
+		  else
+		  {
+			  if (playerpo == null)
+			  {
+				  String postion1 = playerMatchvo.getLocation();
+				  if (position.equals(position1))
+				  {
+					  position_judge = true;
+				  }
+			  }
+			  else 
+			  {
+				  if (playerpo.getPosition().contains(position))
+				  {
+					  position_judge = true;
+				  }
+			  }
+		  }
+		  
+		  if (league.equals("All"))
+		  {
+			  league_judge = true;
+		  }
+		  else
+		  {
+			  teampo = TeamCore.findTeam(teamName);
+			  if (league.contains(teampo.getMatchArea()))
+			  {
+				  league_judge = true;
+			  }
+		  }
+		  
+		  if (age == -1)
+		  {
+			  age_judge = true;
+		  }
+		  else 
+		  {
+		 if (playerpo != null)
+		 {
+		  int age_temp = playerpo.getAge();
+    	  if (age == 0)
+	      {
+			  if (age_temp <= 22)
+			  {
+				  age_judge = true;
+			  }
+		  }
+		  else if (age == 1)
+		  {
+			  if (age_temp > 22 && age_temp <= 25)
+			  {
+				  age_judge = true;
+			  }
+		  }
+		  else if (age == 2)
+		  {
+			  if (age_temp > 25 && age_temp <= 30)
+			  {
+				  age_judge = true;
+			  }
+		  }
+		  else if (age == 3)
+		  {
+			  if (age_temp > 30)
+			  {
+				  age_judge = true;
+			  }
+		  }
+		 }
+		 }
+		  if (position_judge && league_judge&& age_judge)
+		  {
+			  setSortTools(playerMatchvo,sortbys,sortTypes);
+			  heap.insert(playerMatchvo);
+			  ++count;
+		  }
+		}
+		
+		if (n > count)
+		{
+			n = count;
+		}
+		
+		PlayerNormalInfo[] infos = new PlayerNormalInfo[n];
+		PlayerNormalInfo info = null;
+		
+		for (int i = 0 ;i < n; i++)
+		{
+			info = new PlayerNormalInfo();
+			playerMatchvo = heap.deleteMin();
+			playername = playerMatchvo.getName();
+			info.setAge(player_base_map.get(playername.hashCode()).getAge());
+			info.setAssist(playerMatchvo.getAssistNo());
+			info.setBlockShot(playerMatchvo.getBlockNo());
+			info.setDefend(playerMatchvo.getDefenceNo());
+			info.setEfficiency(playerMatchvo.getEfficiency());
+			info.setFault(playerMatchvo.getMistakesNo());
+			info.setFoul(playerMatchvo.getFoulsNo());
+			info.setMinute(playerMatchvo.getMinute());
+			info.setName(playername);
+			info.setNumOfGame(playerMatchvo.getMatchNo());
+			info.setOffend(playerMatchvo.getOffendNo());
+			info.setPenalty(playerMatchvo.getPenaltyHitRate());
+			info.setPoint(playerMatchvo.getPoints());
+			info.setRebound(playerMatchvo.getRebs());
+			info.setShot(playerMatchvo.getHitRate());
+			info.setStart((int) playerMatchvo.getFirstServiceNo());
+			info.setSteal(playerMatchvo.getStealsNo());
+			info.setTeamName(teamName);
+			info.setThree(playerMatchvo.getThreeHitRate());
+			infos[i] = info;
+		}
+		
+		return infos;
 	}
 	@Override
 	public PlayerNormalInfo[] getPlayerTotalNormalInfos(PlayerSortBy[] sortbys,
 			SortType[] sortTypes, int n, String position, String league, int age) {
-		return null;
+		
+		MinBinaryHeap<PlayerMatchVO> heap = new MinBinaryHeap<PlayerMatchVO>(500);
+		PlayerMatchVO playerMatchvo = null;
+		String position1 = null;
+		String playername = null;
+		String teamName = null;
+		TeamPO teampo = null;
+		PlayerPO playerpo = null;
+		
+		boolean position_judge = false;
+		boolean league_judge = false;
+		boolean age_judge = false;
+		
+		int count = 0;
+		for (int i = 0; i < playerQueues.length; i++)
+		{
+		  playerMatchvo = playerQueues[i].getTotalPlayer();
+		  playername = playerMatchvo.getName();
+		  playerpo = player_base_map.get(playername.hashCode());
+		  teamName = playerMatchvo.getTeam();
+		  position_judge = false;
+		  league_judge = false;
+		  age_judge =false;
+		  if (position.equals("All"))
+		  {
+			  position_judge = true;
+		  }
+		  else
+		  {
+			  if (playerpo == null)
+			  {
+				  String postion1 = playerMatchvo.getLocation();
+				  if (position.equals(position1))
+				  {
+					  position_judge = true;
+				  }
+			  }
+			  else 
+			  {
+				  if (playerpo.getPosition().contains(position))
+				  {
+					  position_judge = true;
+				  }
+			  }
+		  }
+		  
+		  if (league.equals("All"))
+		  {
+			  league_judge = true;
+		  }
+		  else
+		  {
+			  teampo = TeamCore.findTeam(teamName);
+			  if (league.contains(teampo.getMatchArea()))
+			  {
+				  league_judge = true;
+			  }
+		  }
+		  
+		  if (age == -1)
+		  {
+			  age_judge = true;
+		  }
+		  else 
+		  {
+		 if (playerpo != null)
+		 {
+		  int age_temp = playerpo.getAge();
+    	  if (age == 0)
+	      {
+			  if (age_temp <= 22)
+			  {
+				  age_judge = true;
+			  }
+		  }
+		  else if (age == 1)
+		  {
+			  if (age_temp > 22 && age_temp <= 25)
+			  {
+				  age_judge = true;
+			  }
+		  }
+		  else if (age == 2)
+		  {
+			  if (age_temp > 25 && age_temp <= 30)
+			  {
+				  age_judge = true;
+			  }
+		  }
+		  else if (age == 3)
+		  {
+			  if (age_temp > 30)
+			  {
+				  age_judge = true;
+			  }
+		  }
+		 }
+		 }
+		  if (position_judge && league_judge&& age_judge)
+		  {
+			  setSortTools(playerMatchvo,sortbys,sortTypes);
+			  heap.insert(playerMatchvo);
+			  ++count;
+		  }
+		}
+		
+		if (n > count)
+		{
+			n = count;
+		}
+		
+		PlayerNormalInfo[] infos = new PlayerNormalInfo[n];
+		PlayerNormalInfo info = null;
+		
+		for (int i = 0 ;i < n; i++)
+		{
+			info = new PlayerNormalInfo();
+			playerMatchvo = heap.deleteMin();
+			playername = playerMatchvo.getName();
+			info.setAge(player_base_map.get(playername.hashCode()).getAge());
+			info.setAssist(playerMatchvo.getAssistNo());
+			info.setBlockShot(playerMatchvo.getBlockNo());
+			info.setDefend(playerMatchvo.getDefenceNo());
+			info.setEfficiency(playerMatchvo.getEfficiency());
+			info.setFault(playerMatchvo.getMistakesNo());
+			info.setFoul(playerMatchvo.getFoulsNo());
+			info.setMinute(playerMatchvo.getMinute());
+			info.setName(playername);
+			info.setNumOfGame(playerMatchvo.getMatchNo());
+			info.setOffend(playerMatchvo.getOffendNo());
+			info.setPenalty(playerMatchvo.getPenaltyHitRate());
+			info.setPoint(playerMatchvo.getPoints());
+			info.setRebound(playerMatchvo.getRebs());
+			info.setShot(playerMatchvo.getHitRate());
+			info.setStart((int) playerMatchvo.getFirstServiceNo());
+			info.setSteal(playerMatchvo.getStealsNo());
+			info.setTeamName(teamName);
+			info.setThree(playerMatchvo.getThreeHitRate());
+			infos[i] = info;
+		}
+		
+		return infos;
+		
 	}
 	
 	private void setSortTools(PlayerMatchVO playervo, PlayerSortBy[] playerSortBys, SortType[] sortTypes)

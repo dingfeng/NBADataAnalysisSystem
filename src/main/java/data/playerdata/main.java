@@ -16,14 +16,13 @@ public class main
 	public static Random rand = new Random();
 	public static void main(String[] args)
 	{
-//		rand.nextInt(1);
-//		for (int i = 0 ;i < 1000; i++)
-//		{
-//			System.out.println(rand.nextInt(448));
-//		}
-//		System.out.println("testTroveMap : "+testTroveMap());
-		System.out.println("test2 :　" + test2());
-//		System.out.println("testUtilMap : "+testUtilMap());
+		PlayerData player = new PlayerData("C:/NBAData/players");
+		PlayerPO[] all_players = player.getAllPlayerData();
+		for (PlayerPO po : all_players)
+		{
+			if (po.getPosition().contains("-"))
+			System.out.println("name : "+po.getName()+"  position : "+po.getPosition());
+		}
  	}
 	
 	public static long testTroveMap()
