@@ -2,6 +2,8 @@ package test;
 
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class main {
 public static void main(String[] args)
@@ -29,17 +31,26 @@ public static void testAll()
 				"-player -avg -n 5 -filter position.F",
 				"-player -total -all -n 10 -filter position.F,league.West -sort shot.desc"
 			};
-			Console console = new Console();
-			PrintStream out = System.out;
-			long start = System.currentTimeMillis();
-			for (String c : commands)
-			{
-				
-				console.execute(out, c.split(" "));
+	    Timer  timer = new Timer();
+	    TimerTask task = new TimerTask()
+	    {
+
+			public void run() {
+				Console console = new Console();
+				PrintStream out = System.out;
+				long start = System.currentTimeMillis();
+				for (String c : commands)
+				{
+					
+					console.execute(out, c.split(" "));
+				}
+				long end = System.currentTimeMillis();
+				System.out.println("time : "+(end - start));
 			}
-			long end = System.currentTimeMillis();
-			System.out.println("time : "+(end - start));
-			out.close();
+	    	
+	    };
+	    timer.schedule(task, 400,6000);
+			
 }
 
 public static void testTeam()

@@ -3,8 +3,10 @@ package data.teamdata;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import org.apache.batik.dom.svg.SAXSVGDocumentFactory;
 import org.apache.batik.util.XMLResourceDescriptor;
@@ -18,7 +20,7 @@ public class TeamData implements TeamDataService
 {
    private String filename;
    private final static int TEAM_NUM = 30;
-   private Toolkit tool = Toolkit.getDefaultToolkit();
+//   private Toolkit tool = Toolkit.getDefaultToolkit();
   public TeamData (String filename)
   {
 	  this.filename = filename;
@@ -31,7 +33,7 @@ public class TeamData implements TeamDataService
     BufferedReader reader= null;
 	try
 	{
-    reader = new BufferedReader(new FileReader(filename+"/teams")  );
+    reader = new BufferedReader(new InputStreamReader(new FileInputStream(filename+"/teams"),"UTF-8"));
 	String tempStr = reader.readLine();
 	String[] items = null;
 	Image image = null;
@@ -39,7 +41,6 @@ public class TeamData implements TeamDataService
 	{
 	tempStr = reader.readLine();
 	items = dealWithLine(tempStr);
-    image = tool.getImage(filename +"/"+items[1]+".png");
 	teampos[i] = new TeamPO(image,items[0],items[1],items[2],
 	items[3],items[4],items[5],Integer.parseInt(items[6]));
 	}

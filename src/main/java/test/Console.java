@@ -2,11 +2,14 @@ package test;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.Arrays;
 
+import po.TeamPO;
 import data.teamdata.TeamData;
 import dataservice.teamdataservice.TeamDataService;
 import bl.matchbl.Match;
@@ -14,9 +17,9 @@ import DataFactory.DataFactoryImp;
 import DataFactoryService.NBADataFactory;
 
 public class Console {
- TeamController tcon;
- PlayerController pcon;
- Match match;
+ static TeamController tcon;
+ static PlayerController pcon;
+  static Match match;
  public void execute(PrintStream out, String[] args)
  {
 	 try{
@@ -40,7 +43,7 @@ public class Console {
 	 }
 	 }catch (Exception e)
 	 {
-		 e.printStackTrace();
+		e.printStackTrace();
 	 }
  }
 }

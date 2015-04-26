@@ -2,7 +2,9 @@ package data.matchdata;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 import dataservice.matchdataservice.MatchDataService;
@@ -252,7 +254,7 @@ public class MatchData  implements MatchDataService
 	  int last  = 0;
 	  char check = 0;
 	  try{
-	  reader = new BufferedReader(new FileReader(file)  );
+	  reader = new BufferedReader(new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"))  );
 	  
 	  line = reader.readLine();                 //read first line 
 	  content_list = line.toCharArray();

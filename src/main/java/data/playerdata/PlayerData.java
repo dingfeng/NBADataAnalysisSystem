@@ -18,7 +18,7 @@ public class PlayerData implements PlayerDataService{
     private String action_file;
     private String info_file;
 	private String portrait_file;
-    private Toolkit kit = Toolkit.getDefaultToolkit();
+//    private Toolkit kit = Toolkit.getDefaultToolkit();
 	public PlayerData(String filename)
 	{
 		action_file = filename + "/action";
@@ -42,8 +42,8 @@ public class PlayerData implements PlayerDataService{
 		{
 			strs = readInfo(f);
 			playerName = strs[0];
-			action = kit.getImage(action_file+"/"+playerName+".png");
-			portrait = kit.getImage(portrait_file+"/"+playerName+".png");
+//			action = kit.getImage(action_file+"/"+playerName+".png");
+//			portrait = kit.getImage(portrait_file+"/"+playerName+".png");
 			playerpos[++player_index] = new PlayerPO(action,portrait,
 			playerName,strs[1].equals("N/A")?-1:Integer.parseInt(strs[1]),
 					strs[2],strs[3].charAt(0) + margin, strs[3].charAt(2)+margin,
