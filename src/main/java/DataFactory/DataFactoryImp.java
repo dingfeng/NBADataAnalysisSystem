@@ -23,10 +23,6 @@ public class DataFactoryImp implements NBADataFactory
 	private DataFactoryImp(){}
 	public static NBADataFactory  instance()
 	{
-		if (dataSource == null)
-		{
-			return null;
-		}
 		if (factory == null)
 		{
 			factory = new DataFactoryImp();
