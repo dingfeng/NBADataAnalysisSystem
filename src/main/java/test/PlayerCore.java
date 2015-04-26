@@ -73,7 +73,6 @@ public class PlayerCore implements PlayerCoreService
 		for (int i = 0; i < n; i++)
 		{
 			playerMatchVO =  heap.deleteMin();
-			System.out.println("hot : "+playerMatchVO.getHotData());
 			highinfo = new PlayerHighInfo();
 			highinfo.setAssistEfficient(playerMatchVO.getAssistEfficiency());
 			highinfo.setBlockShotEfficient(playerMatchVO.getBlockEfficiency());
@@ -411,6 +410,8 @@ public class PlayerCore implements PlayerCoreService
 			info = new PlayerNormalInfo();
 			playerMatchvo = heap.deleteMin();
 			playername = playerMatchvo.getName();
+			playerpo = player_base_map.get(playername.hashCode());
+			if (playerpo != null)
 			info.setAge(player_base_map.get(playername.hashCode()).getAge());
 			info.setAssist(playerMatchvo.getAssistNo());
 			info.setBlockShot(playerMatchvo.getBlockNo());
@@ -557,6 +558,8 @@ public class PlayerCore implements PlayerCoreService
 			info = new PlayerNormalInfo();
 			playerMatchvo = heap.deleteMin();
 			playername = playerMatchvo.getName();
+			playerpo = player_base_map.get(playername.hashCode());
+			if (playerpo != null)
 			info.setAge(player_base_map.get(playername.hashCode()).getAge());
 			info.setAssist(playerMatchvo.getAssistNo());
 			info.setBlockShot(playerMatchvo.getBlockNo());

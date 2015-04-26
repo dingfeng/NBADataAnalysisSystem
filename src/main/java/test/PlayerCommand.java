@@ -1,5 +1,7 @@
 package test;
 
+import java.util.Arrays;
+
 import vo.PlayerSortBy;
 import vo.SortType;
 
@@ -8,7 +10,7 @@ public class PlayerCommand
 	int avg_total = 0; //0代表场均数据，1代表赛季总数据。默认为场均数据
 	int all_hot_king = 0; //0代表all所有球员数据，1代表hot热门球员信息（均为场均数据）,2代表king获得数据王
 	int season_daily = 0; //0代表赛季数据王，1代表当日数据王
-	int n = 50;          //放回一定数目的球员信息，默认为50
+	int n = -1;          //-1代表默认值
 	int low_high = 0 ; //0代表基本数据low，1代表高阶数据high
 	int filter = 0;    //0代表非筛选操作，1代表筛选操作
 	String position = "All"; //F（前锋）,G（后卫）,C（中锋），All 所有的 （默认）
@@ -20,8 +22,8 @@ public class PlayerCommand
 	SortType[] sortType = new SortType[10];
 	int sort_len = -1;
 	
-	PlayerSortBy hotPlayerSort;
-	PlayerSortBy kingPlayerSort;
+	String hotPlayerSort;
+	String kingPlayerSort;
 
 
 	
@@ -45,34 +47,12 @@ public class PlayerCommand
 		  case "-hot":
 			  all_hot_king = 1;
 			  ++i;
-			  switch (commands[i])
-			  {
-			  case "score":
-				  hotPlayerSort = PlayerSortBy.points;
-				  break;
-			  case  "rebound":
-				  hotPlayerSort = PlayerSortBy.rebound;
-				  break;
-			  case  "assist":
-				  hotPlayerSort = PlayerSortBy.assist;
-				  break;
-			  }
+			  hotPlayerSort = commands[i];
 			  break;
 		  case  "-king":
 			  all_hot_king = 2;
 			  ++i;
-			  switch (commands[i])
-			  {
-			  case "score":
-				  kingPlayerSort = PlayerSortBy.points;
-				  break;
-			  case  "rebound":
-				  kingPlayerSort = PlayerSortBy.rebound;
-				  break;
-			  case  "assist":
-				  kingPlayerSort = PlayerSortBy.assist;
-				  break;
-			  }
+			  kingPlayerSort = commands[i];
 			  break;
 		  case  "-season":
 			  season_daily = 0;
@@ -92,9 +72,10 @@ public class PlayerCommand
 			  ++i;
 			  String filter_choice = commands[i];
 			  String[] choices = null;
-			  while (!filter_choice.contains("-"))
+			  String[] filter_choice_list = filter_choice.split(",");
+			  for (int k = 0;k < filter_choice_list.length; k++)
 			  {
-				  choices = filter_choice.split("\\.");
+				  choices = filter_choice_list[k].split("\\.");
 				  switch (choices[0])
 				  {
 				  case "position":
@@ -124,9 +105,7 @@ public class PlayerCommand
 					  }
 					  break;
 				  }
-				  filter_choice = commands[++i];
 			  }
-			  --i;
 			  break;
 		  case "-sort":
 			  sort = 1;
@@ -135,7 +114,10 @@ public class PlayerCommand
 			  while ( i < len)
 			  {
 				choice = commands[i];
+				if (!choice.equals(","))
+				{
 				dealWithOneSortField(choice);
+				}
 				++i;
 			  }
 			  break;
@@ -146,12 +128,13 @@ public class PlayerCommand
 	
 	private void dealWithOneSortField(String field)
 	{
-		String[] choices = field.split("//.");
+		String[] choices = field.split("\\.");
 		++sort_len;
 		PlayerSortBy sortBy = null;
 		SortType sortType = null;
 		switch (choices[0])
 		{
+		
 		//得分
 		case "point":
 		    sortBy = PlayerSortBy.points;
@@ -302,19 +285,19 @@ public class PlayerCommand
 	}
 
 	public PlayerSortBy[] getSorts() {
-		return sorts;
+		return Arrays.copyOf(sorts, sort_len+1);
 	}
 
 	public SortType[] getSortType() {
-		return sortType;
+		return Arrays.copyOf(sortType, sort_len+1);
 	}
 
 	
-	public PlayerSortBy getHotPlayerSort() {
+	public String getHotPlayerSort() {
 		return hotPlayerSort;
 	}
 	
-	public PlayerSortBy getKingPlayerSort()
+	public String getKingPlayerSort()
 	{
 		return kingPlayerSort;
 	}

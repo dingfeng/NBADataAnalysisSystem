@@ -16,10 +16,13 @@ public class TeamController
 //	  private int num = -1;      //默认值为-1，代表无此命令，值为30.当num为正数时，代表命令数组的下标
 //	  private int base_high = 0; //默认值为0代表基本数据类型，1代表高阶数据
 //	  private int sort = -1;     //-1代表没有，当它大于1时代表命令数组的下标
+	TeamCoreService teamCore;
+	public TeamController()
+	{
+		teamCore = new TeamCore();
+	}
 	public void  execute(PrintStream out,String[] command)
 	{
-		try{
-		TeamCore teamCore = new TeamCore();
 		TeamCommand team_command = new TeamCommand();
 		team_command.readCommand(command);
 		int ave_total = team_command.getAve_total();   //默认为0为ave,1代表total
@@ -30,11 +33,12 @@ public class TeamController
 		
 		if (base_high == 1)
 		{
+			System.out.println("高阶数据");
 			TeamSortBy  sortby = TeamSortBy.winRate;
 			SortType sortType = null;
 			if (sort!=-1)
 			{
-				String sortStr = command[sort+1];
+				String sortStr = command[sort];
 				 String[] sort_array = sortStr.split("\\.");
 				 sortby = getSortBy(sort_array[0]);
 				 if (sort_array[1].equals("asc"))
@@ -46,7 +50,7 @@ public class TeamController
 			 int n = 30;
 			 if (num != -1)
 			 {
-				 n = Integer.parseInt(command[num+1]);
+				 n = Integer.parseInt(command[num]);
 			 }
 			 if (n > 30)  n =30;
 			TeamHighInfo[] teamHighInfos = teamCore.getTeamHighInfo(sortby, sortType, n);
@@ -58,12 +62,13 @@ public class TeamController
 		//处理热门球队
 		else if (all_hot > 0)
 		{
-			String field = command[all_hot+1];
+			System.out.println("热门球队");
+			String field = command[all_hot];
 			
 			int n = 5;
 			if (num != -1)
 			{
-				n = Integer.parseInt(command[num+1]);
+				n = Integer.parseInt(command[num]);
 			}
 			if (n > 30) n = 30;
 			//获得热门球队 
@@ -76,10 +81,11 @@ public class TeamController
 		}
 		else if (ave_total == 0)  //场均数据
 		{
+			System.out.println("场均数据");
 		 int n = 30;
 		 if (num != -1)
 		 {
-			 n = Integer.parseInt(command[num+1]);
+			 n = Integer.parseInt(command[num]);
 		 }
 		 if (n > 30)  n =30;
 		 TeamSortBy sortby = null;
@@ -99,7 +105,7 @@ public class TeamController
 		 }
 		 else
 		 {
-			 String sortStr = command[sort+1];
+			 String sortStr = command[sort];
 			 String[] sort_array = sortStr.split("\\.");
 			 sortby = getSortBy(sort_array[0]);
 			 if (sort_array[1].equals("asc"))
@@ -116,10 +122,11 @@ public class TeamController
 		}
 		else       //赛季数据
 		{
+			System.out.println("赛季数据");
 			int n = 30;
 			 if (num != -1)
 			 {
-				 n = Integer.parseInt(command[num+1]);
+				 n = Integer.parseInt(command[num]);
 			 }
 			 if (n > 30)  n =30;
 			 TeamSortBy sortby = null;
@@ -138,8 +145,8 @@ public class TeamController
 			 }
 			 else
 			 {
-				 String sortStr = command[sort+1];
-				 String[] sort_array = sortStr.split(".");
+				 String sortStr = command[sort];
+				 String[] sort_array = sortStr.split("\\.");
 				 sortby = getSortBy(sort_array[0]);
 				 if (sort_array[1].equals("asc"))
 				 {
@@ -153,10 +160,6 @@ public class TeamController
 			    {
 			    	out.append(info.toString());
 			    }
-		}
-		}catch (Exception e)
-		{
-			e.printStackTrace();
 		}
 	}
 	
