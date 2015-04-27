@@ -53,11 +53,19 @@ public class TeamQueue extends AbstractQueue{
 	
     public TeamMatchVO getTeamvoTotal()
     {
+    	if (!recent)
+    	{
+    		update();
+    	}
     	return teamvo_total;
     }
     
     public TeamMatchVO getTeamvoAverage()
     {
+    	if (!recent)
+    	{
+    		update();
+    	}
     	return teamvo_average;
     }
 	//更新数据
@@ -106,11 +114,13 @@ public class TeamQueue extends AbstractQueue{
 				team2 = temp;
 			}
 			points += team1.getTotalScores();
+			 
 			yourPoints += team2.getTotalScores();
 			if ( team1.getTotalScores() > team2.getTotalScores())
 			{
 				++win;
 			}
+			
 			players = team1.getPlayers();
 			 int hitNo0 = 0; // 投篮命中数
 			 int handNo0 = 0; // 投篮出手次数
@@ -126,8 +136,8 @@ public class TeamQueue extends AbstractQueue{
 			 int stealsNo0 = 0;
 			 int blockNo0 = 0 ;
 			 int foulsNo0 = 0;
-			 int defenceRound0 = 0;
-			 int offenseRound0 = 0;
+			 double defenceRound0 = 0;
+			 double  offenseRound0 = 0;
 			for (MatchPlayerPO player : players)
 			{
 				  addPlayer(player.getName());
@@ -184,13 +194,17 @@ public class TeamQueue extends AbstractQueue{
 		    1.07 * (1.0 * yourOffenseRebs0 / (yourOffenseRebs0 + defenceRebs0) * (yourHandNo - yourHitNo))
 		    + 1.07 * yourMistakeNo;
 			defenceRound += defenceRound0;
+			
+			
+			
 			offenseRound0 += handNo0 + 0.4 * penaltyHandNo0 -
-					1.07 * (1.0 * offenseRebs0/(offenseRebs0+defenceRebs0)*(handNo0-hitNo0))
+					1.07 * (1.0 * offenseRebs0/(offenseRebs0+yourDefenceRebs0)*(handNo0-hitNo0))
 			        + 1.07 * mistakesNo0;
+			
+			
 			offenseRound += offenseRound0;
 			
 		}
-		
 		 double hitRate =  hitNo / handNo; // 投篮命中率
 		 double threeHitRate = threeHitNo / threeHandNo;// 三分命中率
 		 double penaltyHitRate = penaltyHitNo / penaltyHandNo;// 罚球命中率
@@ -207,7 +221,7 @@ public class TeamQueue extends AbstractQueue{
 					 penaltyHandNo,  offenseRebs,  defenceRebs,  rebs,
 					 assistNo,  stealsNo,  blockNo,  mistakesNo,
 					 foulsNo,  points,  hitRate,  threeHitRate,
-					 penaltyHitRate,  winRate,  offenseRound,
+					 penaltyHitRate,  winRate,  offenseRound ,
 					 offenseEfficiency,  defenceEfficiency,
 					 orebsEfficiency, drebsEfficiency , stealsEfficiency,
 					 assistEfficiency);
@@ -217,10 +231,11 @@ public class TeamQueue extends AbstractQueue{
 				 penaltyHandNo/ matchNo,  offenseRebs/ matchNo,  defenceRebs/ matchNo,  rebs/ matchNo,
 				 assistNo/ matchNo,  stealsNo/ matchNo,  blockNo/ matchNo,  mistakesNo/ matchNo,
 				 foulsNo/ matchNo,  points/ matchNo,  hitRate,  threeHitRate,
-				 penaltyHitRate,  winRate,  offenseRound,
+				 penaltyHitRate,  winRate,  offenseRound / matchNo,
 				 offenseEfficiency,  defenceEfficiency,
 				 orebsEfficiency, drebsEfficiency , stealsEfficiency,
 				 assistEfficiency);
+		 recent = true;
 	}
 	//获得近期比赛
 	public MatchesPO[] getRecentMatches(int num )

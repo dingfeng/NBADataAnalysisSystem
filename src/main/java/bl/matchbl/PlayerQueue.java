@@ -32,6 +32,7 @@ public class PlayerQueue {
 	private MatchesPO [] matches = new MatchesPO[100];
 	private int matchlen = -1;
 	private String position = null;
+	boolean recent = false;
 	public PlayerQueue(int max, String name) 
 	{
 		match_datas = new MatchPlayerPO[max];
@@ -47,6 +48,7 @@ public class PlayerQueue {
 			int yourOffenseRebs,int yourDefenceRebs,int teamDefenceRebs,int teamOffenseRebs
 			)
 			{
+		recent = false;
 		this.teamDefenceRebs += teamDefenceRebs;
 		this.teamOffenseRebs += teamOffenseRebs;
 		this.yourDefenceRebs += yourDefenceRebs;
@@ -293,8 +295,8 @@ public class PlayerQueue {
 				  penaltyHandNo,
 				time / 60/ (matchNO -time_num),  handNo/ matchNO,
 				threeHandNo/ matchNO,   twoPair/ matchNO, penaltyHitNo / matchNO, hitNo / matchNO, threeHitNo / matchNO);
-	   // double penaltyHitNo, double hitNo,double threeHitNo
-		
+	   // double penaltyHitNo, double hitNo,doubltr threeHitNo
+		recent = true;
 	}
 	//更新
 	public void  update(int num)
@@ -312,11 +314,19 @@ public class PlayerQueue {
 	
 	public PlayerMatchVO getTotalPlayer()
 	{
+		if (!recent)
+		{
+			update();
+		}
 		return playervo_total;
 	}
 	
 	public PlayerMatchVO getAvePlayer()
 	{
+		if (!recent)
+		{
+			update();
+		}
 		return playervo_ave;
 	}
 	public MatchesPO[] getAllMatches()

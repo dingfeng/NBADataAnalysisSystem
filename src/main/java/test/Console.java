@@ -33,12 +33,10 @@ public class Console {
 	 }
 	 else if (args[0].equals("-player"))
 	 {
-		 match.update();
 		 pcon.execute(out, args);
 	 }
 	 else if (args[0].equals("-team"))
 	 {
-		 match.update();
 		 tcon.execute(out, args);
 	 }
 	 }catch (Exception e)

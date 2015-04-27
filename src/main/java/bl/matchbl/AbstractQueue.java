@@ -9,6 +9,7 @@ abstract public class AbstractQueue
   protected int lenth = -1;
   //如果是球队则使用缩写
   protected String name;
+  protected boolean recent = true;
   public AbstractQueue(int max,String name)
   {
 	  this.max = max;
@@ -39,6 +40,7 @@ abstract public class AbstractQueue
 	 if (lenth == max -1)
 		 enlarge();
  	 matches[++lenth] = match; 
+ 	 recent = false;
   }
   
   private void enlarge()

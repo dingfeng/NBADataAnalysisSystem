@@ -155,7 +155,7 @@ public TeamHighInfo[] getTeamHighInfo(TeamSortBy sortBy,SortType sortType, int n
 	int num = 0;
 	for (TeamQueue q : queues)
 	{
-		teamvo = q.getTeamvoTotal();
+		teamvo = q.getTeamvoAverage();
 		if (teamvo == null)
 			continue;
 		setSortBy(teamvo, sortBy,sortType);

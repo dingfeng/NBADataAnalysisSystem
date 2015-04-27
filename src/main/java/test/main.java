@@ -24,18 +24,18 @@ public static void testAll()
 			 "-team -total -all -n 10 -sort shot.desc",
 			 "-team -high -n 5 -sort stealEfficient.asc",
 			 "-player",
-				"-player -all -n 10",
-				"-player -high -n 10 -sort frequency.desc",
-				"-player -hot assist -n 5",
-				"-player -king score -season",
-				"-player -avg -n 5 -filter position.F",
-				"-player -total -all -n 10 -filter position.F,league.West -sort shot.desc"
+			 "-player -all -n 10",
+			 "-player -high -n 10 -sort frequency.desc",
+			 "-player -hot assist -n 5",
+			 "-player -king score -season",
+			 "-player -avg -n 5 -filter position.F",
+			 "-player -total -all -n 10 -filter position.F,league.West -sort shot.desc"
 			};
-	    Timer  timer = new Timer();
-	    TimerTask task = new TimerTask()
-	    {
+//	    Timer  timer = new Timer();
+//	    TimerTask task = new TimerTask()
+//	    {
 
-			public void run() {
+//			public void run() {
 				Console console = new Console();
 				PrintStream out = System.out;
 				long start = System.currentTimeMillis();
@@ -46,10 +46,10 @@ public static void testAll()
 				}
 				long end = System.currentTimeMillis();
 				System.out.println("time : "+(end - start));
-			}
+//			}
 	    	
-	    };
-	    timer.schedule(task, 400,6000);
+//	    };
+//	    timer.schedule(task, 400,6000);
 			
 }
 
