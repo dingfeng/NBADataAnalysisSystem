@@ -16,20 +16,20 @@ public static void testAll()
 	String[] commands = new String[]
 			{
 			 "--datasource K:/NBAData",
-			 "-team -all -total",
-			 "-team",
-			 "-team -all -n 10",
-			 "-team -hot assist -n 5",
-			 "-team -avg -n 5 -sort shot.asc",
-			 "-team -total -all -n 10 -sort shot.desc",
-			 "-team -high -n 5 -sort stealEfficient.asc",
-			 "-player",
+//			 "-team -all -total",
+//			 "-team",
+//			 "-team -all -n 10",
+//			 "-team -hot assist -n 5",
+//			 "-team -avg -n 5 -sort shot.asc",
+//			 "-team -total -all -n 10 -sort shot.desc",
+//			 "-team -high -n 5 -sort stealEfficient.asc",
+//			 "-player",
 			 "-player -all -n 10",
 			 "-player -high -n 10 -sort frequency.desc",
-			 "-player -hot assist -n 5",
-			 "-player -king score -season",
-			 "-player -avg -n 5 -filter position.F",
-			 "-player -total -all -n 10 -filter position.F,league.West -sort shot.desc"
+//			 "-player -hot assist -n 5",
+//			 "-player -king score -season",
+//			 "-player -avg -n 5 -filter position.F",
+//			 "-player -total -all -n 10 -filter position.F,league.West -sort shot.desc"
 			};
 //	    Timer  timer = new Timer();
 //	    TimerTask task = new TimerTask()

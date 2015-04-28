@@ -216,6 +216,7 @@ public class PlayerQueue {
 		if (time != 0 && (teamOffenseRebs + yourRebs) != 0)
 		offenseRebsEfficiency = offenseRebs * (1.0 * teamTotalTime )
 				/ time / (teamOffenseRebs + yourOffenseRebs);
+		
 		; // 进攻篮板率
 		double defenceRebsEfficiency  = 0;
 		if (time != 0 && (teamDefenceRebs + yourRebs) != 0)
@@ -242,6 +243,8 @@ public class PlayerQueue {
 		 mistakeEfficiency = 1.0
 				* mistakesNo
 				/ (handNo - threeHandNo  + 0.44 * penaltyHandNo + mistakesNo);// 失误率
+	
+		
 		double useEfficiency = 0;
 		if (time != 0 &&  teamHand + 0.44 * teamPenalty + teamMistakes != 0)
 		 useEfficiency = (handNo 
@@ -265,6 +268,8 @@ public class PlayerQueue {
 	    if (help1 != 0)
 		 help_uprate = (help2 / 5 - help1 / (len -4)) / (help1 / (len - 4));
 		}
+		
+		
 		//赛季数据更新
 		playervo_total = new  PlayerMatchVO(  name,  teamname,  len + 1,
 				 firstServiceNo,  rebs,  help,  time,
@@ -280,6 +285,7 @@ public class PlayerQueue {
 				   penaltyHandNo,
 				time / 60,  handNo,
 				threeHandNo,   twoPair, penaltyHitNo, hitNo, threeHitNo);
+		
 		//场均数据更新
 	    playervo_ave = new PlayerMatchVO(name,  teamname,  len + 1,
 				 firstServiceNo,  rebs / matchNO,  help/ matchNO,  time/ (matchNO -time_num),

@@ -429,6 +429,7 @@ public class PlayerCore implements PlayerCoreService
 			info.setShot(playerMatchvo.getHitRate());
 			info.setStart((int) playerMatchvo.getFirstServiceNo());
 			info.setSteal(playerMatchvo.getStealsNo());
+			teamName = playerMatchvo.getTeam();
 			info.setTeamName(teamName);
 			info.setThree(playerMatchvo.getThreeHitRate());
 			infos[i] = info;
@@ -561,6 +562,7 @@ public class PlayerCore implements PlayerCoreService
 			playerpo = player_base_map.get(playername.hashCode());
 			if (playerpo != null)
 			info.setAge(player_base_map.get(playername.hashCode()).getAge());
+			 teamName = playerMatchvo.getTeam();
 			info.setAssist(playerMatchvo.getAssistNo());
 			info.setBlockShot(playerMatchvo.getBlockNo());
 			info.setDefend(playerMatchvo.getDefenceNo());
