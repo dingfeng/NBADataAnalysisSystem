@@ -67,6 +67,15 @@ public class PlayerQueue {
 		   this.yourRebs += yourRebs;
 		   this.totalHit += totalHit;
 		   this.yourAttackNO += yourAttackNO;
+		   
+//		   if (name.equals("Russell Westbrook"))
+//		   {
+//			   StringBuilder sb = new StringBuilder();
+//			   sb.append("日期:\t"+match.getDate()+"\t进攻回合:\t"+yourAttackNO);
+//			   System.out.println(sb.toString());
+//			   System.out.println(teamname);
+//		   }
+		   
 		   this.teamHand += teamHand;
 		   this.teamPenalty += teamPenalty;
 		   this.teamMistakes += teamMistakes;
@@ -223,6 +232,7 @@ public class PlayerQueue {
 		 defenceRebsEfficiency = defenceRebs * (1.0 * teamTotalTime)
 				/ time / (teamDefenceRebs + yourDefenceRebs);
 		; // 防守篮板率
+		
 		double assistEfficiency = 0;
 		if ( teamTotalTime != 0 && time / (teamTotalTime) * totalHit - hitNo != 0)
 			assistEfficiency = 1.0 * help
@@ -268,7 +278,6 @@ public class PlayerQueue {
 	    if (help1 != 0)
 		 help_uprate = (help2 / 5 - help1 / (len -4)) / (help1 / (len - 4));
 		}
-		
 		
 		//赛季数据更新
 		playervo_total = new  PlayerMatchVO(  name,  teamname,  len + 1,

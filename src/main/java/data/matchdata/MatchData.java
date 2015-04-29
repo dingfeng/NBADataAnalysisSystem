@@ -361,18 +361,20 @@ public class MatchData  implements MatchDataService
 	{
 		i = time_str.indexOf(':');
 		if ( i != -1)
-		{	
+		{
 		total_time = 60 * Integer.parseInt(time_str.substring(0,i))+
 				Integer.parseInt(time_str.substring(i+1, time_str.length()));
 		}
 	}
+	
+
 	return new MatchPlayerPO(player_info[0],player_info[1],total_time,
 			Integer.parseInt(player_info[3]),Integer.parseInt(player_info[4]),Integer.parseInt(player_info[5]),Integer.parseInt(player_info[6]),
 			Integer.parseInt(player_info[7]),Integer.parseInt(player_info[8]),Integer.parseInt(player_info[9]),Integer.parseInt(player_info[10]),
 			Integer.parseInt(player_info[11]),Integer.parseInt(player_info[12]),Integer.parseInt(player_info[13]),Integer.parseInt(player_info[14]),
 			Integer.parseInt(player_info[15]),Integer.parseInt(player_info[16]));
   }
-  
+  static int l =0;
   //获得今日的比赛数据
   public MatchesPO[] getTodayMatches()
   {

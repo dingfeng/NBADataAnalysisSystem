@@ -93,10 +93,11 @@ public class Match
         	hitNo2 += p.getHitNo();
         }
         double attackNO1 =    teamHand1 + 0.4 * penaltyHandNo1 -
-        		1.07 * (1.0 * offenseRebs1/(offenseRebs1+defenceRebs1)*(teamHand1-hitNo1))
+        		1.07 * (1.0 * offenseRebs1/(offenseRebs1+defenceRebs2)*(teamHand1-hitNo1))
               + 1.07 * teamMistakes1;
+        
          double attackNO2 =   teamHand2 + 0.4 * penaltyHandNo2 -
-         		1.07 * (1.0 * offenseRebs2/(offenseRebs2+defenceRebs2)*(teamHand2-hitNo2))
+         		1.07 * (1.0 * offenseRebs2/(offenseRebs2+defenceRebs1)*(teamHand2-hitNo2))
                 + 1.07 * teamMistakes2;
         
         int firstServiceNO = 0;
@@ -144,7 +145,7 @@ public class Match
            
         	q.enqueue(match,p, team2.getName(), teamHand1 - threeHand1,team2.getTime(), rebs1, totalHit2, attackNO1, teamHand2, teamPenalty2, teamMistakes2, firstServiceNO, rebs2, team1.getName(), team2.getName(), match.getDate(),
         			offenseRebs1,defenceRebs1,defenceRebs2,offenseRebs2);
-          
+           
         }
 	}
 	
