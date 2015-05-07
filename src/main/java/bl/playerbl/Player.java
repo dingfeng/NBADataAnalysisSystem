@@ -171,7 +171,7 @@ public class Player  implements SearchItemProvider{
 	   ArrayList<PlayerMatchVO> result_players = new ArrayList<PlayerMatchVO>(300);
 	   for (PlayerPO p : allPlayerpos)
 	   {
-		   if (p.getPosition().contains(playerPosition) && team.getPlayerArea(p.getName()) == playerArea)
+		   if (p.getPosition().contains(playerPosition) && team.getPlayerArea(p.getName()) == converToStr(playerArea))
 		   {
 			   screen_players.add(player_map.get(p.getName().hashCode()).getAvePlayer());
 		   }
@@ -201,7 +201,7 @@ public class Player  implements SearchItemProvider{
 		   ArrayList<PlayerMatchVO> result_players = new ArrayList<PlayerMatchVO>(300);
 		   for (PlayerPO p : allPlayerpos)
 		   {
-			   if (p.getPosition().contains(playerPosition) && team.getPlayerArea(p.getName()) == playerArea)
+			   if (p.getPosition().contains(playerPosition) && team.getPlayerArea(p.getName()) == converToStr(playerArea))
 			   {
 				   screen_players.add(player_map.get(p.getName().hashCode()).getTotalPlayer());
 			   }
@@ -223,6 +223,32 @@ public class Player  implements SearchItemProvider{
 			return result_players.iterator();
 	}
   
+	private String converToStr(Area area)
+	{
+		String result = null;
+		switch (area)
+		{
+        case ATLANTIC:
+        	result = "Atlantic";
+        	break;
+		case CENTRAL:
+			result = "Central";
+			break;
+		case SOUTHEAST:
+			result = "Southeast";
+			break;
+		case SOUTHWEST:
+			result = "Southeast";
+			break;
+		case NORTHWEST:
+			result = "Northwest";
+			break;
+		case PACIFIC:
+			result = "Pacific";
+			break;
+		}
+		return result;
+	}
 	//获得当日热点球员
 	public  MatchPlayerPO[] getDayHotPlayer(PlayerSortBy sortby) {
 		MatchesPO[]  todayMatches = match.getTodayMatches();
@@ -461,7 +487,11 @@ public class Player  implements SearchItemProvider{
 			data = playervo.getTwoPair();
 			break;//两双
 		}
-		playervo.setSortTool(new SortTool(data,sortType));
+		double [] datas = new double[1];
+		datas[0] = data;
+		SortType[] sortTypes = new SortType[1];
+		sortTypes[0] = sortType;
+		playervo.setSortTool(new SortTool(datas,sortTypes));
 	}
 
 	//获得查找项目

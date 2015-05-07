@@ -33,7 +33,6 @@ public class TeamController
 		
 		if (base_high == 1)
 		{
-			System.out.println("高阶数据");
 			TeamSortBy  sortby = TeamSortBy.winRate;
 			SortType sortType = null;
 			if (sort!=-1)
@@ -62,7 +61,6 @@ public class TeamController
 		//处理热门球队
 		else if (all_hot > 0)
 		{
-			System.out.println("热门球队");
 			String field = command[all_hot];
 			
 			int n = 5;
@@ -81,7 +79,6 @@ public class TeamController
 		}
 		else if (ave_total == 0)  //场均数据
 		{
-			System.out.println("场均数据");
 		 int n = 30;
 		 if (num != -1)
 		 {
@@ -122,7 +119,6 @@ public class TeamController
 		}
 		else       //赛季数据
 		{
-			System.out.println("赛季数据");
 			int n = 30;
 			 if (num != -1)
 			 {

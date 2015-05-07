@@ -344,6 +344,10 @@ public class PlayerCore implements PlayerCoreService
 		  else
 		  {
 			  teampo = TeamCore.findTeam(teamName);
+			  if (playername.equals("Jared Sullinger"))
+			  {
+				  System.out.println(teampo.getName()+" "+teampo.getMatchArea());
+			  }
 			  if (league.contains(teampo.getMatchArea()))
 			  {
 				  league_judge = true;

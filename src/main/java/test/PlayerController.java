@@ -33,18 +33,15 @@ public class PlayerController
 		PlayerSortBy[]  sorts = playerCommand.getSorts();
 		SortType[] sortType = playerCommand.getSortType();
 		int sort_len = playerCommand.getSortLen();
-		
 		String hotPlayerSort = playerCommand.getHotPlayerSort();
 		String kingPlayerSort = playerCommand.getKingPlayerSort();
 		//处理热门球员
 		if (all_hot_king == 1)
 		{
-			System.out.println("热门球员");
 			if (n == -1)
 			{
 				n = 5;
 			}
-			System.out.println("hot sort by : "+hotPlayerSort);
 			PlayerHotInfo[] hotInfos = playerCore.getPlayerHotInfos(hotPlayerSort, n);
 			for (PlayerHotInfo info : hotInfos)
 			{
@@ -62,7 +59,6 @@ public class PlayerController
 			//赛季数据王
 			if (season_daily == 0)
 			{
-				System.out.println("赛季数据王");
 				PlayerKingInfo[] infos = playerCore.getPlayerSeasonKingInfo(kingPlayerSort, n);
 				for (PlayerKingInfo info :infos)
 				{
@@ -72,7 +68,6 @@ public class PlayerController
 			//当日数据王
 			else 
 			{
-				System.out.println("当日数据王");
 				PlayerKingInfo[] infos = playerCore.getPlayerDailyKingInfo(kingPlayerSort, n);
 				for (PlayerKingInfo info : infos)
 				{
@@ -84,7 +79,6 @@ public class PlayerController
 		//获得高阶数据
 		else if (low_high == 1)
 		{
-			System.out.println("高阶数据");
 			if (n == -1)
 			{
 				n = 50;
@@ -130,7 +124,6 @@ public class PlayerController
 			if (avg_total == 0)
 			{
 				
-				System.out.println("场均基本数据");
 			 PlayerNormalInfo[] infos = playerCore.getPlayerAveNormalInfos(psbs, sts, n, position, league, year);
 			 for (PlayerNormalInfo info : infos)
 			 {
@@ -140,7 +133,6 @@ public class PlayerController
 			//赛季总数据
 			else 
 			{
-				System.out.println("赛季总数据");
 				PlayerNormalInfo[] infos = playerCore.getPlayerTotalNormalInfos(psbs, sts, n, position, league, year);
 				 for (PlayerNormalInfo info : infos)
 				 {

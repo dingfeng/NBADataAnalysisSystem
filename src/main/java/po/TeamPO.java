@@ -28,6 +28,10 @@ public class TeamPO implements Comparable<TeamPO>{
 		this.image = image;
 		this.name = name;
 		this.nameAbridge = nameAbridge;
+		if(nameAbridge.equals("BOS"))
+		{
+			matchArea = "E";
+		}
 		this.address = address;
 		this.matchArea = matchArea;
 		this.playerArea = playerArea;

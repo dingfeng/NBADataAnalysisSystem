@@ -11,8 +11,8 @@ import java.util.TimerTask;
 public class main {
 public static void main(String[] args) throws IOException
 {
-//	testAll();
-	outTestCase();
+	testAll();
+//	outTestCase();
 }
 
 static String[] commands = new String[]
@@ -142,8 +142,8 @@ static String[] commands = new String[]
 		 "-player -avg -n 5 -sort shot.asc",
 		 "-player -avg -n 5 -sort three.asc",
 		 "-player -avg -n 5 -sort penalty.asc",
-		 "-player -avg -n 5 -sort defendRebound.asc",
-		 "-player -avg -n 5 -sort offendRebound.asc",
+		 "-player -avg -n 5 -sort defendReboundEfficient.asc",
+		 "-player -avg -n 5 -sort offendReboundEfficient.asc",
 		 "-player -avg -n 5 -sort rebound.asc",
 		 "-player -total -n 5 -sort point.desc",
 		 "-player -total -n 5 -sort rebound.desc",
@@ -155,8 +155,8 @@ static String[] commands = new String[]
 		 "-player -total -n 5 -sort shot.desc",
 		 "-player -total -n 5 -sort three.desc",
 		 "-player -total -n 5 -sort penalty.desc",
-		 "-player -total -n 5 -sort defendRebound.desc",
-		 "-player -total -n 5 -sort offendRebound.desc",
+		 "-player -total -n 5 -sort defendReboundEfficient.desc",
+		 "-player -total -n 5 -sort offendReboundEfficient.desc",
 		 "-player -total -n 5 -sort rebound.asc",
 		 "-player -total -n 5 -sort point.asc",
 		 "-player -total -n 5 -sort rebound.asc",
@@ -168,8 +168,8 @@ static String[] commands = new String[]
 		 "-player -total -n 5 -sort shot.asc",
 		 "-player -total -n 5 -sort three.asc",
 		 "-player -total -n 5 -sort penalty.asc",
-		 "-player -total -n 5 -sort defendRebound.asc",
-		 "-player -total -n 5 -sort offendRebound.asc",
+		 "-player -high -total -n 5 -sort defendReboundEfficient.asc",
+		 "-player  -total -n 5 -sort offendReboundEfficient.asc",
 		 "-player -total -n 5 -sort rebound.asc",
 		 "-player -king rebound -daily",
 		 "-player -king assist -daily",
@@ -190,7 +190,7 @@ public static void testAll()
 				long start = System.currentTimeMillis();
 				for (String c : commands)
 				{
-					
+					System.out.println(c);
 					console.execute(out, c.split(" "));
 				}
 				long end = System.currentTimeMillis();

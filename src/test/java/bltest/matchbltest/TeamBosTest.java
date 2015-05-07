@@ -1,4 +1,4 @@
-package bltest.teambltest;
+package bltest.matchbltest;
 
 import static org.junit.Assert.*;
 

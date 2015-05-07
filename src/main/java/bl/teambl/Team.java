@@ -331,7 +331,7 @@ public class Team   implements SearchItemProvider
 	}
 
 	//获得球员的赛区
-	public Area getPlayerArea(String playername)
+	public String getPlayerArea(String playername)
 	{
 		String teamname = null;
 		for (TeamPO t : teams)

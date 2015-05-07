@@ -16,10 +16,12 @@ public class MatchPlayerMapTest_ave {
 		Match match = Match.instance();
 		TIntObjectMap<PlayerQueue> player_map = match.getPlayer_map();
 		PlayerQueue[] players = new PlayerQueue[player_map.size()];
+		player_map.values(players);
 		for (PlayerQueue  q : players)
 		{
 			System.out.println(q.getAvePlayer());
 		}
+		
 	}
 
 }
