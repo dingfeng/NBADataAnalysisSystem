@@ -217,6 +217,11 @@ public class TeamMatchVO implements Comparable<TeamMatchVO>{
 	}
 	@Override
 	public int compareTo(TeamMatchVO o) {
-		return tool.compareTo(o.getTeamSortTool());
+		int com = tool.compareTo(o.getTeamSortTool());
+		if (com == 0)
+		{
+			com = name.compareTo(o.getName());
+		}
+		return com;
 	}
 }

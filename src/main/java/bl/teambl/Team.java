@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -34,6 +35,7 @@ public class Team   implements SearchItemProvider
 	private TIntObjectMap<TeamPO> po_map;
 	private TeamPO[] teams;
 	private final static int TEAM_NUM = 30;
+	ArrayList<String> list = new ArrayList<String>();
 	public Team()
 	{
 		match = Match.instance();

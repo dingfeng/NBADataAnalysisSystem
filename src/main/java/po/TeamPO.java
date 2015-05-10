@@ -28,15 +28,11 @@ public class TeamPO implements Comparable<TeamPO>{
 		this.image = image;
 		this.name = name;
 		this.nameAbridge = nameAbridge;
-		if(nameAbridge.equals("BOS"))
-		{
-			matchArea = "E";
-		}
 		this.address = address;
-		this.matchArea = matchArea;
 		this.playerArea = playerArea;
 		this.manage = manage;
 		this.foundYear = foundYear;
+		this.matchArea = getMatchArea(playerArea);
 	}
 
 	public Image getImage() {
@@ -74,4 +70,31 @@ public class TeamPO implements Comparable<TeamPO>{
 	public int compareTo(TeamPO o) {
 		return name.compareTo(o.getName());
 	}
+	
+	 public static  String getMatchArea(String playerArea)
+	 {
+		 String result = null;
+		 switch (playerArea)
+		 {
+		 case "Central":
+			 result = "E";
+			 break;
+		 case "Atlantic":
+			 result  = "E";
+			 break;
+	     case "Pacific":
+	    	 result = "W";
+	    	 break;
+		 case "Southwest":
+			 result = "W";
+			 break;
+		 case "Southeast":
+			 result = "E";
+			 break;
+		 case "Northwest":
+			 result = "W";
+			 break;
+		 }
+		 return result;
+	 }
 }

@@ -110,16 +110,11 @@ public class PlayerCommand
 		  case "-sort":
 			  sort = 1;
 			  ++i;
-			  String choice = null;
-			  while ( i < len)
-			  {
-				choice = commands[i];
-				if (!choice.equals(","))
-				{
-				dealWithOneSortField(choice);
+			  String[] choice = commands[i].split(",");
+			  for (String temp1 : choice)
+           		{
+				dealWithOneSortField(temp1);
 				}
-				++i;
-			  }
 			  break;
 		  }
 		}
@@ -136,6 +131,7 @@ public class PlayerCommand
 		{
 		
 		//得分
+		case "score":
 		case "point":
 		    sortBy = PlayerSortBy.points;
 			break;

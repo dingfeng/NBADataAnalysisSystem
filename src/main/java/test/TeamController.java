@@ -30,6 +30,7 @@ public class TeamController
 		int num = team_command.getNum();      //默认值为-1，代表无此命令，值为30.当num为正数时，代表命令数组的下标
 		int base_high = team_command.getBase_high(); //默认值为0代表基本数据类型，1代表高阶数据
 		int sort = team_command.getSort();     //-1代表没有，当它大于1时代表命令数组的下标
+		int k = 0;
 		
 		if (base_high == 1)
 		{
@@ -53,9 +54,10 @@ public class TeamController
 			 }
 			 if (n > 30)  n =30;
 			TeamHighInfo[] teamHighInfos = teamCore.getTeamHighInfo(sortby, sortType, n);
+			k = 0;
 			for (TeamHighInfo info : teamHighInfos)
 			{
-				out.append(info.toString());
+				out.append((++k)+"\n"+info.toString()+"\n");
 			}
 		}
 		//处理热门球队
@@ -71,9 +73,10 @@ public class TeamController
 			if (n > 30) n = 30;
 			//获得热门球队 
 			TeamHotInfo[] hotInfos = teamCore.getTeamHotInfo(field, n);
+			k = 0;
 			for (TeamHotInfo info : hotInfos)
 			{
-				out.append(info.toString());
+				out.append((++k)+"\n"+info.toString()+"\n");
 			}
 			
 		}
@@ -112,9 +115,10 @@ public class TeamController
 			 else sortType = SortType.DESEND;
 		 }
 		 TeamNormalInfo[]  teams = teamCore.getTeamNormalAve(sortby, sortType, n);
+		 k = 0;
 		    for (TeamNormalInfo info : teams)
 		    {
-		    	out.append(info.toString());
+		    	out.append((++k)+"\n"+info.toString()+"\n");
 		    }
 		}
 		else       //赛季数据
@@ -152,9 +156,10 @@ public class TeamController
 			 }
 			
 			 TeamNormalInfo[]  teams = teamCore.getTeamNormalTotal(sortby, sortType, n);
+			 k = 0;
 			    for (TeamNormalInfo info : teams)
 			    {
-			    	out.append(info.toString());
+			    	out.append((++k)+"\n"+info.toString()+"\n");
 			    }
 		}
 	}
@@ -166,6 +171,7 @@ public class TeamController
 		switch (field)
 		{
 		//基础数据
+		case "score":
 		case "point":                   //得分
 			 sortBy = TeamSortBy.points;
 			break;                  

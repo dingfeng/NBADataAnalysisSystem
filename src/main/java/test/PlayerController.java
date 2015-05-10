@@ -30,6 +30,7 @@ public class PlayerController
 		int year = playerCommand.getYear();          //0(<=22),1(22<X<=25),2(25<X<=30),3(X>30); -1(all default)
 		int sort = playerCommand.getSort();   //0表示选择默认排序操作，基础数据的默认排序依据为 -sort score.desc,高阶数据的默认排序依据为-sort winRate.desc
 		                  //对于排序属性的值相同的按球队名的升序排序
+		int k = 0;
 		PlayerSortBy[]  sorts = playerCommand.getSorts();
 		SortType[] sortType = playerCommand.getSortType();
 		int sort_len = playerCommand.getSortLen();
@@ -43,9 +44,10 @@ public class PlayerController
 				n = 5;
 			}
 			PlayerHotInfo[] hotInfos = playerCore.getPlayerHotInfos(hotPlayerSort, n);
+			k = 0;
 			for (PlayerHotInfo info : hotInfos)
 			{
-				out.append(info.toString());
+				out.append((++k)+"\n"+info.toString()+"\n");
 			}
 			
 		}
@@ -60,18 +62,20 @@ public class PlayerController
 			if (season_daily == 0)
 			{
 				PlayerKingInfo[] infos = playerCore.getPlayerSeasonKingInfo(kingPlayerSort, n);
+				k = 0;
 				for (PlayerKingInfo info :infos)
 				{
-					out.append(info.toString());
+					out.append((++k)+"\n"+info.toString()+"\n");
 				}
 			}
 			//当日数据王
 			else 
 			{
 				PlayerKingInfo[] infos = playerCore.getPlayerDailyKingInfo(kingPlayerSort, n);
+				k = 0;
 				for (PlayerKingInfo info : infos)
 				{
-					out.append(info.toString());
+					out.append((++k)+"\n"+info.toString()+"\n");
 				}
 				
 			}
@@ -96,9 +100,10 @@ public class PlayerController
 				sts = sortType;
 			}
 			PlayerHighInfo[] infos = playerCore.getPlayerHighInfos(psbs, sts, n);
+			k = 0;
 			for (PlayerHighInfo info : infos)
 			{
-				out.append(info.toString());
+				out.append((++k)+"\n"+info.toString()+"\n");
 			}
 		}
 		//处理所有球员的数据，基本数据
@@ -125,18 +130,20 @@ public class PlayerController
 			{
 				
 			 PlayerNormalInfo[] infos = playerCore.getPlayerAveNormalInfos(psbs, sts, n, position, league, year);
+			 k = 0;
 			 for (PlayerNormalInfo info : infos)
 			 {
-				 out.append(info.toString());
+				 out.append((++k)+"\n"+info.toString()+"\n");
 			 }
 			}
 			//赛季总数据
 			else 
 			{
 				PlayerNormalInfo[] infos = playerCore.getPlayerTotalNormalInfos(psbs, sts, n, position, league, year);
+				k = 0;
 				 for (PlayerNormalInfo info : infos)
 				 {
-					 out.append(info.toString());
+					 out.append((++k)+"\n"+info.toString()+"\n");
 				 }
 			}
 		}
